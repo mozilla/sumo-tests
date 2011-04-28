@@ -1,6 +1,5 @@
 class ConnectionParameters:
-    #server = "localhost"
-    server = "qa-selenium.mv.mozilla.com"
+    server = "localhost"
     port = 4444
     browser = "*firefox"
     baseurl = "http://support.allizom.org"
@@ -12,8 +11,7 @@ class ConnectionParameters:
 class ConfigOptions:
     #Environment list
     Smoketests = [
-    #"Firefox-default;en-us;MacOSX6"
-    "Firefox-default;en-us;Win7-second"
+    "Firefox-default;en-us;MacOSX6"
     ]
     
     BFT = [
