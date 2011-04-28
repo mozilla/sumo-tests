@@ -1,7 +1,7 @@
 class ConnectionParameters:
     server = "localhost"
     port = 4444
-    browser = "Firefox-default;en-us;MacOSX6"
+    browser = "*firefox"
     baseurl = "http://support.allizom.org"
     baseurl_ssl = "https://support.allizom.org"
     authurl = "http://support-release.allizom.org"
