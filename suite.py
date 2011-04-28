@@ -188,11 +188,7 @@ def ThreadTestRunner(q, browser, test_list, test_info_list):
     runner = unittest.TextTestRunner(stream=sys.stderr)
     
     counter = 0
-    print test_list
     for test in test_list:
-        print test
-        if 'redirect' in test:
-            continue
         # decorator to modify setUp of all functions to open the appropriate browser
         # replaces original setUp
         def setUpDecorator(fn, test, env):
