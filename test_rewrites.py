@@ -87,7 +87,7 @@ class TestRewrites(unittest.TestCase):
                  if you go to an over-specified or under-specified locale, kitsune fixes it
         """
         ja    = {"goToUrl":"/ja-JP-mac","redirectUrl" : "/ja"}
-        nb    = {"goToUrl":"/nb-NO","redirectUrl":"/no"}
+        #nb    = {"goToUrl":"/nb-NO","redirectUrl":"/no"}
         nn    = {"goToUrl":"/nn-NO","redirectUrl":"/no"}
         es_es = {"goToUrl":"/es-ES","redirectUrl":"/es"}
         es_ar = {"goToUrl":"/es-AR","redirectUrl":"/es"}
@@ -95,7 +95,7 @@ class TestRewrites(unittest.TestCase):
         us    = {"goToUrl":"/en-US","redirectUrl":"/en-US"}
         us2    = {"goToUrl":"/en","redirectUrl":"/en-US"}
         
-        urlMatrixArray2 = (ja,nb,nn,es_es,es_ar,es_cl,us,us2)
+        urlMatrixArray2 = (ja,nn,es_es,es_ar,es_cl,us,us2)
         for x in urlMatrixArray2:
             open_url = self.mainURL+(x[self.key1])+self.kbSuffix
             expected_url = self.mainURL+(x[self.key2])+"/home"
