@@ -60,14 +60,17 @@ class TestRewrites(unittest.TestCase):
     """
     def test_redirect_one_locale(self):
         ja    = {"goToUrl":"/ja-JP-mac","redirectUrl" : "/ja"}
-        nb    = {"goToUrl":"/nb-NO","redirectUrl":"/no"}
+        #nb    = {"goToUrl":"/nb-NO","redirectUrl":"/no"}
         nn    = {"goToUrl":"/nn-NO","redirectUrl":"/no"}
         es_es = {"goToUrl":"/es-ES","redirectUrl":"/es"}
         es_ar = {"goToUrl":"/es-AR","redirectUrl":"/es"}
         es_cl = {"goToUrl":"/es-CL","redirectUrl":"/es"}
         sr    = {"goToUrl":"/sr","redirectUrl":"/sr-CYRL"}
          
-        urlMatrixArray = (ja,nb,nn,es_es,es_ar,es_cl,sr)
+        """
+            removing nb-no for now due to bug 650363
+        """
+        urlMatrixArray = (ja,nn,es_es,es_ar,es_cl,sr)
         
         for x in urlMatrixArray:
             for two in self._2:
