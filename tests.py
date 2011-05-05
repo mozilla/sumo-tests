@@ -58,12 +58,10 @@ class testlist:
 #                                   "method":"test_kb_static"},
 #                       "tags":["prod"]})
 ##    
-##    """ disabled until bug gets fixed"""
-###    Smoketests.append({"testcase":{"module":"test_loggedin_ask_a_new_question",
-###                                   "class":"loggedin_ask_a_new_question",
-###                                   "method":"test_loggedin_ask_a_new_question"},
-###                       "tags":[]})
-## 
+    Smoketests.append({"testcase":{"module":"test_loggedin_ask_a_new_question",
+                                   "class":"loggedin_ask_a_new_question",
+                                   "method":"test_loggedin_ask_a_new_question"},
+                       "tags":[]})
 # 
 #    Smoketests.append({"testcase":{"module":"test_loggedin_search_on_homepage",
 #                                   "class":"loggedin_search_on_homepage",
