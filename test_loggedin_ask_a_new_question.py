@@ -27,8 +27,7 @@ class loggedin_ask_a_new_question(unittest.TestCase):
         timestamp = sel.get_eval("new Date().getTime()")
         self.functions.login(0, sel)
         sumo_func.open(sel, '/')
-        sel.click("link=2) Get Personal Help")
-        sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
+        sel.open("/en-US/kb/ask")
         sel.click("link=Ask a new question in the forum")
         sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
         # Adding a new question
@@ -47,7 +46,8 @@ class loggedin_ask_a_new_question(unittest.TestCase):
         sel.click("css=input[value='Post Question']")
         sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
         time.sleep(3)
-        self.failUnless(sel.is_text_present("Please confirm your question"), "Did not get confirmation for Question: %s \r\n" %(question_to_ask))
+        self.failUnless(sel.is_text_present("Your question has been posted"), "Did not get confirmation for Question: %s \r\n" %(question_to_ask))
+        self.failUnless(sel.is_text_present(question_to_ask))
 
     def tearDown(self):
         self.selenium.stop()
