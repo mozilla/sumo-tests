@@ -59,8 +59,8 @@ class testlist:
 #                       "tags":["prod"]})
 ##    
     Smoketests.append({"testcase":{"module":"test_loggedin_ask_a_new_question",
-                                   "class":"loggedin_ask_a_new_question",
-                                   "method":"test_loggedin_ask_a_new_question"},
+                                   "class":"TestAAQ",
+                                   "method":"test_that_posting_question_works"},
                        "tags":[]})
 # 
 #    Smoketests.append({"testcase":{"module":"test_loggedin_search_on_homepage",
