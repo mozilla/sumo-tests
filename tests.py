@@ -28,22 +28,11 @@ class testlist:
 ##                                   "class":"anon_submitting_a_new_question",
 ##                                   "method":"test_anon_submitting_a_new_question"},
 ##                       "tags":[]})
-#
-    Smoketests.append({"testcase":{"module":"test_ask_a_question",
-                                   "class":"ask_a_question",
-                                   "method":"test_ask_a_question"},
-                       "tags":[]})
  
     Smoketests.append({"testcase":{"module":"test_cant_find_what_youre_looking_for_test",
                                    "class":"cant_find_what_youre_looking_for_test",
                                    "method":"test_cant_find_what_youre_looking_for_test"},
                        "tags":["prod"]})
-
-    Smoketests.append({"testcase":{"module":"test_how_to_contribute",
-                                   "class":"how_to_contribute",
-                                  "method":"test_how_to_contribute"},
-                       "tags":["prod"]})
-    
     
     """
       commented due to bug 650303
