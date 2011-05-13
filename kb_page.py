@@ -79,9 +79,6 @@ class KBPage(sumo_page.SumoPage):
         self.is_the_current_page
         
     def create_new_article(self, article_info_dict):
-#        if re.search(self._page_title, self.selenium.get_title(), re.IGNORECASE) is None:
-#            self.go_to_create_new_article_page()
-            
         self.selenium.type(self._article_title_box, article_info_dict['title'])
         label_locator = "label=%s" %(article_info_dict['category'])
         self.selenium.select(self._article_category_menu, label_locator)
