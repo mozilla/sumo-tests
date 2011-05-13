@@ -248,74 +248,79 @@ class testlist:
                         "tags":["prod"]})
     
     FFT = []
-    FFT.extend(BFT)
-    FFT.append({"testcase":{"module":"test_anon_csat_NTF_no",
-                                   "class":"anon_csat_NTF_no",
-                                   "method":"test_anon_csat_ntf_no"},
-                       "tags":[]})
 
-    FFT.append({"testcase":{"module":"test_anon_csat_NTF_yes_new",
-                                   "class":"anon_csat_NTF_yes_new",
-                                   "method":"test_anon_csat_ntf_yes_new"},
-                       "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_anon_csat_popular_article_no",
-                                   "class":"anon_csat_popular_article_no",
-                                   "method":"test_anon_csat_popular_article_no"},
-                       "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_anon_csat_popular_article_yes",
-                                   "class":"anon_csat_popular_article_yes",
-                                   "method":"test_anon_csat_popular_article_yes"},
-                       "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_anon_csat_popular_article_yes_new",
-                                   "class":"anon_csat_popular_article_yes_new",
-                                   "method":"test_anon_csat_popular_article_yes_new"},
-                       "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_article_history",
-                                   "class":"article_history",
-                                   "method":"test_article_history"},
-                       "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_correct_search_whitespace_encoding_test",
-                                   "class":"correct_search_whitespace_encoding_test",
-                                   "method":"test_correct_search_whitespace_encoding_test"},
-                       "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_loggedin_translate_existing_article",
-                                   "class":"loggedin_translate_existing_article",
-                                   "method":"test_loggedin_translate_existing_article"},
-                       "tags":[]})
-
-    #FFT.append({"testcase":{"module":"test_breadcrumbs_forum",
-    #                               "class":"breadcrumbs_forum",
-    #                               "method":"test_breadcrumbs_forum"},
-    #                   "tags":[]})
-    #staging forum isn't always filled
-    
-    FFT.append({"testcase":{"module":"test_breadcrumbs_htc",
-                                   "class":"breadcrumbs_htc",
-                                   "method":"test_breadcrumbs_htc"},
-                       "tags":[]})
-
-    #FFT.append({"testcase":{"module":"test_breadcrumbs_kb",
-    #                               "class":"breadcrumbs_KB",
-    #                               "method":"test_breadcrumbs_kb"},
-    #                   "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_breadcrumbs_misc",
-                                   "class":"breadcrumbs_misc",
-                                   "method":"test_breadcrumbs_misc"},
-                       "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_verify_tiki_wiki_markup_in_search_results",
-                                   "class":"verify_tiki_wiki_markup_in_search_results",
-                                   "method":"test_verify_tiki_wiki_markup_in_search_results"},
+    FFT.append({"testcase":{"module":"test_article_cr_ed_dl",
+                                   "class":"TestArticleCreateEditDelete",
+                                   "method":"test_article_creating_editing_deleting"},
                        "tags":[]})
     
-    FFT.append({"testcase":{"module":"test_locale_redirect",
-                                   "class":"locale_redirect",
-                                   "method":"test_locale_redirect"},
-                       "tags":["prod"]})
+#    FFT.append({"testcase":{"module":"test_anon_csat_NTF_no",
+#                                   "class":"anon_csat_NTF_no",
+#                                   "method":"test_anon_csat_ntf_no"},
+#                       "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_anon_csat_NTF_yes_new",
+#                                   "class":"anon_csat_NTF_yes_new",
+#                                   "method":"test_anon_csat_ntf_yes_new"},
+#                       "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_anon_csat_popular_article_no",
+#                                   "class":"anon_csat_popular_article_no",
+#                                   "method":"test_anon_csat_popular_article_no"},
+#                       "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_anon_csat_popular_article_yes",
+#                                   "class":"anon_csat_popular_article_yes",
+#                                   "method":"test_anon_csat_popular_article_yes"},
+#                       "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_anon_csat_popular_article_yes_new",
+#                                   "class":"anon_csat_popular_article_yes_new",
+#                                   "method":"test_anon_csat_popular_article_yes_new"},
+#                       "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_article_history",
+#                                   "class":"article_history",
+#                                   "method":"test_article_history"},
+#                       "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_correct_search_whitespace_encoding_test",
+#                                   "class":"correct_search_whitespace_encoding_test",
+#                                   "method":"test_correct_search_whitespace_encoding_test"},
+#                       "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_loggedin_translate_existing_article",
+#                                   "class":"loggedin_translate_existing_article",
+#                                   "method":"test_loggedin_translate_existing_article"},
+#                       "tags":[]})
+#
+#    #FFT.append({"testcase":{"module":"test_breadcrumbs_forum",
+#    #                               "class":"breadcrumbs_forum",
+#    #                               "method":"test_breadcrumbs_forum"},
+#    #                   "tags":[]})
+#    #staging forum isn't always filled
+#    
+#    FFT.append({"testcase":{"module":"test_breadcrumbs_htc",
+#                                   "class":"breadcrumbs_htc",
+#                                   "method":"test_breadcrumbs_htc"},
+#                       "tags":[]})
+#
+#    #FFT.append({"testcase":{"module":"test_breadcrumbs_kb",
+#    #                               "class":"breadcrumbs_KB",
+#    #                               "method":"test_breadcrumbs_kb"},
+#    #                   "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_breadcrumbs_misc",
+#                                   "class":"breadcrumbs_misc",
+#                                   "method":"test_breadcrumbs_misc"},
+#                       "tags":[]})
+#
+#    FFT.append({"testcase":{"module":"test_verify_tiki_wiki_markup_in_search_results",
+#                                   "class":"verify_tiki_wiki_markup_in_search_results",
+#                                   "method":"test_verify_tiki_wiki_markup_in_search_results"},
+#                       "tags":[]})
+#    
+#    FFT.append({"testcase":{"module":"test_locale_redirect",
+#                                   "class":"locale_redirect",
+#                                   "method":"test_locale_redirect"},
+#                       "tags":["prod"]})

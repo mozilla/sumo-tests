@@ -15,11 +15,11 @@
 # The Original Code is Mozilla Support
 #
 # The Initial Developer of the Original Code is
-# Vishal K.
+# Mozilla Support
 # Portions created by the Initial Developer are Copyright (C) 2___
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s):
+# Contributor(s): Vishal
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,20 +35,22 @@
 #
 # ***** END LICENSE BLOCK *****
 
+import time
+import re
 
 import sumo_page
 import vars
-import time
+
 
 
 page_load_timeout = vars.ConnectionParameters.page_load_timeout
 
 class QuestionsPage(sumo_page.SumoPage):
-    '''
-    classdocs
-    '''
-    title_forums                  = 'Firefox Support Forum'
-    title_questions_new           = 'Ask a Question'
+    """
+    'Ask a Question' page.
+    """
+    _page_title                   = 'Firefox Support Forum'
+    _page_title_questions_new     = 'Ask a Question'
     forums_page_url               = '/en-US/questions'
     questions_new_url             = '/en-US/questions/new'
     ask_question_link             = '/en-US/questions/new'
@@ -73,12 +75,14 @@ class QuestionsPage(sumo_page.SumoPage):
     
     def go_to_forum_questions_page(self):
         self.open(self.forums_page_url)
-        self.verify_page_title(self.title_forums)
+        self.is_the_current_page
         
     def go_to_ask_new_questions_page(self):
         self.selenium.open(self.questions_new_url)
-        self.verify_page_title(self.title_questions_new)
-    
+        if (re.search(self._page_title_questions_new, self.selenium.get_title()) is None):
+            raise Exception,'\r\nPage tile verification failed. Expected: %s; Actual:%s\r\n' %(self._page_title_questions_new,self.selenium.get_title())
+
+
     def click_ask_new_questions_link(self):
         self.click(self.ask_question_link, True, page_load_timeout)
         
