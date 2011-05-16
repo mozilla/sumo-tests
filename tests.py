@@ -76,11 +76,6 @@ class testlist:
                                    "class":"search_unknownchars",
                                    "method":"test_search_unknownchars"},
                        "tags":["prod"]})
-
-    Smoketests.append({"testcase":{"module":"test_forum_pagination",
-                                   "class":"ForumPagination",
-                                   "method":"test_forum_a_pagination"},
-                       "tags":[]})
  
     Smoketests.append({"testcase":{"module":"test_tiki_search_results",
                                    "class":"TikiSearchResult",
@@ -249,11 +244,15 @@ class testlist:
     
     FFT = []
 
-    FFT.append({"testcase":{"module":"test_article_cr_ed_dl",
+    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
                                    "class":"TestArticleCreateEditDelete",
                                    "method":"test_article_creating_editing_deleting"},
                        "tags":[]})
     
+    FFT.append({"testcase":{"module":"test_forum_pagination",
+                                   "class":"ForumPagination",
+                                   "method":"test_forum_a_pagination"},
+                       "tags":[]})
 #    FFT.append({"testcase":{"module":"test_anon_csat_NTF_no",
 #                                   "class":"anon_csat_NTF_no",
 #                                   "method":"test_anon_csat_ntf_no"},
@@ -313,11 +312,6 @@ class testlist:
 #    FFT.append({"testcase":{"module":"test_breadcrumbs_misc",
 #                                   "class":"breadcrumbs_misc",
 #                                   "method":"test_breadcrumbs_misc"},
-#                       "tags":[]})
-#
-#    FFT.append({"testcase":{"module":"test_verify_tiki_wiki_markup_in_search_results",
-#                                   "class":"verify_tiki_wiki_markup_in_search_results",
-#                                   "method":"test_verify_tiki_wiki_markup_in_search_results"},
 #                       "tags":[]})
 #    
 #    FFT.append({"testcase":{"module":"test_locale_redirect",

@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Portions created by the Initial Developer are Copyright (C) 2010
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
@@ -46,9 +46,12 @@ import vars
 pageLoadTimeout = vars.ConnectionParameters.page_load_timeout
 
 class ContributePage(sumo_page.SumoPage):
-    '''
-    classdocs
-    '''
+    """
+    The 'How to Contribute' Pgae contains 
+    web elements and methods that can be 
+    performed on them. This page is a kb article that
+    educated users/contributors how to get started.
+    """
     _page_title            = 'How to contribute'
     page_url               = '/en-US/kb/How+to+contribute'
     

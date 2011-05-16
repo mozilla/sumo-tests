@@ -12,7 +12,7 @@
 # for the specific language governing rights and limitations under the
 # License.
 #
-# The Original Code is Firefox Input.
+# The Original Code is Mozilla Firefox Support.
 #
 # The Initial Developer of the Original Code is
 # Mozilla Corp.

@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Portions created by the Initial Developer are Copyright (C) 2010
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
@@ -42,9 +42,9 @@ Created on Jun 30, 2010
 import sumo_page
 
 class RefineSearchPage(sumo_page.SumoPage):
-    '''
-    classdocs
-    '''
+    """
+       'Advanced Search' page. 
+    """
     _page_title                  = 'Search'
     page_url                     = '/en-US/search?a=2'
     article_search_box           = "kb_q"

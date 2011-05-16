@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Portions created by the Initial Developer are Copyright (C) 2010
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
@@ -45,9 +45,12 @@ import vars
 pageLoadTimeout = vars.ConnectionParameters.page_load_timeout
 
 class ForumsPage(sumo_page.SumoPage):
-    '''
-    classdocs
-    '''
+    """
+    The Firefox Forums Pgae contains 
+    web elements and methods that can be 
+    performed on them. The page lists different
+    categories of forums: SUMO community/Off-topic etc.
+    """
     _page_title            = 'Forums'
     forums_cat_list_url    = vars.ConnectionParameters.baseurl_ssl+'/en-US/forums'
     kb_articles_forum_url  = vars.ConnectionParameters.baseurl_ssl+'/en-US/forums/knowledge-base-articles'

@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Portions created by the Initial Developer are Copyright (C) 2010
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
@@ -43,9 +43,9 @@ import sumo_page
 import vars
 
 class LoginPage(sumo_page.SumoPage):
-    '''
-    classdocs
-    '''
+    """
+        Form for login.
+    """
     _page_title           = 'Log In'
     page_url              = '/en-US/users/login'
     username_box          = 'id_username'

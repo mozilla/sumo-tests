@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Portions created by the Initial Developer are Copyright (C) 2010
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
@@ -47,15 +47,15 @@ import vars
 page_load_timeout = vars.ConnectionParameters.page_load_timeout
 
 class SupportHomePage(sumo_page.SumoPage):
-    '''
-    classdocs
-    '''
+    """
+    The Firefox Support Home Pgae contains 
+    web elements and methods that can be 
+    performed on them.
+    """
     _page_title             = 'Firefox Support Home Page'
     main_search_box         = 'q'
     log_in_link             = 'log in'
     search_button           = 'css=button.img-submit'
-    """ advanced search link does not exist on homepage anymore (SUMO 2.3)"""
-    #advanced_search_link    = "css=a.home-advanced-search"
     see_all_button          = "button-seeall"
     
     

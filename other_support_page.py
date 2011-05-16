@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Portions created by the Initial Developer are Copyright (C) 2010
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
@@ -44,11 +44,14 @@ import sumo_page
 import vars
 
 class OtherSupportPage(sumo_page.SumoPage):
-    """    classdocs
+    """    
+    'Other Firefox Support' is a knowledge base
+    article that informs users about other resources
+    for getting help on Firefox issues.
     """
     
     _page_title              = 'Other Firefox support'
-    page_url                 = '/kb/Other+Firefox+support'
+    page_url                 = '/kb/Other Firefox support'
     search_box               = "css=input[name='q']"
     search_button            = "css=input[type='submit']"
     moz_community_link       = "link=Mozilla Community"

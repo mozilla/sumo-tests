@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
@@ -46,7 +46,8 @@ page_load_timeout = vars.ConnectionParameters.page_load_timeout
 
 class KBPage(sumo_page.SumoPage):
     """
-    Create New Article Page
+    'Create New Article' Page is where the form
+    for creating new knowledge base article is found.
     """
     _page_title                   = 'Create a New Article'
     _page_title_rev_hist          = 'Revision History'
@@ -86,15 +87,15 @@ class KBPage(sumo_page.SumoPage):
         self.selenium.type(self._article_summary_box, article_info_dict['summary'])
         self.selenium.type(self._article_content_box, article_info_dict['content'])
         self.selenium.click(self._article_submit_btn)
-        time.sleep(3)
+        self.wait_for_element_present(self._comment_box)
         self.selenium.type(self._comment_box, "automated test")
         self.click(self._comment_submit_btn, True, page_load_timeout)
 
     
     def verify_article_contents(self,article_info_dict):
-        """ verify the contents of the article
+        """ 
+            verify the contents of the article
         """
-
         self.is_text_present(article_info_dict['title'])
         assert(article_info_dict['summary']==self.selenium.get_text(self._article_summary_box))
         assert(article_info_dict['content']==self.selenium.get_text(self._article_content_box))

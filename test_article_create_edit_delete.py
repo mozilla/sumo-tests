@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Tanay
@@ -42,17 +42,17 @@ import unittest
 
 from selenium import selenium
 import sumo_test_data
-import kb_page
+import knowledge_base_page
 import login_page
 
 class TestArticleCreateEditDelete(unittest.TestCase):
 
     def setUp(self):
         self.selenium = selenium(
-        vars.ConnectionParameters.server,
-        vars.ConnectionParameters.port,
-        vars.ConnectionParameters.browser,
-        vars.ConnectionParameters.baseurl)
+                                 vars.ConnectionParameters.server,
+                                 vars.ConnectionParameters.port,
+                                 vars.ConnectionParameters.browser,
+                                 vars.ConnectionParameters.baseurl)
         self.selenium.start()
         self.selenium.set_timeout(vars.ConnectionParameters.page_load_timeout)
 
@@ -60,11 +60,16 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         self.selenium.stop()
         
     def test_article_creating_editing_deleting(self):
+        """
+           Creates a new knowledge base article,
+           edits it and deletes it. Verifies creation,
+           edition & deletion
+        """
         sel = self.selenium
-        kb_pg = kb_page.KBPage(sel)
+        kb_pg = knowledge_base_page.KBPage(sel)
         login_pg = login_page.LoginPage(sel)
 
-        """ login with an Admin account as he can delete the article """
+        #login with an Admin account as he can delete the article
         
         user_info = sumo_test_data.SUMOtestData().getUserInfo(1)
         uname = user_info['username']
@@ -75,31 +80,36 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         random_num = random.randint(1000, 9999)
         article_name = str("test_article_%s" %(random_num))
         
-        article_info_dict = {'title':article_name,'category':'How to','keyword':'test','summary':"this is an automated summary_"+str(random_num),'content':"automated content_"+str(random_num)}
+        article_info_dict = {'title':article_name,'category':'How to','keyword':'test',
+                             'summary':"this is an automated summary_"+str(random_num),
+                             'content':"automated content_"+str(random_num)}
         
-        """ create a new article """
+        # create a new article
         kb_pg.go_to_create_new_article_page()
         kb_pg.create_new_article(article_info_dict)
         
         
-        """ verify article history """
+        # verify article history
         article_history_url = kb_pg.get_url_current_page()
         kb_pg.verify_article_history(article_history_url, article_name)
         
-        """ verify article contents """
+        # verify article contents
         article_url = article_history_url.replace("/history","")
         kb_pg.open(article_url)
         kb_pg.click_edit_article()
         kb_pg.verify_article_contents(article_info_dict)
         
-        """ edit that same article """
-        article_info_dict_edited = {'title':article_name+"_edited",'category':'How to','keyword':'test','summary':"this is an automated summary_"+str(random_num)+"_edited",'content':"automated content_"+str(random_num)+"_edited"}
+        # edit that same article
+        article_info_dict_edited = {'title':article_name+"_edited",
+                                    'category':'How to','keyword':'test',
+                                    'summary':"this is an automated summary_"+str(random_num)+"_edited",
+                                    'content':"automated content_"+str(random_num)+"_edited"}
         kb_pg.create_new_article(article_info_dict_edited)
         kb_pg.open(article_url)
         kb_pg.click_edit_article()
         kb_pg.verify_article_contents(article_info_dict_edited)
         
-        """ delete the same article """
+        # delete the same article
         kb_pg.open(article_history_url)
         kb_pg.click_delete_article()
         kb_pg.click_delete_confirmation_button()
