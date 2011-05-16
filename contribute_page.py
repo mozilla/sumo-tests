@@ -47,7 +47,7 @@ pageLoadTimeout = vars.ConnectionParameters.page_load_timeout
 
 class ContributePage(sumo_page.SumoPage):
     """
-    The 'How to Contribute' Pgae contains 
+    The 'How to Contribute' Page contains 
     web elements and methods that can be 
     performed on them. This page is a kb article that
     educated users/contributors how to get started.

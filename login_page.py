@@ -52,7 +52,7 @@ class LoginPage(sumo_page.SumoPage):
     password_box          = 'id_password'
     log_in_button         = "css=input[type='submit']"
     
-    """ if user is logged-in then you see these elements"""
+    # if user is logged-in then you see these elements
     logged_in_as_div      = "css=div#mod-login_box > div"
     logged_in_text        = "Logged in as"
     

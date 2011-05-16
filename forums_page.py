@@ -46,7 +46,7 @@ pageLoadTimeout = vars.ConnectionParameters.page_load_timeout
 
 class ForumsPage(sumo_page.SumoPage):
     """
-    The Firefox Forums Pgae contains 
+    The Firefox Forums Page contains 
     web elements and methods that can be 
     performed on them. The page lists different
     categories of forums: SUMO community/Off-topic etc.
