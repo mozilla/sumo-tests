@@ -35,12 +35,13 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import vars
+import re
 import random
 
 import unittest
-
 from selenium import selenium
+
+import vars
 import sumo_test_data
 import knowledge_base_page
 import login_page
@@ -86,34 +87,58 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         
         # create a new article
         kb_pg.go_to_create_new_article_page()
-        kb_pg.create_new_article(article_info_dict)
+        kb_pg.create_or_edit_article(article_info_dict)
         
         
         # verify article history
         article_history_url = kb_pg.get_url_current_page()
-        kb_pg.verify_article_history(article_history_url, article_name)
+        kb_pg.open(article_history_url)
+        self.verify_article_history(kb_pg, article_history_url, article_name)
         
         # verify article contents
         article_url = article_history_url.replace("/history","")
         kb_pg.open(article_url)
         kb_pg.click_edit_article()
-        kb_pg.verify_article_contents(article_info_dict)
+
+        kb_pg.is_text_present(article_info_dict['title'])
+        actual_summary_text = kb_pg.get_article_summary_text()
+        actual_contents_text = kb_pg.get_article_contents_box()
+        assert article_info_dict['summary'] == actual_summary_text,\
+               "Expected: %s Actual: %s" %(article_info_dict['summary'], actual_summary_text)
+        assert article_info_dict['content'] == actual_contents_text,\
+               "Expected: %s Actual: %s" %(article_info_dict['content'], actual_contents_text)
         
         # edit that same article
         article_info_dict_edited = {'title':article_name+"_edited",
                                     'category':'How to','keyword':'test',
                                     'summary':"this is an automated summary_"+str(random_num)+"_edited",
                                     'content':"automated content_"+str(random_num)+"_edited"}
-        kb_pg.create_new_article(article_info_dict_edited)
+        kb_pg.create_or_edit_article(article_info_dict_edited)
         kb_pg.open(article_url)
         kb_pg.click_edit_article()
-        kb_pg.verify_article_contents(article_info_dict_edited)
+
+        kb_pg.is_text_present(article_info_dict_edited['title'])
+        actual_summary_text = kb_pg.get_article_summary_text()
+        actual_contents_text = kb_pg.get_article_contents_box()
+        assert article_info_dict_edited['summary'] == actual_summary_text,\
+               "Expected: %s Actual: %s" %(article_info_dict_edited['summary'], actual_summary_text)
+        assert article_info_dict_edited['content'] == actual_contents_text,\
+               "Expected: %s Actual: %s" %(article_info_dict_edited['content'], actual_contents_text)
         
         # delete the same article
         kb_pg.open(article_history_url)
-        kb_pg.click_delete_article()
+        kb_pg.click_delete_entire_article_document()
         kb_pg.click_delete_confirmation_button()
-        assert(self.selenium.is_text_present('document has been deleted'))
+        assert kb_pg.is_text_present('document has been deleted'),\
+               "Delete confirmation text not present"
+               
+    def verify_article_history(self, kb_pg, article_history_url, article_name):
+        actual_page_title = kb_pg.selenium.get_title()
+        if re.search(article_name, actual_page_title, re.IGNORECASE) is None:
+            kb_pg.open(article_history_url)
+        
+        if not (kb_pg.page_title_revision_history in actual_page_title):
+            raise Exception("Expected string: %s not found in title: %s" %(kb_pg.page_title_revision_history,actual_page_title))
 
 if __name__ == "__main__":
     unittest.main()

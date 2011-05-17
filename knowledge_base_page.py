@@ -48,70 +48,73 @@ class KBPage(sumo_page.SumoPage):
     'Create New Article' Page is where the form
     for creating new knowledge base article is found.
     """
-    _page_title                   = 'Create a New Article'
-    _page_title_rev_hist          = 'Revision History'
-    _page_url_new_article         = '/en-US/kb/new'
+    _page_title                           = 'Create a New Article'
+    _page_title_rev_hist                  = 'Revision History'
+    _page_url_new_article                 = '/en-US/kb/new'
     
-    _article_title_box            = 'id_title'
-    _article_category_menu        = 'id_category'
-    _article_keywords_box         = 'id_keywords'
-    _article_summary_box          = 'id_summary'
-    _article_content_box          = 'id_content'
-    _article_preview_btn          = 'btn-preview'
-    _article_submit_btn           = 'btn-submit'
-    _comment_box                  = 'id_comment'
-    _comment_submit_btn           = "css=input[value='Submit']"
+    _article_title_box_locator            = 'id_title'
+    _article_category_menu_locator        = 'id_category'
+    _article_keywords_box_locator         = 'id_keywords'
+    _article_summary_box_locator          = 'id_summary'
+    _article_content_box_locator          = 'id_content'
+    _article_preview_btn_locator          = 'btn-preview'
+    _article_submit_btn_locator           = 'btn-submit'
+    _comment_box_locator                  = 'id_comment'
+    _comment_submit_btn_locator           = "css=input[value='Submit']"
     
-    _edit_article_link            = 'link=Edit Article'
-    _edit_top_revision_link       = "link=Edit"
-    _review_top_revision_link     = "css=div#revision-list > form > ul > li:nth-child(1) > div.status > a"
-    _edit_desc_link               = "css=div#document-form > details > summary"
+    _edit_article_link_locator            = "css=nav#doc-tabs > ul > li.edit:nth-child(3) > a[href*='edit']"
+    _review_top_revision_link_locator     = "css=div#revision-list > form > ul > li:nth-child(1) > div.status > a"
+    _edit_desc_link_locator               = "css=div#document-form > details > summary"
     
-    _delete_document_link         = "link=Delete this document"
-    _delete_confirmation_btn      = "css=input[value='Delete']"
+    _delete_document_link_locator         = "css=div#delete-doc > a[href*='delete']"
+    _delete_confirmation_btn_locator      = "css=input[value='Delete']"
     
     def __init__(self,selenium):
         super(KBPage,self).__init__(selenium)               
         
+    @property
+    def article_summary_box(self):
+        return self._article_summary_box_locator
+    
+    @property
+    def article_content_box(self):
+        return self._article_content_box_locator
+    
+    @property
+    def page_title_revision_history(self):
+        return self._page_title_rev_hist
     
     def go_to_create_new_article_page(self):
         self.open(vars.ConnectionParameters.baseurl_ssl+self._page_url_new_article)
         self.is_the_current_page
         
-    def create_new_article(self, article_info_dict):
-        self.selenium.type(self._article_title_box, article_info_dict['title'])
-        label_locator = "label=%s" %(article_info_dict['category'])
-        self.selenium.select(self._article_category_menu, label_locator)
-        self.selenium.type(self._article_keywords_box, article_info_dict['keyword'])
-        self.selenium.type(self._article_summary_box, article_info_dict['summary'])
-        self.selenium.type(self._article_content_box, article_info_dict['content'])
-        self.selenium.click(self._article_submit_btn)
-        self.wait_for_element_present(self._comment_box)
-        self.selenium.type(self._comment_box, "automated test")
-        self.click(self._comment_submit_btn, True, page_load_timeout)
-
-    
-    def verify_article_contents(self,article_info_dict):
-        """ 
-            verify the contents of the article
+    def create_or_edit_article(self, article_info_dict):
         """
-        self.is_text_present(article_info_dict['title'])
-        assert(article_info_dict['summary']==self.selenium.get_text(self._article_summary_box))
-        assert(article_info_dict['content']==self.selenium.get_text(self._article_content_box))
-        
-    def verify_article_history(self,article_history_url,article_name):
-        actual_page_title = self.selenium.get_title()
-        if re.search(article_name, actual_page_title, re.IGNORECASE) is None:
-            self.selenium.open(article_history_url)
-        
-        if not (self._page_title_rev_hist in actual_page_title):
-            raise Exception("Expected string: %s not found in title: %s" %(self._page_title_rev_hist,actual_page_title))
+            creates a new article or edits 
+            an existing article.
+        """
+        self.selenium.type(self._article_title_box_locator, article_info_dict['title'])
+        label_locator = "label=%s" %(article_info_dict['category'])
+        self.selenium.select(self._article_category_menu_locator, label_locator)
+        self.selenium.type(self._article_keywords_box_locator, article_info_dict['keyword'])
+        self.selenium.type(self._article_summary_box_locator, article_info_dict['summary'])
+        self.selenium.type(self._article_content_box_locator, article_info_dict['content'])
+        self.selenium.click(self._article_submit_btn_locator)
+        self.wait_for_element_present(self._comment_box_locator)
+        self.selenium.type(self._comment_box_locator, "automated test")
+        self.click(self._comment_submit_btn_locator, True, page_load_timeout)
+
+    def get_article_summary_text(self):
+        return self.selenium.get_text(self._article_summary_box_locator)
+    
+    def get_article_contents_box(self):
+        return self.selenium.get_text(self._article_content_box_locator)
      
     def click_edit_article(self):
-        self.click(self._edit_article_link, True, page_load_timeout)
+        self.click(self._edit_article_link_locator, True, page_load_timeout)
     
-    def click_delete_article(self):
-        self.click(self._delete_document_link, True, page_load_timeout)
+    def click_delete_entire_article_document(self):
+        self.click(self._delete_document_link_locator, True, page_load_timeout)
     
     def click_delete_confirmation_button(self):
-        self.click(self._delete_confirmation_btn, True, page_load_timeout)
+        self.click(self._delete_confirmation_btn_locator, True, page_load_timeout)
