@@ -4,33 +4,20 @@ Created on Aug 6, 2010
 @author: mozilla
 '''
 
-from selenium import selenium
-import vars
-import unittest
+import pytest
 
 import search_page
 import refine_search_page
 
+@pytest.mark.smoketests
+class TestAdvancedSearchChecked():
 
-class AdvancedSearchChecked(unittest.TestCase):
-
-
-    def setUp(self):
-        self.selenium = selenium(vars.ConnectionParameters.server, vars.ConnectionParameters.port, vars.ConnectionParameters.browser, vars.ConnectionParameters.baseurl)
-        print self.selenium
-        self.selenium.start()
-        self.selenium.set_timeout(vars.ConnectionParameters.page_load_timeout)
-
-    def tearDown(self):
-        self.selenium.stop()
-
-    def test_advanced_search_checked(self):
-        sel = self.selenium
-        refine_search_page_obj     = refine_search_page.RefineSearchPage(sel) 
-        search_page_obj            = search_page.SearchPage(sel)
+    def test_advanced_search_checked(self, testsetup):
+        refine_search_page_obj     = refine_search_page.RefineSearchPage(testsetup) 
+        search_page_obj            = search_page.SearchPage(testsetup)
         
         refine_search_page_obj.go_to_refine_search_page()
-        self.failUnless(refine_search_page_obj.is_kb_cat_checked(), "Default search forum is not set to Firefox")
+        assert(refine_search_page_obj.is_kb_cat_checked(), "Default search forum is not set to Firefox")
         
         search_word = 'firefox crashes' 
         """ search kb tab """
@@ -70,5 +57,3 @@ class AdvancedSearchChecked(unittest.TestCase):
             else:
                 not_found = False           
         search_page_obj.verify_page_title(search_page_obj.title)
-if __name__ == "__main__":
-    unittest.main()

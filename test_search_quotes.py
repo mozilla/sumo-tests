@@ -3,26 +3,16 @@ Created on Jul 28, 2010
 
 @author: mozilla
 '''
-from selenium import selenium
-import vars
-import unittest
+import pytest
 
 import search_page
 
-class SearchQuotes(unittest.TestCase):
+@pytest.mark.smoketests
+@pytest.mark.bft
+class TestSearchQuotes:
 
-
-    def setUp(self):
-        self.selenium = selenium(vars.ConnectionParameters.server, vars.ConnectionParameters.port, vars.ConnectionParameters.browser, vars.ConnectionParameters.baseurl)
-        self.selenium.start()
-        self.selenium.set_timeout(vars.ConnectionParameters.page_load_timeout)
-
-    def tearDown(self):
-        self.selenium.stop()
-
-    def test_search_quotes(self):
-        sel = self.selenium
-        search_page_obj       = search_page.SearchPage(sel)
+    def test_search_quotes(self, testsetup):
+        search_page_obj       = search_page.SearchPage(testsetup)
                 
         search_terms = ["\"lost bookmark\"", "\"clear history\""]
         for current_search_term in search_terms:
@@ -36,10 +26,4 @@ class SearchQuotes(unittest.TestCase):
                     counter = counter+1
                 else:
                     not_found = False
-            self.failUnless(search_page_obj.is_element_present(search_page_obj.result_div), "No search results for %s" %(current_search_term))
-        
-        
- 
-
-if __name__ == "__main__":
-    unittest.main()
+            assert(search_page_obj.is_element_present(search_page_obj.result_div), "No search results for %s" %(current_search_term))

@@ -4,7 +4,6 @@ Created on Jun 30, 2010
 @author: mozilla
 '''
 import sumo_page
-import vars
 
 class RefineSearchPage(sumo_page.SumoPage):
     '''
@@ -25,8 +24,8 @@ class RefineSearchPage(sumo_page.SumoPage):
     forums_tab            = "css=div#search-tabs > ul > li:nth-child(3) > a"
     
     
-    def __init__(self,selenium):
-        super(RefineSearchPage,self).__init__(selenium)               
+    def __init__(self,testsetup):
+        super(RefineSearchPage,self).__init__(testsetup)               
     
     def go_to_refine_search_page(self):
         self.open(self.page_url)

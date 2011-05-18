@@ -50,11 +50,14 @@ class Page(object):
     '''
 
         
-    def __init__(self, selenium):
+    def __init__(self, testsetup):
         '''
         Constructor
         '''
-        self.selenium = selenium
+        self.testsetup = testsetup
+        self.base_url = testsetup.base_url
+        self.selenium = testsetup.selenium
+        self.timeout = testsetup.timeout
         
         
     def verify_page_title(self, title_regexp):
