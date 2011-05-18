@@ -10,7 +10,7 @@ import search_page
 import refine_search_page
 
 @pytest.mark.smoketests
-class TestAdvancedSearchChecked():
+class TestAdvancedSearchChecked:
 
     def test_advanced_search_checked(self, testsetup):
         refine_search_page_obj     = refine_search_page.RefineSearchPage(testsetup) 
@@ -30,7 +30,7 @@ class TestAdvancedSearchChecked():
                 counter = counter+1
             else:
                 not_found = False           
-        search_page_obj.verify_page_title(search_page_obj.title)
+        search_page_obj.is_the_current_page
 
         """ search support questions tab """
         refine_search_page_obj.go_to_refine_search_page()
@@ -43,7 +43,7 @@ class TestAdvancedSearchChecked():
                 counter = counter+1
             else:
                 not_found = False           
-        search_page_obj.verify_page_title(search_page_obj.title)
+        search_page_obj.is_the_current_page
 
         """ search discussion forums tab """
         refine_search_page_obj.go_to_refine_search_page()
@@ -56,4 +56,4 @@ class TestAdvancedSearchChecked():
                 counter = counter+1
             else:
                 not_found = False           
-        search_page_obj.verify_page_title(search_page_obj.title)
+        search_page_obj.is_the_current_page

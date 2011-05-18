@@ -1,7 +1,7 @@
 class ConnectionParameters:
     server = "localhost"
     port = 4444
-    browser = "*firefox"
+    browser = "*chrome"
     baseurl = "http://support.allizom.org"
     baseurl_ssl = "https://support.allizom.org"
     authurl = "http://support-release.allizom.org"
@@ -11,7 +11,7 @@ class ConnectionParameters:
 class ConfigOptions:
     #Environment list
     Smoketests = [
-    "Firefox-default;en-us;MacOSX6"
+    "Firefox-4;en-us;MacOSX6"
     ]
     
     BFT = [
