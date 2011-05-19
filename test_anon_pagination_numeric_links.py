@@ -5,10 +5,10 @@ import pytest
 import support_home_page
 import search_page
 
-@pytest.mark.smoketests
-@pytest.mark.bft
-class TestAnonPaginationNumeriLinks():
+class TestAnonPaginationNumeriLinks:
 
+    @pytest.mark.smoketests
+    @pytest.mark.bft
     def test_anon_pagination_numeric_links(self,testsetup):   
         support_hp_obj  = support_home_page.SupportHomePage(testsetup)
         search_page_obj = search_page.SearchPage(testsetup)
@@ -61,6 +61,3 @@ class TestAnonPaginationNumeriLinks():
                 linkNumber = linkNumber + 1
             pageCounter = int(pageCounter) + 1
             search_page_obj.click(search_page_obj.next_page_link, True, testsetup.timeout)
-          
-    def tearDown(self):
-        self.selenium.stop()

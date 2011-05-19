@@ -1,23 +1,16 @@
-from selenium import selenium
-import vars
-import unittest
 import time
+
+import pytest
+
 import sumo_page
 
-class anon_adv_pagination_numeric_links(unittest.TestCase):
+@pytest.mark.smoketests
+@pytest.mark.bft
+class TestAnonAdvPaginationNumericLinks:
 
-    def setUp(self):
-        self.selenium = selenium(
-        vars.ConnectionParameters.server,
-        vars.ConnectionParameters.port,
-        vars.ConnectionParameters.browser,
-        vars.ConnectionParameters.baseurl)
-        self.selenium.start()
-        self.selenium.set_timeout(vars.ConnectionParameters.page_load_timeout)
-
-    def test_anon_adv_pagination_numeric_links(self):
-        sel = self.selenium
-        sumo_page_obj = sumo_page.SumoPage(sel)
+    def test_anon_adv_pagination_numeric_links(self,testsetup):
+        sel = testsetup.selenium
+        sumo_page_obj = sumo_page.SumoPage(testsetup)
         # This testcase checks the follwoing about pagination links
         # a)the current page is not a link
         # b)All the other page links are active
@@ -29,13 +22,13 @@ class anon_adv_pagination_numeric_links(unittest.TestCase):
         #sumo_func.open(sel,"en-US/search?a=2" )
         search_word = "bookmarks"
         sel.type("kb_q", search_word)
-        sumo_page_obj.click("css=input[value='Search']",True, vars.ConnectionParameters.page_load_timeout)
+        sumo_page_obj.click("css=input[value='Search']",True, testsetup.timeout)
         not_found = True
         counter = 1
         while(not_found and counter < 5):
             if(not(sel.is_text_present(search_word))):
                 sel.refresh()
-                sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
+                sel.wait_for_page_to_load(testsetup.timeout)
                 time.sleep(2)
                 counter = counter+1
             else:
@@ -70,10 +63,4 @@ class anon_adv_pagination_numeric_links(unittest.TestCase):
                 linkNumber = linkNumber + 1
             # Exit the loop immediately IFF there's no "Next" link to click on!
             pageCounter = int(pageCounter) + 1
-            sumo_page_obj.click("link=" + next, True, vars.ConnectionParameters.page_load_timeout)
-
-    def tearDown(self):
-        self.selenium.stop()
-
-if __name__ == "__main__":
-    unittest.main()
+            sumo_page_obj.click("link=" + next, True, testsetup.timeout)

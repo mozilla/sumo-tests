@@ -9,9 +9,12 @@ import pytest
 import search_page
 import refine_search_page
 
-@pytest.mark.smoketests
+
 class TestAdvancedSearchChecked:
 
+    @pytest.mark.smoketests
+    @pytest.mark.bft
+    @pytest.mark.prod
     def test_advanced_search_checked(self, testsetup):
         refine_search_page_obj     = refine_search_page.RefineSearchPage(testsetup) 
         search_page_obj            = search_page.SearchPage(testsetup)

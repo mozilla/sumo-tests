@@ -33,20 +33,7 @@ class testlist:
                                    "class":"cant_find_what_youre_looking_for_test",
                                    "method":"test_cant_find_what_youre_looking_for_test"},
                        "tags":["prod"]})
-    
-    """
-      commented due to bug 650303
-    """
-#    Smoketests.append({"testcase":{"module":"test_inproduct",
-#                                   "class":"inproduct",
-#                                   "method":"test_inproduct"},
-#                       "tags":["prod"]})
-# 
-#    Smoketests.append({"testcase":{"module":"test_kb_static",
-#                                   "class":"kb_static",
-#                                   "method":"test_kb_static"},
-#                       "tags":["prod"]})
-##    
+      
     Smoketests.append({"testcase":{"module":"test_loggedin_ask_a_new_question",
                                    "class":"TestAAQ",
                                    "method":"test_that_posting_question_works"},
@@ -102,11 +89,6 @@ class testlist:
     #                               "class":"webtrends_search_tracking",
     #                               "method":"test_webtrends_search_tracking"},
     #                   "tags":["prod"]})
-
-    Smoketests.append({"testcase":{"module":"test_contribute_redirect",
-                                   "class":"contribute_redirect",
-                                   "method":"test_contribute_redirect"},
-                       "tags":["prod"]})
        
     Smoketests.append({"testcase":{"module":"test_no_query_adv_forum_search",
                                    "class":"no_query_adv_forum_search",
@@ -136,47 +118,12 @@ class testlist:
     BFT = []
     BFT.extend(Smoketests)
     
-    """ commented due to timeout issues"""
-#    BFT.append({"testcase":{"module":"test_article_creating_commentingon_deleting",
-#                                   "class":"article_creating_commentingon_deleting",
-#                                   "method":"test_article_creating_commentingon_deleting"},
-#                       "tags":[]})
 
     """ commented due to timeout issues"""
 #    BFT.append({"testcase":{"module":"test_article_rename_cancel",
 #                                   "class":"article_rename_cancel",
 #                                   "method":"test_article_rename_cancel"},
 #                       "tags":[]})
-
-#    BFT.append({"testcase":{"module":"test_rewrites",
-#                                   "class":"TestRewrites",
-#                                   "method":"test_redirect_one_locale"},
-#                       "tags":["prod"]})
-#
-#    BFT.append({"testcase":{"module":"test_rewrites",
-#                                   "class":"TestRewrites",
-#                                   "method":"test_redirect_pageinfo"},
-#                       "tags":["prod"]})
-#
-#    BFT.append({"testcase":{"module":"test_rewrites",
-#                                   "class":"TestRewrites",
-#                                   "method":"test_redirect_firefox_help"},
-#                       "tags":["prod"]})
-#
-#    BFT.append({"testcase":{"module":"test_rewrites",
-#                                   "class":"TestRewrites",
-#                                   "method":"test_redirect_preferences"},
-#                       "tags":["prod"]})
-#       
-#    BFT.append({"testcase":{"module":"test_rewrites",
-#                                   "class":"TestRewrites",
-#                                   "method":"test_redirect_misc"},
-#                       "tags":["prod"]})
-#    
-#    BFT.append({"testcase":{"module":"test_rewrites",
-#                                   "class":"TestRewrites",
-#                                   "method":"test_redirect_iphone"},
-#                       "tags":["prod"]})
 
     BFT.append({"testcase":{"module":"test_forum_contribs_new_post",
                                    "class":"forum_contribs_new_post",

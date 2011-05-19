@@ -43,8 +43,6 @@ import re
 import time
 
 import sumo_page
-import vars
-page_load_timeout = vars.ConnectionParameters.page_load_timeout
 
 class SupportHomePage(sumo_page.SumoPage):
     """
@@ -59,30 +57,26 @@ class SupportHomePage(sumo_page.SumoPage):
     see_all_button          = "button-seeall"
     
     
-    def __init__(self,selenium):
-        super(SupportHomePage,self).__init__(selenium)
+    def __init__(self,testsetup):
+        super(SupportHomePage,self).__init__(testsetup)
     
     def go_to_support_home_page(self):
         self.open('/')
         self.is_the_current_page
                    
     def click_log_in_link(self):
-        self.click(self.log_in_link,True,vars.ConnectionParameters.page_load_timeout)
-        
-    def click_advanced_search_link(self, refine_search_page_obj):
-        self.click(self.advanced_search_link,True,vars.ConnectionParameters.page_load_timeout)
-        refine_search_page_obj.is_the_current_page
+        self.click(self.log_in_link,True,self.timeout)
         
     def do_search_on_main_search_box(self, search_query, search_page_obj):
         if(re.search(self._page_title, self.selenium.get_title()) is None):
             self.go_to_support_home_page()
         self.type(SupportHomePage.main_search_box, search_query)
-        self.click(self.search_button,True,vars.ConnectionParameters.page_load_timeout)
+        self.click(self.search_button,True,self.timeout)
         count = 0
         while not self.selenium.is_text_present('results for ' + search_query):
             time.sleep(1)
             count += 1
-            if count == page_load_timeout/1000:
+            if count == self.timeout/1000:
                 self.record_error()
                 raise Exception(search_query + " search page hasnt loaded")
         search_page_obj.is_the_current_page
