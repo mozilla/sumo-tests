@@ -34,14 +34,12 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import re
 
 import sumo_page
 import vars
 
-
-
 page_load_timeout = vars.ConnectionParameters.page_load_timeout
+
 
 class KBPage(sumo_page.SumoPage):
     """
@@ -51,7 +49,10 @@ class KBPage(sumo_page.SumoPage):
     _page_title                           = 'Create a New Article'
     _page_title_rev_hist                  = 'Revision History'
     _page_url_new_article                 = '/en-US/kb/new'
-    
+
+    _article_url                          = ''
+    _article_history_url                  = ''
+    _article_title                        = ''
     _article_title_box_locator            = 'id_title'
     _article_category_menu_locator        = 'id_category'
     _article_keywords_box_locator         = 'id_keywords'
@@ -61,60 +62,127 @@ class KBPage(sumo_page.SumoPage):
     _article_submit_btn_locator           = 'btn-submit'
     _comment_box_locator                  = 'id_comment'
     _comment_submit_btn_locator           = "css=input[value='Submit']"
-    
+
     _edit_article_link_locator            = "css=nav#doc-tabs > ul > li.edit:nth-child(3) > a[href*='edit']"
     _review_top_revision_link_locator     = "css=div#revision-list > form > ul > li:nth-child(1) > div.status > a"
     _edit_desc_link_locator               = "css=div#document-form > details > summary"
-    
+
     _delete_document_link_locator         = "css=div#delete-doc > a[href*='delete']"
     _delete_confirmation_btn_locator      = "css=input[value='Delete']"
-    
-    def __init__(self,selenium):
-        super(KBPage,self).__init__(selenium)               
-        
+
+    def __init__(self, selenium):
+        super(KBPage, self).__init__(selenium)  
+
     @property
     def article_summary_box(self):
         return self._article_summary_box_locator
-    
+
     @property
     def article_content_box(self):
         return self._article_content_box_locator
-    
+
     @property
     def page_title_revision_history(self):
         return self._page_title_rev_hist
-    
+
+    @property
+    def article_url(self):
+        return self._article_url
+
+    @article_url.setter
+    def article_url(self, url):
+        self._article_url = url
+
+    @property
+    def article_title(self):
+        return self._article_title
+
+    @article_title.setter
+    def article_title(self, title):
+        self._article_title = title
+
+    @property
+    def article_history_url(self):
+        return self._article_history_url
+
+    @article_history_url.setter
+    def article_history_url(self, hist_url):
+        self._article_history_url = hist_url
+
+    def go_to_article_history_page(self):
+        self.open(self._article_history_url)
+
+    def go_to_article_page(self):
+        self.open(self._article_url)
+
     def go_to_create_new_article_page(self):
-        self.open(vars.ConnectionParameters.baseurl_ssl+self._page_url_new_article)
+        self.open(vars.ConnectionParameters.baseurl_ssl + self._page_url_new_article)
         self.is_the_current_page
-        
-    def create_or_edit_article(self, article_info_dict):
+
+    def set_article(self, article_info_dict):
         """
-            creates a new article or edits 
-            an existing article.
+            creates a new article
         """
-        self.selenium.type(self._article_title_box_locator, article_info_dict['title'])
-        label_locator = "label=%s" %(article_info_dict['category'])
-        self.selenium.select(self._article_category_menu_locator, label_locator)
-        self.selenium.type(self._article_keywords_box_locator, article_info_dict['keyword'])
-        self.selenium.type(self._article_summary_box_locator, article_info_dict['summary'])
-        self.selenium.type(self._article_content_box_locator, article_info_dict['content'])
+        self.set_article_title(article_info_dict['title'])
+        label_locator = "label=%s" % (article_info_dict['category'])
+        self.set_article_category(label_locator)
+        self.set_article_keyword(article_info_dict['keyword'])
+        self.set_article_summary(article_info_dict['summary'])
+        self.set_article_content(article_info_dict['content'])
+        self.submit_article()
+        self.set_article_comment_box()
+
+    def edit_article(self, article_info_dict):
+        """
+            Edits an existing article.
+        """
+        self.set_article_keyword(article_info_dict['keyword'])
+        self.set_article_summary(article_info_dict['summary'])
+        self.set_article_content(article_info_dict['content'])
+        self.submit_article()
+        self.set_article_comment_box()
+
+    def set_article_title(self, title):
+        self.selenium.type(self._article_title_box_locator, title)
+        self._article_title = title
+
+    def set_article_category(self, category):
+        self.selenium.select(self._article_category_menu_locator, category)
+
+    def set_article_keyword(self, keyword):
+        self.selenium.type(self._article_keywords_box_locator, keyword)
+
+    def set_article_summary(self, summary):
+        self.selenium.type(self._article_summary_box_locator, summary)
+
+    def set_article_content(self, content):
+        self.selenium.type(self._article_content_box_locator, content)
+
+    def set_article_comment_box(self, comment='automated test'):
+        self.selenium.type(self._comment_box_locator, comment)
+        self.selenium.click(self._comment_submit_btn_locator)
+        self.selenium.wait_for_page_to_load(page_load_timeout)
+
+    def submit_article(self):
         self.selenium.click(self._article_submit_btn_locator)
         self.wait_for_element_present(self._comment_box_locator)
-        self.selenium.type(self._comment_box_locator, "automated test")
-        self.click(self._comment_submit_btn_locator, True, page_load_timeout)
+
+    def delete_entire_article_document(self):
+        self.go_to_article_history_page()
+        self.click_delete_entire_article_document()
+        self.click_delete_confirmation_button()
 
     def get_article_summary_text(self):
         return self.selenium.get_text(self._article_summary_box_locator)
-    
+
     def get_article_contents_box(self):
         return self.selenium.get_text(self._article_content_box_locator)
-     
+
     def click_edit_article(self):
         self.click(self._edit_article_link_locator, True, page_load_timeout)
-    
+
     def click_delete_entire_article_document(self):
         self.click(self._delete_document_link_locator, True, page_load_timeout)
-    
+
     def click_delete_confirmation_button(self):
         self.click(self._delete_confirmation_btn_locator, True, page_load_timeout)

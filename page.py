@@ -94,6 +94,9 @@ class Page(object):
 
     def get_url_current_page(self):
         return(self.selenium.get_location())
+    
+    def get_page_title(self):
+        return self.selenium.get_title()
 
     def is_element_present(self, locator):
         return self.selenium.is_element_present(locator)
