@@ -42,7 +42,6 @@ import unittest
 from selenium import selenium
 
 import vars
-import sumo_test_data
 import knowledge_base_page
 import login_page
 
@@ -71,12 +70,7 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         login_pg = login_page.LoginPage(self.selenium)
 
         #login with an Admin account as he can delete the article
-
-        user_info = sumo_test_data.SUMOtestData().getUserInfo(1)
-        user_name = user_info['username']
-        pwd = user_info['password']
-
-        login_pg.log_in(user_name, pwd)
+        login_pg.log_in_as_admin()
 
         random_num = random.randint(1000, 9999)
         article_name = "test_article_%s" % random_num
@@ -134,12 +128,7 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         login_pg = login_page.LoginPage(self.selenium)
 
         #login with an Admin account as he can delete the article
-
-        user_info = sumo_test_data.SUMOtestData().getUserInfo(1)
-        user_name = user_info['username']
-        password = user_info['password']
-
-        login_pg.log_in(user_name, password)
+        login_pg.log_in_as_admin()
 
         random_num = random.randint(1000, 9999)
         article_name = "test_article_%s" % random_num
@@ -196,12 +185,7 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         login_pg = login_page.LoginPage(self.selenium)
 
         #login with an Admin account as he can delete the article
-
-        user_info = sumo_test_data.SUMOtestData().getUserInfo(1)
-        user_name = user_info['username']
-        password = user_info['password']
-
-        login_pg.log_in(user_name, password)
+        login_pg.log_in_as_admin()
 
         random_num = random.randint(1000, 9999)
         article_name = "test_article_%s" % random_num

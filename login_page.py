@@ -20,6 +20,7 @@
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
+#                 Rebecca
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -39,39 +40,52 @@ Created on Jun 30, 2010
 
 @author: mozilla
 '''
+import sumo_test_data
 import sumo_page
 import vars
+
 
 class LoginPage(sumo_page.SumoPage):
     """
         Form for login.
     """
-    _page_title           = 'Log In'
-    page_url              = '/en-US/users/login'
-    username_box          = 'id_username'
-    password_box          = 'id_password'
-    log_in_button         = "css=input[type='submit']"
-    
+    _page_title                    = 'Log In'
+    _page_url                      = '/en-US/users/login'
+    _username_box_locator          = 'id_username'
+    _password_box_locator          = 'id_password'
+    _log_in_button_locator         = "css=input[type='submit']"
+
     # if user is logged-in then you see these elements
-    logged_in_as_div      = "css=div#mod-login_box > div"
-    logged_in_text        = "Logged in as"
-    
-    def __init__(self,selenium):
-        super(LoginPage,self).__init__(selenium)   
-     
+    _logged_in_as_div_locator      = "css=div#mod-login_box > div"
+    _logged_in_text                = "Logged in as"
+
+    _non_admin_user_index          = 0
+    _admin_user_index              = 1
+
+    def __init__(self, selenium):
+        super(LoginPage, self).__init__(selenium)
+
     def go_to_login_page(self):
-        self.open(self.page_url)
+        self.open(self._page_url)
         self.is_the_current_page
-        
-    def log_in(self, uname,pwd):
-        if(not (self._page_title in self.selenium.get_title())):
+
+    def log_in(self, uname, pwd):
+        if not (self._page_title in self.selenium.get_title()):
             self.go_to_login_page()
-        
-        self.type(self.username_box,uname)
-        self.type(self.password_box, pwd)
-        self.click_button(self.log_in_button)
+
+        self.type(self._username_box_locator, uname)
+        self.type(self._password_box_locator, pwd)
+        self.click_button(self._log_in_button_locator)
         self.selenium.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
-        if(not (self.selenium.is_element_present(self.log_out_link))):
-            raise Exception, 'Login Failed\r\n'
-        
-    
+
+    def log_in_as_admin(self):
+        user_info = sumo_test_data.SUMOtestData().getUserInfo(self._admin_user_index)
+        user_name = user_info['username']
+        password = user_info['password']
+        self.log_in(user_name, password)
+
+    def log_in_as_non_admin(self):
+        user_info = sumo_test_data.SUMOtestData().getUserInfo(self._non_admin_user_index)
+        user_name = user_info['username']
+        password = user_info['password']
+        self.log_in(user_name, password)
