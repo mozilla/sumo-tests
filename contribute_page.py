@@ -62,8 +62,8 @@ class ContributePage(sumo_page.SumoPage):
     stay_in_contact_link   = "css=a[href *= 'Stay_connected']"
     
     
-    def __init__(self,selenium):
-        super(ContributePage,self).__init__(selenium)               
+    def __init__(self, selenium):
+        super(ContributePage, self).__init__(selenium)               
            
     def go_to_contribute_page(self):
         self.open(self.page_url)

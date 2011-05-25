@@ -61,29 +61,29 @@ class SearchPage(sumo_page.SumoPage):
     ten_search_results       = "css=div.search-results div[class*='result']:nth-child(10)"
     eleven_search_results    = "css=div.search-results div[class*='result']:nth-child(11)"
     
-    def __init__(self,selenium):
-        super(SearchPage,self).__init__(selenium)
+    def __init__(self, selenium):
+        super(SearchPage, self).__init__(selenium)
     
     def go_to_search_page(self):
         self.open(self.page_url)
         self.is_the_current_page
                           
     def do_search_on_search_box(self, search_query):
-        if(not (self._page_title in self.selenium.get_title())):
+        if not (self._page_title in self.selenium.get_title()):
             self.go_to_search_page()
         count=1
-        while(count < 5 and not(self.selenium.is_element_present(self.search_box))):
+        while count < 5 and not(self.selenium.is_element_present(self.search_box)):
             self.go_to_search_page()
             count = count+1
         self.type(self.search_box, search_query)
-        self.click(self.search_button,True,vars.ConnectionParameters.page_load_timeout)
+        self.click(self.search_button, True, vars.ConnectionParameters.page_load_timeout)
         
         
     def get_search_box_value(self):
         return self.selenium.get_value(self.search_box)
     
     def is_search_available(self):
-        if(self.is_text_present(self.search_unavailable_msg)):
+        if self.is_text_present(self.search_unavailable_msg):
             return False
         else:
             return True
@@ -94,6 +94,6 @@ class SearchPage(sumo_page.SumoPage):
     def are_ten_results_present(self):
         return self.is_element_present(self.ten_search_results) and not self.is_element_present(self.eleven_search_results)
     
-    def click_refine_search_link(self,refine_search_page_obj):
+    def click_refine_search_link(self, refine_search_page_obj):
         self.click(self.refine_search_link, True, vars.ConnectionParameters.page_load_timeout)
         refine_search_page_obj.is_the_current_page

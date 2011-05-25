@@ -59,6 +59,7 @@ class KBPage(sumo_page.SumoPage):
     _article_summary_box_locator          = 'id_summary'
     _article_content_box_locator          = 'id_content'
     _article_preview_btn_locator          = 'btn-preview'
+    _article_preview_content_locator      = "css=div#preview > div#doc-content"
     _article_submit_btn_locator           = 'btn-submit'
     _comment_box_locator                  = 'id_comment'
     _comment_submit_btn_locator           = "css=input[value='Submit']"
@@ -129,8 +130,6 @@ class KBPage(sumo_page.SumoPage):
         self.set_article_keyword(article_info_dict['keyword'])
         self.set_article_summary(article_info_dict['summary'])
         self.set_article_content(article_info_dict['content'])
-        self.submit_article()
-        self.set_article_comment_box()
 
     def edit_article(self, article_info_dict):
         """
@@ -186,3 +185,10 @@ class KBPage(sumo_page.SumoPage):
 
     def click_delete_confirmation_button(self):
         self.click(self._delete_confirmation_btn_locator, True, page_load_timeout)
+
+    def click_article_preview_button(self):
+        self.selenium.click(self._article_preview_btn_locator)
+        self.wait_for_element_present(self._article_preview_content_locator)
+
+    def get_article_preview_text(self):
+        return self.selenium.get_text(self._article_preview_content_locator)

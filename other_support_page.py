@@ -69,8 +69,8 @@ class OtherSupportPage(sumo_page.SumoPage):
     fx_channel_link          = "link=#firefox"
     
     
-    def __init__(self,selenium):
-        super(OtherSupportPage,self).__init__(selenium)
+    def __init__(self, selenium):
+        super(OtherSupportPage, self).__init__(selenium)
     
     def go_to_other_support_page(self):
         self.open(self.page_url)

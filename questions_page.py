@@ -80,8 +80,8 @@ class QuestionsPage(sumo_page.SumoPage):
     def go_to_ask_new_questions_page(self):
         self.selenium.open(self.questions_new_url)
         if (re.search(self._page_title_questions_new, self.selenium.get_title()) is None):
-            raise Exception,'\r\nPage tile verification failed. Expected: %s; Actual:%s\r\n' %(self._page_title_questions_new,self.selenium.get_title())
-
+            raise Exception, '\r\nPage tile verification failed. Expected: %s; Actual:%s\r\n'\
+                              % (self._page_title_questions_new,self.selenium.get_title())
 
     def click_ask_new_questions_link(self):
         self.click(self.ask_question_link, True, page_load_timeout)
@@ -99,8 +99,8 @@ class QuestionsPage(sumo_page.SumoPage):
     def go_to_thread(self,url):
         self.selenium.open(url)
         
-    def click_any_question(self,num):
-        q_link = self.question_list_link %(num)
+    def click_any_question(self, num):
+        q_link = self.question_list_link % num
         self.selenium.click(q_link)
         self.selenium.wait_for_page_to_load(page_load_timeout)
         
