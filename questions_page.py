@@ -80,7 +80,7 @@ class QuestionsPage(sumo_page.SumoPage):
     def go_to_ask_new_questions_page(self):
         self.selenium.open(self.questions_new_url)
         if (re.search(self._page_title_questions_new, self.selenium.get_title()) is None):
-            raise Exception, '\r\nPage tile verification failed. Expected: %s; Actual:%s\r\n'\
+            raise Exception, '\r\nPage title verification failed. Expected: %s; Actual:%s\r\n'\
                               % (self._page_title_questions_new,self.selenium.get_title())
 
     def click_ask_new_questions_link(self):
