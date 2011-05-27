@@ -268,6 +268,7 @@ class testlist:
                                    "class":"ForumPagination",
                                    "method":"test_forum_a_pagination"},
                        "tags":[]})
+
 #    FFT.append({"testcase":{"module":"test_anon_csat_NTF_no",
 #                                   "class":"anon_csat_NTF_no",
 #                                   "method":"test_anon_csat_ntf_no"},
