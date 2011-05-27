@@ -43,7 +43,7 @@ class AdvancedSearchChecked(unittest.TestCase):
                 counter = counter+1
             else:
                 not_found = False           
-        search_page_obj.verify_page_title(search_page_obj.title)
+        search_page_obj.is_the_current_page
 
         """ search support questions tab """
         refine_search_page_obj.go_to_refine_search_page()
@@ -56,7 +56,7 @@ class AdvancedSearchChecked(unittest.TestCase):
                 counter = counter+1
             else:
                 not_found = False           
-        search_page_obj.verify_page_title(search_page_obj.title)
+        search_page_obj.is_the_current_page
 
         """ search discussion forums tab """
         refine_search_page_obj.go_to_refine_search_page()
@@ -69,6 +69,7 @@ class AdvancedSearchChecked(unittest.TestCase):
                 counter = counter+1
             else:
                 not_found = False           
-        search_page_obj.verify_page_title(search_page_obj.title)
+        search_page_obj.is_the_current_page
+        
 if __name__ == "__main__":
     unittest.main()

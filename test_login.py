@@ -44,7 +44,7 @@ class TestLogin(unittest.TestCase):
         
         ''' Logout '''
         login_page_obj.log_out()
-        support_page_obj.verify_page_title(support_page_obj.title)
+        support_page_obj.is_the_current_page
 
         
 if __name__ == "__main__":
