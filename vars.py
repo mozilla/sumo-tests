@@ -11,14 +11,15 @@ class ConnectionParameters:
 class ConfigOptions:
     #Environment list
     Smoketests = [
-    "Firefox-4;en-us;MacOSX6"
+    "Firefox 4 on Mac OS X"
     ]
     
     BFT = [
-    "Firefox-default;en-us;Win7-second"
+    "Firefox 4.0 on Windows 7"
     ]
     
     FFT = [
-    "Firefox-default;en-us;MacOSX6",
-    "Firefox-default;en-us;Win7-second"
+    "Firefox 4 on Mac OS X",
+    "Firefox 4.0 on Windows 7"
+    "Internet Explorer 8 on Windows 7"
     ]
