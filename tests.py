@@ -246,13 +246,29 @@ class testlist:
 
     FFT.append({"testcase":{"module":"test_article_create_edit_delete",
                                    "class":"TestArticleCreateEditDelete",
-                                   "method":"test_article_creating_editing_deleting"},
+                                   "method":"test_that_article_can_be_created"},
                        "tags":[]})
     
+    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
+                                   "class":"TestArticleCreateEditDelete",
+                                   "method":"test_that_article_can_be_edited"},
+                       "tags":[]})
+
+    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
+                                   "class":"TestArticleCreateEditDelete",
+                                   "method":"test_that_article_can_be_deleted"},
+                       "tags":[]})
+
+    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
+                                   "class":"TestArticleCreateEditDelete",
+                                   "method":"test_that_article_can_be_previewed_before_submitting"},
+                       "tags":[]})
+
     FFT.append({"testcase":{"module":"test_forum_pagination",
                                    "class":"ForumPagination",
                                    "method":"test_forum_a_pagination"},
                        "tags":[]})
+
 #    FFT.append({"testcase":{"module":"test_anon_csat_NTF_no",
 #                                   "class":"anon_csat_NTF_no",
 #                                   "method":"test_anon_csat_ntf_no"},
