@@ -15,6 +15,8 @@ class LoginPage(sumo_page.SumoPage):
     username_box    = 'id_username'
     password_box    = 'id_password'
     log_in_button   = "css=input[type='submit']"
+    log_in_link     = "css=a[href *= 'login']"
+    log_out_link    = "css=a[href *= 'logout']"
     
     """ if user is logged-in then you see these elements"""
     logged_in_as_div = "css=div#mod-login_box > div"
@@ -37,5 +39,13 @@ class LoginPage(sumo_page.SumoPage):
         self.selenium.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
         if(not (self.selenium.is_element_present(self.log_out_link))):
             raise Exception, 'Login Failed\r\n'
-        
     
+    
+    """ if user is logged out then you see these elements"""
+    logged_out_text  = "Want to contribute?"
+    
+    def log_out(self):
+        self.click_button(self.log_out_link)
+        self.selenium.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
+        if(not (self.selenium.is_element_present(self.log_in_link))):
+            raise Exception, 'Logout Failed\r\n'
