@@ -20,6 +20,6 @@ class ConfigOptions:
     
     FFT = [
     "Firefox 4 on Mac OS X",
-    "Firefox 4 on Windows 7"
+    "Firefox 4 on Windows 7",
     "Internet Explorer 8 on Windows 7"
     ]
