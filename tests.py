@@ -243,6 +243,12 @@ class testlist:
                         "tags":["prod"]})
     
     FFT = []
+    FFT.extend(BFT)
+
+    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
+                                   "class":"TestArticleCreateEditDelete",
+                                   "method":"test_that_article_can_be_previewed_before_submitting"},
+                       "tags":["prod"]})
 
     FFT.append({"testcase":{"module":"test_article_create_edit_delete",
                                    "class":"TestArticleCreateEditDelete",
@@ -257,11 +263,6 @@ class testlist:
     FFT.append({"testcase":{"module":"test_article_create_edit_delete",
                                    "class":"TestArticleCreateEditDelete",
                                    "method":"test_that_article_can_be_deleted"},
-                       "tags":[]})
-
-    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
-                                   "class":"TestArticleCreateEditDelete",
-                                   "method":"test_that_article_can_be_previewed_before_submitting"},
                        "tags":[]})
 
     FFT.append({"testcase":{"module":"test_forum_pagination",
