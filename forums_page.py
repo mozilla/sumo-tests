@@ -61,7 +61,7 @@ class ForumsPage(sumo_page.SumoPage):
     post_button            = "css=input[value='Post']"
     cancel_link            = "link=Cancel"
     reply_button           = "css=input[value='Reply']"
-    reply_link             = "css=a[href *= 'reply']"
+    reply_link             = "css=a[href='#thread-reply']"
     pagination_link        = "css=ol.pagination"
     next_page_link         = "css=li.next"
     prev_page_link         = "css=li.prev"

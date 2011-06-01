@@ -63,8 +63,9 @@ class ForumDeletion(unittest.TestCase):
         postString = p.search(location)
         postNum = postString.group()[5:]
         # delete link of second to last post
-        sel.click("css=li#post-%s > div > div > a:nth-child(2)"
-            % str(int(postNum) - 1))
+        post_to_delete_link = "css=li#post-%s > div > div > a:nth-child(2)" % str(int(postNum) - 1)
+        forums_page_obj.wait_for_element_present(post_to_delete_link)
+        sel.click(post_to_delete_link)
         sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
         #confirmation dialogue for deletion
         sel.click("css=form > input[type='submit']")
