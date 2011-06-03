@@ -189,7 +189,7 @@ class testlist:
 
     FFT.append({"testcase":{"module":"test_new_user_registration",
                                    "class":"TestNewUserRegistration",
-                                   "method":"test_that_new_user_registration_works"},
+                                   "method":"test_that_thank_you_page_is_displayed_after_successful_registration"},
                        "tags":[]})
 
 #    FFT.append({"testcase":{"module":"test_anon_csat_NTF_no",

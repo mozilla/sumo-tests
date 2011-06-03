@@ -54,9 +54,6 @@ class RegisterPage(sumo_page.SumoPage):
     _email_add_box_locator         = 'id_for_email'
     _register_button_locator       = "css=input.btn[value='Register']"
 
-    def __init__(self, selenium):
-        super(RegisterPage, self).__init__(selenium)
-
     @property
     def page_title_after_registration(self):
         return self._page_title_after_registration
@@ -78,7 +75,8 @@ class RegisterPage(sumo_page.SumoPage):
 
     def get_random_word(self, length):
         random_word = ''
-        for i in range(length):
-            random_word = random_word + random.choice(string.letters)
-            i = i + 1
+        i = 0
+        while i < length:
+            random_word += random.choice(string.letters)
+            i += 1
         return random_word

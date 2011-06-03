@@ -54,7 +54,7 @@ class TestNewUserRegistration(unittest.TestCase):
     def tearDown(self):
         self.selenium.stop()
 
-    def test_that_new_user_registration_works(self):
+    def test_that_thank_you_page_is_displayed_after_successful_registration(self):
         """
            Register a new user using random username.
            Verify registration by checking the page title
