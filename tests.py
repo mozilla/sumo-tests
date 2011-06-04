@@ -187,6 +187,11 @@ class testlist:
                                    "method":"test_that_article_can_be_deleted"},
                        "tags":[]})
 
+    FFT.append({"testcase":{"module":"test_new_user_registration",
+                                   "class":"TestNewUserRegistration",
+                                   "method":"test_that_thank_you_page_is_displayed_after_successful_registration"},
+                       "tags":[]})
+
 #    FFT.append({"testcase":{"module":"test_anon_csat_NTF_no",
 #                                   "class":"anon_csat_NTF_no",
 #                                   "method":"test_anon_csat_ntf_no"},
