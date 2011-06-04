@@ -75,8 +75,6 @@ class RegisterPage(sumo_page.SumoPage):
 
     def get_random_word(self, length):
         random_word = ''
-        i = 0
-        while i < length:
+        for _ in range(length):
             random_word += random.choice(string.letters)
-            i += 1
         return random_word
