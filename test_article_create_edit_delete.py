@@ -35,22 +35,21 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import re
 import random
+import re
 
 import unittest
 from selenium import selenium
 
 import vars
-import sumo_test_data
 import knowledge_base_page
 import login_page
+
 
 class TestArticleCreateEditDelete(unittest.TestCase):
 
     def setUp(self):
-        self.selenium = selenium(
-                                 vars.ConnectionParameters.server,
+        self.selenium = selenium(vars.ConnectionParameters.server,
                                  vars.ConnectionParameters.port,
                                  vars.ConnectionParameters.browser,
                                  vars.ConnectionParameters.baseurl)
@@ -59,86 +58,180 @@ class TestArticleCreateEditDelete(unittest.TestCase):
 
     def tearDown(self):
         self.selenium.stop()
-        
-    def test_article_creating_editing_deleting(self):
+
+    def test_that_article_can_be_created(self):
         """
-           Creates a new knowledge base article,
-           edits it and deletes it. Verifies creation,
-           edition & deletion
+           Creates a new knowledge base article.
+           Verifies creation.
+           Deletes the article
         """
-        sel = self.selenium
-        kb_pg = knowledge_base_page.KBPage(sel)
-        login_pg = login_page.LoginPage(sel)
+        knowledge_base_pg = knowledge_base_page.KBPage(self.selenium)
+        login_pg = login_page.LoginPage(self.selenium)
 
         #login with an Admin account as he can delete the article
-        
-        user_info = sumo_test_data.SUMOtestData().getUserInfo(1)
-        uname = user_info['username']
-        pwd   = user_info['password']
-        
-        login_pg.log_in(uname, pwd)
- 
+        login_pg.log_in_as_admin()
+
         random_num = random.randint(1000, 9999)
-        article_name = str("test_article_%s" %(random_num))
-        
-        article_info_dict = {'title':article_name,'category':'How to','keyword':'test',
-                             'summary':"this is an automated summary_"+str(random_num),
-                             'content':"automated content_"+str(random_num)}
-        
+        article_name = "test_article_%s" % random_num
+
+        article_info_dict = {'title': article_name,
+                             'category': 'How to', 'keyword': 'test',
+                             'summary': "this is an automated summary_%s" % random_num,
+                             'content': "automated content__%s" % random_num}
+
         # create a new article
-        kb_pg.go_to_create_new_article_page()
-        kb_pg.create_or_edit_article(article_info_dict)
-        
-        
+        knowledge_base_pg.go_to_create_new_article_page()
+        knowledge_base_pg.set_article(article_info_dict)
+        knowledge_base_pg.submit_article()
+        knowledge_base_pg.set_article_comment_box()
+
         # verify article history
-        article_history_url = kb_pg.get_url_current_page()
-        kb_pg.open(article_history_url)
-        self.verify_article_history(kb_pg, article_history_url, article_name)
-        
+        article_history_url = knowledge_base_pg.get_url_current_page()
+        knowledge_base_pg.article_history_url = article_history_url
+        actual_page_title = knowledge_base_pg.get_page_title()
+        if not (knowledge_base_pg.page_title_revision_history in actual_page_title):
+            raise Exception("Expected string: %s not found in title: %s"\
+                             % (knowledge_base_pg.page_title_revision_history, actual_page_title))
+
         # verify article contents
-        article_url = article_history_url.replace("/history","")
-        kb_pg.open(article_url)
-        kb_pg.click_edit_article()
+        knowledge_base_pg.article_url = (knowledge_base_pg.article_history_url).replace("/history", "")
+        knowledge_base_pg.go_to_article_page()
+        knowledge_base_pg.click_edit_article()
 
-        kb_pg.is_text_present(article_info_dict['title'])
-        actual_summary_text = kb_pg.get_article_summary_text()
-        actual_contents_text = kb_pg.get_article_contents_box()
+        edit_page_title = knowledge_base_pg.get_page_title()
+        assert knowledge_base_pg.article_title in edit_page_title,\
+               "%s not found in Page title %s" % (knowledge_base_pg.article_title, edit_page_title)
+        actual_summary_text = knowledge_base_pg.get_article_summary_text()
+        actual_contents_text = knowledge_base_pg.get_article_contents_box()
         assert article_info_dict['summary'] == actual_summary_text,\
-               "Expected: %s Actual: %s" %(article_info_dict['summary'], actual_summary_text)
+               "Expected: %s Actual: %s"\
+                % (article_info_dict['summary'], actual_summary_text)
         assert article_info_dict['content'] == actual_contents_text,\
-               "Expected: %s Actual: %s" %(article_info_dict['content'], actual_contents_text)
-        
-        # edit that same article
-        article_info_dict_edited = {'title':article_name+"_edited",
-                                    'category':'How to','keyword':'test',
-                                    'summary':"this is an automated summary_"+str(random_num)+"_edited",
-                                    'content':"automated content_"+str(random_num)+"_edited"}
-        kb_pg.create_or_edit_article(article_info_dict_edited)
-        kb_pg.open(article_url)
-        kb_pg.click_edit_article()
+               "Expected: %s Actual: %s"\
+                % (article_info_dict['content'], actual_contents_text)
 
-        kb_pg.is_text_present(article_info_dict_edited['title'])
-        actual_summary_text = kb_pg.get_article_summary_text()
-        actual_contents_text = kb_pg.get_article_contents_box()
-        assert article_info_dict_edited['summary'] == actual_summary_text,\
-               "Expected: %s Actual: %s" %(article_info_dict_edited['summary'], actual_summary_text)
-        assert article_info_dict_edited['content'] == actual_contents_text,\
-               "Expected: %s Actual: %s" %(article_info_dict_edited['content'], actual_contents_text)
-        
         # delete the same article
-        kb_pg.open(article_history_url)
-        kb_pg.click_delete_entire_article_document()
-        kb_pg.click_delete_confirmation_button()
-        assert kb_pg.is_text_present('document has been deleted'),\
-               "Delete confirmation text not present"
-               
-    def verify_article_history(self, kb_pg, article_history_url, article_name):
-        actual_page_title = kb_pg.selenium.get_title()
-        if re.search(article_name, actual_page_title, re.IGNORECASE) is None:
-            kb_pg.open(article_history_url)
-        
-        if not (kb_pg.page_title_revision_history in actual_page_title):
-            raise Exception("Expected string: %s not found in title: %s" %(kb_pg.page_title_revision_history,actual_page_title))
+        knowledge_base_pg.delete_entire_article_document()
+
+    def test_that_article_can_be_edited(self):
+        """
+           Creates a new knowledge base article.
+           Verifies creation.
+           Edits the article, verifies the edition.
+           Deletes the article
+        """
+        knowledge_base_pg = knowledge_base_page.KBPage(self.selenium)
+        login_pg = login_page.LoginPage(self.selenium)
+
+        #login with an Admin account as he can delete the article
+        login_pg.log_in_as_admin()
+
+        random_num = random.randint(1000, 9999)
+        article_name = "test_article_%s" % random_num
+
+        article_info_dict = {'title': article_name,
+                             'category': 'How to',
+                             'keyword': 'test',
+                             'summary': "this is an automated summary_%s" % random_num,
+                             'content': "automated content__%s" % random_num}
+
+        # create a new article
+        knowledge_base_pg.go_to_create_new_article_page()
+        knowledge_base_pg.set_article(article_info_dict)
+        knowledge_base_pg.submit_article()
+        knowledge_base_pg.set_article_comment_box()
+
+        # set article history url
+        article_history_url = knowledge_base_pg.get_url_current_page()
+        knowledge_base_pg.article_history_url = article_history_url
+
+        article_history_url = knowledge_base_pg.article_history_url
+        knowledge_base_pg.article_url = article_history_url.replace("/history", "")
+
+        # edit that same article
+        article_info_dict_edited = {'title': article_name,\
+                                    'category': 'How to', 'keyword': 'test',\
+                                    'summary': "this is an automated summary__%s_edited" % random_num,
+                                    'content': "automated content__%s_edited" % random_num}
+        knowledge_base_pg.click_edit_article()
+        knowledge_base_pg.edit_article(article_info_dict_edited)
+        knowledge_base_pg.go_to_article_page()
+        knowledge_base_pg.click_edit_article()
+
+        # verify the contents of the edited article
+        edit_page_title = knowledge_base_pg.get_page_title()
+        assert knowledge_base_pg.article_title in edit_page_title,\
+               "%s not found in Page title %s" % (knowledge_base_pg.article_title, edit_page_title)
+        actual_summary_text = knowledge_base_pg.get_article_summary_text()
+        actual_contents_text = knowledge_base_pg.get_article_contents_box()
+        assert article_info_dict_edited['summary'] == \
+                                                      actual_summary_text, "Expected: %s Actual: %s"\
+                                                       % (article_info_dict_edited['summary'], actual_summary_text)
+        assert article_info_dict_edited['content'] == actual_contents_text, "Expected: %s Actual: %s"\
+                                                                            % (article_info_dict_edited['content'], actual_contents_text)
+
+        # delete the same article
+        knowledge_base_pg.delete_entire_article_document()
+
+    def test_that_article_can_be_deleted(self):
+        """
+           Creates a new knowledge base article.
+           Deletes the article.
+           Verifies the deletion.
+        """
+        knowledge_base_pg = knowledge_base_page.KBPage(self.selenium)
+        login_pg = login_page.LoginPage(self.selenium)
+
+        #login with an Admin account as he can delete the article
+        login_pg.log_in_as_admin()
+
+        random_num = random.randint(1000, 9999)
+        article_name = "test_article_%s" % random_num
+
+        article_info_dict = {'title': article_name,
+                             'category': 'How to', 'keyword': 'test',
+                             'summary': "this is an automated summary_%s" % random_num,
+                             'content': "automated content__%s" % random_num}
+
+        # create a new article
+        knowledge_base_pg.go_to_create_new_article_page()
+        knowledge_base_pg.set_article(article_info_dict)
+        knowledge_base_pg.submit_article()
+        knowledge_base_pg.set_article_comment_box()
+
+        # set article history url
+        knowledge_base_pg.article_history_url = knowledge_base_pg.get_url_current_page()
+        knowledge_base_pg.article_url = (knowledge_base_pg.article_history_url).replace("/history", "")
+
+        # delete the same article
+        knowledge_base_pg.delete_entire_article_document()
+        knowledge_base_pg.go_to_article_page()
+        actual_page_title = knowledge_base_pg.get_page_title()
+        if re.search('Page Not Found', actual_page_title, re.I) is None:
+            raise AssertionError('Page title is %s, was expecting %s' % (actual_page_title, 'Page Not Found'))
+
+    def test_that_article_can_be_previewed_before_submitting(self):
+        knowledge_base_pg = knowledge_base_page.KBPage(self.selenium)
+        login_pg = login_page.LoginPage(self.selenium)
+
+        login_pg.log_in_as_non_admin()
+
+        random_num = random.randint(1000, 9999)
+        article_name = "test_article_%s" % random_num
+
+        article_info_dict = {'title': article_name,
+                             'category': 'How to', 'keyword': 'test',
+                             'summary': "this is an automated summary_%s" % random_num,
+                             'content': "automated content__%s" % random_num}
+
+        # create a new article
+        knowledge_base_pg.go_to_create_new_article_page()
+        knowledge_base_pg.set_article(article_info_dict)
+        knowledge_base_pg.click_article_preview_button()
+        actual_preview_text = knowledge_base_pg.get_article_preview_text()
+
+        assert actual_preview_text == article_info_dict['content'],\
+                                      "Expected: %s Actual: %s" % (article_info_dict['content'], actual_preview_text)
 
 if __name__ == "__main__":
     unittest.main()

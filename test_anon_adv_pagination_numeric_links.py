@@ -4,10 +4,10 @@ import pytest
 
 import sumo_page
 
-@pytest.mark.smoketests
-@pytest.mark.bft
 class TestAnonAdvPaginationNumericLinks:
 
+    @pytest.mark.smoketests
+    @pytest.mark.bft
     def test_anon_adv_pagination_numeric_links(self,testsetup):
         sel = testsetup.selenium
         sumo_page_obj = sumo_page.SumoPage(testsetup)

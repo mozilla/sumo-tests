@@ -59,37 +59,37 @@ class RefineSearchPage(sumo_page.SumoPage):
     support_questions_tab        = "css=div#search-tabs > ul > li:nth-child(2) > a"
     forums_tab                   = "css=div#search-tabs > ul > li:nth-child(3) > a"
     
-    
+
     def __init__(self,testsetup):
         super(RefineSearchPage,self).__init__(testsetup)               
-    
+
     def go_to_refine_search_page(self):
         self.open(self.page_url)
         self.is_the_current_page
-        
-    def do_search_on_knowledge_base(self, search_query,search_page_obj):
+
+    def do_search_on_knowledge_base(self, search_query, search_page_obj):
         self.click(self.kb_tab)
         self.type(self.article_search_box, search_query)
-        self.click(self.search_button_kb,True)
+        self.click(self.search_button_kb, True)
         search_page_obj.is_the_current_page
-        
-    def do_search_on_support_questions(self, search_query,search_page_obj):
+
+    def do_search_on_support_questions(self, search_query, search_page_obj):
         self.click(self.support_questions_tab)
         self.type(self.post_search_box, search_query)
-        self.click(self.search_button_support,True)
+        self.click(self.search_button_support, True)
         search_page_obj.is_the_current_page
-        
+
     def do_search_tags_on_support_questions(self, search_query,search_page_obj):
         self.click(self.support_questions_tab)
         self.type(self.post_tags_box, search_query)
-        self.click(self.search_button_support,True)
+        self.click(self.search_button_support, True)
         search_page_obj.is_the_current_page
-        
-    def do_search_on_discussion_forums(self, search_query,search_page_obj):
+
+    def do_search_on_discussion_forums(self, search_query, search_page_obj):
         self.click(self.forums_tab)
         self.type(self.thread_search_box, search_query)
-        self.click(self.search_button_disc,True)
+        self.click(self.search_button_disc, True)
         search_page_obj.is_the_current_page
-        
+
     def is_kb_cat_checked(self):
         return self.selenium.is_checked(self.kb_cat_check_box)

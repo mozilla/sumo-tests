@@ -16,7 +16,7 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
@@ -34,40 +34,47 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-'''
-Created on Aug 11, 2010
-
-@author: mozilla
-'''
+import string
+import random
 
 import sumo_page
 import vars
 
-pageLoadTimeout = vars.ConnectionParameters.page_load_timeout
 
-class ContributePage(sumo_page.SumoPage):
+class RegisterPage(sumo_page.SumoPage):
     """
-    The 'How to Contribute' Page contains 
-    web elements and methods that can be 
-    performed on them. This page is a kb article that
-    educated users/contributors how to get started.
+        Form for user registration.
     """
-    _page_title            = 'How to contribute'
-    page_url               = '/en-US/kb/How+to+contribute'
-    
-    improve_kb_link        = "css=a[href *= 'Contributing+to+the+Knowledge+Base']"
-    translate_link         = "css=a[href *= 'Translating+articles']"
-    forum_support_link     = "css=a[href *= 'Providing+Forum+Support']"
-    live_chat_link         = "css=a[href *= 'Helping+with+Live+Chat']"
-    stay_in_contact_link   = "css=a[href *= 'Stay_connected']"
-    
-    
-    def __init__(self, selenium):
-        super(ContributePage, self).__init__(selenium)               
-           
-    def go_to_contribute_page(self):
-        self.open(self.page_url)
+    _page_title                    = 'Register'
+    _page_title_after_registration = 'Thank you for registering'
+    _page_url                      = '/en-US/users/register'
+    _username_box_locator          = 'id_for_username'
+    _password_box_locator          = 'id_for_password'
+    _password_repeat_box_locator   = 'id_for_password2'
+    _email_add_box_locator         = 'id_for_email'
+    _register_button_locator       = "css=input.btn[value='Register']"
+
+    @property
+    def page_title_after_registration(self):
+        return self._page_title_after_registration
+
+    def go_to_registration_page(self):
+        self.open(self._page_url)
         self.is_the_current_page
-        
 
-        
+    def register_new_user(self):
+        user_name = self.get_random_word(5)
+        password = '1234'
+        email = user_name+"@mozilla.com"
+        self.type(self._username_box_locator, user_name)
+        self.type(self._password_box_locator, password)
+        self.type(self._password_repeat_box_locator, password)
+        self.type(self._email_add_box_locator, email)
+        self.click_button(self._register_button_locator)
+        self.selenium.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
+
+    def get_random_word(self, length):
+        random_word = ''
+        for _ in range(length):
+            random_word += random.choice(string.letters)
+        return random_word

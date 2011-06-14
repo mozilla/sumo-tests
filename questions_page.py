@@ -39,11 +39,6 @@ import time
 import re
 
 import sumo_page
-import vars
-
-
-
-page_load_timeout = vars.ConnectionParameters.page_load_timeout
 
 class QuestionsPage(sumo_page.SumoPage):
     """
@@ -68,11 +63,7 @@ class QuestionsPage(sumo_page.SumoPage):
     q_site_box                    = 'id_sites_affected'
     q_trouble_box                 = 'id_troubleshooting'
     q_post_button                 = "css=input[value='Post Question']"
-    
-    def __init__(self,selenium):
-        super(QuestionsPage,self).__init__(selenium)               
-        
-    
+
     def go_to_forum_questions_page(self):
         self.open(self.forums_page_url)
         self.is_the_current_page
@@ -80,42 +71,42 @@ class QuestionsPage(sumo_page.SumoPage):
     def go_to_ask_new_questions_page(self):
         self.selenium.open(self.questions_new_url)
         if (re.search(self._page_title_questions_new, self.selenium.get_title()) is None):
-            raise Exception,'\r\nPage tile verification failed. Expected: %s; Actual:%s\r\n' %(self._page_title_questions_new,self.selenium.get_title())
-
+            raise Exception, '\r\nPage title verification failed. Expected: %s; Actual:%s\r\n'\
+                              % (self._page_title_questions_new,self.selenium.get_title())
 
     def click_ask_new_questions_link(self):
-        self.click(self.ask_question_link, True, page_load_timeout)
+        self.click(self.ask_question_link, True, self.timeout)
         
     def click_firefox_product_link(self):
-        self.click(self.firefox_product_first_link, True, page_load_timeout)
+        self.click(self.firefox_product_first_link, True, self.timeout)
         
     def click_category_problem_link(self):
-        self.click(self.category_prob_first_link, True, page_load_timeout)
+        self.click(self.category_prob_first_link, True, self.timeout)
         
     def type_question(self, question_to_ask):
         self.type(self.type_question_box, question_to_ask)
-        self.click(self.ask_this_button, True, page_load_timeout)
+        self.click(self.ask_this_button, True, self.timeout)
           
     def go_to_thread(self,url):
         self.selenium.open(url)
         
-    def click_any_question(self,num):
-        q_link = self.question_list_link %(num)
+    def click_any_question(self, num):
+        q_link = self.question_list_link % num
         self.selenium.click(q_link)
-        self.selenium.wait_for_page_to_load(page_load_timeout)
+        self.selenium.wait_for_page_to_load(self.timeout)
         
     def click_problem_too_button(self):
         self.selenium.click(self.problem_too_button)
         time.sleep(2)
         
     def click_provide_details_button(self):
-        self.click(self.provide_details_button, True, page_load_timeout)
+        self.click(self.provide_details_button, True, self.timeout)
         
     def fill_up_questions_form(self, q_text='details', q_site='www.example.com', q_trouble='no addons'):
         self.type(self.q_content_box, q_text)
         self.type(self.q_site_box, q_site)
         self.type(self.q_trouble_box, q_trouble)
-        self.click(self.q_post_button, True, page_load_timeout)
+        self.click(self.q_post_button, True, self.timeout)
          
     def get_problem_count(self):
         count_text = self.selenium.get_text(self.problem_count_text)

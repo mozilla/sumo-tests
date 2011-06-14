@@ -5,18 +5,7 @@ class testlist:
                                    "class":"AdvancedSearchChecked",
                                    "method":"test_advanced_search_checked"},
                        "tags":["prod"]})
-    
 
-    Smoketests.append({"testcase":{"module":"test_anon_pagination_numeric_links",
-                                   "class":"anon_pagination_numeric_links",
-                                   "method":"test_anon_pagination_numeric_links"},
-                       "tags":["prod"]})
-
-    Smoketests.append({"testcase":{"module":"test_anon_adv_pagination_numeric_links",
-                                   "class":"anon_adv_pagination_numeric_links",
-                                   "method":"test_anon_adv_pagination_numeric_links"},
-                       "tags":["prod"]})
- 
     Smoketests.append({"testcase":{"module":"test_search_on_home_page",
                                    "class":"SearchOnHomePage",
                                    "method":"test_search_on_home_page"},
@@ -82,14 +71,7 @@ class testlist:
     Smoketests.append({"testcase":{"module":"test_search_quotes_pagination",
                                    "class":"SearchPageQuotes",
                                    "method":"test_that_pagination_works_for_search_terms_with_quotes"},
-                       "tags":["prod"]})
-
-    # Disabled since the locator doesn't give us an idea where it could have been!
-    #Smoketests.append({"testcase":{"module":"test_webtrends_search_tracking",
-    #                               "class":"webtrends_search_tracking",
-    #                               "method":"test_webtrends_search_tracking"},
-    #                   "tags":["prod"]})
-       
+                       "tags":["prod"]})
     Smoketests.append({"testcase":{"module":"test_no_query_adv_forum_search",
                                    "class":"no_query_adv_forum_search",
                                    "method":"test_no_query_adv_forum_search"},
@@ -117,18 +99,7 @@ class testlist:
     
     BFT = []
     BFT.extend(Smoketests)
-    
 
-    """ commented due to timeout issues"""
-#    BFT.append({"testcase":{"module":"test_article_rename_cancel",
-#                                   "class":"article_rename_cancel",
-#                                   "method":"test_article_rename_cancel"},
-#                       "tags":[]})
-
-    BFT.append({"testcase":{"module":"test_forum_contribs_new_post",
-                                   "class":"forum_contribs_new_post",
-                                   "method":"test_forum_contribs_new_post"},
-                       "tags":[]})
 
     BFT.append({"testcase":{"module":"test_forum_new_post",
                                    "class":"ForumPagination",
@@ -136,11 +107,6 @@ class testlist:
                        "tags":[]})
 
     """ commented due to timeout issues"""
-#    BFT.append({"testcase":{"module":"test_kb_delete_as_admin",
-#                                   "class":"kb_delete_as_admin",
-#                                   "method":"test_kb_delete_as_admin"},
-#                       "tags":[]})
-
     #BFT.append({"testcase":{"module":"test_kb_htc_check_images",
     #                               "class":"kb_htc_check_images",
     #                               "method":"test_kb_htc_check_images"},
@@ -152,21 +118,9 @@ class testlist:
                                    "method":"test_search_quotes"},
                        "tags":["prod"]})
 
-    # Link no longer exists
-    #BFT.append({"testcase":{"module":"test_atom_feeds",
-    #                               "class":"atom_feeds",
-    #                               "method":"test_atom_feeds"},
-    #                   "tags":["prod"]})
-
-     
     BFT.append({"testcase":{"module":"test_forum_deletion",
                                    "class":"ForumDeletion",
                                    "method":"test_forum_deletion"},
-                       "tags":[]})
-
-    BFT.append({"testcase":{"module":"test_forum_goto_post_after_reply",
-                                   "class":"forum_goto_post_after_reply",
-                                   "method":"test_forum_goto_post_after_reply"},
                        "tags":[]})
     
     BFT.append({"testcase":{"module":"test_search_advanced_tags",
@@ -190,16 +144,33 @@ class testlist:
                         "tags":["prod"]})
     
     FFT = []
+    FFT.extend(BFT)
 
     FFT.append({"testcase":{"module":"test_article_create_edit_delete",
                                    "class":"TestArticleCreateEditDelete",
-                                   "method":"test_article_creating_editing_deleting"},
+                                   "method":"test_that_article_can_be_previewed_before_submitting"},
+                       "tags":["prod"]})
+
+    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
+                                   "class":"TestArticleCreateEditDelete",
+                                   "method":"test_that_article_can_be_created"},
                        "tags":[]})
     
-    FFT.append({"testcase":{"module":"test_forum_pagination",
-                                   "class":"ForumPagination",
-                                   "method":"test_forum_a_pagination"},
+    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
+                                   "class":"TestArticleCreateEditDelete",
+                                   "method":"test_that_article_can_be_edited"},
                        "tags":[]})
+
+    FFT.append({"testcase":{"module":"test_article_create_edit_delete",
+                                   "class":"TestArticleCreateEditDelete",
+                                   "method":"test_that_article_can_be_deleted"},
+                       "tags":[]})
+
+    FFT.append({"testcase":{"module":"test_new_user_registration",
+                                   "class":"TestNewUserRegistration",
+                                   "method":"test_that_thank_you_page_is_displayed_after_successful_registration"},
+                       "tags":[]})
+
 #    FFT.append({"testcase":{"module":"test_anon_csat_NTF_no",
 #                                   "class":"anon_csat_NTF_no",
 #                                   "method":"test_anon_csat_ntf_no"},

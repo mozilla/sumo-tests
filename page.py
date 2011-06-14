@@ -67,7 +67,7 @@ class Page(object):
     @property
     def is_the_current_page(self):
         page_title = self.selenium.get_title()
-        if (re.search(self._page_title, page_title) is None):
+        if re.search(self._page_title, page_title) is None:
             self.record_error()
             try:
                 raise Exception("Expected page title to be: '" + self._page_title + "' but it was: '" + page_title + "'")
@@ -96,6 +96,9 @@ class Page(object):
 
     def get_url_current_page(self):
         return(self.selenium.get_location())
+    
+    def get_page_title(self):
+        return self.selenium.get_title()
 
     def is_element_present(self, locator):
         return self.selenium.is_element_present(locator)

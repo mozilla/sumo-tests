@@ -8,9 +8,9 @@ import pytest
 import support_home_page
 import search_page
 
-@pytest.mark.smoketests
 class TestSearchOnHomePage:
 
+    @pytest.mark.smoketests
     def test_search_on_home_page(self,testsetup):
         support_home_page_obj = support_home_page.SupportHomePage(testsetup)
         search_page_obj       = search_page.SearchPage(testsetup)

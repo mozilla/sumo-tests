@@ -15,12 +15,11 @@
 # The Original Code is Mozilla Support
 #
 # The Initial Developer of the Original Code is
-# Tanay G.
-# Portions created by the Initial Developer are Copyright (C) 2___
+# Mozilla Support
+# Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): Tanay G.
-#                 Vishal K.
+# Contributor(s): Vishal
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,42 +34,35 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+import unittest
+from selenium import selenium
+
+import vars
+import register_page
 
 
-import datetime
+class TestNewUserRegistration(unittest.TestCase):
 
-import pytest
+    def setUp(self):
+        self.selenium = selenium(vars.ConnectionParameters.server,
+                                 vars.ConnectionParameters.port,
+                                 vars.ConnectionParameters.browser,
+                                 vars.ConnectionParameters.baseurl)
+        self.selenium.start()
+        self.selenium.set_timeout(vars.ConnectionParameters.page_load_timeout)
 
-import questions_page
-import login_page
-import sumo_test_data
+    def tearDown(self):
+        self.selenium.stop()
 
-
-class TestAAQ:
-
-    @pytest.mark.smoketests
-    def test_that_posting_question_works(self, testsetup):
-        """Posts a question to /questions"""
-        self.selenium       = testsetup.selenium
-        login_po            = login_page.LoginPage(testsetup)
-        questions_po        = questions_page.QuestionsPage(testsetup)
-        timestamp           = datetime.datetime.today()
-        q_to_ask            = "automation test question %s" % (timestamp)
-        q_details           = "This is a test. %s" % (timestamp)
-
-        user_info       = sumo_test_data.SUMOtestData().getUserInfo(0)
-        uname           = user_info['username']
-        pwd             = user_info['password']
-
-        login_po.log_in(uname, pwd)
-
-        # go to the /questions/new page and post a question
-        questions_po.go_to_ask_new_questions_page()
-        questions_po.click_firefox_product_link()
-        questions_po.click_category_problem_link()
-        questions_po.type_question(q_to_ask)
-        questions_po.click_provide_details_button()
-        questions_po.fill_up_questions_form(q_details)
-
-        assert self.selenium.is_text_present(q_to_ask), "Did not find text: %s on the page" % (q_to_ask)
-        assert self.selenium.is_text_present(q_details), "Did not find text: %s on the page" % (q_details)
+    def test_that_thank_you_page_is_displayed_after_successful_registration(self):
+        """
+           Register a new user using random username.
+           Verify registration by checking the page title
+        """
+        register_pg = register_page.RegisterPage(self.selenium)
+        register_pg.go_to_registration_page()
+        register_pg.register_new_user()
+        actual_page_title = register_pg.get_page_title()
+        expected_page_title = register_pg.page_title_after_registration
+        assert expected_page_title in actual_page_title, "Expected %s to be in %s"\
+                                    % (expected_page_title, actual_page_title)
