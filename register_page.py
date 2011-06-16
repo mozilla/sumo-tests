@@ -38,7 +38,6 @@ import string
 import random
 
 import sumo_page
-import vars
 
 
 class RegisterPage(sumo_page.SumoPage):
@@ -71,7 +70,7 @@ class RegisterPage(sumo_page.SumoPage):
         self.type(self._password_repeat_box_locator, password)
         self.type(self._email_add_box_locator, email)
         self.click_button(self._register_button_locator)
-        self.selenium.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def get_random_word(self, length):
         random_word = ''

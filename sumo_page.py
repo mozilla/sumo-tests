@@ -34,19 +34,12 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-'''
-Created on Jul 20, 2010
-
-@author: mozilla
-'''
 from page import Page
-import vars
 
 import sys
 import time
 import re
 
-page_load_timeout = vars.ConnectionParameters.page_load_timeout
 
 class SumoPage(Page):
     """
@@ -55,10 +48,7 @@ class SumoPage(Page):
      SumoPage so that every child class can have access to common web 
      elements and methods that pertain to those elements.
     """
-    
-    def __init__(self,selenium):
-        super(SumoPage,self).__init__(selenium)
-        
+ 
     log_out_link       = "css=a[href *='logout']"
     my_account_link    = "css=a[href *='user_preferences']"
     # after the redesign of Dec 2010,Contribute link no longer exists
@@ -71,7 +61,7 @@ class SumoPage(Page):
     # after the redesign of Dec 2010,Other Fx Support link no longer exists
     other_link         = "css=a[href *= 'Other']"
     login_link         = "css=a[href *= 'login']"
-    
+
     def log_out(self):
         self.click(self.log_out_link, True)
         

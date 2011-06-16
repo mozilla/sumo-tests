@@ -97,7 +97,7 @@ class QuestionsPage(sumo_page.SumoPage):
         
     def click_problem_too_button(self):
         self.selenium.click(self.problem_too_button)
-        time.sleep(2)
+        self.wait_for_element_present(self.no_thanks_link)
         
     def click_provide_details_button(self):
         self.click(self.provide_details_button, True, self.timeout)

@@ -36,9 +36,6 @@
 # ***** END LICENSE BLOCK *****
 
 import sumo_page
-import vars
-
-page_load_timeout = vars.ConnectionParameters.page_load_timeout
 
 
 class KBPage(sumo_page.SumoPage):
@@ -70,9 +67,6 @@ class KBPage(sumo_page.SumoPage):
 
     _delete_document_link_locator         = "css=div#delete-doc > a[href*='delete']"
     _delete_confirmation_btn_locator      = "css=input[value='Delete']"
-
-    def __init__(self, selenium):
-        super(KBPage, self).__init__(selenium)  
 
     @property
     def article_summary_box(self):
@@ -117,7 +111,7 @@ class KBPage(sumo_page.SumoPage):
         self.open(self._article_url)
 
     def go_to_create_new_article_page(self):
-        self.open(vars.ConnectionParameters.baseurl_ssl + self._page_url_new_article)
+        self.open(self.base_url_ssl + self._page_url_new_article)
         self.is_the_current_page
 
     def set_article(self, article_info_dict):
@@ -160,7 +154,7 @@ class KBPage(sumo_page.SumoPage):
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.type(self._comment_box_locator, comment)
         self.selenium.click(self._comment_submit_btn_locator)
-        self.selenium.wait_for_page_to_load(page_load_timeout)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def submit_article(self):
         self.selenium.click(self._article_submit_btn_locator)
@@ -178,13 +172,13 @@ class KBPage(sumo_page.SumoPage):
         return self.selenium.get_text(self._article_content_box_locator)
 
     def click_edit_article(self):
-        self.click(self._edit_article_link_locator, True, page_load_timeout)
+        self.click(self._edit_article_link_locator, True, self.timeout)
 
     def click_delete_entire_article_document(self):
-        self.click(self._delete_document_link_locator, True, page_load_timeout)
+        self.click(self._delete_document_link_locator, True, self.timeout)
 
     def click_delete_confirmation_button(self):
-        self.click(self._delete_confirmation_btn_locator, True, page_load_timeout)
+        self.click(self._delete_confirmation_btn_locator, True, self.timeout)
 
     def click_article_preview_button(self):
         self.selenium.click(self._article_preview_btn_locator)

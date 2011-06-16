@@ -34,32 +34,20 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import unittest
-from selenium import selenium
+import pytest
 
-import vars
 import register_page
 
 
-class TestNewUserRegistration(unittest.TestCase):
+class TestNewUserRegistration:
 
-    def setUp(self):
-        self.selenium = selenium(vars.ConnectionParameters.server,
-                                 vars.ConnectionParameters.port,
-                                 vars.ConnectionParameters.browser,
-                                 vars.ConnectionParameters.baseurl)
-        self.selenium.start()
-        self.selenium.set_timeout(vars.ConnectionParameters.page_load_timeout)
-
-    def tearDown(self):
-        self.selenium.stop()
-
-    def test_that_thank_you_page_is_displayed_after_successful_registration(self):
+    @pytest.mark.fft
+    def test_that_thank_you_page_is_displayed_after_successful_registration(self, testsetup):
         """
            Register a new user using random username.
            Verify registration by checking the page title
         """
-        register_pg = register_page.RegisterPage(self.selenium)
+        register_pg = register_page.RegisterPage(testsetup)
         register_pg.go_to_registration_page()
         register_pg.register_new_user()
         actual_page_title = register_pg.get_page_title()

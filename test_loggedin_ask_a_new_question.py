@@ -19,8 +19,8 @@
 # Portions created by the Initial Developer are Copyright (C) 2___
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): Tanay G.
-#                 Vishal K.
+# Contributor(s): Tanay
+#                 Vishal
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,34 +35,28 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-
-
 import datetime
 
 import pytest
 
 import questions_page
 import login_page
-import sumo_test_data
 
 
 class TestAAQ:
 
     @pytest.mark.smoketests
+    @pytest.mark.bft
+    @pytest.mark.fft
     def test_that_posting_question_works(self, testsetup):
         """Posts a question to /questions"""
-        self.selenium       = testsetup.selenium
         login_po            = login_page.LoginPage(testsetup)
         questions_po        = questions_page.QuestionsPage(testsetup)
         timestamp           = datetime.datetime.today()
         q_to_ask            = "automation test question %s" % (timestamp)
         q_details           = "This is a test. %s" % (timestamp)
 
-        user_info       = sumo_test_data.SUMOtestData().getUserInfo(0)
-        uname           = user_info['username']
-        pwd             = user_info['password']
-
-        login_po.log_in(uname, pwd)
+        login_po.log_in_as_non_admin()
 
         # go to the /questions/new page and post a question
         questions_po.go_to_ask_new_questions_page()
@@ -72,5 +66,7 @@ class TestAAQ:
         questions_po.click_provide_details_button()
         questions_po.fill_up_questions_form(q_details)
 
-        assert self.selenium.is_text_present(q_to_ask), "Did not find text: %s on the page" % (q_to_ask)
-        assert self.selenium.is_text_present(q_details), "Did not find text: %s on the page" % (q_details)
+        assert questions_po.is_text_present(q_to_ask),\
+               "Did not find text: %s on the page" % (q_to_ask)
+        assert questions_po.is_text_present(q_details),\
+               "Did not find text: %s on the page" % (q_details)

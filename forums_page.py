@@ -34,15 +34,8 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-'''
-Created on Jul 15, 2010
-
-@author: mozilla
-'''
 import sumo_page
-import vars
 
-pageLoadTimeout = vars.ConnectionParameters.page_load_timeout
 
 class ForumsPage(sumo_page.SumoPage):
     """
@@ -52,8 +45,6 @@ class ForumsPage(sumo_page.SumoPage):
     categories of forums: SUMO community/Off-topic etc.
     """
     _page_title            = 'Forums'
-    forums_cat_list_url    = vars.ConnectionParameters.baseurl_ssl+'/en-US/forums'
-    kb_articles_forum_url  = vars.ConnectionParameters.baseurl_ssl+'/en-US/forums/knowledge-base-articles'
     first_cat_forum_link   = "css=div.name > a"
     post_new_thread_link   = "new-thread"
     thread_title_box       = "css=input#id_title"
@@ -67,29 +58,30 @@ class ForumsPage(sumo_page.SumoPage):
     prev_page_link         = "css=li.prev"
     locked_thread_format   = "css=ol.threads li:nth-child(%d) > div > img[title='Locked']"
     unlocked_thread_format = "css=ol.threads > li:nth-child(%d) > div:nth-child(2) > a"
-    
-    def __init__(self, selenium):
-        super(ForumsPage,self).__init__(selenium)               
-        
+
+    def __init__(self, testsetup):
+        self.forums_cat_list_url = testsetup.base_url_ssl+'/en-US/forums'
+        self.kb_articles_forum_url = testsetup.base_url_ssl+'/en-US/forums/knowledge-base-articles'
+        super(ForumsPage, self).__init__(testsetup)
+
     def post_new_thread_first_cat(self, thread_title, thread_content):
-        self.click(self.post_new_thread_link, True, pageLoadTimeout)
+        self.click(self.post_new_thread_link, True, self.timeout)
         self.selenium.type(self.thread_title_box, thread_title)
         self.selenium.type(self.thread_content_box, thread_content)
-        self.click(self.post_button, True, pageLoadTimeout)
+        self.click(self.post_button, True, self.timeout)
         if not (self.selenium.is_text_present(thread_title)):
             raise Exception("Posting new thread failed\r\n")
-    
+
     def go_to_forums_cat_list_page(self):
         self.open(self.forums_cat_list_url)
         self.is_the_current_page
-        
+
     def post_reply(self, thread_url, reply_text):
         self.go_to_thread(thread_url)
         self.selenium.type(self.thread_content_box, reply_text)
-        self.click(self.reply_button, True, pageLoadTimeout)
+        self.click(self.reply_button, True, self.timeout)
         if not(self.selenium.is_text_present(reply_text)):
             raise Exception('Posting reply failed\r\n')
-        
+
     def go_to_thread(self, url):
         self.open(url)
-        

@@ -1,73 +1,79 @@
-'''
-Created on Oct 11, 2010
-
-@author: mozilla
-'''
-
-from selenium import selenium
-import vars
-import unittest
+# ***** BEGIN LICENSE BLOCK *****
+# Version: MPL 1.1/GPL 2.0/LGPL 2.1
+#
+# The contents of this file are subject to the Mozilla Public License Version
+# 1.1 (the "License"); you may not use this file except in compliance with
+# the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS" basis,
+# WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+# for the specific language governing rights and limitations under the
+# License.
+#
+# The Original Code is Mozilla Support
+#
+# The Initial Developer of the Original Code is
+# Mozilla Support
+# Portions created by the Initial Developer are Copyright (C) 2011
+# the Initial Developer. All Rights Reserved.
+#
+# Contributor(s): Vishal
+#
+# Alternatively, the contents of this file may be used under the terms of
+# either the GNU General Public License Version 2 or later (the "GPL"), or
+# the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+# in which case the provisions of the GPL or the LGPL are applicable instead
+# of those above. If you wish to allow use of your version of this file only
+# under the terms of either the GPL or the LGPL, and not to allow others to
+# use your version of this file under the terms of the MPL, indicate your
+# decision by deleting the provisions above and replace them with the notice
+# and other provisions required by the GPL or the LGPL. If you do not delete
+# the provisions above, a recipient may use your version of this file under
+# the terms of any one of the MPL, the GPL or the LGPL.
+#
+# ***** END LICENSE BLOCK *****
 import random
-import time
+
+import pytest
 
 import questions_page
 
-class QuestionProbCount(unittest.TestCase):
+
+class TestQuestionProbCount:
 
     thread_loc = ''
     thread_num = str(random.randint(100, 10000))
     thread_title = 'test_thread_' + thread_num
     thread_text = 'some text'
 
-    
-    def setUp(self):
-        self.selenium = selenium(vars.ConnectionParameters.server, vars.ConnectionParameters.port, vars.ConnectionParameters.browser, vars.ConnectionParameters.baseurl)
-        self.selenium.start()
-        self.timeout = vars.ConnectionParameters.page_load_timeout
-        self.selenium.set_timeout(self.timeout)
-
-    def tearDown(self):
-        self.selenium.stop()
-
-                
-    def test_questions_problem_count(self):
+    @pytest.mark.bft
+    @pytest.mark.fft
+    def test_that_questions_problem_count_increments(self, testsetup):
         """Checks if the 'I have this problem too' counter increments"""
-        sel                 = self.selenium
-        #login_page_obj      = login_page.LoginPage(sel)
-        questions_page_obj  = questions_page.QuestionsPage(sel)
+        questions_page_obj = questions_page.QuestionsPage(testsetup)
 
+        #   click on a question from the list of 20 questions
+        #   If a question does not have 'I have this problem too'
+        #   button then keep clicking through the list until you find one
 
-#        user_info       = sumo_test_data.SUMOtestData().getUserInfo(0)
-#        uname           = user_info['username']
-#        pwd             = user_info['password']
-#        
-#        ''' login '''
-#        login_page_obj.log_in(uname, pwd)
-        
-        """ click on a question from the list of 20 questions 
-            If a question does not have 'I have this problem too' 
-            button then keep clicking through the list until you find one
-        """
         found = False
         counter = 0
-        while(not found and counter<20):
+        while not found and counter < 20:
             num = random.randint(1, 20)
             questions_page_obj.go_to_forum_questions_page()
             questions_page_obj.click_any_question(num)
-            if(sel.is_element_present(questions_page_obj.problem_too_button)):
+            if questions_page_obj.is_element_present(\
+               questions_page_obj.problem_too_button):
                 found = True
-            counter = counter+1
-        
-        if(not found and counter==20):
+            counter += 1
+
+        if not found and counter == 20:
             return
-            
-        initial_count = questions_page_obj.get_problem_count()     
+
+        initial_count = questions_page_obj.get_problem_count()
         questions_page_obj.click_problem_too_button()
-        time.sleep(2)
-        questions_page_obj.refresh(vars.ConnectionParameters.page_load_timeout)
+        questions_page_obj.refresh()
         post_click_count = questions_page_obj.get_problem_count()
-        
-        self.assertEqual(initial_count+1,post_click_count)
-        
-if __name__ == "__main__":
-    unittest.main()                                               
+
+        assert (initial_count + 1) == post_click_count

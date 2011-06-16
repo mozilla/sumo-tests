@@ -54,13 +54,12 @@ http_regex = re.compile('https?://((\w+\.)+\w+\.\w+)')
 class Page(object):
     """
     Base class for all Pages
-    """        
+    """
+      
     def __init__(self, testsetup):
-        '''
-        Constructor
-        '''
         self.testsetup = testsetup
         self.base_url = testsetup.base_url
+        self.base_url_ssl = testsetup.base_url_ssl
         self.selenium = testsetup.selenium
         self.timeout = testsetup.timeout
 
@@ -78,7 +77,7 @@ class Page(object):
 
     def click_link(self, link, wait_flag=False, timeout=80000):
         self.selenium.click("link=%s" % (link))
-        if(wait_flag):
+        if wait_flag:
             self.selenium.wait_for_page_to_load(timeout)
 
     def click(self, locator, wait_flag=False, timeout=80000):
@@ -91,12 +90,12 @@ class Page(object):
 
     def click_button(self, button, wait_flag=False, timeout=80000):
         self.selenium.click(button)
-        if(wait_flag):
+        if wait_flag:
             self.selenium.wait_for_page_to_load(timeout)
 
     def get_url_current_page(self):
         return(self.selenium.get_location())
-    
+
     def get_page_title(self):
         return self.selenium.get_title()
 
@@ -151,7 +150,9 @@ class Page(object):
                 raise Exception("Sites Page has not loaded")
 
     def record_error(self):
-        ''' Records an error. '''
+        """
+            Records an error. 
+        """
 
         http_matches = http_regex.match(base_url)
         file_name = http_matches.group(1)

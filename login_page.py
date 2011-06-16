@@ -84,3 +84,8 @@ class LoginPage(sumo_page.SumoPage):
         user_name = user_info['username']
         password = user_info['password']
         self.log_in(user_name, password)
+
+    def get_user_name_non_admin(self):
+        user_info = sumo_test_data.SUMOtestData().getUserInfo(self._non_admin_user_index)
+        user_name = user_info['username']
+        return user_name

@@ -38,37 +38,25 @@
 import random
 import re
 
-import unittest
-from selenium import selenium
+import pytest
 
-import vars
 import knowledge_base_page
 import login_page
 
 
-class TestArticleCreateEditDelete(unittest.TestCase):
+class TestArticleCreateEditDelete:
 
-    def setUp(self):
-        self.selenium = selenium(vars.ConnectionParameters.server,
-                                 vars.ConnectionParameters.port,
-                                 vars.ConnectionParameters.browser,
-                                 vars.ConnectionParameters.baseurl)
-        self.selenium.start()
-        self.selenium.set_timeout(vars.ConnectionParameters.page_load_timeout)
-
-    def tearDown(self):
-        self.selenium.stop()
-
-    def test_that_article_can_be_created(self):
+    @pytest.mark.fft
+    def test_that_article_can_be_created(self, testsetup):
         """
            Creates a new knowledge base article.
            Verifies creation.
            Deletes the article
         """
-        knowledge_base_pg = knowledge_base_page.KBPage(self.selenium)
-        login_pg = login_page.LoginPage(self.selenium)
+        knowledge_base_pg = knowledge_base_page.KBPage(testsetup)
+        login_pg = login_page.LoginPage(testsetup)
 
-        #login with an Admin account as he can delete the article
+        # Admin account is used as he can delete the article
         login_pg.log_in_as_admin()
 
         random_num = random.randint(1000, 9999)
@@ -113,15 +101,16 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         # delete the same article
         knowledge_base_pg.delete_entire_article_document()
 
-    def test_that_article_can_be_edited(self):
+    @pytest.mark.fft
+    def test_that_article_can_be_edited(self, testsetup):
         """
            Creates a new knowledge base article.
            Verifies creation.
            Edits the article, verifies the edition.
            Deletes the article
         """
-        knowledge_base_pg = knowledge_base_page.KBPage(self.selenium)
-        login_pg = login_page.LoginPage(self.selenium)
+        knowledge_base_pg = knowledge_base_page.KBPage(testsetup)
+        login_pg = login_page.LoginPage(testsetup)
 
         #login with an Admin account as he can delete the article
         login_pg.log_in_as_admin()
@@ -173,14 +162,15 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         # delete the same article
         knowledge_base_pg.delete_entire_article_document()
 
-    def test_that_article_can_be_deleted(self):
+    @pytest.mark.fft
+    def test_that_article_can_be_deleted(self, testsetup):
         """
            Creates a new knowledge base article.
            Deletes the article.
            Verifies the deletion.
         """
-        knowledge_base_pg = knowledge_base_page.KBPage(self.selenium)
-        login_pg = login_page.LoginPage(self.selenium)
+        knowledge_base_pg = knowledge_base_page.KBPage(testsetup)
+        login_pg = login_page.LoginPage(testsetup)
 
         #login with an Admin account as he can delete the article
         login_pg.log_in_as_admin()
@@ -210,9 +200,11 @@ class TestArticleCreateEditDelete(unittest.TestCase):
         if re.search('Page Not Found', actual_page_title, re.I) is None:
             raise AssertionError('Page title is %s, was expecting %s' % (actual_page_title, 'Page Not Found'))
 
-    def test_that_article_can_be_previewed_before_submitting(self):
-        knowledge_base_pg = knowledge_base_page.KBPage(self.selenium)
-        login_pg = login_page.LoginPage(self.selenium)
+    @pytest.mark.fft
+    @pytest.mark.prod
+    def test_that_article_can_be_previewed_before_submitting(self, testsetup):
+        knowledge_base_pg = knowledge_base_page.KBPage(testsetup)
+        login_pg = login_page.LoginPage(testsetup)
 
         login_pg.log_in_as_non_admin()
 
@@ -232,6 +224,3 @@ class TestArticleCreateEditDelete(unittest.TestCase):
 
         assert actual_preview_text == article_info_dict['content'],\
                                       "Expected: %s Actual: %s" % (article_info_dict['content'], actual_preview_text)
-
-if __name__ == "__main__":
-    unittest.main()

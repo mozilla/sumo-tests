@@ -16,10 +16,11 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): Vishal
+# Contributor(s): Tanay
+#                 Vishal
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,41 +35,28 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import re
-import time
+import pytest
 
-import sumo_page
+import search_page
 
 
-class SupportHomePage(sumo_page.SumoPage):
-    """
-    The Firefox Support Home Pgae contains
-    web elements and methods that can be
-    performed on them.
-    """
-    _page_title             = 'Firefox Support Home Page'
-    main_search_box         = 'q'
-    log_in_link             = 'log in'
-    search_button           = 'css=button.img-submit'
-    see_all_button          = "button-seeall"
+class TestCantFindWhatYouAreLookingFor:
 
-    def go_to_support_home_page(self):
-        self.open('/')
-        self.is_the_current_page
+    @pytest.mark.smoketests
+    @pytest.mark.bft
+    @pytest.mark.fft
+    @pytest.mark.prod
+    def test_cant_find_what_youre_looking_for_test(self, testsetup):
+        search_page_obj = search_page.SearchPage(testsetup)
 
-    def click_log_in_link(self):
-        self.click(self.log_in_link, True, self.timeout)
+        searchTerms = ["firefox", "bgkhdsaghb"]
+        for current_search_term in searchTerms:
+            search_page_obj.go_to_search_page()
+            search_page_obj.do_search_on_search_box(current_search_term)
 
-    def do_search_on_main_search_box(self, search_query, search_page_obj):
-        if re.search(self._page_title, self.selenium.get_title()) is None:
-            self.go_to_support_home_page()
-        self.type(SupportHomePage.main_search_box, search_query)
-        self.click(self.search_button, True, self.timeout)
-        count = 0
-        while not self.selenium.is_text_present('results for %s' % search_query):
-            time.sleep(1)
-            count += 1
-            if count == self.timeout / 1000:
-                self.record_error()
-                raise Exception(search_query + " search page hasnt loaded")
-        search_page_obj.is_the_current_page
+            assert search_page_obj.is_text_present(\
+                "Can't find what you're looking for?"),\
+                "'Can't find text' not present"
+            assert search_page_obj.is_element_present(\
+                search_page_obj.support_question_link),\
+                "Ask question link not present"
