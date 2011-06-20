@@ -46,6 +46,7 @@ class TestForumDeletion:
 
     @pytest.mark.bft
     @pytest.mark.fft
+    @pytest.mark.xfail(reason="spurious failures by Sel trying to find Delete Post button")
     def test_forum_deletion(self, testsetup):
         '''Checks bug 569310 (accidental forum deletion)'''
         login_page_obj   = login_page.LoginPage(testsetup)
