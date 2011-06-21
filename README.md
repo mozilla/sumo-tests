@@ -129,6 +129,8 @@ in your local repository. Do Not check-in this file on Github.
 
 sample sumo_test_data.py :
 
+#!/usr/bin/env python
+
 class SUMOtestData(object):
     """
     User accounts etc. 
