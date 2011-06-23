@@ -1,17 +1,48 @@
-'''
-Created on Apr 13, 2011
-
-@author: mozilla
-'''
-
-import vars
-import unittest
-import urllib
+# ***** BEGIN LICENSE BLOCK *****
+# Version: MPL 1.1/GPL 2.0/LGPL 2.1
+#
+# The contents of this file are subject to the Mozilla Public License Version
+# 1.1 (the "License"); you may not use this file except in compliance with
+# the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS" basis,
+# WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+# for the specific language governing rights and limitations under the
+# License.
+#
+# The Original Code is Mozilla Support
+#
+# The Initial Developer of the Original Code is
+# Mozilla Support
+# Portions created by the Initial Developer are Copyright (C) 2011
+# the Initial Developer. All Rights Reserved.
+#
+# Contributor(s): Vishal
+#
+# Alternatively, the contents of this file may be used under the terms of
+# either the GNU General Public License Version 2 or later (the "GPL"), or
+# the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+# in which case the provisions of the GPL or the LGPL are applicable instead
+# of those above. If you wish to allow use of your version of this file only
+# under the terms of either the GPL or the LGPL, and not to allow others to
+# use your version of this file under the terms of the MPL, indicate your
+# decision by deleting the provisions above and replace them with the notice
+# and other provisions required by the GPL or the LGPL. If you do not delete
+# the provisions above, a recipient may use your version of this file under
+# the terms of any one of the MPL, the GPL or the LGPL.
+#
+# ***** END LICENSE BLOCK *****
+import urllib2
 import sys
+import time
+
+import unittest
 
 cmd_line_args = []
 cmd_line_args.extend(sys.argv)
 del sys.argv[1:]
+
 
 class TestRewrites(unittest.TestCase):
 
@@ -20,7 +51,7 @@ class TestRewrites(unittest.TestCase):
         if len(cmd_line_args) > 1:
             self.mainURL = cmd_line_args[1]
         else:
-            self.mainURL    = vars.ConnectionParameters.baseurl
+            self.mainURL    = "http://support.allizom.org"
         if self.mainURL.endswith('/'):
             self.mainURL = self.mainURL.rstrip('/')
         self.numberOne  = "/1"
@@ -44,7 +75,6 @@ class TestRewrites(unittest.TestCase):
         self.key2 = "redirectUrl"
         self.key3 = "hash"
         self.styleMode = "/home?as=u"
-        #self.styleMode = "/Firefox Help?style_mode=inproduct"
         self.styleModePageInfo = "/Page Info window"
         self.styleMode4 = "?style_mode=inproduct"
         self.article_source_suffix = "?as=u"
@@ -77,8 +107,8 @@ class TestRewrites(unittest.TestCase):
                 for three in self._3:
                     open_url = self.mainURL+self.numberOne+self._1+two+three+(x[self.key1])
                     expected_url = self.mainURL+x[self.key2]+self.styleMode
-                    http_response = urllib.urlopen(open_url)
-                    actual_url = urllib.unquote(http_response.geturl())
+                    http_response = self.get_http_response(open_url)
+                    actual_url = urllib2.unquote(http_response.geturl())
                     self.assertEqual(actual_url,expected_url)
 
         """
@@ -99,8 +129,8 @@ class TestRewrites(unittest.TestCase):
         for x in urlMatrixArray2:
             open_url = self.mainURL+(x[self.key1])+self.kbSuffix
             expected_url = self.mainURL+(x[self.key2])+"/home"
-            http_response = urllib.urlopen(open_url)
-            actual_url = urllib.unquote(http_response.geturl())
+            http_response = self.get_http_response(open_url)
+            actual_url = urllib2.unquote(http_response.geturl())
             self.assertEqual(actual_url,expected_url)
                         
     """ // //RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/pageinfo_general\/$ to
@@ -117,7 +147,7 @@ class TestRewrites(unittest.TestCase):
         five   = {"goToUrl":"/pageinfo_security","redirectUrl":"?as=u#Security"}
 
          
-        urlPageInfo = (one,two,three,four,five)
+        urlPageInfo = (one, two, three, four, five)
         
         for x in self.localesArray:
             for pageInfo in urlPageInfo:
@@ -126,12 +156,12 @@ class TestRewrites(unittest.TestCase):
                         open_url = self.mainURL+self.numberOne+self._1+two+three+x[self.key1]+pageInfo[self.key1]+"/"
                         open_urlNoTrailingSlash = self.mainURL+self.numberOne+self._1+two+three+(x[self.key1])+pageInfo[self.key1]
                         expected_url = self.mainURL+x[self.key2]+self.kbSuffix+self.styleModePageInfo+pageInfo[self.key2]
-                        http_response = urllib.urlopen(open_url)
-                        actual_url = urllib.unquote(http_response.geturl())
+                        http_response = self.get_http_response(open_url)
+                        actual_url = urllib2.unquote(http_response.geturl())
                         self.assertEqual(actual_url,expected_url)
                         """ repeat without trailing slash"""
-                        http_response = urllib.urlopen(open_urlNoTrailingSlash)
-                        actual_url = urllib.unquote(http_response.geturl())
+                        http_response = self.get_http_response(open_urlNoTrailingSlash)
+                        actual_url = urllib2.unquote(http_response.geturl())
                         self.assertEqual(actual_url,expected_url)
 
 
@@ -151,12 +181,12 @@ class TestRewrites(unittest.TestCase):
                         open_url = self.mainURL+self.numberOne+self._1+two+three+x[self.key1]+fxHelp+"/"
                         open_urlNoTrailingSlash = self.mainURL+self.numberOne+self._1+two+three+x[self.key1]+fxHelp
                         expected_url = self.mainURL+x[self.key2]+self.styleMode
-                        http_response = urllib.urlopen(open_url)
-                        actual_url = urllib.unquote(http_response.geturl())
+                        http_response = self.get_http_response(open_url)
+                        actual_url = urllib2.unquote(http_response.geturl())
                         self.assertEqual(actual_url,expected_url)
                         """ repeat without trailing slash"""
-                        http_response = urllib.urlopen(open_urlNoTrailingSlash)
-                        actual_url = urllib.unquote(http_response.geturl())
+                        http_response = self.get_http_response(open_urlNoTrailingSlash)
+                        actual_url = urllib2.unquote(http_response.geturl())
                         self.assertEqual(actual_url,expected_url)
                         
     """RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-main\/$ to
@@ -203,11 +233,11 @@ class TestRewrites(unittest.TestCase):
                         open_url = self.mainURL+self.numberOne+self._1+two+three+x[self.key1]+urlPrefs[self.key1]+"/"
                         open_urlNoTrailingSlash = self.mainURL+self.numberOne+self._1+two+three+x[self.key1]+urlPrefs[self.key1]
                         expected_url = self.mainURL+x[self.key2]+self.kbSuffix+urlPrefs[self.key2]
-                        http_response = urllib.urlopen(open_url)
+                        http_response = self.get_http_response(open_url)
                         if http_response.code == 404:
                                 print "%s gives %s" %(open_url,http_response)
                                 continue
-                        actual_url = urllib.unquote(http_response.geturl())
+                        actual_url = urllib2.unquote(http_response.geturl())
                         self.assert_(expected_url in actual_url)
                         if 'eu=1' in urlPrefs[self.key3]:
                             self.assert_('eu=1' in actual_url)
@@ -225,11 +255,11 @@ class TestRewrites(unittest.TestCase):
 
                             
                         """ repeat without trailing slash"""
-                        http_response = urllib.urlopen(open_urlNoTrailingSlash)
+                        http_response = self.get_http_response(open_urlNoTrailingSlash)
                         if http_response.code == 404:
                                 print "%s gives %s" %(open_url,http_response)
                                 continue
-                        actual_url = urllib.unquote(http_response.geturl())
+                        actual_url = urllib2.unquote(http_response.geturl())
                         self.assert_(expected_url in actual_url)
                         if 'eu=1' in urlPrefs[self.key3]:
                             self.assert_('eu=1' in actual_url)
@@ -254,42 +284,12 @@ class TestRewrites(unittest.TestCase):
         """
         open_url     = self.mainURL+"/windows7-support"
         expected_url = self.mainURL+"/en-US"+self.styleMode
-        http_response = urllib.urlopen(open_url)
-        actual_url = urllib.unquote(http_response.geturl())
+        http_response = self.get_http_response(open_url)
+        actual_url = urllib2.unquote(http_response.geturl())
         self.assertEqual(expected_url,actual_url)
         
         
-        """     +# Redirect old discussion forums to new discussion forums
-                +RewriteRule ^forum/3(.*) /en-US/forums/contributors$1 [L,QSA,R=301]
-                +RewriteRule ^([\-a-zA-Z]+)/forum/3(.*) /en-US/forums/contributors$2 [L,QSA,R=301]
-                 +RewriteRule ^forum/4(.*) /en-US/forums/off-topic$1 [L,QSA,R=301]
-                 +RewriteRule ^([\-a-zA-Z]+)/forum/4(.*) /en-US/forums/off-topic$2 [L,QSA,R=301]
-                +RewriteRule ^forum/5(.*) /en-US/forums/knowledge-base-articles$1 [L,QSA,R=301]
-                +RewriteRule ^([\-a-zA-Z]+)/forum/5(.*) /en-US/forums/knowledge-base-articles$2 [L,QSA,R=301]
-        """
-        """
-           No longer valid, bug 650349
-        """
-#        open_url     = self.mainURL+"/forum/3"
-#        http_response = urllib.urlopen(open_url)
-#        actual_url = urllib.unquote(http_response.geturl())
-#        self.assert_('/forums/contributors' in actual_url)
-#        
-#        open_url     = self.mainURL+"/forum/4"
-#        http_response = urllib.urlopen(open_url)
-#        actual_url = urllib.unquote(http_response.geturl())
-#        self.assert_('/forums/off-topic' in actual_url)
-#                        
-#        open_url     = self.mainURL+"/forum/5"
-#        http_response = urllib.urlopen(open_url)
-#        actual_url = urllib.unquote(http_response.geturl())
-#        self.assert_('/forums/knowledge-base-articles' in actual_url)
-        
-#        open_url     = self.mainURL+"/en-US/forum/6"
-#        expected_url = self.mainURL+"/en-US/questions?tagged=FxHome"
-#        sel.open(open_url)
-#        actual_url = sel.get_location()
-#        self.assertEqual(expected_url,actual_url)
+
         
         """ redirect old mobie url's to new sumo url's
         http://support.allizom.org/1/mobile/4.0/android/en-US/firefox-help ->
@@ -303,8 +303,8 @@ class TestRewrites(unittest.TestCase):
                 for three in mobile_os:
                     open_url     = str(self.mainURL)+str(self.numberOne)+platform+two+three+str(x[self.key1])+"/firefox-help"
                     expectedStr = "m/support"
-                    http_response = urllib.urlopen(open_url)
-                    actual_url = urllib.unquote(http_response.geturl())
+                    http_response = self.get_http_response(open_url)
+                    actual_url = urllib2.unquote(http_response.geturl())
                     if http_response.code == 404:
                         print ("%s gives %s") %(open_url,http_response.code)
                         continue
@@ -316,8 +316,8 @@ class TestRewrites(unittest.TestCase):
         """
         open_url     = self.mainURL+"/contribute"  
         expectedStr = "/en-US"+self.kbSuffix+"/superheroes-wanted"
-        http_response = urllib.urlopen(open_url)
-        actual_url = urllib.unquote(http_response.geturl())
+        http_response = self.get_http_response(open_url)
+        actual_url = urllib2.unquote(http_response.geturl())
         self.failUnless(expectedStr in actual_url)
         
         """
@@ -333,14 +333,14 @@ class TestRewrites(unittest.TestCase):
                     fx_4 = "/4.0b4"
                     open_url = self.mainURL+str(self.numberOne)+str(self._1)+str(fx_4)+str(y)+str(x[self.key1])
                     expected_url = self.mainURL+x[self.key2]+self.styleMode
-                    http_response = urllib.urlopen(open_url)
-                    actual_url = urllib.unquote(http_response.geturl())
+                    http_response = self.get_http_response(open_url)
+                    actual_url = urllib2.unquote(http_response.geturl())
                     self.assertEqual(expected_url,actual_url)
             
                     open_url = self.mainURL+str(self.numberOne)+str(self._1)+str(z)+str(y)+(x[self.key1])
                     expected_url = self.mainURL+x[self.key2]+self.styleMode
-                    http_response = urllib.urlopen(open_url)
-                    actual_url = urllib.unquote(http_response.geturl())
+                    http_response = self.get_http_response(open_url)
+                    actual_url = urllib2.unquote(http_response.geturl())
                     self.assertEqual(expected_url,actual_url)
  
     '''
@@ -369,8 +369,8 @@ class TestRewrites(unittest.TestCase):
             for two in self._2:
                 open_url     = str(self.mainURL)+str(self.numberOne)+str(product_iphone)+two+str(platform_iphone)+str(x[self.key1])
                 expected_url = self.mainURL+"/en-US"+self.kbSuffix+"/What is Firefox Home"+self.article_source_suffix
-                http_response = urllib.urlopen(open_url)
-                actual_url = urllib.unquote(http_response.geturl())
+                http_response = self.get_http_response(open_url)
+                actual_url = urllib2.unquote(http_response.geturl())
                 if http_response.code == 404:
                     print ("%s gives %s") %(open_url,http_response.code)
                     continue
@@ -387,75 +387,40 @@ class TestRewrites(unittest.TestCase):
 #                    if '404' in str(e):
 #                        print str(e)
 #                        
-#                actual_url = urllib.unquote(sel.get_location())
+#                actual_url = urllib2.unquote(sel.get_location())
 #                self.assertEqual(expected_url,actual_url)
 #                
                 # Firefox Home App
                 open_url     = self.mainURL+self.numberOne+product_iphone+two+platform_iphone+x[self.key1]+helptopic_login
                 expected_url = self.mainURL+"/en-US"+self.kbSuffix+"/Cannot log in to Firefox Home App"+self.article_source_suffix
-                http_response = urllib.urlopen(open_url)
-                actual_url = urllib.unquote(http_response.geturl())
+                http_response = self.get_http_response(open_url)
+                actual_url = urllib2.unquote(http_response.geturl())
                 if http_response.code == 404:
                     print ("%s gives %s") %(open_url,http_response.code)
                     continue
                 self.assertEqual(expected_url,actual_url)     
-                           
-    """
-         No longer valid, bug 650303
-    """          
-#    def test_old_kb_redirects(self):
-#        
-#        one    = {"goToUrl":"/Firefox+Help","redirectUrl" : "/home"}
-#        two    = {"goToUrl":"/Windows+start+page","redirectUrl":"/home"}
-#        #three    = {"goToUrl":"/Firefox+Support+Home+Page","redirectUrl":"/home/"}
-#        four = {"goToUrl":"/Get+help+with+Firefox+4+Beta","redirectUrl":"/home"}
-#        five = {"goToUrl":"/Localization+Dashboard","redirectUrl":"/contributors"}
-#        six = {"goToUrl":"/All+Knowledge+Base+articles","redirectUrl":"/contributors"}
-#        seven    = {"goToUrl":"/Mobile+Help+and+Tutorials","redirectUrl":"/mobile"}
-#        eight    = {"goToUrl":"/Article+list","redirectUrl" : "/all"}
-#
-#
-#        kb_array = (one,two,four,five,six)
-#        for x in self.localesArray:
-#            for y in kb_array:
-#                open_url = self.mainURL+(x[self.key1])+self.kbSuffix+y[self.key1]
-#                expected_url = self.mainURL+x[self.key2]+y[self.key2]
-#                http_response = urllib.urlopen(open_url)
-#                actual_url = urllib.unquote(http_response.geturl())
-#                self.assertEqual(expected_url,actual_url)
-#                        
-#        kb_array2 = (seven,)       
-#        for x in self.localesArray:
-#            for y in kb_array2:
-#                open_url = self.mainURL+(x[self.key1])+self.kbSuffix+y[self.key1]
-#                expected_url = y[self.key2]
-#                http_response = urllib.urlopen(open_url)
-#                actual_url = urllib.unquote(http_response.geturl())
-#                self.assertTrue(expected_url in actual_url)
-#                        
-#        """ ^kb/Article\+list$ /kb/all """
-#        kb_array2 = (eight,)
-#        for x in self.localesArray:
-#            for y in kb_array2:
-#                open_url = self.mainURL+str(x[self.key1])+str(self.kbSuffix)+str(y[self.key1])
-#                expected_url = self.mainURL+x[self.key2]+str(self.kbSuffix)+y[self.key2]
-#                http_response = urllib.urlopen(open_url)
-#                actual_url = urllib.unquote(http_response.geturl())
-#                self.assertEqual(expected_url,actual_url)
-#        
-#        """ non-localized kb redirects"""           
-#        one    = {"goToUrl":"/Live+Chat","redirectUrl":"/chat"}
-#        two    = {"goToUrl":"/Support+Website+Forums","redirectUrl" : "/questions"}
-#        
-#        kb_array2 = (one,two)
-#        for x in self.localesArray:
-#            for y in kb_array2:
-#                open_url = self.mainURL+(x[self.key1])+self.kbSuffix+y[self.key1]
-#                expected_url = self.mainURL+"/en-US"+y[self.key2]
-#                http_response = urllib.urlopen(open_url)
-#                actual_url = urllib.unquote(http_response.geturl())
-#                self.assertEqual(expected_url,actual_url)
 
+    def get_http_response(self, url):
+        http_response = ''
+        counter = 0
+        is_200 = False
+        req = urllib2.Request(url)
+        while counter < 8 and not is_200:
+            try:
+                http_response = urllib2.urlopen(req)
+            except Exception, err:
+                print str(err)
+                print 'Error when opening page %s' % url
+                print 'Http Response %s' % http_response.info()
+                time.sleep(2)
+                continue
+            if http_response.code == 200:
+                is_200 = True
+                break
+            else:
+                counter += 1
+                
+        return http_response
 
 if __name__ == "__main__":
     unittest.main()
