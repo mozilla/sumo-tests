@@ -35,86 +35,77 @@
 #
 # ***** END LICENSE BLOCK *****
 
-import time
-import re
-
+import ask_new_questions_page
 import sumo_page
+
 
 class QuestionsPage(sumo_page.SumoPage):
     """
     'Ask a Question' page.
     """
     _page_title                   = 'Firefox Support Forum'
-    _page_title_questions_new     = 'Ask a Question'
-    forums_page_url               = '/en-US/questions'
-    questions_new_url             = '/en-US/questions/new'
-    ask_question_link             = '/en-US/questions/new'
-    firefox_product_first_link    = 'css=ul.select-one > li > a'
-    category_prob_first_link      = 'css=ul.select-one > li > a'
-    type_question_box             = 'search'
-    ask_this_button               = "css=input[value='Ask this']"
-    none_of_these_button          = "css=input[value *='None']"
-    question_list_link            = "css=ol.questions > li:nth-child(%d) > div:nth-child(1) > h2 > a"
-    problem_too_button            = "css=input[value*='problem']"
-    no_thanks_link                = "link=*No*Thanks*"
-    problem_count_text            = "css=div[class^='have-problem'] > mark"
-    provide_details_button        = "show-form-btn"
-    q_content_box                 = 'id_content'
-    q_site_box                    = 'id_sites_affected'
-    q_trouble_box                 = 'id_troubleshooting'
-    q_post_button                 = "css=input[value='Post Question']"
+    _forums_page_url               = '/en-US/questions'
+    _ask_question_link             = '/en-US/questions/new'
+    _question_list_link            = "css=ol.questions > li:nth-child(%d) > div:nth-child(1) > h2 > a"
+    _problem_too_button            = "css=input[value*='problem']"
+    _no_thanks_link                = "link=*No*Thanks*"
+    _problem_count_text            = "css=div[class^='have-problem'] > mark"
+    _sort_solved_link             = "css=a[href*=filter=solved]"
+    _sort_unsolved_link           = "css=a[href*=filter=unsolved]"
+    _sort_no_replies_link         = "css=a[href*=filter=no-replies]"
+    _solved_or_unsolved_text      = "css=ol.questions > li:nth-child(%s) > div.thread-meta > span"
+    _questions_list_block         = "css=ol.questions"
+    _questions_list_xpath         = "//ol[@class='questions']/li"
+
+    @property
+    def problem_too_button(self):
+        return self._problem_too_button
 
     def go_to_forum_questions_page(self):
-        self.open(self.forums_page_url)
+        self.open(self._forums_page_url)
         self.is_the_current_page
-        
-    def go_to_ask_new_questions_page(self):
-        self.selenium.open(self.questions_new_url)
-        if (re.search(self._page_title_questions_new, self.selenium.get_title()) is None):
-            raise Exception, '\r\nPage title verification failed. Expected: %s; Actual:%s\r\n'\
-                              % (self._page_title_questions_new,self.selenium.get_title())
 
     def click_ask_new_questions_link(self):
-        self.click(self.ask_question_link, True, self.timeout)
-        
-    def click_firefox_product_link(self):
-        self.click(self.firefox_product_first_link, True, self.timeout)
-        
-    def click_category_problem_link(self):
-        self.click(self.category_prob_first_link, True, self.timeout)
-        
-    def type_question(self, question_to_ask):
-        self.type(self.type_question_box, question_to_ask)
-        self.click(self.ask_this_button, True, self.timeout)
-          
-    def go_to_thread(self,url):
+        self.click(self._ask_question_link, True, self.timeout)
+        ask_new_questions_pg = ask_new_questions_page.AskNewQuestionsPage(self.testsetup)
+        return ask_new_questions_pg
+
+    def go_to_thread(self, url):
         self.selenium.open(url)
-        
+
     def click_any_question(self, num):
-        q_link = self.question_list_link % num
+        q_link = self._question_list_link % num
         self.selenium.click(q_link)
         self.selenium.wait_for_page_to_load(self.timeout)
-        
+
     def click_problem_too_button(self):
-        self.selenium.click(self.problem_too_button)
-        self.wait_for_element_present(self.no_thanks_link)
-        
-    def click_provide_details_button(self):
-        self.click(self.provide_details_button, True, self.timeout)
-        
-    def fill_up_questions_form(self, q_text='details', q_site='www.example.com', q_trouble='no addons'):
-        self.type(self.q_content_box, q_text)
-        self.type(self.q_site_box, q_site)
-        self.type(self.q_trouble_box, q_trouble)
-        self.click(self.q_post_button, True, self.timeout)
-         
+        self.selenium.click(self._problem_too_button)
+        self.wait_for_element_present(self._no_thanks_link)
+
     def get_problem_count(self):
-        count_text = self.selenium.get_text(self.problem_count_text)
+        count_text = self.selenium.get_text(self._problem_count_text)
         count_text = count_text.split()
         count = int(count_text[0])
         return count
-        
-        
-        
-    
-        
+
+    def click_sort_by_solved_questions(self):
+        self.click(self._sort_solved_link, True, self.timeout)
+
+    def click_sort_by_unsolved_questions(self):
+        self.click(self._sort_unsolved_link, True, self.timeout)
+
+    def click_sort_by_no_replies_questions(self):
+        self.click(self._sort_no_replies_link, True, self.timeout)
+
+    def are_questions_present(self):
+        if self.selenium.is_element_present(self._questions_list_block):
+            return True
+        else:
+            return False
+
+    def get_questions_count(self):
+        return self.selenium.get_xpath_count(self._questions_list_xpath)
+
+    def get_sorted_list_filter_text(self, question_number):
+        locator = self._solved_or_unsolved_text % question_number
+        return self.selenium.get_text(locator)
