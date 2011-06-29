@@ -43,30 +43,30 @@ class QuestionsPage(sumo_page.SumoPage):
     """
     'Ask a Question' page.
     """
-    _page_title                   = 'Firefox Support Forum'
-    _forums_page_url               = '/en-US/questions'
-    _ask_question_link             = '/en-US/questions/new'
-    _question_list_link            = "css=ol.questions > li:nth-child(%d) > div:nth-child(1) > h2 > a"
-    _problem_too_button            = "css=input[value*='problem']"
-    _no_thanks_link                = "link=*No*Thanks*"
-    _problem_count_text            = "css=div[class^='have-problem'] > mark"
-    _sort_solved_link             = "css=a[href*=filter=solved]"
-    _sort_unsolved_link           = "css=a[href*=filter=unsolved]"
-    _sort_no_replies_link         = "css=a[href*=filter=no-replies]"
-    _solved_or_unsolved_text      = "css=ol.questions > li:nth-child(%s) > div.thread-meta > span"
-    _questions_list_block         = "css=ol.questions"
-    _questions_list_xpath         = "//ol[@class='questions']/li"
+    _page_title                         = 'Firefox Support Forum'
+    _forums_page_url                    = '/en-US/questions'
+    _ask_question_link_locator          = '/en-US/questions/new'
+    _question_list_link_locator         = "css=ol.questions > li:nth-child(%d) > div:nth-child(1) > h2 > a"
+    _problem_too_button_locator         = "css=input[value*='problem']"
+    _no_thanks_link_locator             = "link=*No*Thanks*"
+    _problem_count_text_locator         = "css=div[class^='have-problem'] > mark"
+    _sort_solved_link_locator           = "css=a[href*=filter=solved]"
+    _sort_unsolved_link_locator         = "css=a[href*=filter=unsolved]"
+    _sort_no_replies_link_locator       = "css=a[href*=filter=no-replies]"
+    _solved_or_unsolved_text_locator    = "css=ol.questions > li:nth-child(%s) > div.thread-meta > span"
+    _questions_list_block_locator       = "css=ol.questions"
+    _questions_list_xpath_locator       = "//ol[@class='questions']/li"
 
     @property
     def problem_too_button(self):
-        return self._problem_too_button
+        return self._problem_too_button_locator
 
     def go_to_forum_questions_page(self):
         self.open(self._forums_page_url)
         self.is_the_current_page
 
     def click_ask_new_questions_link(self):
-        self.click(self._ask_question_link, True, self.timeout)
+        self.click(self._ask_question_link_locator, True, self.timeout)
         ask_new_questions_pg = ask_new_questions_page.AskNewQuestionsPage(self.testsetup)
         return ask_new_questions_pg
 
@@ -74,38 +74,40 @@ class QuestionsPage(sumo_page.SumoPage):
         self.selenium.open(url)
 
     def click_any_question(self, num):
-        q_link = self._question_list_link % num
+        q_link = self._question_list_link_locator % num
         self.selenium.click(q_link)
         self.selenium.wait_for_page_to_load(self.timeout)
 
     def click_problem_too_button(self):
-        self.selenium.click(self._problem_too_button)
-        self.wait_for_element_present(self._no_thanks_link)
+        self.selenium.click(self._problem_too_button_locator)
+        self.wait_for_element_present(self._no_thanks_link_locator)
 
+    @property
     def get_problem_count(self):
-        count_text = self.selenium.get_text(self._problem_count_text)
+        count_text = self.selenium.get_text(self._problem_count_text_locator)
         count_text = count_text.split()
         count = int(count_text[0])
         return count
 
     def click_sort_by_solved_questions(self):
-        self.click(self._sort_solved_link, True, self.timeout)
+        self.click(self._sort_solved_link_locator, True, self.timeout)
 
     def click_sort_by_unsolved_questions(self):
-        self.click(self._sort_unsolved_link, True, self.timeout)
+        self.click(self._sort_unsolved_link_locator, True, self.timeout)
 
     def click_sort_by_no_replies_questions(self):
-        self.click(self._sort_no_replies_link, True, self.timeout)
+        self.click(self._sort_no_replies_link_locator, True, self.timeout)
 
     def are_questions_present(self):
-        if self.selenium.is_element_present(self._questions_list_block):
+        if self.selenium.is_element_present(self._questions_list_block_locator):
             return True
         else:
             return False
 
+    @property
     def get_questions_count(self):
-        return self.selenium.get_xpath_count(self._questions_list_xpath)
+        return int(self.selenium.get_xpath_count(self._questions_list_xpath_locator))
 
     def get_sorted_list_filter_text(self, question_number):
-        locator = self._solved_or_unsolved_text % question_number
+        locator = self._solved_or_unsolved_text_locator % question_number
         return self.selenium.get_text(locator)

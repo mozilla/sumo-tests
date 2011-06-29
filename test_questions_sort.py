@@ -53,10 +53,10 @@ class TestQuestionsSort:
 
         questions_pg.go_to_forum_questions_page()
         questions_pg.click_sort_by_solved_questions()
-        # if there are no questions in the list then exit the test
+        # if there are no questions in the list then skip the test
         if not questions_pg.are_questions_present():
-            return
-        num_of_questions = int(questions_pg.get_questions_count())
+            pytest.skip("No questions present for filter=%s" % expected_sorted_text)
+        num_of_questions = questions_pg.get_questions_count
 
         for counter in range(num_of_questions):
             actual_sorted_text = questions_pg.get_sorted_list_filter_text(counter + 1)
@@ -75,10 +75,10 @@ class TestQuestionsSort:
 
         questions_pg.go_to_forum_questions_page()
         questions_pg.click_sort_by_no_replies_questions()
-        # if there are no questions in the list then exit the test
+        # if there are no questions in the list then skip the test
         if not questions_pg.are_questions_present():
-            return
-        num_of_questions = int(questions_pg.get_questions_count())
+            pytest.skip("No questions present for filter=%s" % expected_sorted_text)
+        num_of_questions = questions_pg.get_questions_count
 
         for counter in range(num_of_questions):
             index = counter + 1
