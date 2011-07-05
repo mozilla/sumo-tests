@@ -71,9 +71,9 @@ class TestQuestionProbCount:
         if not found and counter == 20:
             return
 
-        initial_count = questions_page_obj.get_problem_count()
+        initial_count = questions_page_obj.get_problem_count
         questions_page_obj.click_problem_too_button()
         questions_page_obj.refresh()
-        post_click_count = questions_page_obj.get_problem_count()
+        post_click_count = questions_page_obj.get_problem_count
 
         assert (initial_count + 1) == post_click_count

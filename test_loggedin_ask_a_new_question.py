@@ -39,7 +39,7 @@ import datetime
 
 import pytest
 
-import questions_page
+import ask_new_questions_page
 import login_page
 
 
@@ -50,23 +50,23 @@ class TestAAQ:
     @pytest.mark.fft
     def test_that_posting_question_works(self, testsetup):
         """Posts a question to /questions"""
-        login_po            = login_page.LoginPage(testsetup)
-        questions_po        = questions_page.QuestionsPage(testsetup)
-        timestamp           = datetime.datetime.today()
-        q_to_ask            = "automation test question %s" % (timestamp)
-        q_details           = "This is a test. %s" % (timestamp)
+        login_po              = login_page.LoginPage(testsetup)
+        ask_new_questions_pg  = ask_new_questions_page.AskNewQuestionsPage(testsetup)
+        timestamp             = datetime.datetime.today()
+        q_to_ask              = "automation test question %s" % (timestamp)
+        q_details             = "This is a test. %s" % (timestamp)
 
         login_po.log_in_as_non_admin()
 
         # go to the /questions/new page and post a question
-        questions_po.go_to_ask_new_questions_page()
-        questions_po.click_firefox_product_link()
-        questions_po.click_category_problem_link()
-        questions_po.type_question(q_to_ask)
-        questions_po.click_provide_details_button()
-        questions_po.fill_up_questions_form(q_details)
+        ask_new_questions_pg.go_to_ask_new_questions_page()
+        ask_new_questions_pg.click_firefox_product_link()
+        ask_new_questions_pg.click_category_problem_link()
+        ask_new_questions_pg.type_question(q_to_ask)
+        ask_new_questions_pg.click_provide_details_button()
+        ask_new_questions_pg.fill_up_questions_form(q_details)
 
-        assert questions_po.is_text_present(q_to_ask),\
+        assert ask_new_questions_pg.is_text_present(q_to_ask),\
                "Did not find text: %s on the page" % (q_to_ask)
-        assert questions_po.is_text_present(q_details),\
+        assert ask_new_questions_pg.is_text_present(q_details),\
                "Did not find text: %s on the page" % (q_details)
