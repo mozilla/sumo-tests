@@ -50,9 +50,9 @@ class QuestionsPage(sumo_page.SumoPage):
     _problem_too_button_locator         = "css=input[value*='problem']"
     _no_thanks_link_locator             = "link=*No*Thanks*"
     _problem_count_text_locator         = "css=div[class^='have-problem'] > mark"
-    _sort_solved_link_locator           = "css=a[href*=filter=solved]"
-    _sort_unsolved_link_locator         = "css=a[href*=filter=unsolved]"
-    _sort_no_replies_link_locator       = "css=a[href*=filter=no-replies]"
+    _sort_solved_link_locator           = "css=a[href*='filter=solved']"
+    _sort_unsolved_link_locator         = "css=a[href*='filter=unsolved']"
+    _sort_no_replies_link_locator       = "css=a[href*='filter=no-replies']"
     _solved_or_unsolved_text_locator    = "css=ol.questions > li:nth-child(%s) > div.thread-meta > span"
     _questions_list_block_locator       = "css=ol.questions"
     _questions_list_xpath_locator       = "//ol[@class='questions']/li"
@@ -90,13 +90,16 @@ class QuestionsPage(sumo_page.SumoPage):
         return count
 
     def click_sort_by_solved_questions(self):
-        self.click(self._sort_solved_link_locator, True, self.timeout)
+        self.selenium.click(self._sort_solved_link_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def click_sort_by_unsolved_questions(self):
-        self.click(self._sort_unsolved_link_locator, True, self.timeout)
+        self.selenium.click(self._sort_unsolved_link_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def click_sort_by_no_replies_questions(self):
-        self.click(self._sort_no_replies_link_locator, True, self.timeout)
+        self.selenium.click(self._sort_no_replies_link_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def are_questions_present(self):
         if self.selenium.is_element_present(self._questions_list_block_locator):
