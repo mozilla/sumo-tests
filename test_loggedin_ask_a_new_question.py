@@ -48,10 +48,10 @@ class TestAAQ:
     @pytest.mark.smoketests
     @pytest.mark.bft
     @pytest.mark.fft
-    def test_that_posting_question_works(self, testsetup):
+    def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
-        login_po              = login_page.LoginPage(testsetup)
-        ask_new_questions_pg  = ask_new_questions_page.AskNewQuestionsPage(testsetup)
+        login_po              = login_page.LoginPage(mozwebqa)
+        ask_new_questions_pg  = ask_new_questions_page.AskNewQuestionsPage(mozwebqa)
         timestamp             = datetime.datetime.today()
         q_to_ask              = "automation test question %s" % (timestamp)
         q_details             = "This is a test. %s" % (timestamp)

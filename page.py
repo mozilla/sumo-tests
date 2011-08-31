@@ -56,7 +56,7 @@ class Page(object):
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.base_url = testsetup.base_url
-        self.base_url_ssl = testsetup.base_url_ssl
+        self.base_url_ssl = testsetup.base_url.replace("http", "https")
         self.selenium = testsetup.selenium
         self.timeout = testsetup.timeout
 
@@ -64,7 +64,6 @@ class Page(object):
     def is_the_current_page(self):
         page_title = self.selenium.get_title()
         if re.search(self._page_title, page_title) is None:
-            self.record_error()
             try:
                 raise Exception("Expected page title to be: '" + self._page_title + "' but it was: '" + page_title + "'")
             except Exception:
@@ -115,7 +114,6 @@ class Page(object):
             time.sleep(1)
             count += 1
             if count == self.timeout / 1000:
-                self.record_error()
                 raise Exception(element + ' has not loaded')
 
     def wait_for_element_visible(self, element):
@@ -125,7 +123,6 @@ class Page(object):
             time.sleep(1)
             count += 1
             if count == self.timeout / 1000:
-                self.record_error()
                 raise Exception(element + " is not visible")
 
     def wait_for_element_not_visible(self, element):
@@ -134,7 +131,6 @@ class Page(object):
             time.sleep(1)
             count += 1
             if count == self.timeout / 1000:
-                self.record_error()
                 raise Exception(element + " is still visible")
 
     def wait_for_page(self, url_regex):
@@ -143,25 +139,4 @@ class Page(object):
             time.sleep(1)
             count += 1
             if count == self.timeout / 1000:
-                self.record_error()
                 raise Exception("Sites Page has not loaded")
-
-    def record_error(self):
-        """
-            Records an error. 
-        """
-
-        http_matches = http_regex.match(self.base_url)
-        file_name = http_matches.group(1)
-
-        print '-------------------'
-        print 'Error at ' + self.selenium.get_location()
-        print 'Page title ' + self.selenium.get_title().encode('utf-8')
-        print '-------------------'
-        filename = file_name + '_' + str(time.time()).split('.')[0] + '.png'
-
-        print 'Screenshot of error in file ' + filename
-        f = open(filename, 'wb')
-        f.write(base64.decodestring(
-            self.selenium.capture_entire_page_screenshot_to_string('')))
-        f.close()

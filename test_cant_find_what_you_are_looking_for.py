@@ -46,8 +46,8 @@ class TestCantFindWhatYouAreLookingFor:
     @pytest.mark.bft
     @pytest.mark.fft
     @pytest.mark.prod
-    def test_cant_find_what_youre_looking_for_test(self, testsetup):
-        search_page_obj = search_page.SearchPage(testsetup)
+    def test_cant_find_what_youre_looking_for_test(self, mozwebqa):
+        search_page_obj = search_page.SearchPage(mozwebqa)
 
         searchTerms = ["firefox", "bgkhdsaghb"]
         for current_search_term in searchTerms:

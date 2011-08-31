@@ -43,12 +43,12 @@ class TestQuestionsSort:
 
     @pytest.mark.fft
     @pytest.mark.prod
-    def test_that_questions_sorts_correctly_by_filter_equal_to_solved(self, testsetup):
+    def test_that_questions_sorts_correctly_by_filter_equal_to_solved(self, mozwebqa):
         """
            Goes to the /questions page,
            Verifies the sort filter=solved works
         """
-        questions_pg = questions_page.QuestionsPage(testsetup)
+        questions_pg = questions_page.QuestionsPage(mozwebqa)
         expected_sorted_text = "Solved"
 
         questions_pg.go_to_forum_questions_page()
@@ -65,12 +65,12 @@ class TestQuestionsSort:
 
     @pytest.mark.fft
     @pytest.mark.prod
-    def test_that_questions_sorts_correctly_by_filter_equal_to_no_replies(self, testsetup):
+    def test_that_questions_sorts_correctly_by_filter_equal_to_no_replies(self, mozwebqa):
         """
            Goes to the /questions page,
            Verifies the sort filter=noreplies works
         """
-        questions_pg = questions_page.QuestionsPage(testsetup)
+        questions_pg = questions_page.QuestionsPage(mozwebqa)
         expected_sorted_text = "No replies"
 
         questions_pg.go_to_forum_questions_page()
