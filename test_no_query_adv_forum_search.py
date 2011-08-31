@@ -47,15 +47,16 @@ class TestNoQueryAdvForumSearch:
     @pytest.mark.bft
     @pytest.mark.fft
     @pytest.mark.prod
-    def test_no_query_adv_forum_search(self, testsetup):
-        login_pg           = login_page.LoginPage(testsetup)
-        refine_search_pg   = refine_search_page.RefineSearchPage(testsetup)
+    def test_no_query_adv_forum_search(self, mozwebqa):
+        login_pg           = login_page.LoginPage(mozwebqa)
+        refine_search_pg   = refine_search_page.RefineSearchPage(mozwebqa)
 
         login_pg.log_in_as_non_admin()
         refine_search_pg.go_to_refine_search_page()
         refine_search_pg.click(refine_search_pg.support_questions_tab)
         refine_search_pg.type(refine_search_pg.asked_by_box, login_pg.get_user_name_non_admin())
-        refine_search_pg.click_button(refine_search_pg.search_button_support, True, testsetup.timeout)
-        assert "refine" in testsetup.selenium.get_attribute(\
+        refine_search_pg.click_button(refine_search_pg.search_button_support, True, mozwebqa.timeout)
+        assert "refine" in mozwebqa.selenium.get_attribute(\
                            "css=div#basic-search > form > input:nth-child(13)@class"),\
                            "refine class not found"
+
