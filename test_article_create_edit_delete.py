@@ -47,14 +47,14 @@ import login_page
 class TestArticleCreateEditDelete:
 
     @pytest.mark.fft
-    def test_that_article_can_be_created(self, testsetup):
+    def test_that_article_can_be_created(self, mozwebqa):
         """
            Creates a new knowledge base article.
            Verifies creation.
            Deletes the article
         """
-        knowledge_base_pg = knowledge_base_page.KBPage(testsetup)
-        login_pg = login_page.LoginPage(testsetup)
+        knowledge_base_pg = knowledge_base_page.KBPage(mozwebqa)
+        login_pg = login_page.LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
         login_pg.log_in_as_admin()
@@ -102,15 +102,15 @@ class TestArticleCreateEditDelete:
         knowledge_base_pg.delete_entire_article_document()
 
     @pytest.mark.fft
-    def test_that_article_can_be_edited(self, testsetup):
+    def test_that_article_can_be_edited(self, mozwebqa):
         """
            Creates a new knowledge base article.
            Verifies creation.
            Edits the article, verifies the edition.
            Deletes the article
         """
-        knowledge_base_pg = knowledge_base_page.KBPage(testsetup)
-        login_pg = login_page.LoginPage(testsetup)
+        knowledge_base_pg = knowledge_base_page.KBPage(mozwebqa)
+        login_pg = login_page.LoginPage(mozwebqa)
 
         #login with an Admin account as he can delete the article
         login_pg.log_in_as_admin()
@@ -163,14 +163,14 @@ class TestArticleCreateEditDelete:
         knowledge_base_pg.delete_entire_article_document()
 
     @pytest.mark.fft
-    def test_that_article_can_be_deleted(self, testsetup):
+    def test_that_article_can_be_deleted(self, mozwebqa):
         """
            Creates a new knowledge base article.
            Deletes the article.
            Verifies the deletion.
         """
-        knowledge_base_pg = knowledge_base_page.KBPage(testsetup)
-        login_pg = login_page.LoginPage(testsetup)
+        knowledge_base_pg = knowledge_base_page.KBPage(mozwebqa)
+        login_pg = login_page.LoginPage(mozwebqa)
 
         #login with an Admin account as he can delete the article
         login_pg.log_in_as_admin()
@@ -202,9 +202,9 @@ class TestArticleCreateEditDelete:
 
     @pytest.mark.fft
     @pytest.mark.prod
-    def test_that_article_can_be_previewed_before_submitting(self, testsetup):
-        knowledge_base_pg = knowledge_base_page.KBPage(testsetup)
-        login_pg = login_page.LoginPage(testsetup)
+    def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
+        knowledge_base_pg = knowledge_base_page.KBPage(mozwebqa)
+        login_pg = login_page.LoginPage(mozwebqa)
 
         login_pg.log_in_as_non_admin()
 
