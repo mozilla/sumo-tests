@@ -56,7 +56,7 @@ class TestAAQ:
         q_to_ask              = "automation test question %s" % (timestamp)
         q_details             = "This is a test. %s" % (timestamp)
 
-        login_po.log_in_as_non_admin()
+        login_po.log_in('default')
 
         # go to the /questions/new page and post a question
         ask_new_questions_pg.go_to_ask_new_questions_page()

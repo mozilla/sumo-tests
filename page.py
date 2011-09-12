@@ -56,7 +56,7 @@ class Page(object):
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.base_url = testsetup.base_url
-        self.base_url_ssl = testsetup.base_url.replace("http", "https")
+        self.base_url_ssl = testsetup.base_url.replace("http://", "https://")
         self.selenium = testsetup.selenium
         self.timeout = testsetup.timeout
 
