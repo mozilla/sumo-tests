@@ -51,10 +51,10 @@ class TestNoQueryAdvForumSearch:
         login_pg           = login_page.LoginPage(mozwebqa)
         refine_search_pg   = refine_search_page.RefineSearchPage(mozwebqa)
 
-        login_pg.log_in_as_non_admin()
+        login_pg.log_in('default')
         refine_search_pg.go_to_refine_search_page()
         refine_search_pg.click(refine_search_pg.support_questions_tab)
-        refine_search_pg.type(refine_search_pg.asked_by_box, login_pg.get_user_name_non_admin())
+        refine_search_pg.type(refine_search_pg.asked_by_box, login_pg.get_user_name('default'))
         refine_search_pg.click_button(refine_search_pg.search_button_support, True, mozwebqa.timeout)
         assert "refine" in mozwebqa.selenium.get_attribute(\
                            "css=div#basic-search > form > input:nth-child(13)@class"),\

@@ -26,7 +26,7 @@ class loggedin_translate_existing_article(unittest.TestCase):
         sumo_func.open(sel, vars.ConnectionParameters.authurlssl)
         timestamp = sel.get_eval("new Date().getTime()")
         language = "hi-IN"
-        self.functions.login(0, sel)
+        self.functions.login(sel, 'default')
         sumo_func.open(sel, vars.ConnectionParameters.authurlssl)
         sel.click("css=div#mostpopular-new > ul > li:nth-child(6) > a")
         sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)

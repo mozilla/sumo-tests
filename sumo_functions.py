@@ -19,18 +19,18 @@ class SUMOfunctions(object):
         '''
         Constructor
         '''
-        self.objTestData = sumo_test_data.SUMOtestData()
         
-    def login(self,userType,sel):
-        user = self.objTestData.getUserInfo(userType)
+    def login(self, sel, userType = 'default'):
+        credentials = self.testsetup.credentials[userType]
+
         self.open(sel, "/en-US/users/login")
         if(sel.is_element_present('link=Sign Out')):
             sel.click('link=Sign Out')
             sel.wait_for_page_to_load(SUMOfunctions.pageLoadTimeout)
             self.open(sel, "/en-US/users/login")
             
-        sel.type("id_username", user['username'])
-        sel.type("id_password", user['password'])
+        sel.type("id_username", credentials['username'])
+        sel.type("id_password", credentials['password'])
         sel.click("css=input[type='submit']")
         sel.wait_for_page_to_load(SUMOfunctions.pageLoadTimeout)
         if(sel.is_element_present('link=Sign Out')):

@@ -57,7 +57,7 @@ class TestArticleCreateEditDelete:
         login_pg = login_page.LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
-        login_pg.log_in_as_admin()
+        login_pg.log_in('admin')
 
         random_num = random.randint(1000, 9999)
         article_name = "test_article_%s" % random_num
@@ -113,7 +113,7 @@ class TestArticleCreateEditDelete:
         login_pg = login_page.LoginPage(mozwebqa)
 
         #login with an Admin account as he can delete the article
-        login_pg.log_in_as_admin()
+        login_pg.log_in('admin')
 
         random_num = random.randint(1000, 9999)
         article_name = "test_article_%s" % random_num
@@ -173,7 +173,7 @@ class TestArticleCreateEditDelete:
         login_pg = login_page.LoginPage(mozwebqa)
 
         #login with an Admin account as he can delete the article
-        login_pg.log_in_as_admin()
+        login_pg.log_in('admin')
 
         random_num = random.randint(1000, 9999)
         article_name = "test_article_%s" % random_num
@@ -206,7 +206,7 @@ class TestArticleCreateEditDelete:
         knowledge_base_pg = knowledge_base_page.KBPage(mozwebqa)
         login_pg = login_page.LoginPage(mozwebqa)
 
-        login_pg.log_in_as_non_admin()
+        login_pg.log_in('default')
 
         random_num = random.randint(1000, 9999)
         article_name = "test_article_%s" % random_num
