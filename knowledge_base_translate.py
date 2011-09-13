@@ -16,10 +16,10 @@
 #
 # The Initial Developer of the Original Code is
 # Mozilla Support
-# Portions created by the Initial Developer are Copyright (C) 2010
+# Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): Vishal
+# Contributor(s): Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,46 +34,47 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import re
-import time
 
 import sumo_page
 
 
-class SupportHomePage(sumo_page.SumoPage):
-    """
-    The Firefox Support Home Pgae contains
-    web elements and methods that can be
-    performed on them.
-    """
-    _page_title             = 'Firefox Support Home Page'
-    main_search_box         = 'q'
-    log_in_link             = 'log in'
-    search_button           = 'css=button.img-submit'
-    see_all_button          = "button-seeall"
-    top_helpful_content_locator = "xpath=//div[@id='home-content-quick']/section[1]/ul/li[1]/a"
-
-    def go_to_support_home_page(self):
-        self.open('/')
-        self.is_the_current_page
-
-    def click_log_in_link(self):
-        self.click(self.log_in_link, True, self.timeout)
-
-    def do_search_on_main_search_box(self, search_query, search_page_obj):
-        if re.search(self._page_title, self.selenium.get_title()) is None:
-            self.go_to_support_home_page()
-        self.type(SupportHomePage.main_search_box, search_query)
-        self.click(self.search_button, True, self.timeout)
-        count = 0
-        while not self.selenium.is_text_present('results for %s' % search_query):
-            time.sleep(1)
-            count += 1
-            if count == self.timeout / 1000:
-                self.record_error()
-                raise Exception(search_query + " search page hasnt loaded")
-        search_page_obj.is_the_current_page
-
-    def click_top_common_content_link(self):
-        self.click(self.top_helpful_content_locator, True, self.timeout)
+class KnowledgeBaseTranslate(sumo_page.SumoPage):
+    
+    description_title_locator = "id_title"
+    description_slug_locator = "id_slug"
+    preview_content_button_locator = "btn-preview"
+    submit_button_locator = "btn-submit"
+    
+    # 2 elements inside the modal popup
+    describe_changes_locator = "id_comment"
+    submit_changes_button_locator = "css=#submit-modal > input"
+    
+    #history of the test
+    top_revision_date = "xpath=//ul/li[2]/div[@class='date']/a/time@datetime"
+    top_revision_author = "css=ul > li:nth-child(2) > div.creator"
+    
+    def click_translate_language(self, language):
+        self.click("link=%s" % language, True, self.timeout)
+    
+    def type_title(self, text):
+        self.type(self.description_title_locator, text)
+    
+    def type_slug(self, text):
+        self.type(self.description_slug_locator, text)
         
+    def click_submit_review(self):
+        self.click(self.submit_button_locator)
+        
+    def type_modal_describe_changes(self, text):
+        self.type(self.describe_changes_locator, text)
+        
+    def click_modal_submit_changes_button(self):
+        self.click(self.submit_changes_button_locator, True, self.timeout)
+        
+    @property
+    def most_recent_revision_date(self):
+        self.get_attribute(self.top_revision_date)
+        
+    @property
+    def most_recent_editor(self):
+        self.get_text(self.top_revision_author)
