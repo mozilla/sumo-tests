@@ -201,7 +201,6 @@ class TestArticleCreateEditDelete:
             raise AssertionError('Page title is %s, was expecting %s' % (actual_page_title, 'Page Not Found'))
 
     @pytest.mark.fft
-    @pytest.mark.prod
     def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
         knowledge_base_pg = knowledge_base_page.KBPage(mozwebqa)
         login_pg = login_page.LoginPage(mozwebqa)
