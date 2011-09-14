@@ -50,8 +50,7 @@ class KnowledgeBaseTranslate(sumo_page.SumoPage):
     submit_changes_button_locator = "css=#submit-modal > input"
     
     #history of the test
-    top_revision_date = "xpath=//ul/li[2]/div[@class='date']/a/time@datetime"
-    top_revision_author = "css=ul > li:nth-child(2) > div.creator"
+    top_revision_comment= "css=ul > li:nth-child(2) > div.comment"
     
     def click_translate_language(self, language):
         self.click("link=%s" % language, True, self.timeout)
@@ -70,11 +69,7 @@ class KnowledgeBaseTranslate(sumo_page.SumoPage):
         
     def click_modal_submit_changes_button(self):
         self.click(self.submit_changes_button_locator, True, self.timeout)
-        
+
     @property
-    def most_recent_revision_date(self):
-        self.get_attribute(self.top_revision_date)
-        
-    @property
-    def most_recent_editor(self):
-        self.get_text(self.top_revision_author)
+    def most_recent_revision_comment(self):
+        return self.get_text(self.top_revision_comment)

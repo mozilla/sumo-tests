@@ -37,91 +37,37 @@
 #
 # ***** END LICENSE BLOCK *****
 
-#import pytest
-import datetime
 from login_page import LoginPage
 from support_home_page import SupportHomePage
 from knowledge_base_article import KnowledgeBaseArticle
 from knowledge_base_translate import KnowledgeBaseTranslate
 from unittestzero import Assert
 
+
 class TestLoggedInTranslateExistingArticle():
 
-    #def setUp(self):
-    #    self.selenium = selenium(
-    #    vars.ConnectionParameters.server,
-    #    vars.ConnectionParameters.port,
-    #    vars.ConnectionParameters.browser,
-    #    vars.ConnectionParameters.baseurl)
-    #    self.selenium.start()
-    #    self.selenium.set_timeout(vars.ConnectionParameters.page_load_timeout)
-    #    self.accounts = sumo_test_data.SUMOtestData()
-    #    self.functions = sumo_functions.SUMOfunctions()
-
+    @pytest.mark.smoketests
+    @pytest.mark.bft
+    @pytest.mark.fft
     def test_loggedin_translate_existing_article(self, mozwebqa):
         login_po = LoginPage(mozwebqa)
         home_po = SupportHomePage(mozwebqa)
         kb_article_po = KnowledgeBaseArticle(mozwebqa)
         kb_translate_po = KnowledgeBaseTranslate(mozwebqa)
-        timestamp = datetime.datetime.now()
         
         login_po.log_in('default')
         
         home_po.click_top_common_content_link()
         
         kb_article_po.click_translate_article()
-        
         kb_translate_po.click_translate_language("Esperanto (eo)")
         
         kb_translate_po.type_title("article_title_%s" % timestamp)
         kb_translate_po.type_slug("article_slug_%s" % timestamp)
-        
         kb_translate_po.click_submit_review()
         
-        kb_translate_po.type_modal_describe_changes("article_changes_%s" % timestamp)
+        change_comment = "article_changes %s" % timestamp
+        kb_translate_po.type_modal_describe_changes(change_comment)
         kb_translate_po.click_modal_submit_changes_button()
         
-        print timestamp.time()
-        print kb_translate_po.most_recent_revision_date
-        rev_date = datetime.datetime.strptime(kb_translate_po.most_recent_revision_date, "%Y-%m-%dT%H:%M:%S")
-        print rev_date.time()
-        
-        Assert.true(rev_date > timestamp, "%s not greater than %s" % (rev_date.date(), timestamp.date()))
-        
-        
-#
-#    def test_loggedin_translate_existing_article(self):
-#        sel = self.selenium
-#        sumo_func = sumo_functions.SUMOfunctions()
-#        user = self.accounts.getUserInfo(0)
-#        sumo_func.open(sel, vars.ConnectionParameters.authurl)
-#        sumo_func.open(sel, vars.ConnectionParameters.authurlssl)
-#        timestamp = sel.get_eval("new Date().getTime()")
-#        language = "hi-IN"
-#        self.functions.login(sel, 'default')
-#        sumo_func.open(sel, vars.ConnectionParameters.authurlssl)
-#        sel.click("css=div#mostpopular-new > ul > li:nth-child(6) > a")
-#        sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
-#        sel.click("link=Translate this page")
-#        sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
-#        # Selecting a language from drop-down list
-#        #breaks in IE for all types of selectors
-#        #sel.select("lang", "index=0")
-#        sel.type("page", "article_" + timestamp)
-#        sel.click("css=input[value='Create translation']")
-#        sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
-#        sel.type("editwiki", "article_" + timestamp)
-#        sel.type("comment", "article_" + timestamp)
-#        sel.click("save")
-#        sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
-#        sumo_func.open(sel, "/en-US/kb/article_" + timestamp + "?bl=n")
-#        # Logging out
-#        sel.click("link=Log Out")
-#        sel.wait_for_page_to_load(vars.ConnectionParameters.page_load_timeout)
-#        sumo_func.open(sel, "/en-US/kb/")
-#
-#    def tearDown(self):
-#        self.selenium.stop()
-#
-#if __name__ == "__main__":
-#    unittest.main()
+        Assert.equal(change_comment, kb_translate_po.most_recent_revision_comment)
