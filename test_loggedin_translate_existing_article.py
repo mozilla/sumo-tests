@@ -43,6 +43,7 @@ from knowledge_base_article import KnowledgeBaseArticle
 from knowledge_base_translate import KnowledgeBaseTranslate
 from unittestzero import Assert
 import pytest
+import datetime
 
 class TestLoggedInTranslateExistingArticle():
 
@@ -54,6 +55,7 @@ class TestLoggedInTranslateExistingArticle():
         home_po = SupportHomePage(mozwebqa)
         kb_article_po = KnowledgeBaseArticle(mozwebqa)
         kb_translate_po = KnowledgeBaseTranslate(mozwebqa)
+        timestamp = datetime.datetime.now()
         
         login_po.log_in('default')
         
