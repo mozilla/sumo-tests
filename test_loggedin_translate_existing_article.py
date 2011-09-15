@@ -42,7 +42,7 @@ from support_home_page import SupportHomePage
 from knowledge_base_article import KnowledgeBaseArticle
 from knowledge_base_translate import KnowledgeBaseTranslate
 from unittestzero import Assert
-
+import pytest
 
 class TestLoggedInTranslateExistingArticle():
 
