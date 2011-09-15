@@ -35,14 +35,6 @@
 #
 # ***** END LICENSE BLOCK *****
 
-import sumo_page
+from knowledge_base import KnowledgeBase
 
-
-class KnowledgeBaseArticle(sumo_page.SumoPage):
-    
-    translate_article_locator = "link=Translate Article"
-    
-    def click_translate_article(self):
-        self.click(self.translate_article_locator, True, self.timeout)
-    
-    
+class KnowledgeBaseArticle(KnowledgeBase):

@@ -35,38 +35,31 @@
 #
 # ***** END LICENSE BLOCK *****
 
-import sumo_page
+from knowledge_base import KnowledgeBase
 
 
-class KBPage(sumo_page.SumoPage):
+class KBPage(KnowledgeBase):
     """
     'Create New Article' Page is where the form
     for creating new knowledge base article is found.
     """
-    _page_title                           = 'Create a New Article'
-    _page_title_rev_hist                  = 'Revision History'
-    _page_url_new_article                 = '/en-US/kb/new'
+    page_title = 'Create a New Article'
+    page_title_rev_hist = 'Revision History'
+    page_url_new_article = '/en-US/kb/new'
 
-    _article_url                          = ''
-    _article_history_url                  = ''
-    _article_title                        = ''
-    _article_title_box_locator            = 'id_title'
-    _article_category_menu_locator        = 'id_category'
-    _article_keywords_box_locator         = 'id_keywords'
-    _article_summary_box_locator          = 'id_summary'
-    _article_content_box_locator          = 'id_content'
-    _article_preview_btn_locator          = 'btn-preview'
-    _article_preview_content_locator      = "css=div#preview > div#doc-content"
-    _article_submit_btn_locator           = 'btn-submit'
-    _comment_box_locator                  = 'id_comment'
-    _comment_submit_btn_locator           = "css=input[value='Submit']"
+    article_title_box_locator = 'id_title'
+    article_category_menu_locator = 'id_category'
+    article_keywords_box_locator = 'id_keywords'
+    article_summary_box_locator = 'id_summary'
+    article_content_box_locator = 'id_content'
+    article_preview_btn_locator = 'btn-preview'
+    article_preview_content_locator = "css=div#preview > div#doc-content"
+    article_submit_btn_locator = 'btn-submit'
+    comment_box_locator = 'id_comment'
+    comment_submit_btn_locator = "css=input[value='Submit']"
 
-    _edit_article_link_locator            = "css=nav#doc-tabs > ul > li.edit:nth-child(3) > a[href*='edit']"
-    _review_top_revision_link_locator     = "css=div#revision-list > form > ul > li:nth-child(1) > div.status > a"
-    _edit_desc_link_locator               = "css=div#document-form > details > summary"
-
-    _delete_document_link_locator         = "css=div#delete-doc > a[href*='delete']"
-    _delete_confirmation_btn_locator      = "css=input[value='Delete']"
+    delete_document_link_locator = "css=div#delete-doc > a[href*='delete']"
+    delete_confirmation_btn_locator = "css=input[value='Delete']"
 
     @property
     def article_summary_box(self):
@@ -74,44 +67,14 @@ class KBPage(sumo_page.SumoPage):
 
     @property
     def article_content_box(self):
-        return self._article_content_box_locator
+        return self.article_content_box_locator
 
     @property
     def page_title_revision_history(self):
-        return self._page_title_rev_hist
-
-    @property
-    def article_url(self):
-        return self._article_url
-
-    @article_url.setter
-    def article_url(self, url):
-        self._article_url = url
-
-    @property
-    def article_title(self):
-        return self._article_title
-
-    @article_title.setter
-    def article_title(self, title):
-        self._article_title = title
-
-    @property
-    def article_history_url(self):
-        return self._article_history_url
-
-    @article_history_url.setter
-    def article_history_url(self, hist_url):
-        self._article_history_url = hist_url
-
-    def go_to_article_history_page(self):
-        self.open(self._article_history_url)
-
-    def go_to_article_page(self):
-        self.open(self._article_url)
+        return self.page_title_rev_hist
 
     def go_to_create_new_article_page(self):
-        self.open(self.base_url_ssl + self._page_url_new_article)
+        self.open(self.base_url_ssl + self.page_url_new_article)
         self.is_the_current_page
 
     def set_article(self, article_info_dict):
@@ -136,53 +99,49 @@ class KBPage(sumo_page.SumoPage):
         self.set_article_comment_box()
 
     def set_article_title(self, title):
-        self.selenium.type(self._article_title_box_locator, title)
-        self._article_title = title
+        self.selenium.type(self.article_title_box_locator, title)
 
     def set_article_category(self, category):
-        self.selenium.select(self._article_category_menu_locator, category)
+        self.selenium.select(self.article_category_menu_locator, category)
 
     def set_article_keyword(self, keyword):
-        self.selenium.type(self._article_keywords_box_locator, keyword)
+        self.selenium.type(self.article_keywords_box_locator, keyword)
 
     def set_article_summary(self, summary):
-        self.selenium.type(self._article_summary_box_locator, summary)
+        self.selenium.type(self.article_summary_box_locator, summary)
 
     def set_article_content(self, content):
-        self.selenium.type(self._article_content_box_locator, content)
+        self.selenium.type(self.article_content_box_locator, content)
 
     def set_article_comment_box(self, comment='automated test'):
-        self.selenium.type(self._comment_box_locator, comment)
-        self.selenium.click(self._comment_submit_btn_locator)
+        self.selenium.type(self.comment_box_locator, comment)
+        self.selenium.click(self.comment_submit_btn_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
 
     def submit_article(self):
-        self.selenium.click(self._article_submit_btn_locator)
-        self.wait_for_element_present(self._comment_box_locator)
-
+        self.selenium.click(self.article_submit_btn_locator)
+        self.wait_for_element_present(self.comment_box_locator)
+        
     def delete_entire_article_document(self):
-        self.go_to_article_history_page()
+        self.navigaton.click_show_history()
         self.click_delete_entire_article_document()
         self.click_delete_confirmation_button()
 
     def get_article_summary_text(self):
-        return self.selenium.get_text(self._article_summary_box_locator)
+        return self.selenium.get_text(self.article_summary_box_locator)
 
     def get_article_contents_box(self):
-        return self.selenium.get_text(self._article_content_box_locator)
-
-    def click_edit_article(self):
-        self.click(self._edit_article_link_locator, True, self.timeout)
+        return self.selenium.get_text(self.article_content_box_locator)
 
     def click_delete_entire_article_document(self):
-        self.click(self._delete_document_link_locator, True, self.timeout)
+        self.click(self.delete_document_link_locator, True, self.timeout)
 
     def click_delete_confirmation_button(self):
-        self.click(self._delete_confirmation_btn_locator, True, self.timeout)
+        self.click(self.delete_confirmation_btn_locator, True, self.timeout)
 
     def click_article_preview_button(self):
-        self.selenium.click(self._article_preview_btn_locator)
-        self.wait_for_element_present(self._article_preview_content_locator)
+        self.selenium.click(self.article_preview_btn_locator)
+        self.wait_for_element_present(self.article_preview_content_locator)
 
     def get_article_preview_text(self):
-        return self.selenium.get_text(self._article_preview_content_locator)
+        return self.selenium.get_text(self.article_preview_content_locator)

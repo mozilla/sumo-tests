@@ -19,9 +19,7 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): Tanay
-#                 Vishal
-#                 Zac Campbell
+# Contributor(s): Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -37,40 +35,30 @@
 #
 # ***** END LICENSE BLOCK *****
 
-from login_page import LoginPage
-from support_home_page import SupportHomePage
-from knowledge_base_article import KnowledgeBaseArticle
-from knowledge_base_translate import KnowledgeBaseTranslate
-from unittestzero import Assert
-import pytest
-import datetime
+from sumo_page import SumoPage
 
 
-class TestLoggedInTranslateExistingArticle():
-
-    @pytest.mark.smoketests
-    @pytest.mark.bft
-    @pytest.mark.fft
-    def test_loggedin_translate_existing_article(self, mozwebqa):
-        login_po = LoginPage(mozwebqa)
-        home_po = SupportHomePage(mozwebqa)
-        kb_article_po = KnowledgeBaseArticle(mozwebqa)
-        kb_translate_po = KnowledgeBaseTranslate(mozwebqa)
-        timestamp = datetime.datetime.now()
+class KnowledgeBase(SumoPage):
+    
+    @property
+    def navigaton(self):
+        return self.Navigation(self.testsetup)
+    
+    class Navigation(SumoPage):
         
-        login_po.log_in('default')
+        article_locator = "link=Article"
+        edit_article_locator = "link=Edit Article"
+        translate_article_locator = "link=Translate Article"
+        show_history_locator = "link=Show History"
         
-        home_po.click_top_common_content_link()
+        def click_article(self):
+            self.click(self.article_locator, True, self.timeout)
         
-        kb_article_po.click_translate_article()
-        kb_translate_po.click_translate_language("Esperanto (eo)")
+        def click_edit_article(self):
+            self.click(self.edit_article_locator, True, self.timeout)
         
-        kb_translate_po.type_title("article_title_%s" % timestamp)
-        kb_translate_po.type_slug("article_slug_%s" % timestamp)
-        kb_translate_po.click_submit_review()
+        def click_translate_article(self):
+            self.click(self.translate_article_locator, True, self.timeout)
         
-        change_comment = "article_changes %s" % timestamp
-        kb_translate_po.type_modal_describe_changes(change_comment)
-        kb_translate_po.click_modal_submit_changes_button()
-        
-        Assert.equal(change_comment, kb_translate_po.most_recent_revision_comment)
+        def click_show_history(self):
+            self.click(self.show_history_locator, True, self.timeout)

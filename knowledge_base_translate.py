@@ -34,11 +34,10 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from knowledge_base import KnowledgeBase
 
-import sumo_page
 
-
-class KnowledgeBaseTranslate(sumo_page.SumoPage):
+class KnowledgeBaseTranslate(KnowledgeBase):
     
     description_title_locator = "id_title"
     description_slug_locator = "id_slug"
