@@ -34,12 +34,11 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from sumo_page import SumoPage
+from ask_new_questions_page import AskNewQuestionsPage
 
-import ask_new_questions_page
-import sumo_page
 
-
-class QuestionsPage(sumo_page.SumoPage):
+class QuestionsPage(SumoPage):
     """
     'Ask a Question' page.
     """
@@ -67,8 +66,7 @@ class QuestionsPage(sumo_page.SumoPage):
 
     def click_ask_new_questions_link(self):
         self.click(self._ask_question_link_locator, True, self.timeout)
-        ask_new_questions_pg = ask_new_questions_page.AskNewQuestionsPage(self.testsetup)
-        return ask_new_questions_pg
+        return AskNewQuestionsPage(self.testsetup)
 
     def go_to_thread(self, url):
         self.selenium.open(url)
@@ -114,3 +112,17 @@ class QuestionsPage(sumo_page.SumoPage):
     def get_sorted_list_filter_text(self, question_number):
         locator = self._solved_or_unsolved_text_locator % question_number
         return self.selenium.get_text(locator)
+
+
+class ViewQuestionPage(SumoPage):
+    
+    question_locator = "css=div.content > h1"
+    detail_locator = "css=div.content > p"
+    
+    @property
+    def question(self):
+        return self.get_text(self.question_locator)
+
+    @property
+    def question_detail(self):
+        return self.get_text(self.detail_locator)

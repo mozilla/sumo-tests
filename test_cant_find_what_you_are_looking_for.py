@@ -35,9 +35,9 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from unittestzero import Assert
+from search_page import SearchPage
 import pytest
-
-import search_page
 
 
 class TestCantFindWhatYouAreLookingFor:
@@ -47,16 +47,14 @@ class TestCantFindWhatYouAreLookingFor:
     @pytest.mark.fft
     @pytest.mark.prod
     def test_cant_find_what_youre_looking_for_test(self, mozwebqa):
-        search_page_obj = search_page.SearchPage(mozwebqa)
+        search_page_obj = SearchPage(mozwebqa)
 
         searchTerms = ["firefox", "bgkhdsaghb"]
         for current_search_term in searchTerms:
             search_page_obj.go_to_search_page()
             search_page_obj.do_search_on_search_box(current_search_term)
-
-            assert search_page_obj.is_text_present(\
-                "Can't find what you're looking for?"),\
-                "'Can't find text' not present"
-            assert search_page_obj.is_element_present(\
-                search_page_obj.support_question_link),\
-                "Ask question link not present"
+            
+            expected_text = "Can't find what you're looking for?"
+            Assert.true(search_page_obj.is_text_present(expected_text), "%s not present" % expected_text)
+            Assert.true(search_page_obj.is_element_present(search_page_obj.support_question_link), "Ask question link not present")
+            

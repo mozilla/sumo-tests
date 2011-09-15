@@ -46,29 +46,29 @@ class LoginPage(sumo_page.SumoPage):
     """
         Form for login.
     """
-    _page_title                    = 'Log In'
-    _page_url                      = '/en-US/users/login'
-    _username_box_locator          = 'id_username'
-    _password_box_locator          = 'id_password'
-    _log_in_button_locator         = "css=input[type='submit']"
+    page_title                    = 'Log In'
+    page_url                      = '/en-US/users/login'
+    username_box_locator          = 'id_username'
+    password_box_locator          = 'id_password'
+    log_in_button_locator         = "css=input[type='submit']"
 
     # if user is logged-in then you see these elements
-    _logged_in_as_div_locator      = "css=div#mod-login_box > div"
-    _logged_in_text                = "Logged in as"
+    logged_in_as_div_locator      = "css=div#mod-login_box > div"
+    logged_in_text                = "Logged in as"
 
     def go_to_login_page(self):
-        self.open(self._page_url)
+        self.open(self.page_url)
         self.is_the_current_page
 
     def log_in(self, user = "default"):
-        if not (self._page_title in self.selenium.get_title()):
+        if not (self.page_title in self.selenium.get_title()):
             self.go_to_login_page()
 
         credentials = self.testsetup.credentials[user]
 
-        self.type(self._username_box_locator, credentials['name'])
-        self.type(self._password_box_locator, credentials['password'])
-        self.click_button(self._log_in_button_locator)
+        self.type(self.username_box_locator, credentials['name'])
+        self.type(self.password_box_locator, credentials['password'])
+        self.click_button(self.log_in_button_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
 
     def get_user_name(self, user = "default"):

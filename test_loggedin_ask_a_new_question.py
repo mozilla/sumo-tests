@@ -35,12 +35,12 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from unittestzero import Assert
+from questions_page import ViewQuestionPage
+from ask_new_questions_page import AskNewQuestionsPage
+from login_page import LoginPage
 import datetime
-
 import pytest
-
-import ask_new_questions_page
-import login_page
 
 
 class TestAAQ:
@@ -50,8 +50,8 @@ class TestAAQ:
     @pytest.mark.fft
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
-        login_po              = login_page.LoginPage(mozwebqa)
-        ask_new_questions_pg  = ask_new_questions_page.AskNewQuestionsPage(mozwebqa)
+        login_po              = LoginPage(mozwebqa)
+        ask_new_questions_pg  = AskNewQuestionsPage(mozwebqa)
         timestamp             = datetime.datetime.today()
         q_to_ask              = "automation test question %s" % (timestamp)
         q_details             = "This is a test. %s" % (timestamp)
@@ -64,9 +64,7 @@ class TestAAQ:
         ask_new_questions_pg.click_category_problem_link()
         ask_new_questions_pg.type_question(q_to_ask)
         ask_new_questions_pg.click_provide_details_button()
-        ask_new_questions_pg.fill_up_questions_form(q_details)
-
-        assert ask_new_questions_pg.is_text_present(q_to_ask),\
-               "Did not find text: %s on the page" % (q_to_ask)
-        assert ask_new_questions_pg.is_text_present(q_details),\
-               "Did not find text: %s on the page" % (q_details)
+        view_question_pg = ask_new_questions_pg.fill_up_questions_form(q_details)
+        
+        Assert.equal(view_question_pg.question, q_to_ask)
+        Assert.equal(view_question_pg.question_detail, q_details)
