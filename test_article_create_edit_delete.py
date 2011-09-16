@@ -36,7 +36,10 @@
 #
 # ***** END LICENSE BLOCK *****
 from unittestzero import Assert
-from knowledge_base_page import KBPage
+from knowledge_base_new_article import KnowledgeBaseNewArticle
+from knowledge_base_article import KnowledgeBaseArticle
+from knowledge_base_article import KnowledgeBaseShowHistory
+from knowledge_base_article import KnowledgeBaseEditArticle
 from login_page import LoginPage
 import re
 import pytest
@@ -51,45 +54,33 @@ class TestArticleCreatecEditDelete:
            Verifies creation.
            Deletes the article
         """
-        knowledge_base_pg = KBPage(mozwebqa)
+        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
+        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
+        kb_edit_article = KnowledgeBaseEditArticle(mozwebqa)
         login_pg = LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
         login_pg.log_in('admin')
 
-        timestamp = datetime.datetime.now()
-        article_name = "test_article_%s" % timestamp
-        article_summary = "this is an automated summary_%s" % timestamp
-        article_content = "automated content_%s" % timestamp
-
-        article_info_dict = {'title': article_name,
-                             'category': 'How to', 'keyword': 'test',
-                             'summary': article_summary, 'content': article_content}
-
-        # create a new article
-        knowledge_base_pg.go_to_create_new_article_page()
-        knowledge_base_pg.set_article(article_info_dict)
-        knowledge_base_pg.submit_article()
-        knowledge_base_pg.set_article_comment_box()
+        article_info_dict = self._create_new_generic_article(kb_new_article)
+        kb_new_article.submit_article()
+        kb_new_article.set_article_comment_box()
 
         # verify article history
-        actual_page_title = knowledge_base_pg.get_page_title()
-        Assert.contains(knowledge_base_pg.page_title_revision_history, actual_page_title)
+        Assert.true(kb_article_history.is_the_current_page)
 
         # verify article contents
-        knowledge_base_pg.navigaton.click_edit_article()
-
-        edit_page_title = knowledge_base_pg.get_page_title()
-        Assert.contains(article_name, edit_page_title)
-
-        actual_summary_text = knowledge_base_pg.get_article_summary_text()
-        Assert.equal(article_summary, actual_summary_text)
+        kb_article_history.navigation.click_edit_article()
         
-        actual_contents_text = knowledge_base_pg.get_article_contents_box()
-        Assert.equal(article_content, actual_contents_text)
+        actual_summary_text = kb_edit_article.article_summary_text
+        Assert.equal(article_info_dict['summary'], actual_summary_text)
+        
+        actual_contents_text = kb_edit_article.article_contents_text
+        Assert.equal(article_info_dict['content'], actual_contents_text)
         
         # delete the same article
-        knowledge_base_pg.delete_entire_article_document()
+        kb_edit_article.navigation.click_show_history()
+        kb_article_history.delete_entire_article_document()
 
     @pytest.mark.fft
     def test_that_article_can_be_edited(self, mozwebqa):
@@ -99,55 +90,47 @@ class TestArticleCreatecEditDelete:
            Edits the article, verifies the edition.
            Deletes the article
         """
-        knowledge_base_pg = KBPage(mozwebqa)
+        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
+        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
+        kb_edit_article = KnowledgeBaseEditArticle(mozwebqa)
         login_pg = LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
         login_pg.log_in('admin')
 
-        timestamp = datetime.datetime.now()
-        article_name = "test_article_%s" % timestamp
-        article_summary = "this is an automated summary_%s" % timestamp
-        article_content = "automated content_%s" % timestamp
-
-        article_info_dict = {'title': article_name,
-                             'category': 'How to', 'keyword': 'test',
-                             'summary': article_summary, 'content': article_content}
-
-        # create a new article
-        knowledge_base_pg.go_to_create_new_article_page()
-        knowledge_base_pg.set_article(article_info_dict)
-        knowledge_base_pg.submit_article()
-        knowledge_base_pg.set_article_comment_box()
+        article_info_dict = self._create_new_generic_article(kb_new_article)
+        kb_new_article.submit_article()
+        kb_new_article.set_article_comment_box()
 
         # verify article history
-        actual_page_title = knowledge_base_pg.get_page_title()
-        Assert.contains(knowledge_base_pg.page_title_revision_history, actual_page_title)
+        Assert.true(kb_article_history.is_the_current_page)
 
         # edit that same article
+        timestamp = datetime.datetime.now()
         edited_article_summary = "this is an automated summary__%s_edited" % timestamp
         edited_article_content = "automated content__%s_edited" % timestamp
-        article_info_dict_edited = {'title': article_name,\
+        article_info_dict_edited = {'title': article_info_dict['title'],\
                                     'category': 'How to', 'keyword': 'test',\
                                     'summary': edited_article_summary, 'content': edited_article_content}
         
-        knowledge_base_pg.navigaton.click_edit_article()
-        knowledge_base_pg.edit_article(article_info_dict_edited)
-        knowledge_base_pg.navigaton.click_article()
-        knowledge_base_pg.navigaton.click_edit_article()
+        kb_article_history.navigation.click_edit_article()
+        kb_edit_article.edit_article(article_info_dict_edited)
+        
+        kb_article_history.navigation.click_edit_article()
 
         # verify the contents of the edited article
-        edit_page_title = knowledge_base_pg.get_page_title()
-        Assert.contains(article_name, edit_page_title)
+        actual_page_title = kb_edit_article.get_page_title()
+        Assert.contains(article_info_dict_edited['title'], actual_page_title)
         
-        actual_summary_text = knowledge_base_pg.get_article_summary_text()
+        actual_summary_text = kb_edit_article.article_summary_text
         Assert.equal(edited_article_summary, actual_summary_text)
          
-        actual_contents_text = knowledge_base_pg.get_article_contents_box()
-        Assert.equal(edited_article_content, actual_contents_text)
+        actual_content_text = kb_edit_article.article_contents_text
+        Assert.equal(edited_article_content, actual_content_text)
 
         # delete the same article
-        knowledge_base_pg.delete_entire_article_document()
+        kb_edit_article.navigation.click_show_history()
+        kb_article_history.delete_entire_article_document()
 
     @pytest.mark.fft
     def test_that_article_can_be_deleted(self, mozwebqa):
@@ -156,49 +139,53 @@ class TestArticleCreatecEditDelete:
            Deletes the article.
            Verifies the deletion.
         """
-        knowledge_base_pg = KBPage(mozwebqa)
+        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
+        kb_article = KnowledgeBaseArticle(mozwebqa)
+        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
         login_pg = LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
         login_pg.log_in('admin')
 
-        timestamp = datetime.datetime.now()
-        article_name = "test_article_%s" % timestamp
-        article_summary = "this is an automated summary_%s" % timestamp
-        article_content = "automated content_%s" % timestamp
-
-        article_info_dict = {'title': article_name,
-                             'category': 'How to', 'keyword': 'test',
-                             'summary': article_summary, 'content': article_content}
-
-        # create a new article
-        knowledge_base_pg.go_to_create_new_article_page()
-        knowledge_base_pg.set_article(article_info_dict)
-        knowledge_base_pg.submit_article()
-        knowledge_base_pg.set_article_comment_box()
+        article_info_dict = self._create_new_generic_article(kb_new_article)
+ 
+        kb_new_article.submit_article()
+        kb_new_article.set_article_comment_box()
 
         # go to article and get URL
-        knowledge_base_pg.navigaton.click_article()
-        article_url = knowledge_base_pg.get_url_current_page()
+        kb_article_history.navigation.click_article()
+        article_url = kb_article.get_url_current_page()
 
-        # go to history and delete the same article
-        knowledge_base_pg.navigaton.click_show_history()
-        knowledge_base_pg.delete_entire_article_document()
-
-        knowledge_base_pg.open(article_url)
-        actual_page_title = knowledge_base_pg.get_page_title()
+        # delete the same article
+        kb_article.navigation.click_show_history()
+        kb_article_history.delete_entire_article_document()
+        
+        kb_article_history.open(article_url)
+        actual_page_title = kb_article_history.get_page_title()
         Assert.contains("Page Not Found", actual_page_title)
 
     @pytest.mark.fft
     @pytest.mark.prod
     def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
-        knowledge_base_pg = KBPage(mozwebqa)
+        
+        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
         login_pg = LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
         login_pg.log_in('admin')
 
+        article_info_dict = self._create_new_generic_article(kb_new_article)
+ 
+        kb_new_article.click_article_preview_button()
+        actual_preview_text = kb_new_article.get_article_preview_text()
+
+        Assert.equal(article_info_dict['content'], actual_preview_text)
+        
+        # Does not need to be deleted as it does not commit the article
+
+    def _create_new_generic_article(self, kb_new_article):
         timestamp = datetime.datetime.now()
+        
         article_name = "test_article_%s" % timestamp
         article_summary = "this is an automated summary_%s" % timestamp
         article_content = "automated content_%s" % timestamp
@@ -208,9 +195,7 @@ class TestArticleCreatecEditDelete:
                              'summary': article_summary, 'content': article_content}
 
         # create a new article
-        knowledge_base_pg.go_to_create_new_article_page()
-        knowledge_base_pg.set_article(article_info_dict)
-        knowledge_base_pg.click_article_preview_button()
-        actual_preview_text = knowledge_base_pg.get_article_preview_text()
-
-        Assert.equal(article_content, actual_preview_text)
+        kb_new_article.go_to_create_new_article_page()
+        kb_new_article.set_article(article_info_dict)
+        
+        return article_info_dict

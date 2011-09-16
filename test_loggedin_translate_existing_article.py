@@ -40,7 +40,8 @@
 from login_page import LoginPage
 from support_home_page import SupportHomePage
 from knowledge_base_article import KnowledgeBaseArticle
-from knowledge_base_translate import KnowledgeBaseTranslate
+from knowledge_base_article import KnowledgeBaseTranslate
+from knowledge_base_article import KnowledgeBaseShowHistory
 from unittestzero import Assert
 import pytest
 import datetime
@@ -56,13 +57,14 @@ class TestLoggedInTranslateExistingArticle():
         home_po = SupportHomePage(mozwebqa)
         kb_article_po = KnowledgeBaseArticle(mozwebqa)
         kb_translate_po = KnowledgeBaseTranslate(mozwebqa)
+        kb_history_po = KnowledgeBaseShowHistory(mozwebqa)
         timestamp = datetime.datetime.now()
         
         login_po.log_in('default')
         
         home_po.click_top_common_content_link()
         
-        kb_article_po.click_translate_article()
+        kb_article_po.navigation.click_translate_article()
         kb_translate_po.click_translate_language("Esperanto (eo)")
         
         kb_translate_po.type_title("article_title_%s" % timestamp)
@@ -73,4 +75,4 @@ class TestLoggedInTranslateExistingArticle():
         kb_translate_po.type_modal_describe_changes(change_comment)
         kb_translate_po.click_modal_submit_changes_button()
         
-        Assert.equal(change_comment, kb_translate_po.most_recent_revision_comment)
+        Assert.equal(change_comment, kb_history_po.most_recent_revision_comment)

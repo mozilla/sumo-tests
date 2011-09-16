@@ -20,6 +20,7 @@
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s): Vishal
+#                 Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,17 +35,14 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from sumo_page import SumoPage
 
-from knowledge_base import KnowledgeBase
-
-
-class KBPage(KnowledgeBase):
+class KnowledgeBaseNewArticle(SumoPage):
     """
     'Create New Article' Page is where the form
     for creating new knowledge base article is found.
     """
     page_title = 'Create a New Article'
-    page_title_rev_hist = 'Revision History'
     page_url_new_article = '/en-US/kb/new'
 
     article_title_box_locator = 'id_title'
@@ -58,20 +56,17 @@ class KBPage(KnowledgeBase):
     comment_box_locator = 'id_comment'
     comment_submit_btn_locator = "css=input[value='Submit']"
 
-    delete_document_link_locator = "css=div#delete-doc > a[href*='delete']"
-    delete_confirmation_btn_locator = "css=input[value='Delete']"
-
-    @property
-    def article_summary_box(self):
-        return self._article_summary_box_locator
-
-    @property
-    def article_content_box(self):
-        return self.article_content_box_locator
-
-    @property
-    def page_title_revision_history(self):
-        return self.page_title_rev_hist
+    #@property
+    #def article_summary_box(self):
+    #    return self._article_summary_box_locator
+    #
+    #@property
+    #def article_content_box(self):
+    #    return self.article_content_box_locator
+    #
+    #@property
+    #def page_title_revision_history(self):
+    #    return self.page_title_rev_hist
 
     def go_to_create_new_article_page(self):
         self.open(self.base_url_ssl + self.page_url_new_article)
@@ -87,16 +82,6 @@ class KBPage(KnowledgeBase):
         self.set_article_keyword(article_info_dict['keyword'])
         self.set_article_summary(article_info_dict['summary'])
         self.set_article_content(article_info_dict['content'])
-
-    def edit_article(self, article_info_dict):
-        """
-            Edits an existing article.
-        """
-        self.set_article_keyword(article_info_dict['keyword'])
-        self.set_article_summary(article_info_dict['summary'])
-        self.set_article_content(article_info_dict['content'])
-        self.submit_article()
-        self.set_article_comment_box()
 
     def set_article_title(self, title):
         self.selenium.type(self.article_title_box_locator, title)
@@ -121,23 +106,6 @@ class KBPage(KnowledgeBase):
     def submit_article(self):
         self.selenium.click(self.article_submit_btn_locator)
         self.wait_for_element_present(self.comment_box_locator)
-        
-    def delete_entire_article_document(self):
-        self.navigaton.click_show_history()
-        self.click_delete_entire_article_document()
-        self.click_delete_confirmation_button()
-
-    def get_article_summary_text(self):
-        return self.selenium.get_text(self.article_summary_box_locator)
-
-    def get_article_contents_box(self):
-        return self.selenium.get_text(self.article_content_box_locator)
-
-    def click_delete_entire_article_document(self):
-        self.click(self.delete_document_link_locator, True, self.timeout)
-
-    def click_delete_confirmation_button(self):
-        self.click(self.delete_confirmation_btn_locator, True, self.timeout)
 
     def click_article_preview_button(self):
         self.selenium.click(self.article_preview_btn_locator)

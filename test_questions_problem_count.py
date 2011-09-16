@@ -33,11 +33,11 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from unittestzero import Assert
+from questions_page import QuestionsPage
 import random
 
 import pytest
-
-import questions_page
 
 
 class TestQuestionProbCount:
@@ -51,7 +51,7 @@ class TestQuestionProbCount:
     @pytest.mark.fft
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
-        questions_page_obj = questions_page.QuestionsPage(mozwebqa)
+        questions_page_obj = QuestionsPage(mozwebqa)
 
         #   click on a question from the list of 20 questions
         #   If a question does not have 'I have this problem too'
