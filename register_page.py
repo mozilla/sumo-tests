@@ -34,42 +34,37 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from sumo_page import SumoPage
 import string
 import random
 
-import sumo_page
 
-
-class RegisterPage(sumo_page.SumoPage):
+class RegisterPage(SumoPage):
     """
         Form for user registration.
     """
-    _page_title                    = 'Register'
-    _page_title_after_registration = 'Thank you for registering'
-    _page_url                      = '/en-US/users/register'
-    _username_box_locator          = 'id_for_username'
-    _password_box_locator          = 'id_for_password'
-    _password_repeat_box_locator   = 'id_for_password2'
-    _email_add_box_locator         = 'id_for_email'
-    _register_button_locator       = "css=input.btn[value='Register']"
-
-    @property
-    def page_title_after_registration(self):
-        return self._page_title_after_registration
+    page_title = 'Register'
+    page_title_after_registration = 'Thank you for registering'
+    page_url = '/en-US/users/register'
+    username_box_locator = 'id_for_username'
+    password_box_locator = 'id_for_password'
+    password_repeat_box_locator = 'id_for_password2'
+    email_add_box_locator = 'id_for_email'
+    register_button_locator = "css=input.btn[value='Register']"
 
     def go_to_registration_page(self):
-        self.open(self._page_url)
+        self.open(self.page_url)
         self.is_the_current_page
 
     def register_new_user(self):
         user_name = self.get_random_word(5)
         password = '1234'
-        email = user_name+"@mozilla.com"
-        self.type(self._username_box_locator, user_name)
-        self.type(self._password_box_locator, password)
-        self.type(self._password_repeat_box_locator, password)
-        self.type(self._email_add_box_locator, email)
-        self.click_button(self._register_button_locator)
+        email = user_name + "@mozilla.com"
+        self.type(self.username_box_locator, user_name)
+        self.type(self.password_box_locator, password)
+        self.type(self.password_repeat_box_locator, password)
+        self.type(self.email_add_box_locator, email)
+        self.click_button(self.register_button_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
 
     def get_random_word(self, length):

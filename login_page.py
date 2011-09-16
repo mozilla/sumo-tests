@@ -46,15 +46,15 @@ class LoginPage(sumo_page.SumoPage):
     """
         Form for login.
     """
-    page_title                    = 'Log In'
-    page_url                      = '/en-US/users/login'
-    username_box_locator          = 'id_username'
-    password_box_locator          = 'id_password'
-    log_in_button_locator         = "css=input[type='submit']"
+    page_title = 'Log In'
+    page_url = '/en-US/users/login'
+    username_box_locator = 'id_username'
+    password_box_locator = 'id_password'
+    log_in_button_locator = "css=input[type='submit']"
 
     # if user is logged-in then you see these elements
-    logged_in_as_div_locator      = "css=div#mod-login_box > div"
-    logged_in_text                = "Logged in as"
+    logged_in_as_div_locator = "css=div#mod-login_box > div"
+    logged_in_text = "Logged in as"
 
     def go_to_login_page(self):
         self.open(self.page_url)

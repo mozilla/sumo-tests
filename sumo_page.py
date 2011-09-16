@@ -49,18 +49,11 @@ class SumoPage(Page):
      elements and methods that pertain to those elements.
     """
  
-    log_out_link       = "css=a[href *='logout']"
-    my_account_link    = "css=a[href *='user_preferences']"
-    # after the redesign of Dec 2010,Contribute link no longer exists
-    contribute_link    = "css=a[href *= 'contribute']"
-    # after the redesign the kb link got renamed to Fx Home link
-    kb_link            = "link=*Home*"
-    # after the redesign of Dec 2010,Support Forum link no longer exists
-    support_forum_link = "css=a[href *= '/en-US/questions']"
-    question_link      = "link=*Question*"
-    # after the redesign of Dec 2010,Other Fx Support link no longer exists
-    other_link         = "css=a[href *= 'Other']"
-    login_link         = "css=a[href *= 'login']"
+    log_out_link = "css=a[href *='logout']"
+    my_account_link = "css=a[href *='user_preferences']"
+    kb_link = "link=*Home*"
+    question_link = "link=*Question*"
+    login_link = "css=a[href *= 'login']"
 
     def log_out(self):
         self.click(self.log_out_link, True)
@@ -68,7 +61,7 @@ class SumoPage(Page):
     def open(self,url,count=0):
         try:
             self.selenium.open(url)
-            is_page_500   = re.search("500", self.selenium.get_title())
+            is_page_500 = re.search("500", self.selenium.get_title())
             is_page_error = re.search("Error", self.selenium.get_title(),re.IGNORECASE)
             is_page_problem = re.search("Problem", self.selenium.get_title(),re.IGNORECASE)
             is_search_unavail = self.selenium.is_text_present("Search Unavailable")
@@ -95,8 +88,8 @@ class SumoPage(Page):
             self.selenium.click(locator)
             if(wait_flag):
                 self.selenium.wait_for_page_to_load(timeout)
-                is_page_500     = re.search("500", self.selenium.get_title())
-                is_page_error   = re.search("Error", self.selenium.get_title(),re.IGNORECASE)
+                is_page_500 = re.search("500", self.selenium.get_title())
+                is_page_error = re.search("Error", self.selenium.get_title(),re.IGNORECASE)
                 is_page_problem = re.search("Problem", self.selenium.get_title(),re.IGNORECASE)
                 is_search_unavail = self.selenium.is_text_present("Search Unavailable")
                 while((is_page_500 is not None or is_page_error is not None or is_page_problem is not None or is_search_unavail) and count < 10):
@@ -108,8 +101,8 @@ class SumoPage(Page):
                         is_search_unavail = self.selenium.is_text_present("Search Unavailable")
         except Exception, e:
             if( wait_flag and count < 10):
-                is_page_500     = re.search("500", self.selenium.get_title())
-                is_page_error   = re.search("Error", self.selenium.get_title(),re.IGNORECASE)
+                is_page_500 = re.search("500", self.selenium.get_title())
+                is_page_error = re.search("Error", self.selenium.get_title(),re.IGNORECASE)
                 is_page_problem = re.search("Problem", self.selenium.get_title(),re.IGNORECASE)
                 is_search_unavail = self.selenium.is_text_present("Search Unavailable")
                 while((is_page_500 is not None or is_page_error is not None or is_page_problem is not None or is_search_unavail) and count < 10):

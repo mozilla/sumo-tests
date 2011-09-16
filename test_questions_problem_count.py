@@ -34,46 +34,28 @@
 #
 # ***** END LICENSE BLOCK *****
 from unittestzero import Assert
+from questions_page import ViewQuestionPage
 from questions_page import QuestionsPage
-import random
-
 import pytest
 
 
 class TestQuestionProbCount:
 
-    thread_loc = ''
-    thread_num = str(random.randint(100, 10000))
-    thread_title = 'test_thread_' + thread_num
-    thread_text = 'some text'
-
     @pytest.mark.bft
     @pytest.mark.fft
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
-        questions_page_obj = QuestionsPage(mozwebqa)
+        
+        questions_pg = QuestionsPage(mozwebqa)
+        view_question_pg = ViewQuestionPage(mozwebqa)
 
-        #   click on a question from the list of 20 questions
-        #   If a question does not have 'I have this problem too'
-        #   button then keep clicking through the list until you find one
+        # Can't +1 your own question so will do it logged out
+        questions_pg.go_to_forum_questions_page()
+        questions_pg.click_any_question(1)
+        
+        initial_count = view_question_pg.problem_count
+        view_question_pg.click_problem_too_button()
+        view_question_pg.refresh()
+        post_click_count = view_question_pg.problem_count
 
-        found = False
-        counter = 0
-        while not found and counter < 20:
-            num = random.randint(1, 20)
-            questions_page_obj.go_to_forum_questions_page()
-            questions_page_obj.click_any_question(num)
-            if questions_page_obj.is_element_present(\
-               questions_page_obj.problem_too_button):
-                found = True
-            counter += 1
-
-        if not found and counter == 20:
-            return
-
-        initial_count = questions_page_obj.get_problem_count
-        questions_page_obj.click_problem_too_button()
-        questions_page_obj.refresh()
-        post_click_count = questions_page_obj.get_problem_count
-
-        assert (initial_count + 1) == post_click_count
+        Assert.equal(initial_count + 1, post_click_count)

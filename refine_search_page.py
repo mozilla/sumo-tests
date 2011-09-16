@@ -45,22 +45,22 @@ class RefineSearchPage(SumoPage):
     """
        'Advanced Search' page. 
     """
-    page_title                   = 'Search'
-    page_url                     = '/en-US/search?a=2'
-    article_search_box           = "kb_q"
-    post_search_box              = 'support_q'
-    post_tags_box                = 'id_q_tags'
-    thread_search_box            = 'discussion_q'
-    search_button_kb             = "css=input[name='w'][value='1']+div.submit-search > input[type='submit']"
-    search_button_support        = "css=input[name='w'][value='2']+div.submit-search > input[type='submit']"
-    search_button_disc           = "css=input[name='w'][value='4']+div.submit-search > input[type='submit']"
-    kb_cat_check_box             = "css=input#id_category_0"
-    kb_tab                       = "css=div#search-tabs > ul > li:nth-child(1) > a"
-    support_questions_tab        = "css=div#search-tabs > ul > li:nth-child(2) > a"
-    forums_tab                   = "css=div#search-tabs > ul > li:nth-child(3) > a"             
-    asked_by_box                 = "id_asked_by"
-    search_results_list          = "css=div.result.question"
-
+    page_title = 'Search'
+    page_url = '/en-US/search?a=2'
+    article_search_box = "kb_q"
+    post_search_box = 'support_q'
+    post_tags_box = 'id_q_tags'
+    thread_search_box = 'discussion_q'
+    search_button_kb = "css=input[name='w'][value='1']+div.submit-search > input[type='submit']"
+    search_button_support = "css=input[name='w'][value='2']+div.submit-search > input[type='submit']"
+    search_button_disc = "css=input[name='w'][value='4']+div.submit-search > input[type='submit']"
+    kb_cat_check_box = "css=input#id_category_0"
+    kb_tab = "css=div#search-tabs > ul > li:nth-child(1) > a"
+    support_questions_tab = "css=div#search-tabs > ul > li:nth-child(2) > a"
+    forums_tab = "css=div#search-tabs > ul > li:nth-child(3) > a"             
+    asked_by_box = "id_asked_by"
+    search_results_list = "css=div.result.question"
+ 
     def go_to_refine_search_page(self):
         self.open(self.page_url)
         self.is_the_current_page

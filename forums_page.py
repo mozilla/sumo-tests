@@ -44,19 +44,19 @@ class ForumsPage(sumo_page.SumoPage):
     performed on them. The page lists different
     categories of forums: SUMO community/Off-topic etc.
     """
-    _page_title            = 'Forums'
-    first_cat_forum_link   = "css=div.name > a"
-    post_new_thread_link   = "new-thread"
-    thread_title_box       = "css=input#id_title"
-    thread_content_box     = "id_content"
-    post_button            = "css=input[value='Post']"
-    cancel_link            = "link=Cancel"
-    reply_button           = "css=input[value='Reply']"
-    reply_link             = "css=a[href='#thread-reply']"
-    pagination_link        = "css=ol.pagination"
-    next_page_link         = "css=li.next"
-    prev_page_link         = "css=li.prev"
-    locked_thread_format   = "css=ol.threads li:nth-child(%d) > div > img[title='Locked']"
+    page_title = 'Forums'
+    first_cat_forum_link = "css=div.name > a"
+    post_new_thread_link = "new-thread"
+    thread_title_box = "css=input#id_title"
+    thread_content_box = "id_content"
+    post_button = "css=input[value='Post']"
+    cancel_link = "link=Cancel"
+    reply_button = "css=input[value='Reply']"
+    reply_link = "css=a[href='#thread-reply']"
+    pagination_link = "css=ol.pagination"
+    next_page_link = "css=li.next"
+    prev_page_link = "css=li.prev"
+    locked_thread_format = "css=ol.threads li:nth-child(%d) > div > img[title='Locked']"
     unlocked_thread_format = "css=ol.threads > li:nth-child(%d) > div:nth-child(2) > a"
 
     def __init__(self, testsetup):

@@ -37,7 +37,7 @@
 # ***** END LICENSE BLOCK *****
 from unittestzero import Assert
 from questions_page import ViewQuestionPage
-from ask_new_questions_page import AskNewQuestionsPage
+from questions_page import AskNewQuestionsPage
 from login_page import LoginPage
 import datetime
 import pytest
@@ -50,11 +50,12 @@ class TestAAQ:
     @pytest.mark.fft
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
-        login_po              = LoginPage(mozwebqa)
-        ask_new_questions_pg  = AskNewQuestionsPage(mozwebqa)
-        timestamp             = datetime.datetime.today()
-        q_to_ask              = "automation test question %s" % (timestamp)
-        q_details             = "This is a test. %s" % (timestamp)
+        login_po = LoginPage(mozwebqa)
+        ask_new_questions_pg = AskNewQuestionsPage(mozwebqa)
+        view_question_pg = ViewQuestionPage(mozwebqa)
+        timestamp = datetime.datetime.today()
+        q_to_ask = "automation test question %s" % (timestamp)
+        q_details = "This is a test. %s" % (timestamp)
 
         login_po.log_in('default')
 
@@ -64,7 +65,7 @@ class TestAAQ:
         ask_new_questions_pg.click_category_problem_link()
         ask_new_questions_pg.type_question(q_to_ask)
         ask_new_questions_pg.click_provide_details_button()
-        view_question_pg = ask_new_questions_pg.fill_up_questions_form(q_details)
+        ask_new_questions_pg.fill_up_questions_form(q_details)
         
         Assert.equal(view_question_pg.question, q_to_ask)
         Assert.equal(view_question_pg.question_detail, q_details)
