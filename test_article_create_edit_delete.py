@@ -45,6 +45,7 @@ import re
 import pytest
 import datetime
 
+
 class TestArticleCreatecEditDelete:
 
     @pytest.mark.fft

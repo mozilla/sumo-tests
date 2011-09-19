@@ -62,7 +62,6 @@ class TestQuestionsSort:
             actual_sorted_text = questions_pg.get_sorted_list_filter_text(counter + 1)
             Assert.equal(actual_sorted_text, expected_sorted_text)
 
-
     @pytest.mark.fft
     @pytest.mark.prod
     def test_that_questions_sorts_correctly_by_filter_equal_to_no_replies(self, mozwebqa):

@@ -37,6 +37,7 @@
 # ***** END LICENSE BLOCK *****
 from sumo_page import SumoPage
 
+
 class KnowledgeBaseNewArticle(SumoPage):
     """
     'Create New Article' Page is where the form

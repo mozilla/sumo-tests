@@ -60,8 +60,8 @@ class ForumsPage(sumo_page.SumoPage):
     unlocked_thread_format = "css=ol.threads > li:nth-child(%d) > div:nth-child(2) > a"
 
     def __init__(self, testsetup):
-        self.forums_cat_list_url = testsetup.base_url_ssl+'/en-US/forums'
-        self.kb_articles_forum_url = testsetup.base_url_ssl+'/en-US/forums/knowledge-base-articles'
+        self.forums_cat_list_url = testsetup.base_url_ssl + '/en-US/forums'
+        self.kb_articles_forum_url = testsetup.base_url_ssl + '/en-US/forums/knowledge-base-articles'
         super(ForumsPage, self).__init__(testsetup)
 
     def post_new_thread_first_cat(self, thread_title, thread_content):

@@ -34,19 +34,18 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from sumo_page import SumoPage
 import re
 import time
 
-import sumo_page
 
-
-class SupportHomePage(sumo_page.SumoPage):
+class SupportHomePage(SumoPage):
     """
     The Firefox Support Home Pgae contains
     web elements and methods that can be
     performed on them.
     """
-    _page_title             = 'Firefox Support Home Page'
+    page_title             = 'Firefox Support Home Page'
     main_search_box         = 'q'
     log_in_link             = 'log in'
     search_button           = 'css=button.img-submit'

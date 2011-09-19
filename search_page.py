@@ -34,10 +34,10 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import sumo_page
+from sumo_page import SumoPage
 
 
-class SearchPage(sumo_page.SumoPage):
+class SearchPage(SumoPage):
     """
     'Search for Firefox Help' page
     """
@@ -63,10 +63,6 @@ class SearchPage(sumo_page.SumoPage):
     def do_search_on_search_box(self, search_query):
         if not (self.page_title in self.selenium.get_title()):
             self.go_to_search_page()
-        #count = 1
-        #while count < 5 and not(self.selenium.is_element_present(self._search_box)):
-        #    self.go_to_search_page()
-        #    count += 1
         self.type(self.search_box, search_query)
         self.click(self.search_button, True, self.timeout)
 

@@ -40,9 +40,10 @@ Created on Jun 30, 2010
 
 @author: mozilla
 '''
-import sumo_page
+from sumo_page import SumoPage
 
-class LoginPage(sumo_page.SumoPage):
+
+class LoginPage(SumoPage):
     """
         Form for login.
     """

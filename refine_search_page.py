@@ -41,6 +41,7 @@ Created on Jun 30, 2010
 '''
 from sumo_page import SumoPage
 
+
 class RefineSearchPage(SumoPage):
     """
        'Advanced Search' page. 
