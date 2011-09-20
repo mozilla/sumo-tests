@@ -19,9 +19,7 @@
 # Portions created by the Initial Developer are Copyright (C) 2011
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): Tanay
-#                 Vishal
-#                 Zac Campbell
+# Contributor(s): Zac Campbell
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -36,40 +34,42 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-from login_page import LoginPage
-from support_home_page import SupportHomePage
-from knowledge_base_article import KnowledgeBaseArticle
-from knowledge_base_translate import KnowledgeBaseTranslate
-from unittestzero import Assert
-import pytest
-import datetime
+
+import sumo_page
 
 
-class TestLoggedInTranslateExistingArticle():
+class KnowledgeBaseTranslate(sumo_page.SumoPage):
 
-    @pytest.mark.smoketests
-    @pytest.mark.bft
-    @pytest.mark.fft
-    def test_loggedin_translate_existing_article(self, mozwebqa):
-        login_po = LoginPage(mozwebqa)
-        home_po = SupportHomePage(mozwebqa)
-        kb_article_po = KnowledgeBaseArticle(mozwebqa)
-        kb_translate_po = KnowledgeBaseTranslate(mozwebqa)
-        timestamp = datetime.datetime.now()
+    description_title_locator = "id_title"
+    description_slug_locator = "id_slug"
+    preview_content_button_locator = "btn-preview"
+    submit_button_locator = "btn-submit"
 
-        login_po.log_in('default')
+    # 2 elements inside the modal popup
+    describe_changes_locator = "id_comment"
+    submit_changes_button_locator = "css=#submit-modal > input"
 
-        home_po.click_top_common_content_link()
+    #history of the test
+    top_revision_comment = "css=ul > li:nth-child(2) > div.comment"
 
-        kb_article_po.click_translate_article()
-        kb_translate_po.click_translate_language("Esperanto (eo)")
+    def click_translate_language(self, language):
+        self.click("link=%s" % language, True, self.timeout)
 
-        kb_translate_po.type_title("article_title_%s" % timestamp)
-        kb_translate_po.type_slug("article_slug_%s" % timestamp)
-        kb_translate_po.click_submit_review()
+    def type_title(self, text):
+        self.type(self.description_title_locator, text)
 
-        change_comment = "article_changes %s" % timestamp
-        kb_translate_po.type_modal_describe_changes(change_comment)
-        kb_translate_po.click_modal_submit_changes_button()
+    def type_slug(self, text):
+        self.type(self.description_slug_locator, text)
 
-        Assert.equal(change_comment, kb_translate_po.most_recent_revision_comment)
+    def click_submit_review(self):
+        self.click(self.submit_button_locator)
+
+    def type_modal_describe_changes(self, text):
+        self.type(self.describe_changes_locator, text)
+
+    def click_modal_submit_changes_button(self):
+        self.click(self.submit_changes_button_locator, True, self.timeout)
+
+    @property
+    def most_recent_revision_comment(self):
+        return self.get_text(self.top_revision_comment)
