@@ -52,7 +52,7 @@ class Page(object):
     """
     Base class for all Pages
     """
-      
+
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.base_url = testsetup.base_url

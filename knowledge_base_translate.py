@@ -39,34 +39,34 @@ import sumo_page
 
 
 class KnowledgeBaseTranslate(sumo_page.SumoPage):
-    
+
     description_title_locator = "id_title"
     description_slug_locator = "id_slug"
     preview_content_button_locator = "btn-preview"
     submit_button_locator = "btn-submit"
-    
+
     # 2 elements inside the modal popup
     describe_changes_locator = "id_comment"
     submit_changes_button_locator = "css=#submit-modal > input"
-    
+
     #history of the test
-    top_revision_comment= "css=ul > li:nth-child(2) > div.comment"
-    
+    top_revision_comment = "css=ul > li:nth-child(2) > div.comment"
+
     def click_translate_language(self, language):
         self.click("link=%s" % language, True, self.timeout)
-    
+
     def type_title(self, text):
         self.type(self.description_title_locator, text)
-    
+
     def type_slug(self, text):
         self.type(self.description_slug_locator, text)
-        
+
     def click_submit_review(self):
         self.click(self.submit_button_locator)
-        
+
     def type_modal_describe_changes(self, text):
         self.type(self.describe_changes_locator, text)
-        
+
     def click_modal_submit_changes_button(self):
         self.click(self.submit_changes_button_locator, True, self.timeout)
 

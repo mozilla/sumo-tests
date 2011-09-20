@@ -46,11 +46,11 @@ class SupportHomePage(sumo_page.SumoPage):
     web elements and methods that can be
     performed on them.
     """
-    _page_title             = 'Firefox Support Home Page'
-    main_search_box         = 'q'
-    log_in_link             = 'log in'
-    search_button           = 'css=button.img-submit'
-    see_all_button          = "button-seeall"
+    _page_title = 'Firefox Support Home Page'
+    main_search_box = 'q'
+    log_in_link = 'log in'
+    search_button = 'css=button.img-submit'
+    see_all_button = "button-seeall"
     top_helpful_content_locator = "xpath=//div[@id='home-content-quick']/section[1]/ul/li[1]/a"
 
     def go_to_support_home_page(self):
@@ -76,4 +76,3 @@ class SupportHomePage(sumo_page.SumoPage):
 
     def click_top_common_content_link(self):
         self.click(self.top_helpful_content_locator, True, self.timeout)
-        
