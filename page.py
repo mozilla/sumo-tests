@@ -63,8 +63,8 @@ class Page(object):
     @property
     def is_the_current_page(self):
         actual_title = self.selenium.get_title()
-        if re.search(self.page_title, actual_title) is None:
-            raise Exception("Expected page title to be: '" + self.page_title + "' but it was: '" + actual_title + "'")
+        if re.search(self._page_title, actual_title) is None:
+            raise Exception("Expected page title to be: '" + self._page_title + "' but it was: '" + actual_title + "'")
         else:
             return True
 

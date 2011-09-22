@@ -39,25 +39,25 @@ import sumo_page
 
 class ForumsPage(sumo_page.SumoPage):
     """
-    The Firefox Forums Page contains 
-    web elements and methods that can be 
+    The Firefox Forums Page contains
+    web elements and methods that can be
     performed on them. The page lists different
     categories of forums: SUMO community/Off-topic etc.
     """
-    page_title = 'Forums'
-    first_cat_forum_link = "css=div.name > a"
-    post_new_thread_link = "new-thread"
-    thread_title_box = "css=input#id_title"
-    thread_content_box = "id_content"
-    post_button = "css=input[value='Post']"
-    cancel_link = "link=Cancel"
-    reply_button = "css=input[value='Reply']"
-    reply_link = "css=a[href='#thread-reply']"
-    pagination_link = "css=ol.pagination"
-    next_page_link = "css=li.next"
-    prev_page_link = "css=li.prev"
-    locked_thread_format = "css=ol.threads li:nth-child(%d) > div > img[title='Locked']"
-    unlocked_thread_format = "css=ol.threads > li:nth-child(%d) > div:nth-child(2) > a"
+    _page_title = 'Forums'
+    _first_cat_forum_link = "css=div.name > a"
+    _post_new_thread_link = "new-thread"
+    _thread_title_box = "css=input#id_title"
+    _thread_content_box = "id_content"
+    _post_button = "css=input[value='Post']"
+    _cancel_link = "link=Cancel"
+    _reply_button = "css=input[value='Reply']"
+    _reply_link = "css=a[href='#thread-reply']"
+    _pagination_link = "css=ol.pagination"
+    _next_page_link = "css=li.next"
+    _prev_page_link = "css=li.prev"
+    _locked_thread_format = "css=ol.threads li:nth-child(%d) > div > img[title='Locked']"
+    __unlocked_thread_format = "css=ol.threads > li:nth-child(%d) > div:nth-child(2) > a"
 
     def __init__(self, testsetup):
         self.forums_cat_list_url = testsetup.base_url_ssl + '/en-US/forums'
@@ -65,10 +65,10 @@ class ForumsPage(sumo_page.SumoPage):
         super(ForumsPage, self).__init__(testsetup)
 
     def post_new_thread_first_cat(self, thread_title, thread_content):
-        self.click(self.post_new_thread_link, True, self.timeout)
-        self.selenium.type(self.thread_title_box, thread_title)
-        self.selenium.type(self.thread_content_box, thread_content)
-        self.click(self.post_button, True, self.timeout)
+        self.click(self._post_new_thread_link, True, self.timeout)
+        self.selenium.type(self._thread_title_box, thread_title)
+        self.selenium.type(self._thread_content_box, thread_content)
+        self.click(self._post_button, True, self.timeout)
         if not (self.selenium.is_text_present(thread_title)):
             raise Exception("Posting new thread failed\r\n")
 
@@ -78,8 +78,8 @@ class ForumsPage(sumo_page.SumoPage):
 
     def post_reply(self, thread_url, reply_text):
         self.go_to_thread(thread_url)
-        self.selenium.type(self.thread_content_box, reply_text)
-        self.click(self.reply_button, True, self.timeout)
+        self.selenium.type(self._thread_content_box, reply_text)
+        self.click(self._reply_button, True, self.timeout)
         if not(self.selenium.is_text_present(reply_text)):
             raise Exception('Posting reply failed\r\n')
 

@@ -45,25 +45,25 @@ class SupportHomePage(SumoPage):
     web elements and methods that can be
     performed on them.
     """
-    page_title             = 'Firefox Support Home Page'
-    main_search_box         = 'q'
-    log_in_link             = 'log in'
-    search_button           = 'css=button.img-submit'
-    see_all_button          = "button-seeall"
-    top_helpful_content_locator = "xpath=//div[@id='home-content-quick']/section[1]/ul/li[1]/a"
+    _page_title = 'Firefox Support Home Page'
+    _main_search_box = 'q'
+    _log_in_link = 'log in'
+    _search_button = 'css=button.img-submit'
+    _see_all_button = "button-seeall"
+    _top_helpful_content_locator = "xpath=//div[@id='home-content-quick']/section[1]/ul/li[1]/a"
 
     def go_to_support_home_page(self):
         self.open('/')
         self.is_the_current_page
 
     def click_log_in_link(self):
-        self.click(self.log_in_link, True, self.timeout)
+        self.click(self._log_in_link, True, self.timeout)
 
     def do_search_on_main_search_box(self, search_query, search_page_obj):
         if re.search(self._page_title, self.selenium.get_title()) is None:
             self.go_to_support_home_page()
         self.type(SupportHomePage.main_search_box, search_query)
-        self.click(self.search_button, True, self.timeout)
+        self.click(self._search_button, True, self.timeout)
         count = 0
         while not self.selenium.is_text_present('results for %s' % search_query):
             time.sleep(1)
@@ -74,5 +74,4 @@ class SupportHomePage(SumoPage):
         search_page_obj.is_the_current_page
 
     def click_top_common_content_link(self):
-        self.click(self.top_helpful_content_locator, True, self.timeout)
-        
+        self.click(self._top_helpful_content_locator, True, self.timeout)
