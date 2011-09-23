@@ -46,14 +46,14 @@ class TestQuestionProbCount:
     @pytest.mark.xfail(reason="Bug 688388 - initial problem count not showing correctly")
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
-        
+
         questions_pg = QuestionsPage(mozwebqa)
         view_question_pg = ViewQuestionPage(mozwebqa)
 
         # Can't +1 your own question so will do it logged out
         questions_pg.go_to_forum_questions_page()
         questions_pg.click_any_question(1)
-        
+
         initial_count = view_question_pg.problem_count
         view_question_pg.click_problem_too_button()
         view_question_pg.refresh()

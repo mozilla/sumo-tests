@@ -39,6 +39,7 @@ from sumo_page import SumoPage
 
 class KnowledgeBase(SumoPage):
 
+<<<<<<< HEAD
     @property
     def navigation(self):
         return self.Navigation(self.testsetup)
@@ -171,3 +172,11 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     @property
     def most_recent_revision_comment(self):
         return self.get_text(self._top_revision_comment)
+=======
+class KnowledgeBaseArticle(sumo_page.SumoPage):
+
+    translate_article_locator = "link=Translate Article"
+
+    def click_translate_article(self):
+        self.click(self.translate_article_locator, True, self.timeout)
+>>>>>>> remove-vars

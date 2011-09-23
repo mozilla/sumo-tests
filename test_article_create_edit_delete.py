@@ -72,13 +72,13 @@ class TestArticleCreatecEditDelete:
 
         # verify article contents
         kb_article_history.navigation.click_edit_article()
-        
+
         actual_summary_text = kb_edit_article.article_summary_text
         Assert.equal(article_info_dict['summary'], actual_summary_text)
-        
+
         actual_contents_text = kb_edit_article.article_contents_text
         Assert.equal(article_info_dict['content'], actual_contents_text)
-        
+
         # delete the same article
         kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
@@ -113,19 +113,19 @@ class TestArticleCreatecEditDelete:
         article_info_dict_edited = {'title': article_info_dict['title'],\
                                     'category': 'How to', 'keyword': 'test',\
                                     'summary': edited_article_summary, 'content': edited_article_content}
-        
+
         kb_article_history.navigation.click_edit_article()
         kb_edit_article.edit_article(article_info_dict_edited)
-        
+
         kb_article_history.navigation.click_edit_article()
 
         # verify the contents of the edited article
         actual_page_title = kb_edit_article.get_page_title()
         Assert.contains(article_info_dict_edited['title'], actual_page_title)
-        
+
         actual_summary_text = kb_edit_article.article_summary_text
         Assert.equal(edited_article_summary, actual_summary_text)
-         
+
         actual_content_text = kb_edit_article.article_contents_text
         Assert.equal(edited_article_content, actual_content_text)
 
@@ -149,7 +149,7 @@ class TestArticleCreatecEditDelete:
         login_pg.log_in('admin')
 
         article_info_dict = self._create_new_generic_article(kb_new_article)
- 
+
         kb_new_article.submit_article()
         kb_new_article.set_article_comment_box()
 
@@ -160,7 +160,7 @@ class TestArticleCreatecEditDelete:
         # delete the same article
         kb_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
-        
+
         kb_article_history.open(article_url)
         actual_page_title = kb_article_history.get_page_title()
         Assert.contains("Page Not Found", actual_page_title)
@@ -168,7 +168,7 @@ class TestArticleCreatecEditDelete:
     @pytest.mark.fft
     @pytest.mark.prod
     def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
-        
+
         kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
         login_pg = LoginPage(mozwebqa)
 
@@ -176,17 +176,17 @@ class TestArticleCreatecEditDelete:
         login_pg.log_in('admin')
 
         article_info_dict = self._create_new_generic_article(kb_new_article)
- 
+
         kb_new_article.click_article_preview_button()
         actual_preview_text = kb_new_article.get_article_preview_text()
 
         Assert.equal(article_info_dict['content'], actual_preview_text)
-        
+
         # Does not need to be deleted as it does not commit the article
 
     def _create_new_generic_article(self, kb_new_article):
         timestamp = datetime.datetime.now()
-        
+
         article_name = "test_article_%s" % timestamp
         article_summary = "this is an automated summary_%s" % timestamp
         article_content = "automated content_%s" % timestamp
@@ -198,5 +198,5 @@ class TestArticleCreatecEditDelete:
         # create a new article
         kb_new_article.go_to_create_new_article_page()
         kb_new_article.set_article(article_info_dict)
-        
+
         return article_info_dict

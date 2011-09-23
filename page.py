@@ -52,7 +52,7 @@ class Page(object):
     """
     Base class for all Pages
     """
-      
+
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.base_url = testsetup.base_url
@@ -94,7 +94,7 @@ class Page(object):
 
     def get_page_title(self):
         return self.selenium.get_title()
-        
+
     def get_text(self, locator):
         return self.selenium.get_text(locator)
 

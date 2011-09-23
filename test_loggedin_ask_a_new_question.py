@@ -66,6 +66,6 @@ class TestAAQ:
         ask_new_questions_pg.type_question(q_to_ask)
         ask_new_questions_pg.click_provide_details_button()
         ask_new_questions_pg.fill_up_questions_form(q_details)
-        
+
         Assert.equal(view_question_pg.question, q_to_ask)
         Assert.equal(view_question_pg.question_detail, q_details)

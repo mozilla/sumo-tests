@@ -56,5 +56,5 @@ class TestNoQueryAdvForumSearch:
         refine_search_pg.click_support_questions_tab()
         refine_search_pg.type_in_asked_by_box(login_pg.get_user_name('default'))
         refine_search_pg.click_search_button_support()
-        
+
         Assert.true(refine_search_pg.search_result_count > 0, "No search results not found")
