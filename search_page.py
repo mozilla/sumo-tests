@@ -71,7 +71,8 @@ class SearchPage(SumoPage):
 
     def is_search_available(self):
         try:
-            return self.is_text_present(self._search_unavailable_msg)
+            if self.is_text_present(self._search_unavailable_msg):
+                return False
         except:
             return True
 

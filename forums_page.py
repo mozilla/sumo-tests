@@ -57,7 +57,7 @@ class ForumsPage(sumo_page.SumoPage):
     _next_page_link = "css=li.next"
     _prev_page_link = "css=li.prev"
     _locked_thread_format = "css=ol.threads li:nth-child(%d) > div > img[title='Locked']"
-    __unlocked_thread_format = "css=ol.threads > li:nth-child(%d) > div:nth-child(2) > a"
+    _unlocked_thread_format = "css=ol.threads > li:nth-child(%d) > div:nth-child(2) > a"
 
     def __init__(self, testsetup):
         self.forums_cat_list_url = testsetup.base_url_ssl + '/en-US/forums'

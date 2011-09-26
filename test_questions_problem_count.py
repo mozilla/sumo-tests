@@ -43,7 +43,6 @@ class TestQuestionProbCount:
 
     @pytest.mark.bft
     @pytest.mark.fft
-    @pytest.mark.xfail(reason="Bug 688388 - initial problem count not showing correctly")
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
 

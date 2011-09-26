@@ -49,14 +49,14 @@ class SumoPage(Page):
      elements and methods that pertain to those elements.
     """
 
-    log_out_link = "css=a[href *='logout']"
-    my_account_link = "css=a[href *='user_preferences']"
-    kb_link = "link=*Home*"
-    question_link = "link=*Question*"
-    login_link = "css=a[href *= 'login']"
+    _log_out_link = "css=a[href *='logout']"
+    _my_account_link = "css=a[href *='user_preferences']"
+    _kb_link = "link=*Home*"
+    _question_link = "link=*Question*"
+    _login_link = "css=a[href *= 'login']"
 
     def log_out(self):
-        self.click(self.log_out_link, True)
+        self.click(self._log_out_link, True)
 
     def open(self, url, count=0):
         try:
