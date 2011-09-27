@@ -52,26 +52,26 @@ class TestLoggedInTranslateExistingArticle():
     @pytest.mark.bft
     @pytest.mark.fft
     def test_loggedin_translate_existing_article(self, mozwebqa):
-        login_po = LoginPage(mozwebqa)
-        home_po = SupportHomePage(mozwebqa)
-        kb_article_po = KnowledgeBaseArticle(mozwebqa)
-        kb_translate_po = KnowledgeBaseTranslate(mozwebqa)
-        kb_history_po = KnowledgeBaseShowHistory(mozwebqa)
+        login_pg = LoginPage(mozwebqa)
+        home_pg = SupportHomePage(mozwebqa)
+        kb_article_pg = KnowledgeBaseArticle(mozwebqa)
+        kb_translate_pg = KnowledgeBaseTranslate(mozwebqa)
+        kb_history_pg = KnowledgeBaseShowHistory(mozwebqa)
         timestamp = datetime.datetime.now()
 
-        login_po.log_in('default')
+        login_pg.log_in('default')
 
-        home_po.click_top_common_content_link()
+        home_pg.click_top_common_content_link()
 
-        kb_article_po.navigation.click_translate_article()
-        kb_translate_po.click_translate_language("Esperanto (eo)")
+        kb_article_pg.navigation.click_translate_article()
+        kb_translate_pg.click_translate_language("Esperanto (eo)")
 
-        kb_translate_po.type_title("article_title_%s" % timestamp)
-        kb_translate_po.type_slug("article_slug_%s" % timestamp)
-        kb_translate_po.click_submit_review()
+        kb_translate_pg.type_title("article_title_%s" % timestamp)
+        kb_translate_pg.type_slug("article_slug_%s" % timestamp)
+        kb_translate_pg.click_submit_review()
 
         change_comment = "article_changes %s" % timestamp
-        kb_translate_po.type_modal_describe_changes(change_comment)
-        kb_translate_po.click_modal_submit_changes_button()
+        kb_translate_pg.type_modal_describe_changes(change_comment)
+        kb_translate_pg.click_modal_submit_changes_button()
 
-        Assert.equal(change_comment, kb_history_po.most_recent_revision_comment)
+        Assert.equal(change_comment, kb_history_pg.most_recent_revision_comment)

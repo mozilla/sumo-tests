@@ -157,11 +157,11 @@ class ViewQuestionPage(SumoPage):
 
     @property
     def question(self):
-        return self.get_text(self._question_locator)
+        return self.selenium.get_text(self._question_locator)
 
     @property
     def question_detail(self):
-        return self.get_text(self._detail_locator)
+        return self.selenium.get_text(self._detail_locator)
 
     def click_problem_too_button(self):
         self.selenium.click(self._problem_too_button_locator)
