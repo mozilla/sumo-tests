@@ -78,11 +78,11 @@ class KnowledgeBaseArticle(KnowledgeBase):
 
 class KnowledgeBaseEditArticle(KnowledgeBase):
 
-    _article_keywords_box_locator = 'id=id_keywords'
-    _article_summary_box_locator = 'id=id_summary'
-    _article_content_box_locator = 'id=id_content'
-    _article_submit_btn_locator = 'id=btn-submit'
-    _comment_box_locator = 'id=id_comment'
+    _article_keywords_box_locator = "id=id_keywords"
+    _article_summary_box_locator = "id=id_summary"
+    _article_content_box_locator = "id=id_content"
+    _article_submit_btn_locator = "id=btn-submit"
+    _comment_box_locator = "id=id_comment"
     _comment_submit_btn_locator = "css=input[value='Submit']"
 
     @property
