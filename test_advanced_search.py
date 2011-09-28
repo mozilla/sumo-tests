@@ -8,7 +8,6 @@ results.
 """
 
 import unittest
-import sumo_functions
 import json
 
 from sumo import SumoURLopener

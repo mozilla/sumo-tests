@@ -52,7 +52,7 @@ class Page(object):
     """
     Base class for all Pages
     """
-      
+
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.base_url = testsetup.base_url
@@ -89,11 +89,17 @@ class Page(object):
         if wait_flag:
             self.selenium.wait_for_page_to_load(timeout)
 
+    def get_attribute(self, attributelocator):
+        return self.selenium.get_attribute(attributelocator)
+
     def get_url_current_page(self):
         return(self.selenium.get_location())
 
     def get_page_title(self):
         return self.selenium.get_title()
+        
+    def get_text(self, locator):
+        return self.selenium.get_text(locator)
 
     def is_element_present(self, locator):
         return self.selenium.is_element_present(locator)
