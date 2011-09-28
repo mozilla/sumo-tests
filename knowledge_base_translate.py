@@ -35,15 +35,15 @@
 #
 # ***** END LICENSE BLOCK *****
 
-import sumo_page
+from sumo_page import SumoPage
 
 
-class KnowledgeBaseTranslate(sumo_page.SumoPage):
+class KnowledgeBaseTranslate(SumoPage):
 
-    description_title_locator = "id_title"
-    description_slug_locator = "id_slug"
-    preview_content_button_locator = "btn-preview"
-    submit_button_locator = "btn-submit"
+    description_title_locator = "id=id_title"
+    description_slug_locator = "id=id_slug"
+    preview_content_button_locator = "id=btn-preview"
+    submit_button_locator = "id=btn-submit"
 
     # 2 elements inside the modal popup
     describe_changes_locator = "id_comment"
@@ -53,23 +53,27 @@ class KnowledgeBaseTranslate(sumo_page.SumoPage):
     top_revision_comment = "css=ul > li:nth-child(2) > div.comment"
 
     def click_translate_language(self, language):
-        self.click("link=%s" % language, True, self.timeout)
+        self.selenium.click("link=%s" % language)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def type_title(self, text):
-        self.type(self.description_title_locator, text)
+        self.selenium.type(self.description_title_locator, text)
 
     def type_slug(self, text):
-        self.type(self.description_slug_locator, text)
+        self.selenium.type(self.description_slug_locator, text)
 
     def click_submit_review(self):
-        self.click(self.submit_button_locator)
+        self.selenium.click(self.submit_button_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def type_modal_describe_changes(self, text):
-        self.type(self.describe_changes_locator, text)
+        self.selenium.type(self.describe_changes_locator, text)
 
     def click_modal_submit_changes_button(self):
-        self.click(self.submit_changes_button_locator, True, self.timeout)
+        self.selenium.click(self.submit_changes_button_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
+
 
     @property
     def most_recent_revision_comment(self):
-        return self.get_text(self.top_revision_comment)
+        return self.selenium.get_text(self.top_revision_comment)

@@ -34,47 +34,27 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
-import sumo_page
+from sumo_page import SumoPage
 
 
-class SearchPage(sumo_page.SumoPage):
+class SearchPage(SumoPage):
     """
     'Search for Firefox Help' page
     """
 
-    _page_title                = 'Search'
-    _page_url                  = 'en-US/search'
-    _search_box                = "css=input[name='q']"
-    _search_button             = "css=input[type='submit']"
-    _refine_search_link        = "css=a[href *= 'a=2']"
-    _next_page_link            = "link=*Next*"
-    _prev_page_link            = "link=*Previous*"
-    _result_div                = "css=div.result"
-    _support_question_link     = "link=*support*question*"
-    _second_page_link          = "link=2"
-    _search_unavailable_msg    = "unavailable"
-    _ten_search_results        = "css=div.search-results div[class*='result']:nth-child(10)"
-    _eleven_search_results     = "css=div.search-results div[class*='result']:nth-child(11)"
-
-    @property
-    def search_box(self):
-        return self._search_box
-
-    @property
-    def second_page_link(self):
-        return self._second_page_link
-
-    @property
-    def next_page_link(self):
-        return self._next_page_link
-
-    @property
-    def result_div(self):
-        return self._result_div
-
-    @property
-    def support_question_link(self):
-        return self._support_question_link
+    _page_title = 'Search'
+    _page_url = 'en-US/search'
+    _search_box = "css=input[name='q']"
+    _search_button = "css=input[type='submit']"
+    _refine_search_link = "css=a[href *= 'a=2']"
+    _next_page_link = "link=*Next*"
+    _prev_page_link = "link=*Previous*"
+    _result_div = "css=div.result"
+    _support_question_link = "link=*support*question*"
+    _second_page_link = "link=2"
+    _search_unavailable_msg = "unavailable"
+    _ten_search_results = "css=div.search-results div[class*='result']:nth-child(10)"
+    _eleven_search_results = "css=div.search-results div[class*='result']:nth-child(11)"
 
     def go_to_search_page(self):
         self.open(self._page_url)
@@ -83,10 +63,6 @@ class SearchPage(sumo_page.SumoPage):
     def do_search_on_search_box(self, search_query):
         if not (self._page_title in self.selenium.get_title()):
             self.go_to_search_page()
-        count = 1
-        while count < 5 and not(self.selenium.is_element_present(self._search_box)):
-            self.go_to_search_page()
-            count += 1
         self.type(self._search_box, search_query)
         self.click(self._search_button, True, self.timeout)
 
@@ -94,9 +70,10 @@ class SearchPage(sumo_page.SumoPage):
         return self.selenium.get_value(self._search_box)
 
     def is_search_available(self):
-        if self.is_text_present(self._search_unavailable_msg):
-            return False
-        else:
+        try:
+            if self.is_text_present(self._search_unavailable_msg):
+                return False
+        except:
             return True
 
     def is_result_present(self):

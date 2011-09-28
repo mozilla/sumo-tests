@@ -34,8 +34,9 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from unittestzero import Assert
+from register_page import RegisterPage
 import pytest
-import register_page
 
 
 class TestNewUserRegistration:
@@ -46,10 +47,9 @@ class TestNewUserRegistration:
            Register a new user using random username.
            Verify registration by checking the page title
         """
-        register_pg = register_page.RegisterPage(mozwebqa)
+        register_pg = RegisterPage(mozwebqa)
         register_pg.go_to_registration_page()
         register_pg.register_new_user()
         actual_page_title = register_pg.get_page_title()
-        expected_page_title = register_pg.page_title_after_registration
-        assert expected_page_title in actual_page_title, "Expected %s to be in %s"\
-                                    % (expected_page_title, actual_page_title)
+        expected_page_title = register_pg._page_title_after_registration
+        Assert.contains(expected_page_title, actual_page_title)

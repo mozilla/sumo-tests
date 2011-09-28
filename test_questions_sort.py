@@ -34,9 +34,9 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from unittestzero import Assert
+from questions_page import QuestionsPage
 import pytest
-
-import questions_page
 
 
 class TestQuestionsSort:
@@ -48,7 +48,7 @@ class TestQuestionsSort:
            Goes to the /questions page,
            Verifies the sort filter=solved works
         """
-        questions_pg = questions_page.QuestionsPage(mozwebqa)
+        questions_pg = QuestionsPage(mozwebqa)
         expected_sorted_text = "Solved"
 
         questions_pg.go_to_forum_questions_page()
@@ -60,8 +60,7 @@ class TestQuestionsSort:
 
         for counter in range(num_of_questions):
             actual_sorted_text = questions_pg.get_sorted_list_filter_text(counter + 1)
-            assert actual_sorted_text == expected_sorted_text,\
-                   "Expected Sorted Reply text : %s Actual Text: %s" % (expected_sorted_text, actual_sorted_text)
+            Assert.equal(actual_sorted_text, expected_sorted_text)
 
     @pytest.mark.fft
     @pytest.mark.prod
@@ -70,7 +69,7 @@ class TestQuestionsSort:
            Goes to the /questions page,
            Verifies the sort filter=noreplies works
         """
-        questions_pg = questions_page.QuestionsPage(mozwebqa)
+        questions_pg = QuestionsPage(mozwebqa)
         expected_sorted_text = "No replies"
 
         questions_pg.go_to_forum_questions_page()
@@ -83,5 +82,4 @@ class TestQuestionsSort:
         for counter in range(num_of_questions):
             index = counter + 1
             actual_sorted_text = questions_pg.get_sorted_list_filter_text(index)
-            assert actual_sorted_text == expected_sorted_text,\
-                   "Expected Sorted Reply text : %s Actual Text: %s" % (expected_sorted_text, actual_sorted_text)
+            Assert.equal(actual_sorted_text, expected_sorted_text)
