@@ -34,28 +34,23 @@
 # the terms of any one of the MPL, the GPL or the LGPL.
 #
 # ***** END LICENSE BLOCK *****
+from sumo_page import SumoPage
 import string
 import random
 
-import sumo_page
 
-
-class RegisterPage(sumo_page.SumoPage):
+class RegisterPage(SumoPage):
     """
         Form for user registration.
     """
-    _page_title                    = 'Register'
+    _page_title = 'Register'
     _page_title_after_registration = 'Thank you for registering'
-    _page_url                      = '/en-US/users/register'
-    _username_box_locator          = 'id_for_username'
-    _password_box_locator          = 'id_for_password'
-    _password_repeat_box_locator   = 'id_for_password2'
-    _email_add_box_locator         = 'id_for_email'
-    _register_button_locator       = "css=input.btn[value='Register']"
-
-    @property
-    def page_title_after_registration(self):
-        return self._page_title_after_registration
+    _page_url = '/en-US/users/register'
+    _username_box_locator = 'id_for_username'
+    _password_box_locator = 'id_for_password'
+    _password_repeat_box_locator = 'id_for_password2'
+    _email_add_box_locator = 'id_for_email'
+    _register_button_locator = "css=input.btn[value='Register']"
 
     def go_to_registration_page(self):
         self.open(self._page_url)
@@ -64,7 +59,7 @@ class RegisterPage(sumo_page.SumoPage):
     def register_new_user(self):
         user_name = self.get_random_word(5)
         password = '1234'
-        email = user_name+"@mozilla.com"
+        email = user_name + "@mozilla.com"
         self.type(self._username_box_locator, user_name)
         self.type(self._password_box_locator, password)
         self.type(self._password_repeat_box_locator, password)
