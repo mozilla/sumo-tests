@@ -46,7 +46,6 @@ class TestNoQueryAdvForumSearch:
     @pytest.mark.smoketests
     @pytest.mark.bft
     @pytest.mark.fft
-    @pytest.mark.prod
     def test_no_query_adv_forum_search(self, mozwebqa):
         login_pg = LoginPage(mozwebqa)
         refine_search_pg = RefineSearchPage(mozwebqa)
