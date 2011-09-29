@@ -49,7 +49,7 @@ class SupportHomePage(SumoPage):
     _main_search_box = "id=q"
     _search_button = "css=button.img-submit"
     _see_all_button = "id=button-seeall"
-    _top_helpful_content_locator = "xpath=//div[@id='home-content-quick']/section[1]/ul/li[1]/a"
+    _top_helpful_content_locator = "css=div#home-content-quick section ul > li > a"
 
     def go_to_support_home_page(self):
         self.open('/')
