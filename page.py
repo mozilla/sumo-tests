@@ -123,12 +123,18 @@ class Page(object):
                 raise Exception(element + " is not visible")
 
     def wait_for_element_not_visible(self, element):
-        count = 0
-        while self.is_element_visible(element):
-            time.sleep(1)
-            count += 1
-            if count == self.timeout / 1000:
-                raise Exception(element + " is still visible")
+        count = self.timeout / 1000
+        while count > 0:
+            try:
+                if self.is_element_visible(element):
+                    time.sleep(1)
+                    count -= 1
+                    continue
+                else:
+                    break
+            except:
+                break
+            raise Exception(element + " is still visible")
 
     def wait_for_page(self, url_regex):
         count = 0
