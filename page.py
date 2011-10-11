@@ -123,7 +123,7 @@ class Page(object):
                 raise Exception(element + " is not visible")
 
     def wait_for_element_not_visible(self, element):
-        count = self.timeout / 1000 
+        count = self.timeout / 1000
         while count > 0:
             try:
                 if self.is_element_visible(element):
