@@ -165,7 +165,7 @@ class ViewQuestionPage(SumoPage):
 
     def click_problem_too_button(self):
         self.selenium.click(self._problem_too_button_locator)
-        self.wait_for_element_present(self._no_thanks_link_locator)
+        self.wait_for_element_not_visible(self._problem_too_button_locator)
 
     @property
     def problem_count(self):
