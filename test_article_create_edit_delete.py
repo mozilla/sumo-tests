@@ -44,6 +44,7 @@ from login_page import LoginPage
 import re
 import pytest
 import datetime
+xfail = pytest.mark.xfail
 
 
 class TestArticleCreateEditDelete:
@@ -83,6 +84,7 @@ class TestArticleCreateEditDelete:
         kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
+    @xfail(reason='Bug 694614 - spurious failures')
     @pytest.mark.fft
     def test_that_article_can_be_edited(self, mozwebqa):
         """
