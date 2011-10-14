@@ -46,7 +46,7 @@ import pytest
 import datetime
 
 
-class TestArticleCreatecEditDelete:
+class TestArticleCreateEditDelete:
 
     @pytest.mark.fft
     def test_that_article_can_be_created(self, mozwebqa):
