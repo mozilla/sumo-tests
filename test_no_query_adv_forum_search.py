@@ -39,13 +39,14 @@ from unittestzero import Assert
 from refine_search_page import RefineSearchPage
 from login_page import LoginPage
 import pytest
-
+xfail = pytest.mark.xfail
 
 class TestNoQueryAdvForumSearch:
 
     @pytest.mark.smoketests
     @pytest.mark.bft
     @pytest.mark.fft
+    @xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out')
     def test_no_query_adv_forum_search(self, mozwebqa):
         login_pg = LoginPage(mozwebqa)
         refine_search_pg = RefineSearchPage(mozwebqa)
