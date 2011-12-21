@@ -127,7 +127,7 @@ class KnowledgeBaseTranslate(KnowledgeBase):
     _description_title_locator = "id=id_title"
     _description_slug_locator = "id=id_slug"
     _preview_content_button_locator = "id=btn-preview"
-    _submit_button_locator = "id=btn-submit"
+    _submit_button_locator = "css=.btn-important"
 
     # 2 elements inside the modal popup
     _describe_changes_locator = "id=id_comment"
