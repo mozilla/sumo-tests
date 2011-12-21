@@ -53,7 +53,7 @@ class KnowledgeBaseNewArticle(SumoPage):
     _article_content_box_locator = 'id_content'
     _article_preview_btn_locator = 'css=div.submit > .btn-preview'
     _article_preview_content_locator = "css=div#preview > div#doc-content"
-    _article_submit_btn_locator = 'btn-submit'
+    _article_submit_btn_locator = 'css=.btn-important'
     _comment_box_locator = 'id_comment'
     _comment_submit_btn_locator = "css=input[value='Submit']"
 
