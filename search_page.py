@@ -50,7 +50,7 @@ class SearchPage(SumoPage):
     _next_page_link = "link=*Next*"
     _prev_page_link = "link=*Previous*"
     _result_div = "css=div.result"
-    _support_question_link = "link=*support*question*"
+    _support_question_link = "css=p.aaq > a"
     _second_page_link = "link=2"
     _search_unavailable_msg = "unavailable"
     _ten_search_results = "css=div.search-results div[class*='result']:nth-child(10)"
@@ -89,3 +89,7 @@ class SearchPage(SumoPage):
     def click_next_page_link(self):
         self.click(self._next_page_link)
         self.selenium.wait_for_page_to_load(self.timeout)
+
+    @property
+    def is_ask_a_question_present(self):
+        return self.is_element_present(self._support_question_link)

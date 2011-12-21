@@ -56,5 +56,5 @@ class TestCantFindWhatYouAreLookingFor:
             
             expected_text = "Can't find what you're looking for?"
             Assert.true(search_page_obj.is_text_present(expected_text), "%s not present" % expected_text)
-            Assert.true(search_page_obj.is_element_present(search_page_obj._support_question_link), "Ask question link not present")
+            Assert.true(search_page_obj.is_ask_a_question_present, "Ask question link not present")
             
