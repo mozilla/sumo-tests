@@ -51,7 +51,7 @@ class TestRewrites(unittest.TestCase):
         if len(cmd_line_args) > 1:
             self.mainURL = cmd_line_args[1]
         else:
-            self.mainURL    = "http://support.allizom.org"
+            self.mainURL    = "http://support-dev.allizom.org"
         if self.mainURL.endswith('/'):
             self.mainURL = self.mainURL.rstrip('/')
         self.numberOne  = "/1"
