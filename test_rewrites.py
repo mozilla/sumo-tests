@@ -248,7 +248,7 @@ class TestRewrites(unittest.TestCase):
                                     raise Exception
                             except Exception:
                                 print '\r\n'
-                                print "string not foud :"+urlPrefs[self.key3]
+                                print "string not found :"+urlPrefs[self.key3]
                                 print "actual url :"+actual_url
                                 raise
                                 
