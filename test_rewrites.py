@@ -56,9 +56,9 @@ class TestRewrites(unittest.TestCase):
             self.mainURL = self.mainURL.rstrip('/')
         self.numberOne  = "/1"
         self._1         = "/firefox"
-        #self._2         = array("/3.5.1","/3.0.12","/2.0.0.20","/3.5b99")
-        #self._3         = array("/Linux","/WINNT","/Darwin")
-        #self._2         = array("/3.6.3plugin1","/3.6.2")
+        #self._2        = array("/3.5.1","/3.0.12","/2.0.0.20","/3.5b99")
+        #self._3        = array("/Linux","/WINNT","/Darwin")
+        #self._2        = array("/3.6.3plugin1","/3.6.2")
         self._2         = ["/4.0"]
         self._3         = ["/WINNT","/Darwin","/Linux"]
         self.kbSuffix   = "/kb"
