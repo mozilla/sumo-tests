@@ -80,17 +80,17 @@ class TestRewrites(unittest.TestCase):
         self.article_source_suffix = "?as=u"
          
         
-    """ // # Redirect locales that point to one locale in SUMO
+    """// # Redirect locales that point to one locale in SUMO
        // 10     RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/ja\-JP\-mac$ /1/$1/$2/$3/ja/ [R]
        // 11     RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/n[bn]\-NO$ /1/$1/$2/$3/no/ [R]
        // 12     RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/es\-ES$ /1/$1/$2/$3/es/ [R]
        // 13     RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/es\-AR$ /1/$1/$2/$3/es/ [R]
-      // 14     RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/es\-CL$ /1/$1/$2/$3/es/ [R]
-      // 15     RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/sr$ /1/$1/$2/$3/sr-CYRL/ [R]      
+       // 14     RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/es\-CL$ /1/$1/$2/$3/es/ [R]
+       // 15     RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/sr$ /1/$1/$2/$3/sr-CYRL/ [R]      
     """
     def test_redirect_one_locale(self):
         ja    = {"goToUrl":"/ja-JP-mac","redirectUrl" : "/ja"}
-        #nb    = {"goToUrl":"/nb-NO","redirectUrl":"/no"}
+        #nb   = {"goToUrl":"/nb-NO","redirectUrl":"/no"}
         nn    = {"goToUrl":"/nn-NO","redirectUrl":"/no"}
         es_es = {"goToUrl":"/es-ES","redirectUrl":"/es"}
         es_ar = {"goToUrl":"/es-AR","redirectUrl":"/es"}
@@ -113,17 +113,17 @@ class TestRewrites(unittest.TestCase):
 
         """
            redirect /kb to /home
-           Note: this redirect is not part of the .htaccess, its part of Kitsune
-                 if you go to an over-specified or under-specified locale, kitsune fixes it
+           Note: this redirect is not part of the .htaccess; it's part of Kitsune
+                 if you go to an over-specified or under-specified locale, Kitsune fixes it
         """
         ja    = {"goToUrl":"/ja-JP-mac","redirectUrl" : "/ja"}
-        #nb    = {"goToUrl":"/nb-NO","redirectUrl":"/no"}
+        #nb   = {"goToUrl":"/nb-NO","redirectUrl":"/no"}
         nn    = {"goToUrl":"/nn-NO","redirectUrl":"/no"}
         es_es = {"goToUrl":"/es-ES","redirectUrl":"/es"}
         es_ar = {"goToUrl":"/es-AR","redirectUrl":"/es"}
         es_cl = {"goToUrl":"/es-CL","redirectUrl":"/es"}
         us    = {"goToUrl":"/en-US","redirectUrl":"/en-US"}
-        us2    = {"goToUrl":"/en","redirectUrl":"/en-US"}
+        us2   = {"goToUrl":"/en","redirectUrl":"/en-US"}
         
         urlMatrixArray2 = (ja,nn,es_es,es_ar,es_cl,us,us2)
         for x in urlMatrixArray2:
@@ -134,10 +134,10 @@ class TestRewrites(unittest.TestCase):
             self.assertEqual(actual_url,expected_url)
                         
     """ // //RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/pageinfo_general\/$ to
-// // /$4/kb/Page+Info+window?style_mode=inproduct#General [R,NE] 
-// For eg. http://support.mozilla.com/1/firefox/3.6b3pre/Darwin/es-MX/pageinfo_general
-//         redirects to
-//         http://support.mozilla.com/es/kb/Page+Info+window?style_mode=inproduct#General      
+        // /$4/kb/Page+Info+window?style_mode=inproduct#General [R,NE] 
+        // For eg. http://support.mozilla.com/1/firefox/3.6b3pre/Darwin/es-MX/pageinfo_general
+        // redirects to
+        // http://support.mozilla.com/es/kb/Page+Info+window?style_mode=inproduct#General      
     """
     def test_redirect_pageinfo(self):
         one    = {"goToUrl":"/pageinfo_general","redirectUrl" : "?as=u#General"}
@@ -165,11 +165,11 @@ class TestRewrites(unittest.TestCase):
                         self.assertEqual(actual_url,expected_url)
 
 
-    """ //  // RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/firefox-help\/$ to
-//  // /$4/kb/Firefox+Help?style_mode=inproduct [R,NE] 
-// For eg. http://support.mozilla.com/1/firefox/3.6b3pre/Darwin/fr/firefox-help
-//         redirects to
-//         http://support.mozilla.com/fr/kb/Firefox+Help?style_mode=inproduct    
+    """ // RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/firefox-help\/$ to
+        // /$4/kb/Firefox+Help?style_mode=inproduct [R,NE] 
+        // For eg. http://support.mozilla.com/1/firefox/3.6b3pre/Darwin/fr/firefox-help
+        // redirects to
+        // http://support.mozilla.com/fr/kb/Firefox+Help?style_mode=inproduct    
     """
     def test_redirect_firefox_help(self):
         firefoxHelpArr = ["/firefox-help","/firefox-f1","/firefox-osxkey"]
@@ -190,38 +190,38 @@ class TestRewrites(unittest.TestCase):
                         self.assertEqual(actual_url,expected_url)
                         
     """RewriteRule ^1/([\-a-zA-Z]+)/([\.0-9ab]+(?:pre)?)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-main\/$ to
-//  /$4/kb/Options+window+-+Main+panel?style_mode=inproduct&as=u [R,NE]
-// For eg. http://support.mozilla.com/1/firefox/3.6b3pre/Darwin/en-US/prefs-main/
-//         redirects to
-//         http://support.mozilla.com/en-US/kb/Options+window+-+Main+panel?style_mode=inproduct&as=u    
+       // /$4/kb/Options+window+-+Main+panel?style_mode=inproduct&as=u [R,NE]
+       // For eg. http://support.mozilla.com/1/firefox/3.6b3pre/Darwin/en-US/prefs-main/
+       // redirects to
+       // http://support.mozilla.com/en-US/kb/Options+window+-+Main+panel?style_mode=inproduct&as=u    
     """
     def test_redirect_preferences(self):
         one    = {"goToUrl":"/prefs-main","redirectUrl" : "/Options window - General panel","hash" :"?as=u"}
         two    = {"goToUrl":"/prefs-clear-private-data","redirectUrl":"/Clear Recent History","hash":"?as=u"}
-        three    = {"goToUrl":"/prefs-fonts-and-colors","redirectUrl":"/Options window - Content panel","hash":"?as=u#fonts_and_colors"}
-        four = {"goToUrl":"/prefs-privacy","redirectUrl":"/Options window - Privacy panel","hash":"?as=u"}
-        five = {"goToUrl":"/prefs-applications","redirectUrl":"/Options window - Applications panel","hash":"?as=u"}
-        six = {"goToUrl":"/prefs-connection-settings","redirectUrl":"/Options window - Advanced panel","hash":"?as=u#connection_settings"}
-        seven    = {"goToUrl":"/prefs-tabs","redirectUrl":"/Options window - Tabs panel","hash":"?as=u"}
-        eight    = {"goToUrl":"/prefs-advanced-javascript","redirectUrl" : "/Options window - Content panel","hash":"?as=u#advanced_javascript"}
-        nine    = {"goToUrl":"/prefs-languages","redirectUrl":"/Options window - Content panel","hash":"?as=u#languages"}
+        three  = {"goToUrl":"/prefs-fonts-and-colors","redirectUrl":"/Options window - Content panel","hash":"?as=u#fonts_and_colors"}
+        four   = {"goToUrl":"/prefs-privacy","redirectUrl":"/Options window - Privacy panel","hash":"?as=u"}
+        five   = {"goToUrl":"/prefs-applications","redirectUrl":"/Options window - Applications panel","hash":"?as=u"}
+        six    = {"goToUrl":"/prefs-connection-settings","redirectUrl":"/Options window - Advanced panel","hash":"?as=u#connection_settings"}
+        seven  = {"goToUrl":"/prefs-tabs","redirectUrl":"/Options window - Tabs panel","hash":"?as=u"}
+        eight  = {"goToUrl":"/prefs-advanced-javascript","redirectUrl" : "/Options window - Content panel","hash":"?as=u#advanced_javascript"}
+        nine   = {"goToUrl":"/prefs-languages","redirectUrl":"/Options window - Content panel","hash":"?as=u#languages"}
         ten    = {"goToUrl":"/prefs-content","redirectUrl":"/Options window - Content panel","hash":"?as=u"}
         eleven = {"goToUrl":"/prefs-security","redirectUrl":"/Options window - Security panel","hash":"?as=u"}
         twelve = {"goToUrl":"/prefs-advanced-general","redirectUrl":"/Options window - Advanced panel","hash":"?as=u"}
         thirteen = {"goToUrl":"/prefs-advanced-network","redirectUrl":"/Options window - Advanced panel","hash":"?as=u#advanced_network"}
-        fourteen    = {"goToUrl":"/prefs-advanced-update","redirectUrl":"/Options window - Advanced panel","hash":"?as=u#advanced_update"}
+        fourteen = {"goToUrl":"/prefs-advanced-update","redirectUrl":"/Options window - Advanced panel","hash":"?as=u#advanced_update"}
         fifteen = {"goToUrl":"/prefs-advanced-encryption","redirectUrl":"/Options window - Advanced panel","hash":"?as=u#advanced_encryption"}
         #sixteen = {"goToUrl":"/ieusers","redirectUrl":"/Windows start page","hash":"?as=u"}
-        #seventeen    = {"goToUrl":"/eu/ieusers","redirectUrl":"/Windows start page","hash":"?as=u&eu=1"}
-        eighteen    = {"goToUrl":"/places-locked","redirectUrl" : "/The bookmarks and history system will not be functional","hash":"?as=u"}
-        nineteen    = {"goToUrl":"/private-browsing","redirectUrl":"/Private Browsing","hash":"?as=u"}
+        #seventeen = {"goToUrl":"/eu/ieusers","redirectUrl":"/Windows start page","hash":"?as=u&eu=1"}
+        eighteen  = {"goToUrl":"/places-locked","redirectUrl" : "/The bookmarks and history system will not be functional","hash":"?as=u"}
+        nineteen  = {"goToUrl":"/private-browsing","redirectUrl":"/Private Browsing","hash":"?as=u"}
         twenty    = {"goToUrl":"/prefs-weave","redirectUrl":"/How to sync Firefox settings between computers","hash":"?as=u"}
         #twentyone = {"goToUrl":"/firefox-f1","redirectUrl":"/Firefox Help","hash":""}
         #twentytwo = {"goToUrl":"/firefox-osxkey","redirectUrl":"/Firefox Help","hash":""}
         twentythree = {"goToUrl":"/keyboard-shortcuts","redirectUrl":"/Keyboard shortcuts","hash":"?as=u"}
-        twentyfour    = {"goToUrl":"/eu/keyboard-shortcuts","redirectUrl":"/Keyboard shortcuts","hash":"?as=u&eu=1"}
-        twentyfive = {"goToUrl":"/plugin-crashed","redirectUrl":"/Plugin crash reports","hash":"?as=u"}
-        twentysix    = {"goToUrl":"/eu/plugin-crashed","redirectUrl":"/Plugin crash reports","hash":"?as=u&eu=1"}
+        twentyfour  = {"goToUrl":"/eu/keyboard-shortcuts","redirectUrl":"/Keyboard shortcuts","hash":"?as=u&eu=1"}
+        twentyfive  = {"goToUrl":"/plugin-crashed","redirectUrl":"/Plugin crash reports","hash":"?as=u"}
+        twentysix   = {"goToUrl":"/eu/plugin-crashed","redirectUrl":"/Plugin crash reports","hash":"?as=u&eu=1"}
         
         urlPrefsArray = (one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,thirteen,fourteen,fifteen,eighteen,nineteen,twenty,twentythree,twentyfour,twentyfive,twentysix)
 
@@ -278,9 +278,9 @@ class TestRewrites(unittest.TestCase):
     def test_redirect_misc(self):
         """ 
            // this redirect is for windows 7 support only
-          //  http://support-stage.mozilla.org/1/windows7-support using |en-US| and
-          //  have it redirect to
-          //  http://support-stage.mozilla.org/en-US/kb/Firefox+Help?style_mode=inproduct   
+           // http://support-stage.mozilla.org/1/windows7-support using |en-US| and
+           // have it redirect to
+           // http://support-stage.mozilla.org/en-US/kb/Firefox+Help?style_mode=inproduct   
         """
         open_url     = self.mainURL+"/windows7-support"
         expected_url = self.mainURL+"/en-US"+self.styleMode
@@ -291,7 +291,7 @@ class TestRewrites(unittest.TestCase):
         
 
         
-        """ redirect old mobie url's to new sumo url's
+        """ redirect old mobile URLs to new SUMO URLs
         http://support.allizom.org/1/mobile/4.0/android/en-US/firefox-help ->
         http://www.mozilla.com/en-US/m/support/
         """
@@ -376,20 +376,6 @@ class TestRewrites(unittest.TestCase):
                     continue
                 self.assertEqual(expected_url,actual_url)
                             
-                """
-                commented due to frequent unknown failures
-                """
-#                open_url     = str(self.mainURL)+self.numberOne+product_iphone+two+platform_iphone+x[self.key1]+helptopic_iphone
-#                expected_url = self.mainURL+"/en-US"+self.kbSuffix+"/How to set up Firefox Home"+self.article_source_suffix
-#                try:
-#                    sel.open(open_url)
-#                except Exception,e:
-#                    if '404' in str(e):
-#                        print str(e)
-#                        
-#                actual_url = urllib2.unquote(sel.get_location())
-#                self.assertEqual(expected_url,actual_url)
-#                
                 # Firefox Home App
                 open_url     = self.mainURL+self.numberOne+product_iphone+two+platform_iphone+x[self.key1]+helptopic_login
                 expected_url = self.mainURL+"/en-US"+self.kbSuffix+"/Cannot log in to Firefox Home App"+self.article_source_suffix
