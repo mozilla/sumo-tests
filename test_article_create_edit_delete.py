@@ -40,6 +40,7 @@ from knowledge_base_new_article import KnowledgeBaseNewArticle
 from knowledge_base_article import KnowledgeBaseArticle
 from knowledge_base_article import KnowledgeBaseShowHistory
 from knowledge_base_article import KnowledgeBaseEditArticle
+from knowledge_base_article import KnowledgeBaseTranslate
 from login_page import LoginPage
 import re
 import pytest
@@ -184,6 +185,45 @@ class TestArticleCreateEditDelete:
         Assert.equal(article_info_dict['content'], actual_preview_text)
 
         # Does not need to be deleted as it does not commit the article
+
+    @pytest.mark.fft
+    def test_that_article_can_be_translated(self, mozwebqa):
+        """
+           Creates a new knowledge base article.
+           Translate article
+        """
+        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
+        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
+        kb_edit_article = KnowledgeBaseEditArticle(mozwebqa)
+        kb_translate_pg = KnowledgeBaseTranslate(mozwebqa)
+        login_pg = LoginPage(mozwebqa)
+        timestamp = datetime.datetime.now()
+
+        # Admin account is used as he can delete the article
+        login_pg.log_in('admin')
+
+        article_info_dict = self._create_new_generic_article(kb_new_article)
+        kb_new_article.submit_article()
+        kb_new_article.set_article_comment_box()
+
+        # verify article history
+        Assert.true(kb_article_history.is_the_current_page)
+
+        kb_article_history.navigation.click_translate_article()
+        kb_translate_pg.click_translate_language('Esperanto (eo)')
+
+        kb_translate_pg.type_title('artikolo_titolo%s' % timestamp)
+        kb_translate_pg.type_slug('artikolo_limako_%s' % timestamp)
+        kb_translate_pg.click_submit_review()
+
+        change_comment = 'artikolo sangoj %s' % timestamp
+        kb_translate_pg.type_modal_describe_changes(change_comment)
+        kb_translate_pg.click_modal_submit_changes_button()
+
+        Assert.equal(change_comment, kb_article_history.most_recent_revision_comment)
+        Assert.equal('Esperanto', kb_article_history.revision_history)
+
+        kb_article_history.delete_entire_article_document()
 
     def _create_new_generic_article(self, kb_new_article):
         timestamp = datetime.datetime.now()
