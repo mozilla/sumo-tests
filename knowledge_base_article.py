@@ -160,6 +160,8 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     _delete_document_link_locator = "css=div#delete-doc > a[href*='delete']"
     _delete_confirmation_btn_locator = "css=input[value='Delete']"
 
+    _revision_history_language_locator = 'css=div.choice-list ul li > span'
+
     #history of the test
     _top_revision_comment = "css=#revision-list li:nth-child(2) > div.comment"
 
@@ -179,3 +181,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     def most_recent_revision_comment(self):
         self.wait_for_element_visible(self._top_revision_comment)
         return self.selenium.get_text(self._top_revision_comment)
+
+    @property
+    def revision_history(self):
+        return self.selenium.get_text(self._revision_history_language_locator)
