@@ -50,6 +50,7 @@ class SupportHomePage(SumoPage):
     _search_button = "css=button.img-submit"
     _see_all_button = "id=button-seeall"
     _top_helpful_content_locator = "css=div#home-content-quick section ul > li > a"
+    _top_issues_link_locator = 'css=#home-content-explore ul > li > a'
 
     def go_to_support_home_page(self):
         self.open('/')
@@ -71,3 +72,6 @@ class SupportHomePage(SumoPage):
 
     def click_top_common_content_link(self):
         self.click(self._top_helpful_content_locator, True, self.timeout)
+
+    def click_first_top_issues_link(self):
+        self.click(self._top_issues_link_locator, True, self.timeout)
