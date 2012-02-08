@@ -164,6 +164,19 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
 
     #history of the test
     _top_revision_comment = "css=#revision-list li:nth-child(2) > div.comment"
+    
+    _show_chart_link_locator = 'id=show-chart'
+    _helpfulness_chart_locator = 'id=helpful-chart'
+    _helpfulness_chart_graph_locator = 'css=svg > rect'
+
+    def click_show_helpfulness_chart(self):
+        self.selenium.click(self._show_chart_link_locator)
+        self.wait_for_element_visible(self._helpfulness_chart_locator)
+        
+    @property
+    def is_helpfulness_chart_visible(self):
+        # Because of bug 723575 there are two element checks to assert that the graph has actually loaded
+        return self.is_element_visible(self._helpfulness_chart_locator) and self.is_element_visible(self._helpfulness_chart_graph_locator)
 
     def delete_entire_article_document(self):
         self.click_delete_entire_article_document()
