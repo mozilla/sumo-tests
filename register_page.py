@@ -21,18 +21,19 @@ class RegisterPage(SumoPage):
     _register_button_locator = "css=input.btn[value='Register']"
 
     def go_to_registration_page(self):
-        self.open(self._page_url)
+        self.selenium.open(self._page_url)
+        self.selenium.wait_for_page_to_load(self.timeout)
         self.is_the_current_page
 
     def register_new_user(self):
         user_name = self.get_random_word(5)
         password = '1234'
         email = user_name + "@mozilla.com"
-        self.type(self._username_box_locator, user_name)
-        self.type(self._password_box_locator, password)
-        self.type(self._password_repeat_box_locator, password)
-        self.type(self._email_add_box_locator, email)
-        self.click_button(self._register_button_locator)
+        self.selenium.type(self._username_box_locator, user_name)
+        self.selenium.type(self._password_box_locator, password)
+        self.selenium.type(self._password_repeat_box_locator, password)
+        self.selenium.type(self._email_add_box_locator, email)
+        self.selenium.click(self._register_button_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
 
     def get_random_word(self, length):

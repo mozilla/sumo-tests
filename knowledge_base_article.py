@@ -2,16 +2,17 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-from sumo_page import SumoPage
 
+from base import Base
+from page import Page
 
-class KnowledgeBase(SumoPage):
+class KnowledgeBase(Base):
 
     @property
     def navigation(self):
         return self.Navigation(self.testsetup)
 
-    class Navigation(SumoPage):
+    class Navigation(Page):
 
         _article_locator = "link=Article"
         _edit_article_locator = "link=Edit Article"
@@ -106,16 +107,16 @@ class KnowledgeBaseTranslate(KnowledgeBase):
         self.selenium.wait_for_page_to_load(self.timeout)
 
     def type_title(self, text):
-        self.type(self._description_title_locator, text)
+        self.selenium.type(self._description_title_locator, text)
 
     def type_slug(self, text):
-        self.type(self._description_slug_locator, text)
+        self.selenium.type(self._description_slug_locator, text)
 
     def click_submit_review(self):
         self.selenium.click(self._submit_button_locator)
 
     def type_modal_describe_changes(self, text):
-        self.type(self._describe_changes_locator, text)
+        self.selenium.type(self._describe_changes_locator, text)
 
     def click_modal_submit_changes_button(self):
         self.selenium.click(self._submit_changes_button_locator)
@@ -144,7 +145,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     @property
     def is_helpfulness_chart_visible(self):
         # Because of bug 723575 there are two element checks to assert that the graph has actually loaded
-        return self.is_element_visible(self._helpfulness_chart_locator) and self.is_element_visible(self._helpfulness_chart_graph_locator)
+        return self.selenium.is_visible(self._helpfulness_chart_locator) and self.selenium.is_visible(self._helpfulness_chart_graph_locator)
 
     def delete_entire_article_document(self):
         self.click_delete_entire_article_document()

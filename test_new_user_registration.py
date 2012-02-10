@@ -18,6 +18,6 @@ class TestNewUserRegistration:
         register_pg = RegisterPage(mozwebqa)
         register_pg.go_to_registration_page()
         register_pg.register_new_user()
-        actual_page_title = register_pg.get_page_title()
+        actual_page_title = register_pg.page_title
         expected_page_title = register_pg._page_title_after_registration
         Assert.contains(expected_page_title, actual_page_title)
