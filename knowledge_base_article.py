@@ -6,6 +6,7 @@
 from base import Base
 from page import Page
 
+
 class KnowledgeBase(Base):
 
     @property

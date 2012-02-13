@@ -5,6 +5,7 @@
 
 from base import Base
 
+
 class SearchPage(Base):
     """
     'Search for Firefox Help' page
@@ -41,10 +42,7 @@ class SearchPage(Base):
         return self.selenium.get_value(self._search_box)
 
     def is_search_available(self):
-        try:
-            return not self.selenium.is_text_present(self._search_unavailable_msg)
-        except:
-            return True
+        return not self.selenium.is_text_present(self._search_unavailable_msg)
 
     def is_result_present(self):
         return self.selenium.is_element_present(self._result_div)
@@ -64,7 +62,7 @@ class SearchPage(Base):
     @property
     def ask_a_question_text(self):
         return self.selenium.get_text(self._ask_a_question_locator)
-    
+
     @property
     def is_ask_a_question_present(self):
         return self.selenium.is_element_present(self._support_question_link)

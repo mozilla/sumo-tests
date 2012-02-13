@@ -26,8 +26,6 @@ class LoginPage(SumoPage):
 
     def go_to_login_page(self):
         self.selenium.open(self._page_url)
-        
-
         self.is_the_current_page
 
     def log_in(self, user="default"):
