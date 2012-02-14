@@ -7,10 +7,10 @@ Created on Jun 30, 2010
 
 @author: mozilla
 '''
-from sumo_page import SumoPage
+from base import Base
 
 
-class LoginPage(SumoPage):
+class LoginPage(Base):
     """
         Form for login.
     """
