@@ -8,7 +8,8 @@ from unittestzero import Assert
 import pytest
 import requests
 
-
+@pytest.mark.skip_selenium
+@pytest.mark.nondestructive
 class TestRedirects:
 
     _user_agent_firefox = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:5.0) Gecko/20100101 Firefox/5.0'
@@ -16,60 +17,47 @@ class TestRedirects:
     def _check_redirect(self, testsetup, start_url, expected_url, user_agent=_user_agent_firefox, locale='en-US'):
         start_url = testsetup.base_url + start_url
         expected_url = testsetup.base_url + expected_url
-        if testsetup.selenium:
-            testsetup.selenium.get(start_url)
-            Assert.equal(testsetup.selenium.current_url, expected_url)
-        else:
-            headers = {'user-agent': user_agent,
-                       'accept-language': locale}
-            r = requests.get(start_url, headers=headers)
-            Assert.equal(r.url, expected_url)
 
-    @pytest.mark.skip_selenium
-    @pytest.mark.nondestructive
+        headers = {'user-agent': user_agent,
+                   'accept-language': locale}
+        r = requests.get(start_url, headers=headers)
+        Assert.equal(r.url, expected_url)
+    
     @pytest.mark.parametrize(('input', 'expected'), [
-    ('/ja-JP-mac/kb', '/ja/home'),
-    ('/nn-NO/kb', '/no/home'),
-    ('/es-ES/kb', '/es/home'),
-    ('/es-AR/kb', '/es/home'),
-    ('/es-CL/kb', '/es/home'),
-    ('/en-US/kb', '/en-US/home'),
-    ('/en/kb', '/en-US/home')
+        ('/ja-JP-mac/kb', '/ja/home'),
+        ('/nn-NO/kb', '/no/home'),
+        ('/es-ES/kb', '/es/home'),
+        ('/es-AR/kb', '/es/home'),
+        ('/es-CL/kb', '/es/home'),
+        ('/en-US/kb', '/en-US/home'),
+        ('/en/kb', '/en-US/home')
     ])
     def test_redirect_locale_to_home(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
 
-    @pytest.mark.skip_selenium
-    @pytest.mark.nondestructive
     @pytest.mark.parametrize(('input', 'expected'), [
-    ('/windows7-support', '/en-US/home?as=u'),
+        ('/windows7-support', '/en-US/home?as=u'),
     ])
     def test_support_links(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
 
     @pytest.mark.xfail(reason='Tests redirect to production')
-    @pytest.mark.skip_selenium
-    @pytest.mark.nondestructive
     @pytest.mark.parametrize(('input', 'expected'), [
-    ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/home?as=u'),
-    ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/home?as=u'),
-    ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/home?as=u')
+        ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/home?as=u'),
+        ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/home?as=u'),
+        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/home?as=u')
     ])
     def test_old_mobile_redirects(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
 
-    @pytest.mark.skip_selenium
-    @pytest.mark.nondestructive
     @pytest.mark.parametrize(('input', 'expected'), [
-    ('/contribute', '/en-US/home?as=u')
+        ('/contribute', '/en-US/home?as=u')
     ])
     def test_contribute_redirects(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
 
-    @pytest.mark.skip_selenium
-    @pytest.mark.nondestructive
     @pytest.mark.parametrize(('input', 'expected'), [
-    ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot%20log%20in%20to%20Firefox%20Home%20App?as=u')
+        ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot%20log%20in%20to%20Firefox%20Home%20App?as=u')
     ])
     def test_contribute_redirects(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
