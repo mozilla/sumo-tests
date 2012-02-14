@@ -25,7 +25,7 @@ class LoginPage(SumoPage):
     _logged_in_text = "Logged in as"
 
     def go_to_login_page(self):
-        self.open(self._page_url)
+        self.selenium.open(self._page_url)
         self.is_the_current_page
 
     def log_in(self, user="default"):
@@ -34,9 +34,9 @@ class LoginPage(SumoPage):
 
         credentials = self.testsetup.credentials[user]
 
-        self.type(self._username_box_locator, credentials['name'])
-        self.type(self._password_box_locator, credentials['password'])
-        self.click_button(self._log_in_button_locator)
+        self.selenium.type(self._username_box_locator, credentials['name'])
+        self.selenium.type(self._password_box_locator, credentials['password'])
+        self.selenium.click(self._log_in_button_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
 
     def get_user_name(self, user="default"):

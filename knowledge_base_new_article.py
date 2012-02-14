@@ -2,10 +2,11 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-from sumo_page import SumoPage
+
+from base import Base
 
 
-class KnowledgeBaseNewArticle(SumoPage):
+class KnowledgeBaseNewArticle(Base):
     """
     'Create New Article' Page is where the form
     for creating new knowledge base article is found.
@@ -25,7 +26,8 @@ class KnowledgeBaseNewArticle(SumoPage):
     _comment_submit_btn_locator = "css=input[value='Submit']"
 
     def go_to_create_new_article_page(self):
-        self.open(self.base_url_ssl + self._page_url_new_article)
+        self.selenium.open(self.base_url_ssl + self._page_url_new_article)
+        self.selenium.wait_for_page_to_load(self.timeout)
         self.is_the_current_page
 
     def set_article(self, article_info_dict):
