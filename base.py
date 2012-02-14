@@ -12,5 +12,5 @@ class Base(Page):
     _sign_in_locator = 'link=Sign In'
     
     def sign_in(self):
-        self.selelnium.click(self._sign_in_locator)
+        self.selenium.click(self._sign_in_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
