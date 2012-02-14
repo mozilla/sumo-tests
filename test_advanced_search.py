@@ -11,6 +11,7 @@ Performs a search on SUMO via the JSON API and asserts that there are some
 results.
 """
 
+import pytest
 import unittest
 import json
 
@@ -21,6 +22,7 @@ sumo = SumoURLopener()
 
 class TestAdvancedSearch(unittest.TestCase):
 
+    @pytest.mark.xfail(reason='No longer functional, needs refactor')
     def test_categories(self):
         """Advanced KB searches with categories should return results."""
 
