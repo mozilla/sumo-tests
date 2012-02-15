@@ -36,7 +36,7 @@ How to Set up and Build SUMO Tests Locally
 ------------------------------------------
 This repository contains Selenium tests used to test the website support.mozilla.org on
 development: http://support-dev.allizom.org or
-staging: http://support-release.allizom.org
+staging: http://support.allizom.org
 
 For information specific to Firefox Support see the [GitHub repository][GitHub Support].
 
