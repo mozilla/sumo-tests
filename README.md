@@ -15,7 +15,7 @@ If you know some Python, it's worth having a look at the Selenium framework to u
 
 If you need to brush up on programming but are eager to start contributing immediately, please consider helping us find bugs in Mozilla [Firefox][firefox] or find bugs in the Mozilla web-sites tested by the [WebQA][webqa] team.
 
-To brush up on Python skills before engaging with us, [Dive Into Python][dive] is an excellent resource.  MIT also has [lecture notes on Python][mit] available through their open courseware.The programming concepts you will need to know include functions, working with classes, and some object oriented programming basics.
+To brush up on Python skills before engaging with us, [Dive Into Python][dive] is an excellent resource.  MIT also has [lecture notes on Python][mit] available through their open courseware.The programming concepts you will need to know include functions, working with classes, and some object-oriented programming basics.
 
 [mit]: http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-189-a-gentle-introduction-to-programming-using-python-january-iap-2011/
 [dive]: http://www.diveintopython.net/toc/index.html
@@ -36,7 +36,7 @@ How to Set up and Build SUMO Tests Locally
 ------------------------------------------
 This repository contains Selenium tests used to test the website support.mozilla.org on
 development: http://support-dev.allizom.org or
-staging: http://support-release.allizom.org
+staging: http://support.allizom.org
 
 For information specific to Firefox Support see the [GitHub repository][GitHub Support].
 
@@ -137,7 +137,7 @@ If the test run hangs with Firefox open but no URL gets entered in the address b
 Writing Tests
 -------------
 
-If you want to get involved and add more tests then there's just a few things
+If you want to get involved and add more tests, then there's just a few things
 we'd like to ask you to do:
 
 1. Use the [template files][GitHub Templates] for all new tests and page objects
