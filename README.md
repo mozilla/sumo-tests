@@ -9,9 +9,9 @@ https://github.com/mozilla/sumo-tests/contributors
 Getting involved as a contributor
 ------------------------------------------
 
-We love working with contributors to fill out the Selenium test coverage for sumo-tests, but it does require a few skills.   You will need to know some Python, some Selenium and you will need some basic familiarity with Github.
+We love working with contributors to fill out the Selenium test coverage for sumo-tests, but it does require a few skills.   You will need to know some Python, some Selenium and you will need some basic familiarity with GitHub.
 
-If you know some Python, it's worth having a look at the Selenium framework to understand the basic concepts of browser based testing and especially page objects. Our suite uses [Selenium WebDriver][webdriver].
+If you know some Python, it's worth having a look at the Selenium framework to understand the basic concepts of browser-based testing and especially page objects. Our suite currently uses [Selenium RC][rc].
 
 If you need to brush up on programming but are eager to start contributing immediately, please consider helping us find bugs in Mozilla [Firefox][firefox] or find bugs in the Mozilla web-sites tested by the [WebQA][webqa] team.
 
@@ -22,6 +22,7 @@ To brush up on Python skills before engaging with us, [Dive Into Python][dive] i
 [webqa]: http://quality.mozilla.org/teams/web-qa/
 [firefox]: http://quality.mozilla.org/teams/desktop-firefox/
 [webdriver]: http://seleniumhq.org/docs/03_webdriver.html
+[rc]: http://seleniumhq.org/docs/03_webdriver.html#webdriver-backed-selenium-rc
 
 Questions are always welcome
 ----------------------------
@@ -34,12 +35,12 @@ While we take pains to keep our documentation updated, the best source of inform
 How to Set up and Build SUMO Tests Locally
 ------------------------------------------
 This repository contains Selenium tests used to test the website support.mozilla.org on
-staging: http://support.allizom.org or
-certification-branch: http://support-release.allizom.org
+development: http://support-dev.allizom.org or
+staging: http://support-release.allizom.org
 
 For information specific to Firefox Support see the [GitHub repository][GitHub Support].
 
-[GitHub Support]: https://github.com/jsocol/kitsune
+[GitHub Support]: https://github.com/mozilla/kitsune
 
 Mozilla maintains a guide to running Automated tests on our QMO website:
 
@@ -107,9 +108,9 @@ While most of us have had some experience using virtual machines, [virtualenv][v
 
 Some of the tests in sumo-tests require logging in to https://support.allizom.org with credentials of varying privilege levels.
 
-1. create two username and password combinations on https://support.allizom.org
-2. join #sumo and ask for one of these users to be upgraded to admin (or ask someone on #mozwebqa to do this for you)
-3. copy sumo-tests/credentials.yaml to a location outside of sumo-tests. update the 'default' and 'admin' users in credentials.yaml with those credentials
+1. Create two username and password combinations on https://support.allizom.org
+2. Join #sumo and ask for one of these users to be upgraded to admin (or ask someone on #mozwebqa to do this for you)
+3. Copy sumo-tests/credentials.yaml to a location outside of sumo-tests. update the 'default' and 'admin' users in credentials.yaml with those credentials
 
 #### Running tests locally
 
