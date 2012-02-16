@@ -8,11 +8,12 @@ from unittestzero import Assert
 import pytest
 import requests
 
+
 @pytest.mark.skip_selenium
 @pytest.mark.nondestructive
 class TestRedirects:
 
-    _user_agent_firefox = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:5.0) Gecko/20100101 Firefox/5.0'
+    _user_agent_firefox = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0.1) Gecko/20100101 Firefox/10.0.1'
 
     def _check_redirect(self, testsetup, start_url, expected_url, user_agent=_user_agent_firefox, locale='en-US'):
         start_url = testsetup.base_url + start_url
@@ -22,7 +23,7 @@ class TestRedirects:
                    'accept-language': locale}
         r = requests.get(start_url, headers=headers)
         Assert.equal(r.url, expected_url)
-    
+
     @pytest.mark.parametrize(('input', 'expected'), [
         ('/ja-JP-mac/kb', '/ja/home'),
         ('/nn-NO/kb', '/no/home'),
@@ -36,7 +37,7 @@ class TestRedirects:
         self._check_redirect(mozwebqa, input, expected)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/windows7-support', '/en-US/home?as=u'),
+        ('/windows7-support', '/en-US/home?as=u')
     ])
     def test_support_links(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
