@@ -2,12 +2,13 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-from sumo_page import SumoPage
+
+from base import Base
 import re
 import time
 
 
-class SupportHomePage(SumoPage):
+class SupportHomePage(Base):
     """
     The Firefox Support Home Pgae contains
     web elements and methods that can be
@@ -21,14 +22,17 @@ class SupportHomePage(SumoPage):
     _top_issues_link_locator = 'css=#home-content-explore ul > li > a'
 
     def go_to_support_home_page(self):
-        self.open('/')
+        self.selenium.open('/')
+        self.selenium.wait_for_page_to_load(self.timeout)
         self.is_the_current_page
 
     def do_search_on_main_search_box(self, search_query, search_page_obj):
         if re.search(self._page_title, self.selenium.get_title()) is None:
             self.go_to_support_home_page()
-        self.type(SupportHomePage.main_search_box, search_query)
-        self.click(self._search_button, True, self.timeout)
+        self.selenium.type(SupportHomePage.main_search_box, search_query)
+        self.selenium.click(self._search_button)
+        self.selenium.wait_for_page_to_load(self.timeout)
+
         count = 0
         while not self.selenium.is_text_present('results for %s' % search_query):
             time.sleep(1)
@@ -39,7 +43,9 @@ class SupportHomePage(SumoPage):
         search_page_obj.is_the_current_page
 
     def click_top_common_content_link(self):
-        self.click(self._top_helpful_content_locator, True, self.timeout)
+        self.selenium.click(self._top_helpful_content_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def click_first_top_issues_link(self):
-        self.click(self._top_issues_link_locator, True, self.timeout)
+        self.selenium.click(self._top_issues_link_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)

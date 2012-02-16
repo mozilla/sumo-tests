@@ -90,7 +90,7 @@ class TestArticleCreateEditDelete:
         kb_article_history.navigation.click_edit_article()
 
         # verify the contents of the edited article
-        actual_page_title = kb_edit_article.get_page_title()
+        actual_page_title = kb_edit_article.page_title
         Assert.contains(article_info_dict_edited['title'], actual_page_title)
 
         actual_summary_text = kb_edit_article.article_summary_text
@@ -125,14 +125,14 @@ class TestArticleCreateEditDelete:
 
         # go to article and get URL
         kb_article_history.navigation.click_article()
-        article_url = kb_article.get_url_current_page()
+        article_url = kb_article.url_current_page
 
         # delete the same article
         kb_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-        kb_article_history.open(article_url)
-        actual_page_title = kb_article_history.get_page_title()
+        kb_article_history.selenium.open(article_url)
+        actual_page_title = kb_article_history.page_title
         Assert.contains("Page Not Found", actual_page_title)
 
     @pytest.mark.fft
