@@ -7,7 +7,7 @@ Created on Jun 30, 2010
 
 @author: mozilla
 '''
-from base import Base
+from pages.base import Base
 
 
 class LoginPage(Base):

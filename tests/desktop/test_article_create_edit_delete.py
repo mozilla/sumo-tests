@@ -3,12 +3,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
-from knowledge_base_new_article import KnowledgeBaseNewArticle
-from knowledge_base_article import KnowledgeBaseArticle
-from knowledge_base_article import KnowledgeBaseShowHistory
-from knowledge_base_article import KnowledgeBaseEditArticle
-from knowledge_base_article import KnowledgeBaseTranslate
-from login_page import LoginPage
+from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
+from pages.desktop.knowledge_base_article import KnowledgeBaseArticle
+from pages.desktop.knowledge_base_article import KnowledgeBaseShowHistory
+from pages.desktop.knowledge_base_article import KnowledgeBaseEditArticle
+from pages.desktop.knowledge_base_article import KnowledgeBaseTranslate
+from pages.desktop.login_page import LoginPage
 import re
 import pytest
 import datetime

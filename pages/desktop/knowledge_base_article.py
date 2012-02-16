@@ -3,8 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from base import Base
-from page import Page
+from pages.base import Base
+from pages.page import Page
 
 
 class KnowledgeBase(Base):
@@ -134,7 +134,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
 
     #history of the test
     _top_revision_comment = "css=#revision-list li:nth-child(2) > div.comment"
-    
+
     _show_chart_link_locator = 'id=show-chart'
     _helpfulness_chart_locator = 'id=helpful-chart'
     _helpfulness_chart_graph_locator = 'css=svg > rect'
@@ -142,7 +142,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     def click_show_helpfulness_chart(self):
         self.selenium.click(self._show_chart_link_locator)
         self.wait_for_element_visible(self._helpfulness_chart_locator)
-        
+
     @property
     def is_helpfulness_chart_visible(self):
         # Because of bug 723575 there are two element checks to assert that the graph has actually loaded
