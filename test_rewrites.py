@@ -31,14 +31,12 @@ class TestRedirects:
         ('/es-AR/kb', '/es/home'),
         ('/es-CL/kb', '/es/home'),
         ('/en-US/kb', '/en-US/home'),
-        ('/en/kb', '/en-US/home')
-    ])
+        ('/en/kb', '/en-US/home')])
     def test_redirect_locale_to_home(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/windows7-support', '/en-US/home?as=u')
-    ])
+        ('/windows7-support', '/en-US/home?as=u')])
     def test_support_links(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
 
@@ -46,19 +44,16 @@ class TestRedirects:
     @pytest.mark.parametrize(('input', 'expected'), [
         ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/home?as=u'),
         ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/home?as=u'),
-        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/home?as=u')
-    ])
+        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/home?as=u')])
     def test_old_mobile_redirects(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/contribute', '/en-US/home?as=u')
-    ])
+        ('/contribute', '/en-US/home?as=u')])
     def test_contribute_redirects(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot%20log%20in%20to%20Firefox%20Home%20App?as=u')
-    ])
+        ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot%20log%20in%20to%20Firefox%20Home%20App?as=u')])
     def test_contribute_redirects(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
