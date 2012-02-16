@@ -2,10 +2,11 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-from sumo_page import SumoPage
+
+from base import Base
 
 
-class QuestionsPage(SumoPage):
+class QuestionsPage(Base):
     """
     'Ask a Question' landing page.
     """
@@ -21,15 +22,18 @@ class QuestionsPage(SumoPage):
     _questions_list_xpath_locator = "//ol[@class='questions']/li"
 
     def go_to_forum_questions_page(self):
-        self.open(self._forums_page_url)
+        self.selenium.open(self._forums_page_url)
+        self.selenium.wait_for_page_to_load(self.timeout)
         self.is_the_current_page
 
     def click_ask_new_questions_link(self):
-        self.click(self._ask_question_link_locator, True, self.timeout)
+        self.selenium.click(self._ask_question_link_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
         return AskNewQuestionsPage(self.testsetup)
 
     def go_to_thread(self, url):
         self.selenium.open(url)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def click_any_question(self, num):
         q_link = self._question_list_link_locator % num
@@ -63,7 +67,7 @@ class QuestionsPage(SumoPage):
         return self.selenium.get_text(locator)
 
 
-class AskNewQuestionsPage(SumoPage):
+class AskNewQuestionsPage(Base):
     """
     'Ask a New Question' page.
     Child class of Questions Page
@@ -92,30 +96,35 @@ class AskNewQuestionsPage(SumoPage):
         self.is_the_current_page
 
     def click_firefox_product_link(self):
-        self.click(self._firefox_product_first_link_locator, True, self.timeout)
+        self.selenium.click(self._firefox_product_first_link_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def click_category_problem_link(self):
-        self.click(self._category_prob_first_link_locator, True, self.timeout)
+        self.selenium.click(self._category_prob_first_link_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def type_question(self, question_to_ask):
-        self.type(self._type_question_box_locator, question_to_ask)
-        self.click(self._ask_this_button_locator, True, self.timeout)
+        self.selenium.type(self._type_question_box_locator, question_to_ask)
+        self.selenium.click(self._ask_this_button_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def click_provide_details_button(self):
-        self.click(self._provide_details_button_locator, True, self.timeout)
+        self.selenium.click(self._provide_details_button_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def fill_up_questions_form(self, q_text='details', q_site='www.example.com', q_trouble='no addons'):
-        self.type(self._q_content_box_locator, q_text)
-        self.type(self._q_site_box_locator, q_site)
-        self.type(self._q_trouble_box_locator, q_trouble)
-        self.click(self._q_post_button_locator, True, self.timeout)
+        self.selenium.type(self._q_content_box_locator, q_text)
+        self.selenium.type(self._q_site_box_locator, q_site)
+        self.selenium.type(self._q_trouble_box_locator, q_trouble)
+        self.selenium.click(self._q_post_button_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
 
     def get_sorted_list_filter_text(self, question_number):
         locator = self._solved_or_unsolved_text_locator % question_number
         return self.selenium.get_text(locator)
 
 
-class ViewQuestionPage(SumoPage):
+class ViewQuestionPage(Base):
 
     _question_locator = "css=div.content > h1"
     _detail_locator = "css=div.content > p"
