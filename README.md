@@ -124,6 +124,7 @@ To run tests locally its a simple case of calling the command below from this di
 
 __Output__
 Output of a test run should look like this:
+
     ============================= test session starts ==============================
     platform darwin -- Python 2.6.1 -- pytest-2.1.3
     collected 19 items
