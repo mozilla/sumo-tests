@@ -3,8 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
-from refine_search_page import RefineSearchPage
-from login_page import LoginPage
+from pages.desktop.refine_search_page import RefineSearchPage
+from pages.desktop.login_page import LoginPage
 import pytest
 xfail = pytest.mark.xfail
 
