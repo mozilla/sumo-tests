@@ -122,6 +122,25 @@ To run tests locally its a simple case of calling the command below from this di
 
     py.test --browser="*firefox" --credentials=/full/path/to/credentials.yaml -k fft .
 
+__Output__
+Output of a test run should look like this:
+`
+============================= test session starts ==============================
+platform darwin -- Python 2.6.1 -- pytest-2.1.3
+collected 19 items
+
+tests/desktop/test_article_create_edit_delete.py .x...
+tests/desktop/test_cant_find_what_you_are_looking_for.py .
+tests/desktop/test_loggedin_ask_a_new_question.py .
+tests/desktop/test_new_user_registration.py .
+tests/desktop/test_no_query_adv_forum_search.py x
+tests/desktop/test_questions_problem_count.py .
+tests/desktop/test_questions_sort.py ..
+tests/desktop/test_view_helpfulness_chart.py .
+
+========================= 6 tests deselected by 'fft' ==========================
+============= 11 passed, 6 deselected, 2 xfailed in 206.37 seconds =============
+`
 __Note__
 "~" will not resolve to the home directory when used in the py.test command line.
 
