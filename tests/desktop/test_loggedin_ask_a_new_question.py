@@ -3,9 +3,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
-from questions_page import ViewQuestionPage
-from questions_page import AskNewQuestionsPage
-from login_page import LoginPage
+from pages.desktop.questions_page import ViewQuestionPage
+from pages.desktop.questions_page import AskNewQuestionsPage
+from pages.desktop.login_page import LoginPage
 import datetime
 import pytest
 
