@@ -35,3 +35,6 @@ class TestAAQ:
 
         Assert.equal(view_question_pg.question, q_to_ask)
         Assert.equal(view_question_pg.question_detail, q_details)
+
+        # sign out
+        ask_new_questions_pg.sign_out()
