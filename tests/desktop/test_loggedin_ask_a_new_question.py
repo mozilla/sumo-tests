@@ -5,7 +5,6 @@
 from unittestzero import Assert
 from pages.desktop.questions_page import ViewQuestionPage
 from pages.desktop.questions_page import AskNewQuestionsPage
-from pages.desktop.login_page import LoginPage
 import datetime
 import pytest
 
@@ -17,17 +16,17 @@ class TestAAQ:
     @pytest.mark.fft
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
-        login_po = LoginPage(mozwebqa)
         ask_new_questions_pg = AskNewQuestionsPage(mozwebqa)
         view_question_pg = ViewQuestionPage(mozwebqa)
         timestamp = datetime.datetime.today()
         q_to_ask = "automation test question %s" % (timestamp)
         q_details = "This is a test. %s" % (timestamp)
 
-        login_po.log_in('default')
-
-        # go to the /questions/new page and post a question
+        # go to the /questions/new page and log in
         ask_new_questions_pg.go_to_ask_new_questions_page()
+        ask_new_questions_pg.sign_in('default')
+
+        # post a question
         ask_new_questions_pg.click_firefox_product_link()
         ask_new_questions_pg.click_category_problem_link()
         ask_new_questions_pg.type_question(q_to_ask)

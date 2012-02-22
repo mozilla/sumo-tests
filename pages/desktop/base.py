@@ -9,8 +9,34 @@ from pages.page import Page
 
 class Base(Page):
 
-    _sign_in_locator = 'link=Sign In'
+    def sign_in(self, user="default"):
+        login = self.header.click_login()
+        login.log_in(user)
 
-    def sign_in(self):
-        self.selenium.click(self._sign_in_locator)
-        self.selenium.wait_for_page_to_load(self.timeout)
+    @property
+    def header(self):
+        return Base.HeaderRegion(self.testsetup)
+
+    class HeaderRegion(Page):
+
+        #Not LoggedIn
+        _login_locator = "link=Sign In"
+        _register_locator = "link=Register"
+
+        #LoggedIn
+        _account_controller_locator = "css=#aux-nav .account a.user" # untested
+        _account_dropdown_locator = "css=#aux-nav .account ul" # untested
+        _logout_locator = "css=li.nomenu.logout > a" # untested
+
+        def click_login(self):
+            self.selenium.click(self._login_locator)
+            from pages.desktop.login_page import LoginPage
+            return LoginPage(self.testsetup)
+
+        def click_logout(self):
+            self.selenium.find_element(*self._logout_locator).click()
+
+        @property
+        def is_user_logged_in(self):
+            return self.is_element_visible(*self._account_controller_locator)
+
