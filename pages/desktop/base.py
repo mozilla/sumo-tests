@@ -37,10 +37,10 @@ class Base(Page):
             from pages.desktop.login_page import LoginPage
             return LoginPage(self.testsetup)
 
-        def click_logout(self): # untested
+        def click_logout(self):
             self.selenium.click(self._logout_locator)
 
         @property
-        def is_user_logged_in(self): # untested
+        def is_user_logged_in(self):
             return self.selenium.is_visible(self._account_controller_locator)
 
