@@ -13,7 +13,7 @@ class SearchPage(Base):
 
     _page_title = 'Search'
     _page_url = 'en-US/search'
-    _search_box = "css=input[name='q']"
+    _search_box = "css=input.search-query"
     _search_button = "css=input[type='submit']"
     _refine_search_link = "css=a[href *= 'a=2']"
     _next_page_link = "link=*Next*"
