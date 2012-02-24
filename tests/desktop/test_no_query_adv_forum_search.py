@@ -26,3 +26,6 @@ class TestNoQueryAdvForumSearch:
         refine_search_pg.click_search_button_support()
 
         Assert.true(refine_search_pg.search_result_count > 0, "No search results not found")
+
+        # sign out
+        refine_search_pg.sign_out()

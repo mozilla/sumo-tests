@@ -11,15 +11,14 @@ class Base(Page):
 
     @property
     def header(self):
-        return Base.HeaderRegion(self.testsetup)
+        return self.HeaderRegion(self.testsetup)
 
     def sign_in(self, user="default"):
         login = self.header.click_login()
         login.log_in(user)
 
     def sign_out(self):
-        if self.header.is_user_logged_in:
-            self.header.click_logout()
+        self.header.click_logout()
 
     class HeaderRegion(Page):
 
@@ -30,7 +29,7 @@ class Base(Page):
         #LoggedIn
         _account_controller_locator = "css=#aux-nav .account a.user"
         _account_dropdown_locator = "css=#aux-nav .account ul" # untested
-        _logout_locator = "css=li.nomenu.logout > a"
+        _logout_locator = "css=.logout > a"
 
         def click_login(self):
             self.selenium.click(self._login_locator)
