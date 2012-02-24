@@ -70,3 +70,7 @@ class Page(object):
             count += 1
             if count == self.timeout / 1000:
                 raise Exception(locator + " is still visible")
+
+    def get_user_name(self, user="default"):
+        credentials = self.testsetup.credentials[user]
+        return credentials['name']
