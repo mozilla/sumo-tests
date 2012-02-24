@@ -4,7 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
 from pages.desktop.refine_search_page import RefineSearchPage
-from pages.desktop.login_page import LoginPage
 import pytest
 xfail = pytest.mark.xfail
 
@@ -15,11 +14,13 @@ class TestNoQueryAdvForumSearch:
     @pytest.mark.fft
     @xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out')
     def test_no_query_adv_forum_search(self, mozwebqa):
-        login_pg = LoginPage(mozwebqa)
         refine_search_pg = RefineSearchPage(mozwebqa)
 
-        login_pg.log_in('default')
+        # go to page and log in
         refine_search_pg.go_to_refine_search_page()
+        refine_search_pg.sign_in('default')
+
+        # do test
         refine_search_pg.click_support_questions_tab()
         refine_search_pg.type_in_asked_by_box(login_pg.get_user_name('default'))
         refine_search_pg.click_search_button_support()
