@@ -40,10 +40,32 @@ class KnowledgeBase(Base):
 class KnowledgeBaseArticle(KnowledgeBase):
 
     _title_locator = "css=h1.title"
+    _helpful_locator = "helpful"
+    _not_helpful_locator = "not-helpful"
 
     @property
     def article_title(self):
         self.selenium.get_text(self._title_locator)
+
+    def vote_helpful(self):
+        self.selenium.click(self._helpful_locator)
+
+    def vote_not_helpful(self):
+        self.selenium.click(self._not_helpful_locator)
+
+    # each user can only vote once per article
+    def can_vote(self):
+        return self.selenium.is_element_present(self._helpful_locator)
+
+    # for providing some random feedback about the article
+    def vote(self):
+        if (self.can_vote()):
+            import random
+            helpful = random.randint(0,1)
+            if (helpful):
+                self.vote_helpful()
+            else:
+                self.vote_not_helpful()
 
 
 class KnowledgeBaseEditArticle(KnowledgeBase):
