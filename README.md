@@ -129,13 +129,12 @@ Output of a test run should look like this:
     platform darwin -- Python 2.6.1 -- pytest-2.1.3
     collected 19 items
 
-    tests/desktop/test_article_create_edit_delete.py .x...
-    tests/desktop/test_cant_find_what_you_are_looking_for.py .
+    tests/desktop/test_article_create_edit_delete.py .X...
     tests/desktop/test_loggedin_ask_a_new_question.py .
     tests/desktop/test_new_user_registration.py .
-    tests/desktop/test_no_query_adv_forum_search.py x
     tests/desktop/test_questions_problem_count.py .
     tests/desktop/test_questions_sort.py ..
+    tests/desktop/test_search.py .X
     tests/desktop/test_view_helpfulness_chart.py .
 
     ========================= 6 tests deselected by 'fft' ==========================
