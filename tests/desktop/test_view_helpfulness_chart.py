@@ -28,7 +28,6 @@ class TestViewHelpfulnessChart:
         Assert.true(contrib_page.is_the_current_page)
         contrib_page.click_all_time()
         kb_article = contrib_page.click_top_visited_article_link()
-        Assert.true(kb_article.is_the_current_page)
 
         # vote on article to artificially inflate data
         kb_article.vote()

@@ -37,4 +37,4 @@ class ContributorsPage(Base):
         self.selenium.click(self._this_week_button_locator)
 
     def click_all_time(self):
-        self.selnium.click(self._all_time_button_locator)
+        self.selenium.click(self._all_time_button_locator)
