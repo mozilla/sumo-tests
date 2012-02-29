@@ -261,7 +261,7 @@ class TestRewrites(unittest.TestCase):
         
         """ redirect old mobile URLs to new SUMO URLs
         http://support.allizom.org/1/mobile/4.0/android/en-US/firefox-help ->
-        http://www.mozilla.com/en-US/m/support/
+        http://support.allizom.org/en-US/mobile
         """
         platform  = "/mobile"
         mobile_os = ('/android','/iphone', '/nokia')
@@ -270,7 +270,7 @@ class TestRewrites(unittest.TestCase):
             for two in self._2:
                 for three in mobile_os:
                     open_url     = str(self.mainURL)+str(self.numberOne)+platform+two+three+str(x[self.key1])+"/firefox-help"
-                    expectedStr = "m/support"
+                    expectedStr = "mobile"
                     http_response = self.get_http_response(open_url)
                     actual_url = urllib2.unquote(http_response.geturl())
                     if http_response.code == 404:
