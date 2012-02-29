@@ -261,7 +261,7 @@ class TestRewrites(unittest.TestCase):
         
         """ redirect old mobile URLs to new SUMO URLs
         http://support.allizom.org/1/mobile/4.0/android/en-US/firefox-help ->
-        http://support.mozilla.org/en-US/mobile
+        http://support.allizom.org/en-US/mobile
         """
         platform  = "/mobile"
         mobile_os = ('/android','/iphone', '/nokia')
