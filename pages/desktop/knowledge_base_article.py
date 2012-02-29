@@ -40,8 +40,9 @@ class KnowledgeBase(Base):
 class KnowledgeBaseArticle(KnowledgeBase):
 
     _title_locator = "css=h1.title"
-    _helpful_locator = "helpful"
-    _not_helpful_locator = "not-helpful"
+    _helpful_locator = "css=div#side input[name=helpful]"
+    _not_helpful_locator = "css=div#side input[name=not-helpful]"
+    _helpful_form_busy_locator = "css=form.helpful.busy"
 
     @property
     def article_title(self):
@@ -49,9 +50,11 @@ class KnowledgeBaseArticle(KnowledgeBase):
 
     def vote_helpful(self):
         self.selenium.click(self._helpful_locator)
+        self.wait_for_element_come_and_go(self._helpful_form_busy_locator)
 
     def vote_not_helpful(self):
         self.selenium.click(self._not_helpful_locator)
+        self.wait_for_element_come_and_go(self._helpful_form_busy_locator)
 
     # each user can only vote once per article
     def can_vote(self):
