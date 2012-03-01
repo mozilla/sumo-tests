@@ -7,6 +7,7 @@
 from unittestzero import Assert
 import pytest
 import requests
+import urllib
 
 
 @pytest.mark.skip_selenium
@@ -15,30 +16,45 @@ class TestRedirects:
 
     _user_agent_firefox = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0.1) Gecko/20100101 Firefox/10.0.1'
 
-    def _check_redirect(self, testsetup, start_url, expected_url, user_agent=_user_agent_firefox, locale='en-US'):
+    def _check_redirect(self, testsetup, start_url, user_agent=_user_agent_firefox, locale='en-US'):
         start_url = testsetup.base_url + start_url
-        expected_url = testsetup.base_url + expected_url
 
         headers = {'user-agent': user_agent,
                    'accept-language': locale}
-        r = requests.get(start_url, headers=headers)
-        Assert.equal(r.url, expected_url)
+        return requests.get(start_url, headers=headers)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/ja-JP-mac/kb', '/ja/home'),
-        ('/nn-NO/kb', '/no/home'),
-        ('/es-ES/kb', '/es/home'),
-        ('/es-AR/kb', '/es/home'),
-        ('/es-CL/kb', '/es/home'),
-        ('/en-US/kb', '/en-US/home'),
-        ('/en/kb', '/en-US/home')])
-    def test_redirect_locale_to_home(self, mozwebqa, input, expected):
-        self._check_redirect(mozwebqa, input, expected)
+        ('/1/firefox/4.0/WINNT/en-US/firefox-help/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/WINNT/en-US/firefox-f1/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/WINNT/en-US/firefox-osxkey/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/Darwin/en-US/firefox-help/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/Darwin/en-US/firefox-f1/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/Darwin/en-US/firefox-osxkey/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/Linux/en-US/firefox-help/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/Linux/en-US/firefox-f1/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/Linux/en-US/firefox-osxkey/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/WINNT/en-US/prefs-main/', '/en-US/kb/Options window - General panel'),
+        ('/1/firefox/4.0/Darwin/en-US/prefs-main/', '/en-US/kb/Options window - General panel'),
+        ('/1/firefox/4.0/Linux/en-US/prefs-main/', '/en-US/kb/Options window - General panel'),
+        ('/1/firefox/4.0/WINNT/en-US/prefs-clear-private-data/', '/en-US/kb/Clear Recent History'),
+        ('/1/firefox/4.0/Darwin/en-US/prefs-clear-private-data/', '/en-US/kb/Clear Recent History'),
+        ('/1/firefox/4.0/Linux/en-US/prefs-clear-private-data/', '/en-US/kb/Clear Recent History'),
+        ('/1/firefox/4.0/WINNT/en-US/prefs-fonts-and-colors/', '/en-US/kb/Options window - Content panel')])
+    def test_browser_redirect_to_sumo(self, mozwebqa, input, expected):
+        expected_url = mozwebqa.base_url + expected
+        r = self._check_redirect(mozwebqa, input)
+
+        Assert.equal(urllib.unquote(r.url), expected_url)
+        Assert.equal(r.status_code, requests.codes.ok)
 
     @pytest.mark.parametrize(('input', 'expected'), [
         ('/windows7-support', '/en-US/home?as=u')])
-    def test_support_links(self, mozwebqa, input, expected):
-        self._check_redirect(mozwebqa, input, expected)
+    def test_support_redirects(self, mozwebqa, input, expected):
+        expected_url = mozwebqa.base_url + expected
+        r = self._check_redirect(mozwebqa, input)
+
+        Assert.equal(urllib.unquote(r.url), expected_url)
+        Assert.equal(r.status_code, requests.codes.ok)
 
     @pytest.mark.xfail(reason='Tests redirect to production')
     @pytest.mark.parametrize(('input', 'expected'), [
@@ -46,15 +62,27 @@ class TestRedirects:
         ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/home?as=u'),
         ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/home?as=u')])
     def test_old_mobile_redirects(self, mozwebqa, input, expected):
-        self._check_redirect(mozwebqa, input, expected)
+        expected_url = mozwebqa.base_url + expected
+        r = self._check_redirect(mozwebqa, input)
+
+        Assert.equal(urllib.unquote(r.url), expected_url)
+        Assert.equal(r.status_code, requests.codes.ok)
 
     @pytest.mark.parametrize(('input', 'expected'), [
         ('/contribute', '/en-US/home?as=u')])
     def test_contribute_redirects(self, mozwebqa, input, expected):
-        self._check_redirect(mozwebqa, input, expected)
+        expected_url = mozwebqa.base_url + expected
+        r = self._check_redirect(mozwebqa, input)
+
+        Assert.equal(urllib.unquote(r.url), expected_url)
+        Assert.equal(r.status_code, requests.codes.ok)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot%20log%20in%20to%20Firefox%20Home%20App?as=u')])
-    def test_contribute_redirects(self, mozwebqa, input, expected):
-        self._check_redirect(mozwebqa, input, expected)
+        ('/1/firefox-home/4.0/iPhone/en-US', '/en-US/kb/What is Firefox Home?as=u'),
+        ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot log in to Firefox Home App?as=u')])
+    def test_iphone_redirects(self, mozwebqa, input, expected):
+        expected_url = mozwebqa.base_url + expected
+        r = self._check_redirect(mozwebqa, input)
 
+        Assert.equal(urllib.unquote(r.url), expected_url)
+        Assert.equal(r.status_code, requests.codes.ok)
