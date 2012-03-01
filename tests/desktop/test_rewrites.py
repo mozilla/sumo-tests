@@ -56,21 +56,11 @@ class TestRedirects:
         Assert.equal(urllib.unquote(r.url), expected_url)
         Assert.equal(r.status_code, requests.codes.ok)
 
-    @pytest.mark.xfail(reason='Tests redirect to production')
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/home?as=u'),
-        ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/home?as=u'),
-        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/home?as=u')])
+        ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/mobile?as=u'),
+        ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/mobile?as=u'),
+        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/mobile?as=u')])
     def test_old_mobile_redirects(self, mozwebqa, input, expected):
-        expected_url = mozwebqa.base_url + expected
-        r = self._check_redirect(mozwebqa, input)
-
-        Assert.equal(urllib.unquote(r.url), expected_url)
-        Assert.equal(r.status_code, requests.codes.ok)
-
-    @pytest.mark.parametrize(('input', 'expected'), [
-        ('/contribute', '/en-US/home?as=u')])
-    def test_contribute_redirects(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
         r = self._check_redirect(mozwebqa, input)
 
