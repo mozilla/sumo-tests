@@ -57,3 +57,4 @@ class TestRedirects:
         ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot%20log%20in%20to%20Firefox%20Home%20App?as=u')])
     def test_contribute_redirects(self, mozwebqa, input, expected):
         self._check_redirect(mozwebqa, input, expected)
+

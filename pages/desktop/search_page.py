@@ -3,7 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from base import Base
+from pages.desktop.base import Base
 
 
 class SearchPage(Base):
@@ -13,7 +13,7 @@ class SearchPage(Base):
 
     _page_title = 'Search'
     _page_url = 'en-US/search'
-    _search_box = "css=input[name='q']"
+    _search_box = "css=input.search-query"
     _search_button = "css=input[type='submit']"
     _refine_search_link = "css=a[href *= 'a=2']"
     _next_page_link = "link=*Next*"

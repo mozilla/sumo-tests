@@ -7,7 +7,7 @@ Created on Jun 30, 2010
 
 @author: mozilla
 '''
-from base import Base
+from pages.desktop.base import Base
 
 
 class LoginPage(Base):
@@ -38,7 +38,3 @@ class LoginPage(Base):
         self.selenium.type(self._password_box_locator, credentials['password'])
         self.selenium.click(self._log_in_button_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
-
-    def get_user_name(self, user="default"):
-        credentials = self.testsetup.credentials[user]
-        return credentials['name']
