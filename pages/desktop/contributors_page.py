@@ -19,8 +19,9 @@ class ContributorsPage(Base):
     _page_url = "/en-US/contributors"
     _this_week_button_locator = "link=This Week"
     _all_time_button_locator = "link=All Time"
+    _documents_table_busy_locator = "css=table.documents.busy"
     _top_most_visited_article_locator = \
-        "css=#most-visited-table tbody > tr:nth-of-type(2) > td:nth-of-type(1) > a"
+        "css=#most-visited-table > tr:nth-of-type(2) > td:nth-of-type(1) > a"
 
 
     def go_to_contributors_page(self):
@@ -35,6 +36,8 @@ class ContributorsPage(Base):
 
     def click_this_week(self):
         self.selenium.click(self._this_week_button_locator)
+        self.wait_for_element_come_and_go(self._documents_table_busy_locator)
 
     def click_all_time(self):
         self.selenium.click(self._all_time_button_locator)
+        self.wait_for_element_come_and_go(self._documents_table_busy_locator)
