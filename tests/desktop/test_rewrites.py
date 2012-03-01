@@ -10,6 +10,7 @@ import requests
 import urllib
 
 
+@pytest.mark.fft
 @pytest.mark.skip_selenium
 @pytest.mark.nondestructive
 class TestRedirects:
