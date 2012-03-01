@@ -19,11 +19,18 @@ class TestViewHelpfulnessChart:
            Deletes the article
         """
         sumo_homepage = SupportHomePage(mozwebqa)
-        kb_article = KnowledgeBaseArticle(mozwebqa)
         kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
 
+        # navigate to article
         sumo_homepage.go_to_support_home_page()
-        sumo_homepage.click_first_top_issues_link()
+        sumo_homepage.sign_in();
+        contrib_page = sumo_homepage.click_knowledge_base_dashboard_link()
+        Assert.true(contrib_page.is_the_current_page)
+        contrib_page.click_all_time()
+        kb_article = contrib_page.click_top_visited_article_link()
+
+        # vote on article to artificially inflate data
+        kb_article.vote()
 
         kb_article.navigation.click_show_history()
 
