@@ -71,6 +71,15 @@ class Page(object):
             if count == self.timeout / 1000:
                 raise Exception(locator + " is still visible")
 
+    def wait_for_element_come_and_go(self, locator):
+        self.wait_for_element_present(locator)
+        count = 0
+        while self.selenium.is_element_present(locator):
+            time.sleep(1)
+            count += 1
+            if count == self.timeout / 1000:
+                raise Exception(locator + " is still present")
+
     def get_user_name(self, user="default"):
         credentials = self.testsetup.credentials[user]
         return credentials['name']

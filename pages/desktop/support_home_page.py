@@ -20,6 +20,7 @@ class SupportHomePage(Base):
     _see_all_button = "id=button-seeall"
     _top_helpful_content_locator = "css=div#home-content-quick section ul > li > a"
     _top_issues_link_locator = 'css=#home-content-explore ul > li > a'
+    _kb_dashboard_link_locator = 'link=Knowledge Base Dashboard'
 
     def go_to_support_home_page(self):
         self.selenium.open('/')
@@ -49,3 +50,9 @@ class SupportHomePage(Base):
     def click_first_top_issues_link(self):
         self.selenium.click(self._top_issues_link_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
+
+    def click_knowledge_base_dashboard_link(self):
+        self.selenium.click(self._kb_dashboard_link_locator)
+        self.selenium.wait_for_page_to_load(self.timeout)
+        from contributors_page import ContributorsPage
+        return ContributorsPage(self.testsetup)
