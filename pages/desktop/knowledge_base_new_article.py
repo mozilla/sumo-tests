@@ -12,7 +12,7 @@ class KnowledgeBaseNewArticle(Base):
     for creating new knowledge base article is found.
     """
     _page_title = 'Create a New Article'
-    _page_url_new_article = '/en-US/kb/new'
+    _page_url = '/en-US/kb/new'
 
     _article_title_box_locator = 'id_title'
     _article_category_menu_locator = 'id_category'
@@ -24,11 +24,6 @@ class KnowledgeBaseNewArticle(Base):
     _article_submit_btn_locator = 'css=.btn-important'
     _comment_box_locator = 'id_comment'
     _comment_submit_btn_locator = "css=input[value='Submit']"
-
-    def go_to_create_new_article_page(self):
-        self.selenium.open(self.base_url_ssl + self._page_url_new_article)
-        self.selenium.wait_for_page_to_load(self.timeout)
-        self.is_the_current_page
 
     def set_article(self, article_info_dict):
         """

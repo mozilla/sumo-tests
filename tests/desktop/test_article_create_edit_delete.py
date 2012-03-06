@@ -12,7 +12,6 @@ from pages.desktop.login_page import LoginPage
 import re
 import pytest
 import datetime
-xfail = pytest.mark.xfail
 
 
 class TestArticleCreateEditDelete:
@@ -52,7 +51,7 @@ class TestArticleCreateEditDelete:
         kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    @xfail(reason='Bug 694614 - spurious failures')
+    @pytest.mark.xfail(reason='Bug 694614 - spurious failures')
     @pytest.mark.fft
     def test_that_article_can_be_edited(self, mozwebqa):
         """
@@ -204,7 +203,7 @@ class TestArticleCreateEditDelete:
                              'summary': article_summary, 'content': article_content}
 
         # create a new article
-        kb_new_article.go_to_create_new_article_page()
+        kb_new_article.go_to_page()
         kb_new_article.set_article(article_info_dict)
 
         return article_info_dict

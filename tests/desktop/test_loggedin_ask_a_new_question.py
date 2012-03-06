@@ -23,7 +23,7 @@ class TestAAQ:
         q_details = "This is a test. %s" % (timestamp)
 
         # go to the /questions/new page and log in
-        ask_new_questions_pg.go_to_ask_new_questions_page()
+        ask_new_questions_pg.go_to_page()
         ask_new_questions_pg.sign_in('default')
 
         # post a question

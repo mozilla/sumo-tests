@@ -16,7 +16,7 @@ class TestNewUserRegistration:
            Verify registration by checking the page title
         """
         register_pg = RegisterPage(mozwebqa)
-        register_pg.go_to_registration_page()
+        register_pg.go_to_page()
         register_pg.register_new_user()
         actual_page_title = register_pg.page_title
         expected_page_title = register_pg._page_title_after_registration

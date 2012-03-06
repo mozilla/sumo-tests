@@ -26,11 +26,6 @@ class SearchPage(Base):
     _ten_search_results = "css=div.search-results div[class*='result']:nth-child(10)"
     _eleven_search_results = "css=div.search-results div[class*='result']:nth-child(11)"
 
-    def go_to_search_page(self):
-        self.selenium.open(self._page_url)
-        self.selenium.wait_for_page_to_load(self.timeout)
-        self.is_the_current_page
-
     def do_search_on_search_box(self, search_query):
         if not (self._page_title in self.selenium.get_title()):
             self.go_to_search_page()

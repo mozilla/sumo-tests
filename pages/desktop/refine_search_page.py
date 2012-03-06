@@ -26,11 +26,6 @@ class RefineSearchPage(Base):
     _asked_by_box = "id_asked_by"
     _search_results_list = "css=div.result.question"
 
-    def go_to_refine_search_page(self):
-        self.selenium.open(self._page_url)
-        self.selenium.wait_for_page_to_load(self.timeout)
-        self.is_the_current_page
-
     def click_support_questions_tab(self):
         self.selenium.click(self._support_questions_tab)
 

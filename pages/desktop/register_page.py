@@ -20,11 +20,6 @@ class RegisterPage(Base):
     _email_add_box_locator = 'id_for_email'
     _register_button_locator = "css=input.btn[value='Register']"
 
-    def go_to_registration_page(self):
-        self.selenium.open(self._page_url)
-        self.selenium.wait_for_page_to_load(self.timeout)
-        self.is_the_current_page
-
     def register_new_user(self):
         user_name = self.get_random_word(5)
         password = '1234'

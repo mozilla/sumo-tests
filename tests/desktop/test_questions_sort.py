@@ -19,7 +19,7 @@ class TestQuestionsSort:
         questions_pg = QuestionsPage(mozwebqa)
         expected_sorted_text = "Solved"
 
-        questions_pg.go_to_forum_questions_page()
+        questions_pg.go_to_page()
         questions_pg.click_sort_by_solved_questions()
         # if there are no questions in the list then skip the test
         if not questions_pg.are_questions_present():
@@ -40,7 +40,7 @@ class TestQuestionsSort:
         questions_pg = QuestionsPage(mozwebqa)
         expected_sorted_text = "No replies"
 
-        questions_pg.go_to_forum_questions_page()
+        questions_pg.go_to_page()
         questions_pg.click_sort_by_no_replies_questions()
         # if there are no questions in the list then skip the test
         if not questions_pg.are_questions_present():

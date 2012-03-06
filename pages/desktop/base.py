@@ -19,6 +19,14 @@ class Base(Page):
 
     def sign_out(self):
         self.header.click_logout()
+        
+    def go_to_page(self):
+        if (self._page_url):
+            self.selenium.open(self._page_url)
+            self.selenium.wait_for_page_to_load(self.timeout)
+            self.is_the_current_page
+        # i can imagine an else here that throws an exception
+        # that this page cannot be navigated directly to
 
     class HeaderRegion(Page):
 

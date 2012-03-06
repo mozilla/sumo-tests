@@ -18,7 +18,7 @@ class TestSearch:
 
         searchTerms = ["firefox", "bgkhdsaghb"]
         for current_search_term in searchTerms:
-            search_page_obj.go_to_search_page()
+            search_page_obj.go_to_page()
             search_page_obj.do_search_on_search_box(current_search_term)
 
             expected_text = "Can't find what you're looking for?"
@@ -33,7 +33,7 @@ class TestSearch:
         refine_search_pg = RefineSearchPage(mozwebqa)
 
         # go to page and log in
-        refine_search_pg.go_to_refine_search_page()
+        refine_search_pg.go_to_page()
         refine_search_pg.sign_in('default')
 
         # do test

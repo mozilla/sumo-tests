@@ -15,17 +15,13 @@ class SupportHomePage(Base):
     performed on them.
     """
     _page_title = "Firefox Support Home Page"
+    _page_url = "/"
     _main_search_box = "id=q"
     _search_button = "css=button.img-submit"
     _see_all_button = "id=button-seeall"
     _top_helpful_content_locator = "css=div#home-content-quick section ul > li > a"
     _top_issues_link_locator = 'css=#home-content-explore ul > li > a'
     _kb_dashboard_link_locator = 'link=Knowledge Base Dashboard'
-
-    def go_to_support_home_page(self):
-        self.selenium.open('/')
-        self.selenium.wait_for_page_to_load(self.timeout)
-        self.is_the_current_page
 
     def do_search_on_main_search_box(self, search_query, search_page_obj):
         if re.search(self._page_title, self.selenium.get_title()) is None:

@@ -18,7 +18,7 @@ class TestQuestionProbCount:
         view_question_pg = ViewQuestionPage(mozwebqa)
 
         # Can't +1 your own question so will do it logged out
-        questions_pg.go_to_forum_questions_page()
+        questions_pg.go_to_page()
         questions_pg.click_any_question(1)
 
         initial_count = view_question_pg.problem_count

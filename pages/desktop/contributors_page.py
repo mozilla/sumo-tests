@@ -24,11 +24,6 @@ class ContributorsPage(Base):
         "css=#most-visited-table > tr:nth-of-type(2) > td:nth-of-type(1) > a"
 
 
-    def go_to_contributors_page(self):
-        self.selenium.open(self._page_url)
-        self.selenium.wait_for_page_to_load(self.timeout)
-        self.is_the_current_page
-
     def click_top_visited_article_link(self):
         self.selenium.click(self._top_most_visited_article_locator)
         self.selenium.wait_for_page_to_load(self.timeout)
