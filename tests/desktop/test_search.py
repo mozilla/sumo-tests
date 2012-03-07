@@ -13,17 +13,18 @@ class TestSearch:
     @pytest.mark.bft
     @pytest.mark.fft
     @pytest.mark.prod
-    def test_cant_find_what_youre_looking_for_test(self, mozwebqa):
+    @pytest.mark.parametrize(('search_term'), [
+        ('firefox'),
+        ('bgkhdsaghb')])
+    def test_cant_find_what_youre_looking_for_test(self, mozwebqa, search_term):
         search_page_obj = SearchPage(mozwebqa)
 
-        searchTerms = ["firefox", "bgkhdsaghb"]
-        for current_search_term in searchTerms:
-            search_page_obj.go_to_search_page()
-            search_page_obj.do_search_on_search_box(current_search_term)
+        search_page_obj.go_to_search_page()
+        search_page_obj.do_search_on_search_box(search_term)
 
-            expected_text = "Can't find what you're looking for?"
-            Assert.contains(expected_text, search_page_obj.ask_a_question_text)
-            Assert.true(search_page_obj.is_ask_a_question_present, "Ask question link not present")
+        expected_text = "Can't find what you're looking for?"
+        Assert.contains(expected_text, search_page_obj.ask_a_question_text)
+        Assert.true(search_page_obj.is_ask_a_question_present, "Ask question link not present")
 
     @pytest.mark.smoketests
     @pytest.mark.bft
