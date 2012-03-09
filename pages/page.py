@@ -10,6 +10,7 @@ Created on Jun 21, 2010
 import re
 import time
 import base64
+from unittestzero import Assert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotVisibleException
@@ -34,10 +35,8 @@ class Page(object):
         if self._page_title:
             WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
 
-        if re.search(self._page_title, self.selenium.title) is None:
-            raise Exception("Expected page title to be: '" + self._page_title + "' but it was: '" + actual_title + "'")
-        else:
-            return True
+        Assert.equal(self.selenium.title, self._page_title,
+            "Expected page title: %s. Actual page title: %s" % (self._page_title, self.selenium.title))
 
     @property
     def url_current_page(self):

@@ -10,7 +10,7 @@ class QuestionsPage(Base):
     """
     'Ask a Question' landing page.
     """
-    _page_title = 'Firefox Support Forum'
+    _page_title = 'Firefox Support Forum | Firefox Help'
     _forums_page_url = '/en-US/questions'
     _ask_question_link_locator = '/en-US/questions/new'
     _sort_solved_link_locator = (By.CSS_SELECTOR, "a[href*='filter=solved']")
@@ -66,14 +66,14 @@ class AskNewQuestionsPage(Base):
     'Ask a New Question' page.
     Child class of Questions Page
     """
-    _page_title = 'Ask a Question'
+    _page_title = 'Ask a Question | Firefox Help'
     _questions_new_url = '/en-US/questions/new'
     _firefox_product_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _category_prob_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _type_question_box_locator = (By.NAME, 'search')
     _ask_this_button_locator = (By.CSS_SELECTOR, "input[value='Ask this']")
     _none_of_these_button_locator = (By.CSS_SELECTOR, "input[value *='None']")
-    _provide_details_button_locator = (By.ID, "show-form-btn") #???
+    _provide_details_button_locator = (By.ID, "show-form-btn")
     _q_content_box_locator = (By.ID, 'id_content')
     _q_site_box_locator = (By.ID, 'id_sites_affected')
     _q_trouble_box_locator = (By.ID, 'id_troubleshooting')
