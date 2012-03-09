@@ -23,7 +23,7 @@ class SupportHomePage(Base):
     _kb_dashboard_link_locator = (By.LINK_TEXT, 'Knowledge Base Dashboard')
 
     def go_to_support_home_page(self):
-        self.selenium.get(self.base_url + '/en-US/home')
+        self.open('/en-US/home')
         self.is_the_current_page
 
     def do_search_on_main_search_box(self, search_query):
