@@ -13,13 +13,13 @@ class QuestionsPage(Base):
     _page_title = 'Firefox Support Forum | Firefox Help'
     _forums_page_url = '/en-US/questions'
     _ask_question_link_locator = '/en-US/questions/new'
-    _sort_solved_link_locator = (By.CSS_SELECTOR, "a[href*='filter=solved']")
-    _sort_unsolved_link_locator = (By.CSS_SELECTOR, "a[href*='filter=unsolved']")
-    _sort_no_replies_link_locator = (By.CSS_SELECTOR, "a[href*='filter=no-replies']")
-    _questions_list_block_locator = (By.CSS_SELECTOR, "ol.questions")
-    _questions_list_locator = (By.CSS_SELECTOR, "ol.questions > li")
-    _question_list_link_locator = (By.CSS_SELECTOR, "h2 > a")
-    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, "div.thread-meta > span")
+    _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
+    _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=unsolved"]')
+    _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=no-replies"]')
+    _questions_list_block_locator = (By.CSS_SELECTOR, 'ol.questions')
+    _questions_list_locator = (By.CSS_SELECTOR, 'ol.questions > li')
+    _question_list_link_locator = (By.CSS_SELECTOR, 'h2 > a')
+    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > span')
     
     def go_to_forum_questions_page(self):
         self.open(self._forums_page_url)
@@ -65,18 +65,18 @@ class AskNewQuestionsPage(Base):
     _firefox_product_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _category_prob_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _type_question_box_locator = (By.NAME, 'search')
-    _ask_this_button_locator = (By.CSS_SELECTOR, "input[value='Ask this']")
-    _none_of_these_button_locator = (By.CSS_SELECTOR, "input[value *='None']")
-    _provide_details_button_locator = (By.ID, "show-form-btn")
+    _ask_this_button_locator = (By.CSS_SELECTOR, 'input[value="Ask this"]')
+    _none_of_these_button_locator = (By.CSS_SELECTOR, 'input[value *="None"]')
+    _provide_details_button_locator = (By.ID, 'show-form-btn')
     _q_content_box_locator = (By.ID, 'id_content')
     _q_site_box_locator = (By.ID, 'id_sites_affected')
     _q_trouble_box_locator = (By.ID, 'id_troubleshooting')
-    _q_post_button_locator = (By.CSS_SELECTOR, "input[value='Post Question']")
-    _sort_solved_link_locator = (By.CSS_SELECTOR, "a[href*=filter=solved]")
-    _sort_unsolved_link_locator = (By.CSS_SELECTOR, "a[href*=filter=unsolved]")
-    _sort_no_replies_link_locator = (By.CSS_SELECTOR, "a[href*=filter=no-replies]")
-    _questions_list_locator = (By.CSS_SELECTOR, "ol.questions > li")
-    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, "div.thread-meta > span")
+    _q_post_button_locator = (By.CSS_SELECTOR, 'input[value="Post Question"]')
+    _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=solved]')
+    _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=unsolved]')
+    _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=no-replies]')
+    _questions_list_locator = (By.CSS_SELECTOR, 'ol.questions > li')
+    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > span')
 
     def go_to_ask_new_questions_page(self):
         self.open(self._questions_new_url)
@@ -107,11 +107,11 @@ class AskNewQuestionsPage(Base):
 
 class ViewQuestionPage(Base):
 
-    _question_locator = (By.CSS_SELECTOR, "div.content > h1")
-    _detail_locator = (By.CSS_SELECTOR, "div.content > p")
-    _problem_too_button_locator = (By.CSS_SELECTOR, "input[value*='problem']")
-    _problem_count_text_locator = (By.CSS_SELECTOR, "div[class^='have-problem'] > mark")
-    _no_thanks_link_locator = (By.LINK_TEXT, "No Thanks")
+    _question_locator = (By.CSS_SELECTOR, 'div.content > h1')
+    _detail_locator = (By.CSS_SELECTOR, 'div.content > p')
+    _problem_too_button_locator = (By.CSS_SELECTOR, 'input[value*="problem"]')
+    _problem_count_text_locator = (By.CSS_SELECTOR, 'div[class^="have-problem"] > mark')
+    _no_thanks_link_locator = (By.LINK_TEXT, 'No Thanks')
 
     @property
     def question(self):

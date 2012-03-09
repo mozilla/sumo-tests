@@ -18,17 +18,17 @@ class LoginPage(Base):
     _page_url = '/en-US/users/login'
     _username_box_locator = (By.ID, 'id_username')
     _password_box_locator = (By.ID, 'id_password')
-    _log_in_button_locator = (By.CSS_SELECTOR, "input[type='submit']")
+    _log_in_button_locator = (By.CSS_SELECTOR, 'input[type="submit"]')
 
     # if user is logged-in then you see these elements
-    _logged_in_as_div_locator = (By.CSS_SELECTOR, "div#mod-login_box > div")
-    _logged_in_text = "Logged in as"
+    _logged_in_as_div_locator = (By.CSS_SELECTOR, 'div#mod-login_box > div')
+    _logged_in_text = 'Logged in as'
 
     def go_to_login_page(self):
         self.open(self._page_url)
         self.is_the_current_page
 
-    def log_in(self, user="default"):
+    def log_in(self, user='default'):
         if not (self._page_title in self.selenium.title):
             self.go_to_login_page()
 

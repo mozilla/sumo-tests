@@ -26,7 +26,7 @@ class Page(object):
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.base_url = testsetup.base_url
-        self.base_url_ssl = testsetup.base_url.replace("http://", "https://")
+        self.base_url_ssl = testsetup.base_url.replace('http://', 'https://')
         self.selenium = testsetup.selenium
         self.timeout = testsetup.timeout
 
@@ -108,6 +108,6 @@ class Page(object):
         self.wait_for_element_present(*locator)
         self.wait_for_element_not_present(*locator)
         
-    def get_user_name(self, user="default"):
+    def get_user_name(self, user='default'):
         credentials = self.testsetup.credentials[user]
         return credentials['name']
