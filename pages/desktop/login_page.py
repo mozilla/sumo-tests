@@ -8,7 +8,7 @@ Created on Jun 30, 2010
 @author: mozilla
 '''
 from pages.desktop.base import Base
-
+from selenium.webdriver.common.by import By
 
 class LoginPage(Base):
     """
@@ -16,25 +16,24 @@ class LoginPage(Base):
     """
     _page_title = 'Log In'
     _page_url = '/en-US/users/login'
-    _username_box_locator = 'id_username'
-    _password_box_locator = 'id_password'
-    _log_in_button_locator = "css=input[type='submit']"
+    _username_box_locator = (By.ID, 'id_username')
+    _password_box_locator = (By.ID, 'id_password')
+    _log_in_button_locator = (By.CSS_SELECTOR, "input[type='submit']")
 
     # if user is logged-in then you see these elements
-    _logged_in_as_div_locator = "css=div#mod-login_box > div"
+    _logged_in_as_div_locator = (By.CSS_SELECTOR, "div#mod-login_box > div")
     _logged_in_text = "Logged in as"
 
     def go_to_login_page(self):
-        self.selenium.open(self._page_url)
+        self.open(self._page_url)
         self.is_the_current_page
 
     def log_in(self, user="default"):
-        if not (self._page_title in self.selenium.get_title()):
+        if not (self._page_title in self.selenium.title):
             self.go_to_login_page()
 
         credentials = self.testsetup.credentials[user]
 
-        self.selenium.type(self._username_box_locator, credentials['name'])
-        self.selenium.type(self._password_box_locator, credentials['password'])
-        self.selenium.click(self._log_in_button_locator)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(*self._username_box_locator).send_keys(credentials['name'])
+        self.selenium.find_element(*self._password_box_locator).send_keys(credentials['password'])
+        self.selenium.find_element(*self._log_in_button_locator).click()

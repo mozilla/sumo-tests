@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.page import Page
+from selenium.webdriver.common.by import By
 
 
 class Base(Page):
@@ -23,23 +24,23 @@ class Base(Page):
     class HeaderRegion(Page):
 
         #Not LoggedIn
-        _login_locator = "link=Sign In"
-        _register_locator = "link=Register"
+        _login_locator = (By.CSS_SELECTOR, "li.logout > a:nth-of-type(1)")
+        _register_locator = (By.CSS_SELECTOR, "li.logout > a:nth-of-type(2)")
 
         #LoggedIn
-        _account_controller_locator = "css=#aux-nav .account a.user"
-        _account_dropdown_locator = "css=#aux-nav .account ul" # untested
-        _logout_locator = "css=.logout > a"
+        _account_controller_locator = (By.CSS_SELECTOR, "#aux-nav .account a.user")
+        _account_dropdown_locator = (By.CSS_SELECTOR, "#aux-nav .account ul") # untested
+        _logout_locator = (By.CSS_SELECTOR, ".logout > a")
 
         def click_login(self):
-            self.selenium.click(self._login_locator)
+            self.selenium.find_element(*self._login_locator).click()
             from pages.desktop.login_page import LoginPage
             return LoginPage(self.testsetup)
 
         def click_logout(self):
-            self.selenium.click(self._logout_locator)
+            self.selenium.find_element(*self._logout_locator).click()
 
         @property
         def is_user_logged_in(self):
-            return self.selenium.is_visible(self._account_controller_locator)
+            return self.is_element_visible(*self._account_controller_locator)
 
