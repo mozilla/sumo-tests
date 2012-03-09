@@ -13,7 +13,8 @@ class SupportHomePage(Base):
     web elements and methods that can be
     performed on them.
     """
-    _page_title = "Firefox Support Home Page"
+    _page_title = 'Firefox Support Home Page'
+    _home_url = '/en-US/home'
     
     _main_search_box = (By.ID, 'q')
     _search_button = (By.CSS_SELECTOR, 'button.img-submit')
@@ -23,7 +24,7 @@ class SupportHomePage(Base):
     _kb_dashboard_link_locator = (By.LINK_TEXT, 'Knowledge Base Dashboard')
 
     def go_to_support_home_page(self):
-        self.open('/en-US/home')
+        self.open(self._home_url)
         self.is_the_current_page
 
     def do_search_on_main_search_box(self, search_query):
