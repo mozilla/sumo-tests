@@ -17,13 +17,9 @@ class QuestionsPage(Base):
     _sort_unsolved_link_locator = (By.CSS_SELECTOR, "a[href*='filter=unsolved']")
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, "a[href*='filter=no-replies']")
     _questions_list_block_locator = (By.CSS_SELECTOR, "ol.questions")
-    _questions_list_xpath_locator = (By.XPATH, "//ol[@class='questions']/li")
-    def _question_list_link_locator(self, num):
-        locator = "ol.questions > li:nth-child(%d) > div:nth-child(1) > h2 > a" % num
-        return (By.CSS_SELECTOR, locator)
-    def _solved_or_unsolved_text_locator(self, num):
-        locator = "ol.questions > li:nth-child(%s) > div.thread-meta > span" % num
-        return (By.CSS_SELECTOR, locator)
+    _questions_list_locator = (By.CSS_SELECTOR, "ol.questions > li")
+    _question_list_link_locator = (By.CSS_SELECTOR, "h2 > a")
+    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, "div.thread-meta > span")
     
     def go_to_forum_questions_page(self):
         self.open(self._forums_page_url)
@@ -36,9 +32,8 @@ class QuestionsPage(Base):
     def go_to_thread(self, url):
         self.open(url)
 
-    def click_any_question(self, num):
-        q_link = self._question_list_link_locator(num)
-        self.selenium.find_element(*q_link).click()
+    def click_any_question(self, question_number):
+        return self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._question_list_link_locator).click()
 
     def click_sort_by_solved_questions(self):
         self.selenium.find_element(*self._sort_solved_link_locator).click()
@@ -54,11 +49,10 @@ class QuestionsPage(Base):
 
     @property
     def get_questions_count(self):
-        return len(self.selenium.find_elements(*self._questions_list_xpath_locator))
+        return len(self.selenium.find_elements(*self._questions_list_locator))
 
     def get_sorted_list_filter_text(self, question_number):
-        locator = self._solved_or_unsolved_text_locator(question_number)
-        return self.selenium.find_element(*locator).text
+        return self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._solved_or_unsolved_text_locator).text
 
 
 class AskNewQuestionsPage(Base):
@@ -81,11 +75,8 @@ class AskNewQuestionsPage(Base):
     _sort_solved_link_locator = (By.CSS_SELECTOR, "a[href*=filter=solved]")
     _sort_unsolved_link_locator = (By.CSS_SELECTOR, "a[href*=filter=unsolved]")
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, "a[href*=filter=no-replies]")
-    _questions_list_block_locator = (By.CSS_SELECTOR, "ol.questions")
-    _questions_list_xpath_locator = (By.XPATH, "//ol[@class='questions']/li")
-    def _solved_or_unsolved_text_locator(self, num):
-        locator = "ol.questions > li:nth-child(%s) > div.thread-meta > span" % num
-        return (By.CSS_SELECTOR, locator)
+    _questions_list_locator = (By.CSS_SELECTOR, "ol.questions > li")
+    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, "div.thread-meta > span")
 
     def go_to_ask_new_questions_page(self):
         self.open(self._questions_new_url)
@@ -111,8 +102,7 @@ class AskNewQuestionsPage(Base):
         self.selenium.find_element(*self._q_post_button_locator).click()
 
     def get_sorted_list_filter_text(self, question_number):
-        locator = self._solved_or_unsolved_text_locator(question_number)
-        return self.selenium.find_element(*locator).text
+        return self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._solved_or_unsolved_text_locator).text
 
 
 class ViewQuestionPage(Base):
