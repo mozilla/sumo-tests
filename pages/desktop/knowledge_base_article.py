@@ -106,13 +106,19 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         self.set_article_comment_box()
 
     def set_article_keyword(self, keyword):
-        self.selenium.find_element(*self._article_keywords_box_locator).send_keys(keyword)
+        we = self.selenium.find_element(*self._article_keywords_box_locator)
+        we.clear()
+        we.send_keys(keyword)
 
     def set_article_summary(self, summary):
-        self.selenium.find_element(*self._article_summary_box_locator).send_keys(summary)
+        we = self.selenium.find_element(*self._article_summary_box_locator)
+        we.clear()
+        we.send_keys(summary)
 
     def set_article_content(self, content):
-        self.selenium.find_element(*self._article_content_box_locator).send_keys(content)
+        we = self.selenium.find_element(*self._article_content_box_locator)
+        we.clear()
+        we.send_keys(content)
 
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
