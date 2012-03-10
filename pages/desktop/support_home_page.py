@@ -23,7 +23,7 @@ class SupportHomePage(Base):
     _kb_dashboard_link_locator = 'link=Knowledge Base Dashboard'
 
     def go_to_support_home_page(self):
-        self.selenium.open('/')
+        self.open('/')
         self.selenium.wait_for_page_to_load(self.timeout)
         self.is_the_current_page
 
