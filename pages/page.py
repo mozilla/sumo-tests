@@ -44,7 +44,7 @@ class Page(object):
 
     @property
     def page_title(self):
-        return self.selenium.title()
+        return self.selenium.title
 
     def refresh(self):
         self.selenium.refresh()

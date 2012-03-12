@@ -5,7 +5,9 @@
 
 from pages.desktop.base import Base
 from pages.page import Page
-
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+import re
 
 class KnowledgeBase(Base):
 
@@ -15,50 +17,55 @@ class KnowledgeBase(Base):
 
     class Navigation(Page):
 
-        _article_locator = "link=Article"
-        _edit_article_locator = "link=Edit Article"
-        _translate_article_locator = "link=Translate Article"
-        _show_history_locator = "link=Show History"
+        _article_locator = (By.LINK_TEXT, 'Article')
+        _edit_article_locator = (By.LINK_TEXT, 'Edit Article')
+        _translate_article_locator = (By.LINK_TEXT, 'Translate Article')
+        _show_history_locator = (By.LINK_TEXT, 'Show History')
+        _show_editing_tools_locator = (By.CSS_SELECTOR, '.show')
 
+        def show_editing_tools(self):
+            if self.is_element_visible(*self._show_editing_tools_locator):
+                self.selenium.find_element(*self._show_editing_tools_locator).click()
+            
         def click_article(self):
-            self.selenium.click(self._article_locator)
-            self.selenium.wait_for_page_to_load(self.timeout)
+            self.show_editing_tools()
+            self.selenium.find_element(*self._article_locator).click()
 
         def click_edit_article(self):
-            self.selenium.click(self._edit_article_locator)
-            self.selenium.wait_for_page_to_load(self.timeout)
+            self.show_editing_tools()
+            self.selenium.find_element(*self._edit_article_locator).click()
 
         def click_translate_article(self):
-            self.selenium.click(self._translate_article_locator)
-            self.selenium.wait_for_page_to_load(self.timeout)
+            self.show_editing_tools()
+            self.selenium.find_element(*self._translate_article_locator).click()
 
         def click_show_history(self):
-            self.selenium.click(self._show_history_locator)
-            self.selenium.wait_for_page_to_load(self.timeout)
+            self.show_editing_tools()
+            self.selenium.find_element(*self._show_history_locator).click()
 
 
 class KnowledgeBaseArticle(KnowledgeBase):
 
-    _title_locator = "css=h1.title"
-    _helpful_locator = "css=div#side input[name=helpful]"
-    _not_helpful_locator = "css=div#side input[name=not-helpful]"
-    _helpful_form_busy_locator = "css=form.helpful.busy"
+    _title_locator = (By.CSS_SELECTOR, 'h1.title')
+    _helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=helpful]')
+    _not_helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=not-helpful]')
+    _helpful_form_busy_locator = (By.CSS_SELECTOR, 'form.helpful.busy')
 
     @property
     def article_title(self):
-        self.selenium.get_text(self._title_locator)
+        self.selenium.find_element(*self._title_locator).click()
 
     def vote_helpful(self):
-        self.selenium.click(self._helpful_locator)
-        self.wait_for_element_come_and_go(self._helpful_form_busy_locator)
+        self.selenium.find_element(*self._helpful_locator).click()
+        self.wait_for_element_come_and_go(*self._helpful_form_busy_locator)
 
     def vote_not_helpful(self):
-        self.selenium.click(self._not_helpful_locator)
-        self.wait_for_element_come_and_go(self._helpful_form_busy_locator)
+        self.selenium.find_element(*self._not_helpful_locator).click()
+        self.wait_for_element_come_and_go(*self._helpful_form_busy_locator)
 
     # each user can only vote once per article
     def can_vote(self):
-        return self.selenium.is_element_present(self._helpful_locator)
+        return self.is_element_present(*self._helpful_locator)
 
     # for providing some random feedback about the article
     def vote(self):
@@ -73,20 +80,20 @@ class KnowledgeBaseArticle(KnowledgeBase):
 
 class KnowledgeBaseEditArticle(KnowledgeBase):
 
-    _article_keywords_box_locator = "id=id_keywords"
-    _article_summary_box_locator = "id=id_summary"
-    _article_content_box_locator = "id=id_content"
-    _article_submit_btn_locator = "css=.btn-submit"
-    _comment_box_locator = "id=id_comment"
-    _comment_submit_btn_locator = "css=input[value='Submit']"
+    _article_keywords_box_locator = (By.ID, 'id_keywords')
+    _article_summary_box_locator = (By.ID, 'id_summary')
+    _article_content_box_locator = (By.ID, 'id_content')
+    _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn-submit')
+    _comment_box_locator = (By.ID, 'id_comment')
+    _comment_submit_btn_locator = (By.CSS_SELECTOR, 'input[value="Submit"]')
 
     @property
     def article_summary_text(self):
-        return self.selenium.get_text(self._article_summary_box_locator)
+        return self.selenium.find_element(*self._article_summary_box_locator).text
 
     @property
     def article_contents_text(self):
-        return self.selenium.get_text(self._article_content_box_locator)
+        return self.selenium.find_element(*self._article_content_box_locator).text
 
     def edit_article(self, article_info_dict):
         """
@@ -99,97 +106,107 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         self.set_article_comment_box()
 
     def set_article_keyword(self, keyword):
-        self.selenium.type(self._article_keywords_box_locator, keyword)
+        we = self.selenium.find_element(*self._article_keywords_box_locator)
+        we.clear()
+        we.send_keys(keyword)
 
     def set_article_summary(self, summary):
-        self.selenium.type(self._article_summary_box_locator, summary)
+        we = self.selenium.find_element(*self._article_summary_box_locator)
+        we.clear()
+        we.send_keys(summary)
 
     def set_article_content(self, content):
-        self.selenium.type(self._article_content_box_locator, content)
+        we = self.selenium.find_element(*self._article_content_box_locator)
+        we.clear()
+        we.send_keys(content)
 
     def set_article_comment_box(self, comment='automated test'):
-        self.selenium.type(self._comment_box_locator, comment)
-        self.selenium.click(self._comment_submit_btn_locator)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
+        self.selenium.find_element(*self._comment_submit_btn_locator).click()
 
     def submit_article(self):
-        self.selenium.click(self._article_submit_btn_locator)
+        self.selenium.find_element(*self._article_submit_btn_locator).click()
         self.wait_for_element_present(self._comment_box_locator)
 
 
 class KnowledgeBaseTranslate(KnowledgeBase):
 
-    _description_title_locator = "id=id_title"
-    _description_slug_locator = "id=id_slug"
-    _preview_content_button_locator = "id=btn-preview"
-    _submit_button_locator = "css=.btn-important"
+    _description_title_locator = (By.ID, 'id_title')
+    _description_slug_locator = (By.ID, 'id_slug')
+    _preview_content_button_locator = (By.ID, 'btn-preview')
+    _submit_button_locator = (By.CSS_SELECTOR, '.btn-important')
 
     # 2 elements inside the modal popup
-    _describe_changes_locator = "id=id_comment"
-    _submit_changes_button_locator = "css=#submit-modal > input"
+    _describe_changes_locator = (By.ID, 'id_comment')
+    _submit_changes_button_locator = (By.CSS_SELECTOR, '#submit-modal > input')
 
     def click_translate_language(self, language):
-        self.selenium.click("link=%s" % language)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(By.LINK_TEXT, language).click()
 
     def type_title(self, text):
-        self.selenium.type(self._description_title_locator, text)
+        self.selenium.find_element(*self._description_title_locator).send_keys(text)
 
     def type_slug(self, text):
-        self.selenium.type(self._description_slug_locator, text)
+        self.selenium.find_element(*self._description_slug_locator).send_keys(text)
 
     def click_submit_review(self):
-        self.selenium.click(self._submit_button_locator)
+        self.selenium.find_element(*self._submit_button_locator).click()
 
     def type_modal_describe_changes(self, text):
-        self.selenium.type(self._describe_changes_locator, text)
+        self.selenium.find_element(*self._describe_changes_locator).send_keys(text)
 
     def click_modal_submit_changes_button(self):
-        self.selenium.click(self._submit_changes_button_locator)
+        self.selenium.find_element(*self._submit_changes_button_locator).click()
 
 
 class KnowledgeBaseShowHistory(KnowledgeBase):
 
-    _page_title = 'Revision History'
+    _page_title = 'Revision History | Firefox Help'
 
-    _delete_document_link_locator = "css=div#delete-doc > a[href*='delete']"
-    _delete_confirmation_btn_locator = "css=input[value='Delete']"
+    _delete_document_link_locator = (By.CSS_SELECTOR, 'div#delete-doc > a[href*="delete"]')
+    _delete_confirmation_btn_locator = (By.CSS_SELECTOR, 'input[value="Delete"]')
 
-    _revision_history_language_locator = 'css=div.choice-list ul li > span'
+    _revision_history_language_locator = (By.CSS_SELECTOR, 'div.choice-list ul li > span')
 
     #history of the test
-    _top_revision_comment = "css=#revision-list li:nth-child(2) > div.comment"
+    _top_revision_comment = (By.CSS_SELECTOR, '#revision-list li:nth-child(2) > div.comment')
 
-    _show_chart_link_locator = 'id=show-chart'
-    _helpfulness_chart_locator = 'id=helpful-chart'
-    _helpfulness_chart_graph_locator = 'css=svg > rect'
+    _show_chart_link_locator = (By.ID, 'show-chart')
+    _helpfulness_chart_locator = (By.ID, 'helpful-chart')
+    _helpfulness_chart_graph_locator = (By.CSS_SELECTOR, 'svg > rect')
 
-    def click_show_helpfulness_chart(self):
-        self.selenium.click(self._show_chart_link_locator)
-        self.wait_for_element_visible(self._helpfulness_chart_locator)
+     # need regex here because article name is in title
+    @property
+    def is_the_current_page(self):
+        if self._page_title:
+            WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
+
+        if re.search(self._page_title, self.selenium.title) is None:
+            raise Exception("Expected page title to be: '" + self._page_title + "' but it was: '" + actual_title + "'")
+        else:
+            return True
+
 
     @property
     def is_helpfulness_chart_visible(self):
         # Because of bug 723575 there are two element checks to assert that the graph has actually loaded
-        return self.selenium.is_visible(self._helpfulness_chart_locator) and self.selenium.is_visible(self._helpfulness_chart_graph_locator)
+        return self.is_visible(*self._helpfulness_chart_locator) and self.is_visible(*self._helpfulness_chart_graph_locator)
 
     def delete_entire_article_document(self):
         self.click_delete_entire_article_document()
         self.click_delete_confirmation_button()
 
     def click_delete_entire_article_document(self):
-        self.selenium.click(self._delete_document_link_locator)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(*self._delete_document_link_locator).click()
 
     def click_delete_confirmation_button(self):
-        self.selenium.click(self._delete_confirmation_btn_locator)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(*self._delete_confirmation_btn_locator).click()
 
     @property
     def most_recent_revision_comment(self):
-        self.wait_for_element_visible(self._top_revision_comment)
-        return self.selenium.get_text(self._top_revision_comment)
+        self.wait_for_element_visible(*self._top_revision_comment)
+        return self.selenium.find_element(*self._top_revision_comment).text
 
     @property
     def revision_history(self):
-        return self.selenium.get_text(self._revision_history_language_locator)
+        return self.selenium.find_element(*self._revision_history_language_locator).text

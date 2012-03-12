@@ -131,7 +131,7 @@ class TestArticleCreateEditDelete:
         kb_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-        kb_article_history.selenium.open(article_url)
+        kb_article_history.selenium.get(article_url)
         actual_page_title = kb_article_history.page_title
         Assert.contains("Page Not Found", actual_page_title)
 
