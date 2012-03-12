@@ -73,5 +73,6 @@ class KnowledgeBaseNewArticle(Base):
         self.selenium.find_element(*self._article_preview_btn_locator).click()
         self.wait_for_element_present(*self._article_preview_content_locator)
 
-    def get_article_preview_text(self):
+    @property
+    def article_preview_text(self):
         return self.selenium.find_element(*self._article_preview_content_locator).text

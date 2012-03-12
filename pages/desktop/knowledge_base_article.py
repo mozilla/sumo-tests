@@ -64,6 +64,7 @@ class KnowledgeBaseArticle(KnowledgeBase):
         self.wait_for_element_come_and_go(*self._helpful_form_busy_locator)
 
     # each user can only vote once per article
+    @property
     def can_vote(self):
         return self.is_element_present(*self._helpful_locator)
 
@@ -106,19 +107,19 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         self.set_article_comment_box()
 
     def set_article_keyword(self, keyword):
-        we = self.selenium.find_element(*self._article_keywords_box_locator)
-        we.clear()
-        we.send_keys(keyword)
+        element = self.selenium.find_element(*self._article_keywords_box_locator)
+        element.clear()
+        element.send_keys(keyword)
 
     def set_article_summary(self, summary):
-        we = self.selenium.find_element(*self._article_summary_box_locator)
-        we.clear()
-        we.send_keys(summary)
+        element = self.selenium.find_element(*self._article_summary_box_locator)
+        element.clear()
+        element.send_keys(summary)
 
     def set_article_content(self, content):
-        we = self.selenium.find_element(*self._article_content_box_locator)
-        we.clear()
-        we.send_keys(content)
+        element = self.selenium.find_element(*self._article_content_box_locator)
+        element.clear()
+        element.send_keys(content)
 
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
@@ -126,7 +127,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
 
     def submit_article(self):
         self.selenium.find_element(*self._article_submit_btn_locator).click()
-        self.wait_for_element_present(self._comment_box_locator)
+        self.wait_for_element_present(*self._comment_box_locator)
 
 
 class KnowledgeBaseTranslate(KnowledgeBase):

@@ -48,7 +48,6 @@ class Page(object):
 
     def refresh(self):
         self.selenium.refresh()
-        #self.selenium.get(self.selenium.current_url)
 
     def open(self, url_fragment):
         self.selenium.get(self.base_url + url_fragment)
