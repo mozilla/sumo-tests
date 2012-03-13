@@ -34,8 +34,8 @@ class ContributorsPage(Base):
 
     def click_this_week(self):
         self.selenium.find_element(*self._this_week_button_locator).click()
-        self.wait_for_element_come_and_go(*self._documents_table_busy_locator)
+        self.wait_for_ajax()
 
     def click_all_time(self):
         self.selenium.find_element(*self._all_time_button_locator).click()
-        self.wait_for_element_come_and_go(self._documents_table_busy_locator)
+        self.wait_for_ajax()

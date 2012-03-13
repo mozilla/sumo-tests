@@ -70,7 +70,7 @@ class KnowledgeBaseArticle(KnowledgeBase):
 
     # for providing some random feedback about the article
     def vote(self):
-        if (self.can_vote()):
+        if self.can_vote:
             import random
             helpful = random.randint(0,1)
             if (helpful):
@@ -170,7 +170,8 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     _revision_history_language_locator = (By.CSS_SELECTOR, 'div.choice-list ul li > span')
 
     #history of the test
-    _top_revision_comment = (By.CSS_SELECTOR, '#revision-list li:nth-child(2) > div.comment')
+    _top_revision_comment = (By.CSS_SELECTOR, \
+                             '#revision-list li:nth-child(2) > div.comment')
 
     _show_chart_link_locator = (By.ID, 'show-chart')
     _helpfulness_chart_locator = (By.ID, 'helpful-chart')
@@ -183,15 +184,18 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
             WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
 
         if re.search(self._page_title, self.selenium.title) is None:
-            raise Exception("Expected page title to be: '" + self._page_title + "' but it was: '" + actual_title + "'")
+            raise Exception("Expected page title to be: '" + self._page_title \
+                            + "' but it was: '" + actual_title + "'")
         else:
             return True
 
 
     @property
     def is_helpfulness_chart_visible(self):
-        # Because of bug 723575 there are two element checks to assert that the graph has actually loaded
-        return self.is_visible(*self._helpfulness_chart_locator) and self.is_visible(*self._helpfulness_chart_graph_locator)
+        # Because of bug 723575 there are two element checks to assert that 
+        # the graph has actually loaded
+        return self.is_element_visible(*self._helpfulness_chart_locator) \
+            and self.is_element_visible(*self._helpfulness_chart_graph_locator)
 
     def delete_entire_article_document(self):
         self.click_delete_entire_article_document()
@@ -203,6 +207,10 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     def click_delete_confirmation_button(self):
         self.selenium.find_element(*self._delete_confirmation_btn_locator).click()
 
+    def click_show_helpfulness_chart(self):
+        self.selenium.find_element(*self._show_chart_link_locator).click()
+        self.wait_for_ajax()
+        
     @property
     def most_recent_revision_comment(self):
         self.wait_for_element_visible(*self._top_revision_comment)
