@@ -22,10 +22,12 @@ class KnowledgeBase(Base):
         _translate_article_locator = (By.LINK_TEXT, 'Translate Article')
         _show_history_locator = (By.LINK_TEXT, 'Show History')
         _show_editing_tools_locator = (By.CSS_SELECTOR, '.show')
+        _editing_tools_locator = (By.ID, 'doc-tabs')
 
         def show_editing_tools(self):
             if self.is_element_visible(*self._show_editing_tools_locator):
                 self.selenium.find_element(*self._show_editing_tools_locator).click()
+            self.wait_for_element_visible(*self._editing_tools_locator)
             
         def click_article(self):
             self.show_editing_tools()
