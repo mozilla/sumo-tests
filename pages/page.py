@@ -91,6 +91,7 @@ class Page(object):
         count = 0
         while count < self.timeout:
             time.sleep(1)
+            count += 1
             if self.selenium.execute_script("return jQuery.active == 0"):
                 return
         raise Exception("Wait for AJAX timed out after %s seconds" % count)
