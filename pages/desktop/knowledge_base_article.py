@@ -59,11 +59,11 @@ class KnowledgeBaseArticle(KnowledgeBase):
 
     def vote_helpful(self):
         self.selenium.find_element(*self._helpful_locator).click()
-        self.wait_for_element_come_and_go(*self._helpful_form_busy_locator)
+        self.wait_for_ajax()
 
     def vote_not_helpful(self):
         self.selenium.find_element(*self._not_helpful_locator).click()
-        self.wait_for_element_come_and_go(*self._helpful_form_busy_locator)
+        self.wait_for_ajax()
 
     # each user can only vote once per article
     @property
