@@ -27,7 +27,7 @@ class KnowledgeBase(Base):
         def show_editing_tools(self):
             if self.is_element_visible(*self._show_editing_tools_locator):
                 self.selenium.find_element(*self._show_editing_tools_locator).click()
-            self.wait_for_element_visible(*self._editing_tools_locator)
+                self.wait_for_element_visible(*self._editing_tools_locator)
             
         def click_article(self):
             self.show_editing_tools()
