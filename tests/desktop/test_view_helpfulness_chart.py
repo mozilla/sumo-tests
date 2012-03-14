@@ -25,7 +25,7 @@ class TestViewHelpfulnessChart:
         sumo_homepage.go_to_support_home_page()
         sumo_homepage.sign_in();
         contrib_page = sumo_homepage.click_knowledge_base_dashboard_link()
-        Assert.true(contrib_page.is_the_current_page)
+        contrib_page.is_the_current_page
         contrib_page.click_all_time()
         kb_article = contrib_page.click_top_visited_article_link()
 

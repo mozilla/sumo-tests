@@ -5,36 +5,35 @@
 from pages.desktop.base import Base
 import string
 import random
+from selenium.webdriver.common.by import By
 
 
 class RegisterPage(Base):
     """
         Form for user registration.
     """
-    _page_title = 'Register'
+    _page_title = 'Register | Firefox Help'
     _page_title_after_registration = 'Thank you for registering'
     _page_url = '/en-US/users/register'
-    _username_box_locator = 'id_for_username'
-    _password_box_locator = 'id_for_password'
-    _password_repeat_box_locator = 'id_for_password2'
-    _email_add_box_locator = 'id_for_email'
-    _register_button_locator = "css=input.btn[value='Register']"
+    _username_box_locator = (By.ID, 'id_for_username')
+    _password_box_locator = (By.ID, 'id_for_password')
+    _password_repeat_box_locator = (By.ID, 'id_for_password2')
+    _email_add_box_locator = (By.ID, 'id_for_email')
+    _register_button_locator = (By.CSS_SELECTOR, 'input.btn[value="Register"]')
 
     def go_to_registration_page(self):
-        self.selenium.open(self._page_url)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.open(self._page_url)
         self.is_the_current_page
 
     def register_new_user(self):
         user_name = self.get_random_word(5)
         password = '1234'
         email = user_name + "@mozilla.com"
-        self.selenium.type(self._username_box_locator, user_name)
-        self.selenium.type(self._password_box_locator, password)
-        self.selenium.type(self._password_repeat_box_locator, password)
-        self.selenium.type(self._email_add_box_locator, email)
-        self.selenium.click(self._register_button_locator)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(*self._username_box_locator).send_keys(user_name)
+        self.selenium.find_element(*self._password_box_locator).send_keys(password)
+        self.selenium.find_element(*self._password_repeat_box_locator).send_keys(password)
+        self.selenium.find_element(*self._email_add_box_locator).send_keys(email)
+        self.selenium.find_element(*self._register_button_locator).click()
 
     def get_random_word(self, length):
         random_word = ''

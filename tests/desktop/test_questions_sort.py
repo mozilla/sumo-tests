@@ -22,12 +22,12 @@ class TestQuestionsSort:
         questions_pg.go_to_forum_questions_page()
         questions_pg.click_sort_by_solved_questions()
         # if there are no questions in the list then skip the test
-        if not questions_pg.are_questions_present():
+        if not questions_pg.are_questions_present:
             pytest.skip("No questions present for filter=%s" % expected_sorted_text)
-        num_of_questions = questions_pg.get_questions_count
+        num_of_questions = questions_pg.questions_count
 
         for counter in range(num_of_questions):
-            actual_sorted_text = questions_pg.get_sorted_list_filter_text(counter + 1)
+            actual_sorted_text = questions_pg.sorted_list_filter_text(counter + 1)
             Assert.equal(actual_sorted_text, expected_sorted_text)
 
     @pytest.mark.fft
@@ -43,11 +43,11 @@ class TestQuestionsSort:
         questions_pg.go_to_forum_questions_page()
         questions_pg.click_sort_by_no_replies_questions()
         # if there are no questions in the list then skip the test
-        if not questions_pg.are_questions_present():
+        if not questions_pg.are_questions_present:
             pytest.skip("No questions present for filter=%s" % expected_sorted_text)
-        num_of_questions = questions_pg.get_questions_count
+        num_of_questions = questions_pg.questions_count
 
         for counter in range(num_of_questions):
             index = counter + 1
-            actual_sorted_text = questions_pg.get_sorted_list_filter_text(index)
+            actual_sorted_text = questions_pg.sorted_list_filter_text(index)
             Assert.equal(actual_sorted_text, expected_sorted_text)
