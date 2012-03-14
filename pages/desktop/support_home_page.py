@@ -13,7 +13,8 @@ class SupportHomePage(Base):
     web elements and methods that can be
     performed on them.
     """
-    _page_title = 'Firefox Support Home Page'
+
+    _page_title = 'Firefox Support Home Page | Firefox Help'
     _home_url = '/en-US/home'
     
     _main_search_box = (By.ID, 'q')

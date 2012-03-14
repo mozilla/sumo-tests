@@ -39,13 +39,11 @@ class SearchPage(Base):
     def get_search_box_value(self):
         return self.selenium.find_element(*self._search_box).value
 
-#    not used
-#    def is_search_available(self):
-#        return not self.selenium.is_text_present(self._search_unavailable_msg)
-
+    @property
     def is_result_present(self):
         return self.is_element_present(*self._result_div)
 
+    @property
     def are_ten_results_present(self):
         return len(self.selenium.find_elements(*self._results_list_locator)) == 10
 

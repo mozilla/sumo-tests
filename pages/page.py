@@ -48,7 +48,6 @@ class Page(object):
 
     def refresh(self):
         self.selenium.refresh()
-        #self.selenium.get(self.selenium.current_url)
 
     def open(self, url_fragment):
         self.selenium.get(self.base_url + url_fragment)
@@ -77,36 +76,24 @@ class Page(object):
         while not self.is_element_present(*locator):
             time.sleep(1)
             count += 1
-            if count == self.timeout / 1000:
+            if count == self.timeout:
                 raise Exception(*locator + ' has not loaded')
 
-    def wait_for_element_not_present(self, *locator):
-        count = 0
-        while self.is_element_present(*locator):
-            time.sleep(1)
-            count += 1
-            if count == self.timeout / 1000:
-                raise Exception(*locator + ' is still present')
-            
     def wait_for_element_visible(self, *locator):
         count = 0
         while not self.is_element_visible(*locator):
             time.sleep(1)
             count += 1
-            if count == self.timeout / 1000:
+            if count == self.timeout:
                 raise Exception(*locator + " is not visible")
 
-    def wait_for_element_not_visible(self, *locator):
+    def wait_for_ajax(self):
         count = 0
-        while self.is_element_visible(*locator):
+        while count < self.timeout:
             time.sleep(1)
-            count += 1
-            if count == self.timeout / 1000:
-                raise Exception(*locator + " is still visible")
-
-    def wait_for_element_come_and_go(self, *locator):
-        self.wait_for_element_present(*locator)
-        self.wait_for_element_not_present(*locator)
+            if self.selenium.execute_script("return jQuery.active == 0"):
+                return
+        raise Exception("Wait for AJAX timed out after %s seconds" % count)
         
     def get_user_name(self, user='default'):
         credentials = self.testsetup.credentials[user]

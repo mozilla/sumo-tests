@@ -147,7 +147,7 @@ class TestArticleCreateEditDelete:
         article_info_dict = self._create_new_generic_article(kb_new_article)
 
         kb_new_article.click_article_preview_button()
-        actual_preview_text = kb_new_article.get_article_preview_text()
+        actual_preview_text = kb_new_article.article_preview_text
 
         Assert.equal(article_info_dict['content'], actual_preview_text)
 

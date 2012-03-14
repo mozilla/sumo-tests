@@ -44,14 +44,15 @@ class QuestionsPage(Base):
     def click_sort_by_no_replies_questions(self):
         self.selenium.find_element(*self._sort_no_replies_link_locator).click()
 
+    @property
     def are_questions_present(self):
         return self.is_element_present(*self._questions_list_block_locator)
 
     @property
-    def get_questions_count(self):
+    def questions_count(self):
         return len(self.selenium.find_elements(*self._questions_list_locator))
 
-    def get_sorted_list_filter_text(self, question_number):
+    def sorted_list_filter_text(self, question_number):
         return self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._solved_or_unsolved_text_locator).text
 
 
@@ -101,7 +102,8 @@ class AskNewQuestionsPage(Base):
         self.selenium.find_element(*self._q_trouble_box_locator).send_keys(q_trouble)
         self.selenium.find_element(*self._q_post_button_locator).click()
 
-    def get_sorted_list_filter_text(self, question_number):
+    @property
+    def sorted_list_filter_text(self, question_number):
         return self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._solved_or_unsolved_text_locator).text
 
 

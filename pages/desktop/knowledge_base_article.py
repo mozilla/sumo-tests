@@ -64,12 +64,13 @@ class KnowledgeBaseArticle(KnowledgeBase):
         self.wait_for_element_come_and_go(*self._helpful_form_busy_locator)
 
     # each user can only vote once per article
+    @property
     def can_vote(self):
         return self.is_element_present(*self._helpful_locator)
 
     # for providing some random feedback about the article
     def vote(self):
-        if (self.can_vote()):
+        if self.can_vote:
             import random
             helpful = random.randint(0,1)
             if (helpful):
@@ -106,19 +107,19 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         self.set_article_comment_box()
 
     def set_article_keyword(self, keyword):
-        we = self.selenium.find_element(*self._article_keywords_box_locator)
-        we.clear()
-        we.send_keys(keyword)
+        element = self.selenium.find_element(*self._article_keywords_box_locator)
+        element.clear()
+        element.send_keys(keyword)
 
     def set_article_summary(self, summary):
-        we = self.selenium.find_element(*self._article_summary_box_locator)
-        we.clear()
-        we.send_keys(summary)
+        element = self.selenium.find_element(*self._article_summary_box_locator)
+        element.clear()
+        element.send_keys(summary)
 
     def set_article_content(self, content):
-        we = self.selenium.find_element(*self._article_content_box_locator)
-        we.clear()
-        we.send_keys(content)
+        element = self.selenium.find_element(*self._article_content_box_locator)
+        element.clear()
+        element.send_keys(content)
 
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
@@ -126,7 +127,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
 
     def submit_article(self):
         self.selenium.find_element(*self._article_submit_btn_locator).click()
-        self.wait_for_element_present(self._comment_box_locator)
+        self.wait_for_element_present(*self._comment_box_locator)
 
 
 class KnowledgeBaseTranslate(KnowledgeBase):
@@ -169,7 +170,8 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     _revision_history_language_locator = (By.CSS_SELECTOR, 'div.choice-list ul li > span')
 
     #history of the test
-    _top_revision_comment = (By.CSS_SELECTOR, '#revision-list li:nth-child(2) > div.comment')
+    _top_revision_comment = (By.CSS_SELECTOR, \
+                             '#revision-list li:nth-child(2) > div.comment')
 
     _show_chart_link_locator = (By.ID, 'show-chart')
     _helpfulness_chart_locator = (By.ID, 'helpful-chart')
@@ -182,15 +184,18 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
             WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
 
         if re.search(self._page_title, self.selenium.title) is None:
-            raise Exception("Expected page title to be: '" + self._page_title + "' but it was: '" + actual_title + "'")
+            raise Exception("Expected page title to be: '" + self._page_title \
+                            + "' but it was: '" + actual_title + "'")
         else:
             return True
 
 
     @property
     def is_helpfulness_chart_visible(self):
-        # Because of bug 723575 there are two element checks to assert that the graph has actually loaded
-        return self.is_visible(*self._helpfulness_chart_locator) and self.is_visible(*self._helpfulness_chart_graph_locator)
+        # Because of bug 723575 there are two element checks to assert that 
+        # the graph has actually loaded
+        return self.is_element_visible(*self._helpfulness_chart_locator) \
+            and self.is_element_visible(*self._helpfulness_chart_graph_locator)
 
     def delete_entire_article_document(self):
         self.click_delete_entire_article_document()
@@ -202,6 +207,10 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     def click_delete_confirmation_button(self):
         self.selenium.find_element(*self._delete_confirmation_btn_locator).click()
 
+    def click_show_helpfulness_chart(self):
+        self.selenium.find_element(*self._show_chart_link_locator).click()
+        self.wait_for_ajax()
+        
     @property
     def most_recent_revision_comment(self):
         self.wait_for_element_visible(*self._top_revision_comment)

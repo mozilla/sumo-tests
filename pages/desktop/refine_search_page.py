@@ -64,10 +64,6 @@ class RefineSearchPage(Base):
         self.selenium.find_element(*self._search_button_disc).click()
         search_page_obj.is_the_current_page
 
-#    not used
-#    def is_kb_cat_checked(self):
-#        return self.selenium.find_element(*self._kb_cat_check_box).is_checked
-
     @property
     def search_result_count(self):
         return len(self.selenium.find_elements(*self._search_results_list))
