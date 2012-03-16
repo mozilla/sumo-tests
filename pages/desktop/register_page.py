@@ -27,7 +27,7 @@ class RegisterPage(Base):
 
     def register_new_user(self):
         user_name = self.get_random_word(5)
-        password = '1234'
+        password = '1234abCD'
         email = user_name + "@mozilla.com"
         self.selenium.find_element(*self._username_box_locator).send_keys(user_name)
         self.selenium.find_element(*self._password_box_locator).send_keys(password)
