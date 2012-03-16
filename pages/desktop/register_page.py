@@ -27,7 +27,7 @@ class RegisterPage(Base):
 
     def register_new_user(self):
         user_name = self.get_random_word(5)
-        password = '1234'
+        password = '1234abCD'
         email = user_name + "@mozilla.com"
         self.selenium.type(self._username_box_locator, user_name)
         self.selenium.type(self._password_box_locator, password)
