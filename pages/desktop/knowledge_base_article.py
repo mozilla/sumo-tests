@@ -187,7 +187,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
 
         if re.search(self._page_title, self.selenium.title) is None:
             raise Exception("Expected page title to be: '" + self._page_title \
-                            + "' but it was: '" + actual_title + "'")
+                            + "' but it was: '" + self.selenium.title + "'")
         else:
             return True
 
