@@ -6,14 +6,10 @@ from unittestzero import Assert
 from pages.desktop.questions_page import ViewQuestionPage
 from pages.desktop.questions_page import AskNewQuestionsPage
 import datetime
-import pytest
 
 
 class TestAAQ:
 
-    @pytest.mark.smoketests
-    @pytest.mark.bft
-    @pytest.mark.fft
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
         ask_new_questions_pg = AskNewQuestionsPage(mozwebqa)

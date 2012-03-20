@@ -4,13 +4,10 @@
 from unittestzero import Assert
 from pages.desktop.questions_page import ViewQuestionPage
 from pages.desktop.questions_page import QuestionsPage
-import pytest
 
 
 class TestQuestionProbCount:
 
-    @pytest.mark.bft
-    @pytest.mark.fft
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
 
