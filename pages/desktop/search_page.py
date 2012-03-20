@@ -4,6 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.desktop.base import Base
+from selenium.webdriver.common.by import By
 
 
 class SearchPage(Base):
@@ -11,58 +12,52 @@ class SearchPage(Base):
     'Search for Firefox Help' page
     """
 
-    _page_title = 'Search'
-    _page_url = 'en-US/search'
-    _search_box = "css=input.search-query"
-    _search_button = "css=input[type='submit']"
-    _refine_search_link = "css=a[href *= 'a=2']"
-    _next_page_link = "link=*Next*"
-    _prev_page_link = "link=*Previous*"
-    _result_div = "css=div.result"
-    _ask_a_question_locator = 'css=p.aaq'
-    _support_question_link = "css=p.aaq > a"
-    _second_page_link = "link=2"
-    _search_unavailable_msg = "unavailable"
-    _ten_search_results = "css=div.search-results div[class*='result']:nth-child(10)"
-    _eleven_search_results = "css=div.search-results div[class*='result']:nth-child(11)"
+    _page_title = 'Search | Firefox Help'
+    _page_url = '/en-US/search'
+    _search_box = (By.CSS_SELECTOR, 'input.search-query')
+    _search_button = (By.CSS_SELECTOR, 'input[type="submit"]')
+    _refine_search_link = (By.CSS_SELECTOR, 'a[href *= "a=2"]')
+    _next_page_link = (By.LINK_TEXT, 'Next')
+    _prev_page_link = (By.LINK_TEXT, 'Previous')
+    _result_div = (By.CSS_SELECTOR, 'div.result')
+    _ask_a_question_locator = (By.CSS_SELECTOR, 'p.aaq')
+    _support_question_link = (By.CSS_SELECTOR, 'p.aaq > a')
+    _second_page_link = (By.LINK_TEXT, '2')
+    _search_unavailable_msg = 'unavailable'
+    _results_list_locator = (By.CSS_SELECTOR, 'div.search-results div[class*="result"]')
 
     def go_to_search_page(self):
-        self.selenium.open(self._page_url)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.open(self._page_url)
         self.is_the_current_page
 
     def do_search_on_search_box(self, search_query):
-        if not (self._page_title in self.selenium.get_title()):
+        if not (self._page_title in self.selenium.title):
             self.go_to_search_page()
-        self.selenium.type(self._search_box, search_query)
-        self.selenium.click(self._search_button)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(*self._search_box).send_keys(search_query)
+        self.selenium.find_element(*self._search_button).click()
 
     def get_search_box_value(self):
-        return self.selenium.get_value(self._search_box)
+        return self.selenium.find_element(*self._search_box).value
 
-    def is_search_available(self):
-        return not self.selenium.is_text_present(self._search_unavailable_msg)
-
+    @property
     def is_result_present(self):
-        return self.selenium.is_element_present(self._result_div)
+        return self.is_element_present(*self._result_div)
 
+    @property
     def are_ten_results_present(self):
-        return self.selenium.is_element_present(self._ten_search_results) and not self.selenium.is_element_present(self._eleven_search_results)
+        return len(self.selenium.find_elements(*self._results_list_locator)) == 10
 
     def click_refine_search_link(self, refine_search_page_obj):
-        self.selenium.click(self._refine_search_link)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(*self._refine_search_link).click()
         refine_search_page_obj.is_the_current_page
 
     def click_next_page_link(self):
-        self.selenium.click(self._next_page_link)
-        self.selenium.wait_for_page_to_load(self.timeout)
+        self.selenium.find_element(*self._next_page_link).click()
 
     @property
     def ask_a_question_text(self):
-        return self.selenium.get_text(self._ask_a_question_locator)
+        return self.selenium.find_element(*self._ask_a_question_locator).text
 
     @property
     def is_ask_a_question_present(self):
-        return self.selenium.is_element_present(self._support_question_link)
+        return self.is_element_present(*self._support_question_link)
