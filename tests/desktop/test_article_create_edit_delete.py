@@ -12,12 +12,10 @@ from pages.desktop.login_page import LoginPage
 import re
 import pytest
 import datetime
-xfail = pytest.mark.xfail
 
 
 class TestArticleCreateEditDelete:
 
-    @pytest.mark.fft
     def test_that_article_can_be_created(self, mozwebqa):
         """
            Creates a new knowledge base article.
@@ -52,8 +50,7 @@ class TestArticleCreateEditDelete:
         kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    @xfail(reason='Bug 694614 - spurious failures')
-    @pytest.mark.fft
+    @pytest.mark.xfail(reason='Bug 694614 - spurious failures')
     def test_that_article_can_be_edited(self, mozwebqa):
         """
            Creates a new knowledge base article.
@@ -103,7 +100,6 @@ class TestArticleCreateEditDelete:
         kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    @pytest.mark.fft
     def test_that_article_can_be_deleted(self, mozwebqa):
         """
            Creates a new knowledge base article.
@@ -135,7 +131,6 @@ class TestArticleCreateEditDelete:
         actual_page_title = kb_article_history.page_title
         Assert.contains("Page Not Found", actual_page_title)
 
-    @pytest.mark.fft
     def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
 
         kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
@@ -153,7 +148,6 @@ class TestArticleCreateEditDelete:
 
         # Does not need to be deleted as it does not commit the article
 
-    @pytest.mark.fft
     def test_that_article_can_be_translated(self, mozwebqa):
         """
            Creates a new knowledge base article.

@@ -4,12 +4,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
 from pages.desktop.register_page import RegisterPage
-import pytest
 
 
 class TestNewUserRegistration:
 
-    @pytest.mark.fft
     def test_that_thank_you_page_is_displayed_after_successful_registration(self, mozwebqa):
         """
            Register a new user using random username.
