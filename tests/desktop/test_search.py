@@ -9,10 +9,7 @@ import pytest
 
 class TestSearch:
 
-    @pytest.mark.smoketests
-    @pytest.mark.bft
-    @pytest.mark.fft
-    @pytest.mark.prod
+    @pytest.mark.nondestructive
     @pytest.mark.parametrize(('search_term'), [
         ('firefox'),
         ('bgkhdsaghb')])
@@ -26,9 +23,6 @@ class TestSearch:
         Assert.contains(expected_text, search_page_obj.ask_a_question_text)
         Assert.true(search_page_obj.is_ask_a_question_present, "Ask question link not present")
 
-    @pytest.mark.smoketests
-    @pytest.mark.bft
-    @pytest.mark.fft
     @pytest.mark.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out')
     def test_no_query_adv_forum_search(self, mozwebqa):
         refine_search_pg = RefineSearchPage(mozwebqa)

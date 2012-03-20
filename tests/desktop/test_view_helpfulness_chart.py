@@ -7,11 +7,10 @@ from unittestzero import Assert
 from pages.desktop.support_home_page import SupportHomePage
 from pages.desktop.knowledge_base_article import KnowledgeBaseArticle
 from pages.desktop.knowledge_base_article import KnowledgeBaseShowHistory
-import pytest
+
 
 class TestViewHelpfulnessChart:
 
-    @pytest.mark.fft
     def test_view_helpfulness_chart(self, mozwebqa):
         """
            Creates a new knowledge base article.
