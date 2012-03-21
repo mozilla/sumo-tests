@@ -6,14 +6,19 @@
 from pages.desktop.base import Base
 from pages.page import Page
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-import re
+
 
 class KnowledgeBase(Base):
 
     @property
     def navigation(self):
         return self.Navigation(self.testsetup)
+
+    @property
+    def is_the_current_page(self):
+        if self._page_title:
+            page_title = self.page_title
+            Assert.contains(self._page_title, page_title)
 
     class Navigation(Page):
 
@@ -32,22 +37,35 @@ class KnowledgeBase(Base):
         def click_article(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._article_locator).click()
+            kb_article = KnowledgeBaseArticle(self.testsetup)
+            kb_article.is_the_current_page
+            return kb_article
 
         def click_edit_article(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._edit_article_locator).click()
+            edit_kb_article = KnowledgeBaseEditArticle(self.testsetup)
+            edit_kb_article.is_the_current_page
+            return edit_kb_article
 
         def click_translate_article(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._translate_article_locator).click()
+            translate_kb_article = KnowledgeBaseTranslate(self.testsetup)
+            translate_kb_article.is_the_current_page
+            return translate_kb_article
 
         def click_show_history(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._show_history_locator).click()
+            kb_article_history = KnowledgeBaseShowHistory(self.testsetup)
+            kb_article_history.is_the_current_page
+            return kb_article_history
 
 
 class KnowledgeBaseArticle(KnowledgeBase):
 
+    _page_title = ' | How to | Firefox Help'
     _title_locator = (By.CSS_SELECTOR, 'h1.title')
     _helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=helpful]')
     _not_helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=not-helpful]')
@@ -83,6 +101,7 @@ class KnowledgeBaseArticle(KnowledgeBase):
 
 class KnowledgeBaseEditArticle(KnowledgeBase):
 
+    _page_title = 'Edit Article | '
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
     _article_content_box_locator = (By.ID, 'id_content')
@@ -134,6 +153,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
 
 class KnowledgeBaseTranslate(KnowledgeBase):
 
+    _page_title = 'Select language | '
     _description_title_locator = (By.ID, 'id_title')
     _description_slug_locator = (By.ID, 'id_slug')
     _preview_content_button_locator = (By.ID, 'btn-preview')
@@ -164,7 +184,7 @@ class KnowledgeBaseTranslate(KnowledgeBase):
 
 class KnowledgeBaseShowHistory(KnowledgeBase):
 
-    _page_title = 'Revision History | Firefox Help'
+    _page_title = 'Revision History | '
 
     _delete_document_link_locator = (By.CSS_SELECTOR, 'div#delete-doc > a[href*="delete"]')
     _delete_confirmation_btn_locator = (By.CSS_SELECTOR, 'input[value="Delete"]')
@@ -178,19 +198,6 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     _show_chart_link_locator = (By.ID, 'show-chart')
     _helpfulness_chart_locator = (By.ID, 'helpful-chart')
     _helpfulness_chart_graph_locator = (By.CSS_SELECTOR, 'svg > rect')
-
-     # need regex here because article name is in title
-    @property
-    def is_the_current_page(self):
-        if self._page_title:
-            WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
-
-        if re.search(self._page_title, self.selenium.title) is None:
-            raise Exception("Expected page title to be: '" + self._page_title \
-                            + "' but it was: '" + self.selenium.title + "'")
-        else:
-            return True
-
 
     @property
     def is_helpfulness_chart_visible(self):
