@@ -33,10 +33,10 @@ class Page(object):
     @property
     def is_the_current_page(self):
         if self._page_title:
-            WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
+            page_title = self.page_title
 
-        Assert.equal(self.selenium.title, self._page_title,
-            "Expected page title: %s. Actual page title: %s" % (self._page_title, self.selenium.title))
+        Assert.equal(page_title, self._page_title,
+            "Expected page title: %s. Actual page title: %s" % (self._page_title, page_title))
 
     @property
     def url_current_page(self):
@@ -44,6 +44,7 @@ class Page(object):
 
     @property
     def page_title(self):
+        WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
         return self.selenium.title
 
     def refresh(self):
