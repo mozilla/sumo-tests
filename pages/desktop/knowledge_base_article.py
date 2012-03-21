@@ -126,7 +126,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         self.set_article_summary(article_info_dict['summary'])
         self.set_article_content(article_info_dict['content'])
         self.submit_article()
-        self.set_article_comment_box()
+        return self.set_article_comment_box()
 
     def set_article_keyword(self, keyword):
         element = self.selenium.find_element(*self._article_keywords_box_locator)
@@ -146,6 +146,9 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
         self.selenium.find_element(*self._comment_submit_btn_locator).click()
+        kb_article_history = KnowledgeBaseShowHistory(self.testsetup)
+        kb_article_history.is_the_current_page
+        return kb_article_history
 
     def submit_article(self):
         self.selenium.find_element(*self._article_submit_btn_locator).click()

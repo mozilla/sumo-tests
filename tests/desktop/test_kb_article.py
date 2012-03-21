@@ -60,9 +60,6 @@ class TestKnowledgeBaseArticle:
         kb_new_article.submit_article()
         kb_article_history = kb_new_article.set_article_comment_box()
 
-        # verify article history
-        Assert.true(kb_article_history.is_the_current_page)
-
         # edit that same article
         timestamp = datetime.datetime.now()
         edited_article_summary = "this is an automated summary__%s_edited" % timestamp
