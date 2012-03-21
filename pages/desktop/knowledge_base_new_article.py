@@ -6,6 +6,7 @@
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from pages.desktop.knowledge_base_article import KnowledgeBaseShowHistory
 
 class KnowledgeBaseNewArticle(Base):
     """

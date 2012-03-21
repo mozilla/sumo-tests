@@ -4,10 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
 from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
-from pages.desktop.knowledge_base_article import KnowledgeBaseArticle
-from pages.desktop.knowledge_base_article import KnowledgeBaseShowHistory
-from pages.desktop.knowledge_base_article import KnowledgeBaseEditArticle
-from pages.desktop.knowledge_base_article import KnowledgeBaseTranslate
 from pages.desktop.login_page import LoginPage
 from pages.desktop.support_home_page import SupportHomePage
 import re
@@ -156,9 +152,7 @@ class TestKnowledgeBaseArticle:
         kb_new_article.submit_article()
         kb_article_history = kb_new_article.set_article_comment_box()
 
-        # verify article history
-        Assert.true(kb_article_history.is_the_current_page)
-
+        # translating
         kb_translate_pg = kb_article_history.navigation.click_translate_article()
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
@@ -170,9 +164,11 @@ class TestKnowledgeBaseArticle:
         kb_translate_pg.type_modal_describe_changes(change_comment)
         kb_article_history = kb_translate_pg.click_modal_submit_changes_button()
 
+        # verifying
         Assert.equal(change_comment, kb_article_history.most_recent_revision_comment)
         Assert.equal('Esperanto', kb_article_history.revision_history)
 
+        # deleting
         kb_article_history.delete_entire_article_document()
 
     def _create_new_generic_article(self, kb_new_article):
@@ -212,9 +208,6 @@ class TestKnowledgeBaseArticle:
         kb_article.vote()
 
         kb_article_history = kb_article.navigation.click_show_history()
-
-        # verify article history page loaded
-        Assert.true(kb_article_history.is_the_current_page)
 
         kb_article_history.click_show_helpfulness_chart()
         Assert.true(kb_article_history.is_helpfulness_chart_visible)

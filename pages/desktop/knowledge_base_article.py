@@ -6,6 +6,7 @@
 from pages.desktop.base import Base
 from pages.page import Page
 from selenium.webdriver.common.by import By
+from unittestzero import Assert
 
 
 class KnowledgeBase(Base):
@@ -180,6 +181,9 @@ class KnowledgeBaseTranslate(KnowledgeBase):
 
     def click_modal_submit_changes_button(self):
         self.selenium.find_element(*self._submit_changes_button_locator).click()
+        kb_article_history = KnowledgeBaseShowHistory(self.testsetup)
+        kb_article_history.is_the_current_page
+        return kb_article_history
 
 
 class KnowledgeBaseShowHistory(KnowledgeBase):
