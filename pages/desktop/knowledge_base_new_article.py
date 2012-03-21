@@ -64,6 +64,9 @@ class KnowledgeBaseNewArticle(Base):
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
         self.selenium.find_element(*self._comment_submit_btn_locator).click()
+        kb_article_history = KnowledgeBaseShowHistory(self.testsetup)
+        kb_article_history.is_the_current_page
+        return kb_article_history
 
     def submit_article(self):
         self.selenium.find_element(*self._article_submit_btn_locator).click()
