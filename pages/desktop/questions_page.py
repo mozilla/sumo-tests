@@ -5,7 +5,6 @@
 
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from unittestzero import Assert
 
 class QuestionsPage(Base):
@@ -126,10 +125,10 @@ class ViewQuestionPage(Base):
 
     def is_the_current_page(self, question_name):
         if self._page_title:
-            WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
+            page_title = self.page_title
             
-        Assert.equal(self.selenium.title, question_name + self._page_title,
-            "Expected page title: %s. Actual page title: %s" % (self._page_title, self.selenium.title))
+        Assert.equal(page_title, question_name + self._page_title,
+            "Expected page title: %s. Actual page title: %s" % (question_name + self._page_title, page_title))
 
         
     @property
