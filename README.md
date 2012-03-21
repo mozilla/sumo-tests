@@ -130,14 +130,12 @@ Output of a test run should look like this:
 	collected 35 items 
 	
 	tests/desktop/test_kb_article.py .X....
-	tests/desktop/test_loggedin_ask_a_new_question.py .
 	tests/desktop/test_new_user_registration.py .
-	tests/desktop/test_questions_problem_count.py .
-	tests/desktop/test_questions_sort.py ..
+	tests/desktop/test_questions.py ....
 	tests/desktop/test_rewrites.py .....................
 	tests/desktop/test_search.py ..X
 	
-	==================== 33 passed, 2 xpassed in 177.06 seconds ====================
+	==================== 33 passed, 2 xpassed in 172.03 seconds ====================
 
 __Note__
 "~" will not resolve to the home directory when used in the py.test command line.
