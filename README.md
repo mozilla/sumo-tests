@@ -120,25 +120,24 @@ Before each test run, clean up the repo:
 
 To run tests locally its a simple case of calling the command below from this directory
 
-    py.test --browser="*firefox" --credentials=/full/path/to/credentials.yaml -k fft .
+    py.test --driver=firefox --destructive --credentials=/full/path/to/credentials.yaml .
 
 __Output__
 Output of a test run should look like this:
 
-    ============================= test session starts ==============================
-    platform darwin -- Python 2.6.1 -- pytest-2.1.3
-    collected 19 items
-
-    tests/desktop/test_article_create_edit_delete.py .X...
-    tests/desktop/test_loggedin_ask_a_new_question.py .
-    tests/desktop/test_new_user_registration.py .
-    tests/desktop/test_questions_problem_count.py .
-    tests/desktop/test_questions_sort.py ..
-    tests/desktop/test_search.py .X
-    tests/desktop/test_view_helpfulness_chart.py .
-
-    ========================= 6 tests deselected by 'fft' ==========================
-    ============= 11 passed, 6 deselected, 2 xfailed in 206.37 seconds =============
+	============================= test session starts ==============================
+	platform darwin -- Python 2.6.1 -- pytest-2.2.3
+	collected 35 items 
+	
+	tests/desktop/test_kb_article.py .X....
+	tests/desktop/test_loggedin_ask_a_new_question.py .
+	tests/desktop/test_new_user_registration.py .
+	tests/desktop/test_questions_problem_count.py .
+	tests/desktop/test_questions_sort.py ..
+	tests/desktop/test_rewrites.py .....................
+	tests/desktop/test_search.py ..X
+	
+	==================== 33 passed, 2 xpassed in 177.06 seconds ====================
 
 __Note__
 "~" will not resolve to the home directory when used in the py.test command line.
