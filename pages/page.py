@@ -34,9 +34,9 @@ class Page(object):
     def is_the_current_page(self):
         if self._page_title:
             page_title = self.page_title
-
-        Assert.equal(page_title, self._page_title,
-            "Expected page title: %s. Actual page title: %s" % (self._page_title, page_title))
+            Assert.equal(page_title, self._page_title,
+                         "Expected page title: %s. Actual page title: %s" % \
+                         (self._page_title, page_title))
 
     @property
     def url_current_page(self):

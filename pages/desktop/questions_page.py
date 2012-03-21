@@ -126,9 +126,9 @@ class ViewQuestionPage(Base):
     def is_the_current_page(self, question_name):
         if self._page_title:
             page_title = self.page_title
-            
-        Assert.equal(page_title, question_name + self._page_title,
-            "Expected page title: %s. Actual page title: %s" % (question_name + self._page_title, page_title))
+            Assert.equal(page_title, question_name + self._page_title,
+                         "Expected page title: %s. Actual page title: %s" % \
+                         (question_name + self._page_title, page_title))
 
         
     @property
