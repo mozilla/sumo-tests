@@ -120,7 +120,7 @@ Before each test run, clean up the repo:
 
 To run tests locally its a simple case of calling the command below from this directory
 
-    py.test --driver=firefox --firefoxpath=<path_to_firefox> --destructive --credentials=/full/path/to/credentials.yaml .
+    py.test --driver=firefox --destructive --credentials=/full/path/to/credentials.yaml .
 
 __Output__
 Output of a test run should look like this:
