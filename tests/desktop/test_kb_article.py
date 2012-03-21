@@ -24,8 +24,6 @@ class TestKnowledgeBaseArticle:
            Deletes the article
         """
         kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
-        kb_edit_article = KnowledgeBaseEditArticle(mozwebqa)
         login_pg = LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
@@ -33,13 +31,10 @@ class TestKnowledgeBaseArticle:
 
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
-        kb_new_article.set_article_comment_box()
-
-        # verify article history
-        Assert.true(kb_article_history.is_the_current_page)
+        kb_article_history = kb_new_article.set_article_comment_box()
 
         # verify article contents
-        kb_article_history.navigation.click_edit_article()
+        kb_edit_article = kb_article_history.navigation.click_edit_article()
 
         actual_summary_text = kb_edit_article.article_summary_text
         Assert.equal(article_info_dict['summary'], actual_summary_text)
@@ -48,7 +43,7 @@ class TestKnowledgeBaseArticle:
         Assert.equal(article_info_dict['content'], actual_contents_text)
 
         # delete the same article
-        kb_edit_article.navigation.click_show_history()
+        kb_article_history = kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
     @pytest.mark.xfail(reason='Bug 694614 - spurious failures')
@@ -60,8 +55,6 @@ class TestKnowledgeBaseArticle:
            Deletes the article
         """
         kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
-        kb_edit_article = KnowledgeBaseEditArticle(mozwebqa)
         login_pg = LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
@@ -69,7 +62,7 @@ class TestKnowledgeBaseArticle:
 
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
-        kb_new_article.set_article_comment_box()
+        kb_article_history = kb_new_article.set_article_comment_box()
 
         # verify article history
         Assert.true(kb_article_history.is_the_current_page)
@@ -82,10 +75,10 @@ class TestKnowledgeBaseArticle:
                                     'category': 'How to', 'keyword': 'test',\
                                     'summary': edited_article_summary, 'content': edited_article_content}
 
-        kb_article_history.navigation.click_edit_article()
-        kb_edit_article.edit_article(article_info_dict_edited)
+        kb_edit_article = kb_article_history.navigation.click_edit_article()
+        kb_article_history = kb_edit_article.edit_article(article_info_dict_edited)
 
-        kb_article_history.navigation.click_edit_article()
+        kb_edit_article = kb_article_history.navigation.click_edit_article()
 
         # verify the contents of the edited article
         actual_page_title = kb_edit_article.page_title
@@ -98,7 +91,7 @@ class TestKnowledgeBaseArticle:
         Assert.equal(edited_article_content, actual_content_text)
 
         # delete the same article
-        kb_edit_article.navigation.click_show_history()
+        kb_article_history = kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
     def test_that_article_can_be_deleted(self, mozwebqa):
@@ -108,8 +101,6 @@ class TestKnowledgeBaseArticle:
            Verifies the deletion.
         """
         kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        kb_article = KnowledgeBaseArticle(mozwebqa)
-        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
         login_pg = LoginPage(mozwebqa)
 
         # Admin account is used as he can delete the article
@@ -118,14 +109,14 @@ class TestKnowledgeBaseArticle:
         article_info_dict = self._create_new_generic_article(kb_new_article)
 
         kb_new_article.submit_article()
-        kb_new_article.set_article_comment_box()
+        kb_article_history = kb_new_article.set_article_comment_box()
 
         # go to article and get URL
-        kb_article_history.navigation.click_article()
+        kb_article = kb_article_history.navigation.click_article()
         article_url = kb_article.url_current_page
 
         # delete the same article
-        kb_article.navigation.click_show_history()
+        kb_article_history = kb_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
         kb_article_history.selenium.get(article_url)
@@ -155,9 +146,6 @@ class TestKnowledgeBaseArticle:
            Translate article
         """
         kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
-        kb_edit_article = KnowledgeBaseEditArticle(mozwebqa)
-        kb_translate_pg = KnowledgeBaseTranslate(mozwebqa)
         login_pg = LoginPage(mozwebqa)
         timestamp = datetime.datetime.now()
 
@@ -166,12 +154,12 @@ class TestKnowledgeBaseArticle:
 
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
-        kb_new_article.set_article_comment_box()
+        kb_article_history = kb_new_article.set_article_comment_box()
 
         # verify article history
         Assert.true(kb_article_history.is_the_current_page)
 
-        kb_article_history.navigation.click_translate_article()
+        kb_translate_pg = kb_article_history.navigation.click_translate_article()
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
         kb_translate_pg.type_title('artikolo_titolo%s' % timestamp)
@@ -180,7 +168,7 @@ class TestKnowledgeBaseArticle:
 
         change_comment = 'artikolo sangoj %s' % timestamp
         kb_translate_pg.type_modal_describe_changes(change_comment)
-        kb_translate_pg.click_modal_submit_changes_button()
+        kb_article_history = kb_translate_pg.click_modal_submit_changes_button()
 
         Assert.equal(change_comment, kb_article_history.most_recent_revision_comment)
         Assert.equal('Esperanto', kb_article_history.revision_history)
@@ -211,7 +199,6 @@ class TestKnowledgeBaseArticle:
            Deletes the article
         """
         sumo_homepage = SupportHomePage(mozwebqa)
-        kb_article_history = KnowledgeBaseShowHistory(mozwebqa)
 
         # navigate to article
         sumo_homepage.go_to_support_home_page()
@@ -224,7 +211,7 @@ class TestKnowledgeBaseArticle:
         # vote on article to artificially inflate data
         kb_article.vote()
 
-        kb_article.navigation.click_show_history()
+        kb_article_history = kb_article.navigation.click_show_history()
 
         # verify article history page loaded
         Assert.true(kb_article_history.is_the_current_page)
