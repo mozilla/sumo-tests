@@ -5,6 +5,8 @@
 
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from unittestzero import Assert
 
 class QuestionsPage(Base):
     """
@@ -33,7 +35,10 @@ class QuestionsPage(Base):
         self.open(url)
 
     def click_any_question(self, question_number):
-        return self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._question_list_link_locator).click()
+        self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._question_list_link_locator).click()
+        view_question_pg = ViewQuestionPage(self.testsetup)
+        view_question_pg.is_the_current_page
+        return view_question_pg
 
     def click_sort_by_solved_questions(self):
         self.selenium.find_element(*self._sort_solved_link_locator).click()
@@ -96,11 +101,14 @@ class AskNewQuestionsPage(Base):
     def click_provide_details_button(self):
         self.selenium.find_element(*self._provide_details_button_locator).click()
 
-    def fill_up_questions_form(self, q_text='details', q_site='www.example.com', q_trouble='no addons'):
+    def fill_up_questions_form(self, question_to_ask, q_text='details', q_site='www.example.com', q_trouble='no addons'):
         self.selenium.find_element(*self._q_content_box_locator).send_keys(q_text)
         self.selenium.find_element(*self._q_site_box_locator).send_keys(q_site)
         self.selenium.find_element(*self._q_trouble_box_locator).send_keys(q_trouble)
         self.selenium.find_element(*self._q_post_button_locator).click()
+        view_question_pg = ViewQuestionPage(self.testsetup)
+        view_question_pg.is_the_current_page(question_to_ask)
+        return view_question_pg
 
     @property
     def sorted_list_filter_text(self, question_number):
@@ -114,7 +122,16 @@ class ViewQuestionPage(Base):
     _problem_too_button_locator = (By.CSS_SELECTOR, 'input[value*="problem"]')
     _problem_count_text_locator = (By.CSS_SELECTOR, 'div[class^="have-problem"] > mark')
     _no_thanks_link_locator = (By.LINK_TEXT, 'No Thanks')
+    _page_title = ' | Firefox Support Forum | Firefox Help'
 
+    def is_the_current_page(self, question_name):
+        if self._page_title:
+            WebDriverWait(self.selenium, self.timeout).until(lambda s: s.title)
+            
+        Assert.equal(self.selenium.title, question_name + self._page_title,
+            "Expected page title: %s. Actual page title: %s" % (self._page_title, self.selenium.title))
+
+        
     @property
     def question(self):
         return self.selenium.find_element(*self._question_locator).text

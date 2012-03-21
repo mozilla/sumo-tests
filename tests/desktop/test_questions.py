@@ -15,7 +15,6 @@ class TestQuestions:
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
         ask_new_questions_pg = AskNewQuestionsPage(mozwebqa)
-        view_question_pg = ViewQuestionPage(mozwebqa)
         timestamp = datetime.datetime.today()
         q_to_ask = "automation test question %s" % (timestamp)
         q_details = "This is a test. %s" % (timestamp)
@@ -29,7 +28,7 @@ class TestQuestions:
         ask_new_questions_pg.click_category_problem_link()
         ask_new_questions_pg.type_question(q_to_ask)
         ask_new_questions_pg.click_provide_details_button()
-        ask_new_questions_pg.fill_up_questions_form(q_details)
+        view_question_pg = ask_new_questions_pg.fill_up_questions_form(q_to_ask, q_details)
 
         Assert.equal(view_question_pg.question, q_to_ask)
         Assert.equal(view_question_pg.question_detail, q_details)
@@ -82,11 +81,10 @@ class TestQuestions:
         """Checks if the 'I have this problem too' counter increments"""
 
         questions_pg = QuestionsPage(mozwebqa)
-        view_question_pg = ViewQuestionPage(mozwebqa)
 
         # Can't +1 your own question so will do it logged out
         questions_pg.go_to_forum_questions_page()
-        questions_pg.click_any_question(1)
+        view_question_pg = questions_pg.click_any_question(1)
 
         initial_count = view_question_pg.problem_count
         view_question_pg.click_problem_too_button()
