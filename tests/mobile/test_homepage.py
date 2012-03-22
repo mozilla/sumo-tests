@@ -26,3 +26,11 @@ class TestHome:
 
         home.header.click_header_menu()
         Assert.false(home.header.is_dropdown_menu_expanded)
+
+    @pytest.mark.nondestructive
+    def test_the_header_text_and_page_title(self, mozwebqa):
+        home = Home(mozwebqa)
+        home.is_the_current_page
+
+        Assert.equal('Firefox Help\nfor Mobile', home.header_text)
+        Assert.equal('Return to Firefox Support homepage', home.header_title)
