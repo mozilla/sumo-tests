@@ -6,7 +6,6 @@ from unittestzero import Assert
 from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
 from pages.desktop.login_page import LoginPage
 from pages.desktop.support_home_page import SupportHomePage
-import re
 import pytest
 import datetime
 
