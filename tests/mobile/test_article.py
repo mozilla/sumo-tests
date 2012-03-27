@@ -21,4 +21,4 @@ class TestArticle:
 
         article_page.click_helpful_button()
         Assert.true(article_page.is_vote_box_visible)
-        Assert.equal("Glad to hear it — thanks for the feedback!", article_page.vote_box_text)
+        Assert.equal(u"Glad to hear it \u2014 thanks for the feedback!", article_page.vote_box_text)
