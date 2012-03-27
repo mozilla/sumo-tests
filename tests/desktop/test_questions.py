@@ -3,9 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
-from pages.desktop.questions_page import QuestionsPage
-from pages.desktop.questions_page import ViewQuestionPage
-from pages.desktop.questions_page import AskNewQuestionsPage
+from pages.desktop.page_provider import PageProvider
 import datetime
 import pytest
 
@@ -14,14 +12,13 @@ class TestQuestions:
 
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
-        ask_new_questions_pg = AskNewQuestionsPage(mozwebqa)
         timestamp = datetime.datetime.today()
         q_to_ask = "automation test question %s" % (timestamp)
         q_details = "This is a test. %s" % (timestamp)
 
         # go to the /questions/new page and log in
-        ask_new_questions_pg.go_to_ask_new_questions_page()
-        ask_new_questions_pg.sign_in('default')
+        page_provider = PageProvider(mozwebqa)
+        ask_new_questions_pg = page_provider.provide_new_question()
 
         # post a question
         ask_new_questions_pg.click_firefox_product_link()
@@ -42,10 +39,10 @@ class TestQuestions:
            Goes to the /questions page,
            Verifies the sort filter=solved works
         """
-        questions_pg = QuestionsPage(mozwebqa)
         expected_sorted_text = "Solved"
 
-        questions_pg.go_to_forum_questions_page()
+        page_provider = PageProvider(mozwebqa)
+        questions_pg = page_provider.provide_questions_page()
         questions_pg.click_sort_by_solved_questions()
         # if there are no questions in the list then skip the test
         if not questions_pg.are_questions_present:
@@ -62,10 +59,10 @@ class TestQuestions:
            Goes to the /questions page,
            Verifies the sort filter=noreplies works
         """
-        questions_pg = QuestionsPage(mozwebqa)
         expected_sorted_text = "No replies"
 
-        questions_pg.go_to_forum_questions_page()
+        page_provider = PageProvider(mozwebqa)
+        questions_pg = page_provider.provide_questions_page()
         questions_pg.click_sort_by_no_replies_questions()
         # if there are no questions in the list then skip the test
         if not questions_pg.are_questions_present:
@@ -80,10 +77,9 @@ class TestQuestions:
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
 
-        questions_pg = QuestionsPage(mozwebqa)
-
         # Can't +1 your own question so will do it logged out
-        questions_pg.go_to_forum_questions_page()
+        page_provider = PageProvider(mozwebqa)
+        questions_pg = page_provider.provide_questions_page()
         view_question_pg = questions_pg.click_any_question(1)
 
         initial_count = view_question_pg.problem_count

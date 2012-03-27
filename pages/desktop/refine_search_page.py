@@ -27,10 +27,6 @@ class RefineSearchPage(Base):
     _asked_by_box = (By.ID, 'id_asked_by')
     _search_results_list = (By.CSS_SELECTOR, 'div.result.question')
 
-    def go_to_refine_search_page(self):
-        self.open(self._page_url)
-        self.is_the_current_page
-
     def click_support_questions_tab(self):
         self.selenium.find_element(*self._support_questions_tab).click()
 
