@@ -3,7 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
-from pages.desktop.register_page import RegisterPage
+from pages.desktop.page_provider import PageProvider
 
 
 class TestNewUserRegistration:
@@ -13,8 +13,8 @@ class TestNewUserRegistration:
            Register a new user using random username.
            Verify registration by checking the page title
         """
-        register_pg = RegisterPage(mozwebqa)
-        register_pg.go_to_registration_page()
+        page_provider = PageProvider(mozwebqa)
+        register_pg = page_provider.provide_new_user_registration()
         register_pg.register_new_user()
         actual_page_title = register_pg.page_title
         expected_page_title = register_pg._page_title_after_registration

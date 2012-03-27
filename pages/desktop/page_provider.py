@@ -18,7 +18,14 @@ class PageProvider(Page):
             page_object.sign_in(user)
         return page_object
 
+    ''' pages for which login is forbidden '''
+    
+    def provide_new_user_registration(self):
+        from pages.desktop.register_page import RegisterPage
+        return self._go_to_page(RegisterPage(self.testsetup))
+
     ''' pages for which login is optional '''
+
     def provide_home_page(self, do_login=False, user='default'):
         from pages.desktop.support_home_page import SupportHomePage
         return self._go_to_page(SupportHomePage(self.testsetup), do_login, user)
