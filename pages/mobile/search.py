@@ -20,10 +20,10 @@ class Search(Base):
 
     @property
     def results(self):
-        return [self.SearchResults(self.testsetup, web_element)
+        return [self.SearchResult(self.testsetup, web_element)
                 for web_element in self.selenium.find_elements(*self._results_locator)]
 
-    class SearchResults(Page):
+    class SearchResult(Page):
         def __init__(self, testsetup, web_element):
             Page.__init__(self, testsetup)
             self._root_element = web_element

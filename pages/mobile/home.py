@@ -38,6 +38,5 @@ class Home(Base):
         else:
             search_box.submit()
 
-        self.selenium.find_element(*self._search_button_locator).click()
         from pages.mobile.search import Search
         return Search(self.testsetup, search_term)
