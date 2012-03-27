@@ -15,7 +15,7 @@ class SupportHomePage(Base):
     """
 
     _page_title = 'Firefox Support Home Page | Firefox Help'
-    _home_url = '/en-US/home'
+    _page_url = '/en-US/home'
     
     _main_search_box = (By.ID, 'q')
     _search_button = (By.CSS_SELECTOR, 'button.img-submit')
@@ -23,10 +23,6 @@ class SupportHomePage(Base):
     _top_helpful_content_locator = (By.CSS_SELECTOR, 'div#home-content-quick section ul > li > a')
     _top_issues_link_locator = (By.CSS_SELECTOR, '#home-content-explore ul > li > a')
     _kb_dashboard_link_locator = (By.LINK_TEXT, 'Knowledge Base Dashboard')
-
-    def go_to_support_home_page(self):
-        self.open(self._home_url)
-        self.is_the_current_page
 
     def do_search_on_main_search_box(self, search_query):
         search_box = self.selenium.find_element(*self._main_search_box)
