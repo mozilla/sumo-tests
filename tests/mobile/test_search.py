@@ -13,9 +13,14 @@ from pages.mobile.home import Home
 class TestSearch:
 
     @pytest.mark.nondestructive
-    @pytest.mark.parametrize(('search_term', 'results_count'), [("firefox", 1), ("frfx", 0)])
-    def test_that_search_returns_results(self, mozwebqa, search_term, results_count):
+    def test_that_positive_search_returns_results(self, mozwebqa):
         home = Home(mozwebqa)
 
-        search_page = home.search_for(search_term)
-        Assert.greater_equal(len(search_page.results), results_count)
+        search_page = home.search_for("firefox")
+        Assert.greater(len(search_page.results), 0)
+
+    def test_that_negative_search_does_not_return_results(self, mozwebqa):
+        home = Home(mozwebqa)
+
+        search_page = home.search_for("frfx")
+        Assert.equal(len(search_page.results), 0)
