@@ -13,8 +13,7 @@ class TestSearch:
         ('firefox'),
         ('bgkhdsaghb')])
     def test_cant_find_what_youre_looking_for_test(self, mozwebqa, search_term):
-        page_provider = PageProvider(mozwebqa)
-        search_page_obj = page_provider.provide_search()
+        search_page_obj = PageProvider(mozwebqa).search_page()
         search_page_obj.do_search_on_search_box(search_term)
 
         expected_text = "Can't find what you're looking for?"
@@ -23,8 +22,7 @@ class TestSearch:
 
     @pytest.mark.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out')
     def test_no_query_adv_forum_search(self, mozwebqa):
-        page_provider = PageProvider(mozwebqa)
-        refine_search_pg = page_provider.provide_refine_search()
+        refine_search_pg = PageProvider(mozwebqa).refine_search_page()
 
         # do test
         refine_search_pg.click_support_questions_tab()

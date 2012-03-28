@@ -18,7 +18,7 @@ class Base(Page):
     def sign_in(self, user="default"):
         login = self.header.click_login()
         login.log_in(user)
-        Assert.true(self.header.is_user_logged_in, "%s is not logged in" % user)
+        Assert.true(self.header.is_user_logged_in, "login failed")
 
 
     def sign_out(self):

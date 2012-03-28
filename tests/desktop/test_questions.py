@@ -17,8 +17,7 @@ class TestQuestions:
         q_details = "This is a test. %s" % (timestamp)
 
         # go to the /questions/new page and log in
-        page_provider = PageProvider(mozwebqa)
-        ask_new_questions_pg = page_provider.provide_new_question()
+        ask_new_questions_pg = PageProvider(mozwebqa).new_question_page()
 
         # post a question
         ask_new_questions_pg.click_firefox_product_link()
@@ -41,8 +40,7 @@ class TestQuestions:
         """
         expected_sorted_text = "Solved"
 
-        page_provider = PageProvider(mozwebqa)
-        questions_pg = page_provider.provide_questions_page()
+        questions_pg = PageProvider(mozwebqa).questions_page()
         questions_pg.click_sort_by_solved_questions()
         # if there are no questions in the list then skip the test
         if not questions_pg.are_questions_present:
@@ -61,8 +59,7 @@ class TestQuestions:
         """
         expected_sorted_text = "No replies"
 
-        page_provider = PageProvider(mozwebqa)
-        questions_pg = page_provider.provide_questions_page()
+        questions_pg = PageProvider(mozwebqa).questions_page()
         questions_pg.click_sort_by_no_replies_questions()
         # if there are no questions in the list then skip the test
         if not questions_pg.are_questions_present:
@@ -78,8 +75,7 @@ class TestQuestions:
         """Checks if the 'I have this problem too' counter increments"""
 
         # Can't +1 your own question so will do it logged out
-        page_provider = PageProvider(mozwebqa)
-        questions_pg = page_provider.provide_questions_page()
+        questions_pg = PageProvider(mozwebqa).questions_page()
         view_question_pg = questions_pg.click_any_question(1)
 
         initial_count = view_question_pg.problem_count

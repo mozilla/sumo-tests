@@ -16,8 +16,7 @@ class TestKnowledgeBaseArticle:
            Verifies creation.
            Deletes the article
         """
-        page_provider = PageProvider(mozwebqa)
-        kb_new_article = page_provider.provide_kb_new_article()
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
         kb_article_history = kb_new_article.set_article_comment_box()
@@ -43,8 +42,7 @@ class TestKnowledgeBaseArticle:
            Edits the article, verifies the edition.
            Deletes the article
         """
-        page_provider = PageProvider(mozwebqa)
-        kb_new_article = page_provider.provide_kb_new_article()
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
         kb_article_history = kb_new_article.set_article_comment_box()
@@ -82,8 +80,7 @@ class TestKnowledgeBaseArticle:
            Deletes the article.
            Verifies the deletion.
         """
-        page_provider = PageProvider(mozwebqa)
-        kb_new_article = page_provider.provide_kb_new_article()
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
 
         kb_new_article.submit_article()
@@ -103,8 +100,7 @@ class TestKnowledgeBaseArticle:
 
     def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
 
-        page_provider = PageProvider(mozwebqa)
-        kb_new_article = page_provider.provide_kb_new_article()
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
 
         kb_new_article.click_article_preview_button()
@@ -119,8 +115,7 @@ class TestKnowledgeBaseArticle:
            Creates a new knowledge base article.
            Translate article
         """
-        page_provider = PageProvider(mozwebqa)
-        kb_new_article = page_provider.provide_kb_new_article()
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
         kb_article_history = kb_new_article.set_article_comment_box()
@@ -167,8 +162,7 @@ class TestKnowledgeBaseArticle:
            Verifies creation.
            Deletes the article
         """
-        page_provider = PageProvider(mozwebqa)
-        sumo_homepage = page_provider.provide_home_page(True)
+        sumo_homepage = PageProvider(mozwebqa).home_page(do_login=True)
         contrib_page = sumo_homepage.click_knowledge_base_dashboard_link()
         contrib_page.is_the_current_page
         contrib_page.click_all_time()

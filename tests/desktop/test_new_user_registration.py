@@ -13,8 +13,7 @@ class TestNewUserRegistration:
            Register a new user using random username.
            Verify registration by checking the page title
         """
-        page_provider = PageProvider(mozwebqa)
-        register_pg = page_provider.provide_new_user_registration()
+        register_pg = PageProvider(mozwebqa).new_user_registration_page()
         register_pg.register_new_user()
         actual_page_title = register_pg.page_title
         expected_page_title = register_pg._page_title_after_registration
