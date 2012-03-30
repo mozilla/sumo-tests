@@ -14,6 +14,7 @@ class Home(Base):
     _page_title = 'Firefox for Mobile Support Home Page | Firefox Help'
 
     _header_locator = (By.CSS_SELECTOR, 'h1.site-title > a')
+    _first_question_locator = (By.CSS_SELECTOR, 'div.common-questions > ul > li:nth-child(1) > a')
 
     def __init__(self, testsetup):
         Base.__init__(self, testsetup)
@@ -26,3 +27,8 @@ class Home(Base):
     @property
     def header_title(self):
         return self.selenium.find_element(*self._header_locator).get_attribute('title')
+
+    def click_to_see_first_article(self):
+        self.selenium.find_element(*self._first_question_locator).click()
+        from pages.mobile.article import Article
+        return Article(self.testsetup)
