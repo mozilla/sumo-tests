@@ -10,8 +10,6 @@ Created on Jun 30, 2010
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
 from unittestzero import Assert
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import ElementNotVisibleException
 
 class LoginPage(Base):
     """
