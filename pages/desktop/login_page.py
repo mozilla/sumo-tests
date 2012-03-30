@@ -9,6 +9,7 @@ Created on Jun 30, 2010
 '''
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
+from unittestzero import Assert
 
 class LoginPage(Base):
     """
@@ -19,6 +20,7 @@ class LoginPage(Base):
     _username_box_locator = (By.ID, 'id_username')
     _password_box_locator = (By.ID, 'id_password')
     _log_in_button_locator = (By.CSS_SELECTOR, 'input[type="submit"]')
+    _login_error_locator = (By.CSS_SELECTOR, 'ul.errorlist > li')
 
     # if user is logged-in then you see these elements
     _logged_in_as_div_locator = (By.CSS_SELECTOR, 'div#mod-login_box > div')
@@ -37,3 +39,8 @@ class LoginPage(Base):
         self.selenium.find_element(*self._username_box_locator).send_keys(credentials['name'])
         self.selenium.find_element(*self._password_box_locator).send_keys(credentials['password'])
         self.selenium.find_element(*self._log_in_button_locator).click()
+        
+        if self.is_element_visible(*self._login_error_locator):
+            error = self.selenium.find_element(*self._login_error_locator).text
+            error = "login failed for %s\n" % credentials['name'] + error
+            Assert.fail(error)
