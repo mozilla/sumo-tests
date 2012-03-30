@@ -20,6 +20,14 @@ class PageProvider():
         if (do_login):
             page_object.sign_in(user)
         return page_object
+    
+    def _go_to_page_with_login_redirect(self, page_object, user='default'):
+        from pages.desktop.login_page import LoginPage
+        self.selenium.get(self.base_url_ssl + page_object._page_url)
+        login_page = LoginPage(self.testsetup)
+        login_page.log_in(user)
+        page_object.is_the_current_page
+        return page_object
 
     ''' pages for which login is forbidden '''
 
@@ -52,6 +60,5 @@ class PageProvider():
     ''' pages for which login is required '''
 
     def new_kb_article_page(self, user='admin'):
-        home_page = self.provide_home_page(do_login=True, user)
         from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
-        return self._go_to_page(KnowledgeBaseNewArticle(self.testsetup))
+        return self._go_to_page_with_login_redirect(KnowledgeBaseNewArticle(self.testsetup),user)

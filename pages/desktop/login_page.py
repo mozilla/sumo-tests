@@ -35,12 +35,7 @@ class LoginPage(Base):
         self.selenium.find_element(*self._password_box_locator).send_keys(credentials['password'])
         self.selenium.find_element(*self._log_in_button_locator).click()
         
-        error = ""
-        try:
+        if self.is_element_visible(*self._login_error_locator):
             error = self.selenium.find_element(*self._login_error_locator).text
-        except NoSuchElementException, ElementNotVisibleException:
-            '''no error, do nothing'''
-        finally:
-            if error != "":
-                error = "login failed for %s\n" % credentials['name'] + error
-                Assert.fail(error)
+            error = "login failed for %s\n" % credentials['name'] + error
+            Assert.fail(error)
