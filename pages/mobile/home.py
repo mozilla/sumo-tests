@@ -16,6 +16,7 @@ class Home(Base):
     _header_locator = (By.CSS_SELECTOR, 'h1.site-title > a')
     _search_box_locator = (By.NAME, 'q')
     _search_button_locator = (By.CSS_SELECTOR, 'form#search > button')
+    _first_question_locator = (By.CSS_SELECTOR, 'div.common-questions > ul > li:nth-child(1) > a')
 
     def __init__(self, testsetup):
         Base.__init__(self, testsetup)
@@ -40,3 +41,8 @@ class Home(Base):
 
         from pages.mobile.search import Search
         return Search(self.testsetup, search_term)
+
+    def click_to_see_first_article(self):
+        self.selenium.find_element(*self._first_question_locator).click()
+        from pages.mobile.article import Article
+        return Article(self.testsetup)
