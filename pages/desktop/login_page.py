@@ -26,14 +26,7 @@ class LoginPage(Base):
     _logged_in_as_div_locator = (By.CSS_SELECTOR, 'div#mod-login_box > div')
     _logged_in_text = 'Logged in as'
 
-    def go_to_login_page(self):
-        self.open(self._page_url)
-        self.is_the_current_page
-
     def log_in(self, user='default'):
-        if not (self._page_title in self.selenium.title):
-            self.go_to_login_page()
-
         credentials = self.testsetup.credentials[user]
 
         self.selenium.find_element(*self._username_box_locator).send_keys(credentials['name'])

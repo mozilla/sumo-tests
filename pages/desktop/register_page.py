@@ -21,10 +21,6 @@ class RegisterPage(Base):
     _email_add_box_locator = (By.ID, 'id_for_email')
     _register_button_locator = (By.CSS_SELECTOR, 'input.btn[value="Register"]')
 
-    def go_to_registration_page(self):
-        self.open(self._page_url)
-        self.is_the_current_page
-
     def register_new_user(self):
         user_name = self.get_random_word(5)
         password = '1234abCD'

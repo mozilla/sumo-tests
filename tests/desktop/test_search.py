@@ -3,9 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
-from pages.desktop.search_page import SearchPage
-from pages.desktop.refine_search_page import RefineSearchPage
 import pytest
+from pages.desktop.page_provider import PageProvider
 
 class TestSearch:
 
@@ -14,9 +13,7 @@ class TestSearch:
         ('firefox'),
         ('bgkhdsaghb')])
     def test_cant_find_what_youre_looking_for_test(self, mozwebqa, search_term):
-        search_page_obj = SearchPage(mozwebqa)
-
-        search_page_obj.go_to_search_page()
+        search_page_obj = PageProvider(mozwebqa).search_page()
         search_page_obj.do_search_on_search_box(search_term)
 
         expected_text = "Can't find what you're looking for?"
@@ -25,11 +22,7 @@ class TestSearch:
 
     @pytest.mark.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out')
     def test_no_query_adv_forum_search(self, mozwebqa):
-        refine_search_pg = RefineSearchPage(mozwebqa)
-
-        # go to page and log in
-        refine_search_pg.go_to_refine_search_page()
-        refine_search_pg.sign_in('default')
+        refine_search_pg = PageProvider(mozwebqa).refine_search_page()
 
         # do test
         refine_search_pg.click_support_questions_tab()
