@@ -26,10 +26,6 @@ class SearchPage(Base):
     _search_unavailable_msg = 'unavailable'
     _results_list_locator = (By.CSS_SELECTOR, 'div.search-results div[class*="result"]')
 
-    def go_to_search_page(self):
-        self.open(self._page_url)
-        self.is_the_current_page
-
     def do_search_on_search_box(self, search_query):
         if not (self._page_title in self.selenium.title):
             self.go_to_search_page()

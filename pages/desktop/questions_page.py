@@ -12,7 +12,7 @@ class QuestionsPage(Base):
     'Ask a Question' landing page.
     """
     _page_title = 'Firefox Support Forum | Firefox Help'
-    _forums_page_url = '/en-US/questions'
+    _page_url = '/en-US/questions'
     _ask_question_link_locator = '/en-US/questions/new'
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
     _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=unsolved"]')
@@ -22,10 +22,6 @@ class QuestionsPage(Base):
     _question_list_link_locator = (By.CSS_SELECTOR, 'h2 > a')
     _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > span')
     
-    def go_to_forum_questions_page(self):
-        self.open(self._forums_page_url)
-        self.is_the_current_page
-
     def click_ask_new_questions_link(self):
         self.selenium.find_element(*self._ask_question_link_locator).click()
         return AskNewQuestionsPage(self.testsetup)
@@ -66,7 +62,7 @@ class AskNewQuestionsPage(Base):
     Child class of Questions Page
     """
     _page_title = 'Ask a Question | Firefox Help'
-    _questions_new_url = '/en-US/questions/new'
+    _page_url = '/en-US/questions/new'
     _firefox_product_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _category_prob_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _type_question_box_locator = (By.NAME, 'search')
@@ -82,10 +78,6 @@ class AskNewQuestionsPage(Base):
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=no-replies]')
     _questions_list_locator = (By.CSS_SELECTOR, 'ol.questions > li')
     _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > span')
-
-    def go_to_ask_new_questions_page(self):
-        self.open(self._questions_new_url)
-        self.is_the_current_page
 
     def click_firefox_product_link(self):
         self.selenium.find_element(*self._firefox_product_first_link_locator).click()

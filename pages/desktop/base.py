@@ -18,6 +18,7 @@ class Base(Page):
         login = self.header.click_login()
         login.log_in(user)
 
+
     def sign_out(self):
         self.header.click_logout()
 

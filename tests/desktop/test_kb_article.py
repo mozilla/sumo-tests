@@ -3,9 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from unittestzero import Assert
-from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
-from pages.desktop.login_page import LoginPage
-from pages.desktop.support_home_page import SupportHomePage
+from pages.desktop.page_provider import PageProvider
 import pytest
 import datetime
 
@@ -18,12 +16,7 @@ class TestKnowledgeBaseArticle:
            Verifies creation.
            Deletes the article
         """
-        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        login_pg = LoginPage(mozwebqa)
-
-        # Admin account is used as he can delete the article
-        login_pg.log_in('admin')
-
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
         kb_article_history = kb_new_article.set_article_comment_box()
@@ -49,12 +42,7 @@ class TestKnowledgeBaseArticle:
            Edits the article, verifies the edition.
            Deletes the article
         """
-        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        login_pg = LoginPage(mozwebqa)
-
-        # Admin account is used as he can delete the article
-        login_pg.log_in('admin')
-
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
         kb_article_history = kb_new_article.set_article_comment_box()
@@ -92,12 +80,7 @@ class TestKnowledgeBaseArticle:
            Deletes the article.
            Verifies the deletion.
         """
-        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        login_pg = LoginPage(mozwebqa)
-
-        # Admin account is used as he can delete the article
-        login_pg.log_in('admin')
-
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
 
         kb_new_article.submit_article()
@@ -117,12 +100,7 @@ class TestKnowledgeBaseArticle:
 
     def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
 
-        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        login_pg = LoginPage(mozwebqa)
-
-        # Admin account is used as he can delete the article
-        login_pg.log_in('admin')
-
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
 
         kb_new_article.click_article_preview_button()
@@ -137,13 +115,7 @@ class TestKnowledgeBaseArticle:
            Creates a new knowledge base article.
            Translate article
         """
-        kb_new_article = KnowledgeBaseNewArticle(mozwebqa)
-        login_pg = LoginPage(mozwebqa)
-        timestamp = datetime.datetime.now()
-
-        # Admin account is used as he can delete the article
-        login_pg.log_in('admin')
-
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
         article_info_dict = self._create_new_generic_article(kb_new_article)
         kb_new_article.submit_article()
         kb_article_history = kb_new_article.set_article_comment_box()
@@ -152,6 +124,7 @@ class TestKnowledgeBaseArticle:
         kb_translate_pg = kb_article_history.navigation.click_translate_article()
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
+        timestamp = datetime.datetime.now()
         kb_translate_pg.type_title('artikolo_titolo%s' % timestamp)
         kb_translate_pg.type_slug('artikolo_limako_%s' % timestamp)
         kb_translate_pg.click_submit_review()
@@ -179,7 +152,6 @@ class TestKnowledgeBaseArticle:
                              'summary': article_summary, 'content': article_content}
 
         # create a new article
-        kb_new_article.go_to_create_new_article_page()
         kb_new_article.set_article(article_info_dict)
 
         return article_info_dict
@@ -190,11 +162,7 @@ class TestKnowledgeBaseArticle:
            Verifies creation.
            Deletes the article
         """
-        sumo_homepage = SupportHomePage(mozwebqa)
-
-        # navigate to article
-        sumo_homepage.go_to_support_home_page()
-        sumo_homepage.sign_in()
+        sumo_homepage = PageProvider(mozwebqa).home_page(do_login=True)
         contrib_page = sumo_homepage.click_knowledge_base_dashboard_link()
         contrib_page.is_the_current_page
         contrib_page.click_all_time()
