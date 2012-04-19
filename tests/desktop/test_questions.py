@@ -83,4 +83,4 @@ class TestQuestions:
         view_question_pg.refresh()
         post_click_count = view_question_pg.problem_count
 
-        Assert.equal(initial_count + 1, post_click_count)
+        Assert.greater(post_click_count, initial_count)
