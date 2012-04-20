@@ -12,6 +12,7 @@ from pages.page import Page
 
 class Search(Base):
 
+    _page_url = '/en-US/search'
     _results_locator = (By.CSS_SELECTOR, 'ol.search-results li')
 
     def __init__(self, testsetup, search_term):
