@@ -7,13 +7,13 @@
 
 from unittestzero import Assert
 
-from pages.mobile.home import Home
+from pages.mobile.page_provider import PageProvider
 
 
 class TestArticle:
 
     def test_that_checks_the_vote_of_an_article(self, mozwebqa):
-        home = Home(mozwebqa)
+        home = PageProvider(mozwebqa).home_page()
 
         article_page = home.click_to_see_first_article()
         Assert.contains("How to | Firefox Help", article_page.page_title)

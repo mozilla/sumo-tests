@@ -8,7 +8,7 @@ import pytest
 
 from unittestzero import Assert
 
-from pages.mobile.home import Home
+from pages.mobile.page_provider import PageProvider
 
 
 class TestHome:
@@ -17,7 +17,7 @@ class TestHome:
 
     @pytest.mark.nondestructive
     def test_the_expandable_header_menu(self, mozwebqa):
-        home = Home(mozwebqa)
+        home = PageProvider(mozwebqa).home_page()
         home.header.click_header_menu()
         Assert.true(home.header.is_dropdown_menu_expanded)
 
@@ -29,7 +29,7 @@ class TestHome:
 
     @pytest.mark.nondestructive
     def test_the_header_text_and_page_title(self, mozwebqa):
-        home = Home(mozwebqa)
+        home = PageProvider(mozwebqa).home_page()
         home.is_the_current_page
 
         Assert.equal('Firefox Help\nfor Mobile', home.header_text)

@@ -12,6 +12,7 @@ from pages.mobile.base import Base
 class Home(Base):
 
     _page_title = 'Firefox for Mobile Support Home Page | Firefox Help'
+    _page_url = '/en-US/'
 
     _header_locator = (By.CSS_SELECTOR, 'h1.site-title > a')
     _search_box_locator = (By.NAME, 'q')
@@ -20,7 +21,6 @@ class Home(Base):
 
     def __init__(self, testsetup):
         Base.__init__(self, testsetup)
-        self.selenium.get(self.base_url)
 
     @property
     def header_text(self):
