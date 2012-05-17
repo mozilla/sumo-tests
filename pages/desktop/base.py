@@ -31,7 +31,7 @@ class Base(Page):
         #LoggedIn
         _account_controller_locator = (By.CSS_SELECTOR, '#aux-nav .account a.user')
         _account_dropdown_locator = (By.CSS_SELECTOR, '#aux-nav .account ul') # untested
-        _logout_locator = (By.CSS_SELECTOR, '.logout > a')
+        _logout_locator = (By.CSS_SELECTOR, 'li.account li:last-child > a')
 
         def click_login(self):
             self.selenium.find_element(*self._login_locator).click()
