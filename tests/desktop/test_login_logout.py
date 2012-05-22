@@ -13,7 +13,6 @@ class TestLoginLogout:
 
     @pytest.mark.nondestructive
     def test_login(self, mozwebqa):
-
         home_page = PageProvider(mozwebqa).home_page()
         home_page.sign_in('default')
 
@@ -22,7 +21,6 @@ class TestLoginLogout:
     @pytest.mark.native
     @pytest.mark.nondestructive
     def test_logout(self, mozwebqa):
-
         home_page = PageProvider(mozwebqa).home_page(do_login=True, user='default')
         Assert.true(home_page.header.is_user_logged_in, 'User not shown to be logged in')
 
