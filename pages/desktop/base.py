@@ -6,6 +6,7 @@
 
 from pages.page import Page
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Base(Page):
@@ -18,7 +19,6 @@ class Base(Page):
         login = self.header.click_login()
         login.log_in(user)
 
-
     def sign_out(self):
         self.header.click_logout()
 
@@ -30,8 +30,8 @@ class Base(Page):
 
         #LoggedIn
         _account_controller_locator = (By.CSS_SELECTOR, '#aux-nav .account a.user')
-        _account_dropdown_locator = (By.CSS_SELECTOR, '#aux-nav .account ul') # untested
-        _logout_locator = (By.CSS_SELECTOR, '.logout > a')
+        _account_dropdown_locator = (By.CSS_SELECTOR, '#aux-nav li.account')
+        _logout_locator = (By.CSS_SELECTOR, 'li.account li:last-child > a')
 
         def click_login(self):
             self.selenium.find_element(*self._login_locator).click()
@@ -39,9 +39,10 @@ class Base(Page):
             return LoginPage(self.testsetup)
 
         def click_logout(self):
-            self.selenium.find_element(*self._logout_locator).click()
+            account_menu_element = self.selenium.find_element(*self._account_dropdown_locator)
+            logout_element = self.selenium.find_element(*self._logout_locator)
+            ActionChains(self.selenium).move_to_element(account_menu_element).move_to_element(logout_element).click().perform()
 
         @property
         def is_user_logged_in(self):
             return self.is_element_visible(*self._account_controller_locator)
-

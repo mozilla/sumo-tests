@@ -21,6 +21,7 @@ class TestSearch:
         Assert.true(search_page_obj.is_ask_a_question_present, "Ask question link not present")
 
     @pytest.mark.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out')
+    @pytest.mark.native
     def test_no_query_adv_forum_search(self, mozwebqa):
         refine_search_pg = PageProvider(mozwebqa).refine_search_page()
 
