@@ -10,6 +10,7 @@ import pytest
 
 class TestQuestions:
 
+    @pytest.mark.native
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
         timestamp = datetime.datetime.today()
