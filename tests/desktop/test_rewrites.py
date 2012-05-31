@@ -39,7 +39,7 @@ class TestRedirects:
         ('/1/firefox/4.0/WINNT/en-US/prefs-clear-private-data/', '/en-US/kb/remove-recent-browsing-search-and-download-history?redirectlocale=en-US&as=u&redirectslug=Clear+Recent+History'),
         ('/1/firefox/4.0/Darwin/en-US/prefs-clear-private-data/', '/en-US/kb/remove-recent-browsing-search-and-download-history?redirectlocale=en-US&as=u&redirectslug=Clear+Recent+History'),
         ('/1/firefox/4.0/Linux/en-US/prefs-clear-private-data/', '/en-US/kb/remove-recent-browsing-search-and-download-history?redirectlocale=en-US&as=u&redirectslug=Clear+Recent+History'),
-        ('/1/firefox/4.0/WINNT/en-US/prefs-fonts-and-colors/', '/en-US/kb/Options window - Content panel?as=u#fonts_and_colors')])
+        ('/1/firefox/4.0/WINNT/en-US/prefs-fonts-and-colors/', '/en-US/kb/settings-fonts-languages-pop-ups-javascript?redirectlocale=en-US&as=u&redirectslug=Options+window+-+Content+panel#fonts_and_colors')])
     def test_browser_redirect_to_sumo(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
         r = self._check_redirect(mozwebqa, input)
