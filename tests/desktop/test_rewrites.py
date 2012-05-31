@@ -14,7 +14,7 @@ import urllib
 @pytest.mark.nondestructive
 class TestRedirects:
 
-    _user_agent_firefox = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:10.0.1) Gecko/20100101 Firefox/10.0.1'
+    _user_agent_firefox = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:12.0) Gecko/20100101 Firefox/12.0'
 
     def _check_redirect(self, testsetup, start_url, user_agent=_user_agent_firefox, locale='en-US'):
         start_url = testsetup.base_url + start_url
