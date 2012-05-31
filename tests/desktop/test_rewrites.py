@@ -35,7 +35,7 @@ class TestRedirects:
         ('/1/firefox/4.0/Linux/en-US/firefox-osxkey/', '/en-US/home?as=u'),
         ('/1/firefox/4.0/WINNT/en-US/prefs-main/', '/en-US/kb/Options window - General panel?as=u'),
         ('/1/firefox/4.0/Darwin/en-US/prefs-main/', '/en-US/kb/Options window - General panel?as=u'),
-        ('/1/firefox/4.0/Linux/en-US/prefs-main/', 'en-US/kb/startup-home-page-download-settings?redirectlocale=en-US&as=u&redirectslug=Options+window+-+General+panel'),
+        ('/1/firefox/4.0/Linux/en-US/prefs-main/', '/en-US/kb/startup-home-page-download-settings?redirectlocale=en-US&as=u&redirectslug=Options+window+-+General+panel'),
         ('/1/firefox/4.0/WINNT/en-US/prefs-clear-private-data/', '/en-US/kb/Clear Recent History?as=u'),
         ('/1/firefox/4.0/Darwin/en-US/prefs-clear-private-data/', '/en-US/kb/Clear Recent History?as=u'),
         ('/1/firefox/4.0/Linux/en-US/prefs-clear-private-data/', '/en-US/kb/Clear Recent History?as=u'),
