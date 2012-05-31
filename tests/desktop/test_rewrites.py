@@ -59,7 +59,7 @@ class TestRedirects:
         Assert.equal(r.status_code, requests.codes.ok)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/1/firefox-home/4.0/iPhone/en-US', '/en-US/kb/What is Firefox Home?as=u'),
+        ('/1/firefox-home/4.0/iPhone/en-US', '/en-US/kb/what-is-firefox-home-for-ios-iphone-and-ipad?redirectlocale=en-US&as=u&redirectslug=What+is+Firefox+Home'),
         ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot log in to Firefox Home App?as=u')])
     def test_iphone_redirects(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
