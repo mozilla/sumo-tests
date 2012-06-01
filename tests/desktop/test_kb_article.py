@@ -156,6 +156,7 @@ class TestKnowledgeBaseArticle:
 
         return article_info_dict
 
+    @pytest.mark.nondestructive
     def test_view_helpfulness_chart(self, mozwebqa):
         """
            Creates a new knowledge base article.
