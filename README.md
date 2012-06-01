@@ -11,7 +11,7 @@ Getting involved as a contributor
 
 We love working with contributors to fill out the Selenium test coverage for sumo-tests, but it does require a few skills.   You will need to know some Python, some Selenium and you will need some basic familiarity with GitHub.
 
-If you know some Python, it's worth having a look at the Selenium framework to understand the basic concepts of browser-based testing and especially page objects. Our suite currently uses [Selenium RC][rc].
+If you know some Python, it's worth having a look at the Selenium framework to understand the basic concepts of browser-based testing and especially page objects.
 
 If you need to brush up on programming but are eager to start contributing immediately, please consider helping us find bugs in Mozilla [Firefox][firefox] or find bugs in the Mozilla web-sites tested by the [WebQA][webqa] team.
 
@@ -22,7 +22,6 @@ To brush up on Python skills before engaging with us, [Dive Into Python][dive] i
 [webqa]: http://quality.mozilla.org/teams/web-qa/
 [firefox]: http://quality.mozilla.org/teams/desktop-firefox/
 [webdriver]: http://seleniumhq.org/docs/03_webdriver.html
-[rc]: http://seleniumhq.org/docs/03_webdriver.html#webdriver-backed-selenium-rc
 
 Questions are always welcome
 ----------------------------
@@ -79,24 +78,6 @@ If you are running on Ubuntu/Debian you will need to do following first
     sudo apt-get install python-setuptools
 
 to install the required Python libraries.
-
-#### Java
-You will need a version of the [Java Runtime Environment][JRE] installed
-
-[JRE]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
-
-#### Selenium
-The sumo-tests project will be moving to WebDriver soon, but is still using the standalone Selenium RC server at this time.
-
-Once this is all set up you will need to download and start a Selenium server. You can download the latest Selenium server from [here][Selenium Downloads]. The filename will be something like 'selenium-server-standalone-2.19.0.jar'
-
-To start the Selenium server run the following command:
-
-    java -jar ~/Downloads/selenium-server-standalone-2.19.0.jar
-
-Change the path/name to the downloaded Selenium server file.
-
-[Selenium Downloads]: http://code.google.com/p/selenium/downloads/list
 
 ####Virtualenv and Virtualenvwrapper (Optional/Intermediate level)
 While most of us have had some experience using virtual machines, [virtualenv][venv] is something else entirely.  It's used to keep libraries that you install from clashing and messing up your local environment.  After installing virtualenv, installing [virtualenvwrapper][wrapper] will give you some nice commands to use with virtualenvwrapper.
