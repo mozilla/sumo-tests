@@ -33,18 +33,24 @@ class TestRedirects:
         ('/1/firefox/4.0/Linux/en-US/firefox-help/', '/en-US/home?as=u'),
         ('/1/firefox/4.0/Linux/en-US/firefox-f1/', '/en-US/home?as=u'),
         ('/1/firefox/4.0/Linux/en-US/firefox-osxkey/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/WINNT/en-US/prefs-main/', '/en-US/kb/startup-home-page-download-settings?redirectlocale=en-US&as=u&redirectslug=Options+window+-+General+panel'),
-        ('/1/firefox/4.0/Darwin/en-US/prefs-main/', '/en-US/kb/startup-home-page-download-settings?redirectlocale=en-US&as=u&redirectslug=Options+window+-+General+panel'),
-        ('/1/firefox/4.0/Linux/en-US/prefs-main/', '/en-US/kb/startup-home-page-download-settings?redirectlocale=en-US&as=u&redirectslug=Options+window+-+General+panel'),
-        ('/1/firefox/4.0/WINNT/en-US/prefs-clear-private-data/', '/en-US/kb/remove-recent-browsing-search-and-download-history?redirectlocale=en-US&as=u&redirectslug=Clear+Recent+History'),
-        ('/1/firefox/4.0/Darwin/en-US/prefs-clear-private-data/', '/en-US/kb/remove-recent-browsing-search-and-download-history?redirectlocale=en-US&as=u&redirectslug=Clear+Recent+History'),
-        ('/1/firefox/4.0/Linux/en-US/prefs-clear-private-data/', '/en-US/kb/remove-recent-browsing-search-and-download-history?redirectlocale=en-US&as=u&redirectslug=Clear+Recent+History'),
-        ('/1/firefox/4.0/WINNT/en-US/prefs-fonts-and-colors/', '/en-US/kb/settings-fonts-languages-pop-ups-javascript?redirectlocale=en-US&as=u&redirectslug=Options+window+-+Content+panel')])
+    ])
     def test_browser_redirect_to_sumo(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
         r = self._check_redirect(mozwebqa, input)
 
         Assert.equal(urllib.unquote(r.url), expected_url)
+        Assert.equal(r.status_code, requests.codes.ok)
+
+    @pytest.mark.parametrize(('input'), [
+        ('/1/firefox/4.0/WINNT/en-US/prefs-main/'),
+        ('/1/firefox/4.0/Darwin/en-US/prefs-main/'),
+        ('/1/firefox/4.0/Linux/en-US/prefs-main/'),
+        ('/1/firefox/4.0/WINNT/en-US/prefs-clear-private-data/'),
+        ('/1/firefox/4.0/Darwin/en-US/prefs-clear-private-data/'),
+        ('/1/firefox/4.0/Linux/en-US/prefs-clear-private-data/'),
+        ('/1/firefox/4.0/WINNT/en-US/prefs-fonts-and-colors/')])
+    def test_kb_redirects_status_ok(self, mozwebqa, input):
+        r = self._check_redirect(mozwebqa, input)
         Assert.equal(r.status_code, requests.codes.ok)
 
     @pytest.mark.parametrize(('input', 'expected'), [
@@ -58,12 +64,9 @@ class TestRedirects:
         Assert.equal(urllib.unquote(r.url), expected_url)
         Assert.equal(r.status_code, requests.codes.ok)
 
-    @pytest.mark.parametrize(('input', 'expected'), [
-        ('/1/firefox-home/4.0/iPhone/en-US', '/en-US/kb/what-is-firefox-home-for-ios-iphone-and-ipad?redirectlocale=en-US&as=u&redirectslug=What+is+Firefox+Home'),
-        ('/1/firefox-home/4.0/iPhone/en-US/log-in', '/en-US/kb/Cannot log in to Firefox Home App?as=u')])
-    def test_iphone_redirects(self, mozwebqa, input, expected):
-        expected_url = mozwebqa.base_url + expected
+    @pytest.mark.parametrize(('input'), [
+        ('/1/firefox-home/4.0/iPhone/en-US'),
+        ('/1/firefox-home/4.0/iPhone/en-US/log-in')])
+    def test_iphone_kb_redirects_status_ok(self, mozwebqa, input):
         r = self._check_redirect(mozwebqa, input)
-
-        Assert.equal(urllib.unquote(r.url), expected_url)
         Assert.equal(r.status_code, requests.codes.ok)
