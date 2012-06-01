@@ -22,6 +22,7 @@ class TestSearch:
 
     @pytest.mark.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out')
     @pytest.mark.native
+    @pytest.mark.nondestructive
     def test_no_query_adv_forum_search(self, mozwebqa):
         refine_search_pg = PageProvider(mozwebqa).refine_search_page()
 
