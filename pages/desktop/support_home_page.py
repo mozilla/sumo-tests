@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 
 class SupportHomePage(Base):
     """
-    The Firefox Support Home Pgae contains
+    The Firefox Support Home Page contains
     web elements and methods that can be
     performed on them.
     """
