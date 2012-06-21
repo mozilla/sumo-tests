@@ -161,7 +161,7 @@ class KnowledgeBaseTranslate(KnowledgeBase):
     _description_title_locator = (By.ID, 'id_title')
     _description_slug_locator = (By.ID, 'id_slug')
     _preview_content_button_locator = (By.ID, 'btn-preview')
-    _submit_button_locator = (By.CSS_SELECTOR, '.btn-important')
+    _submit_button_locator = (By.CSS_SELECTOR, '.buttons-and-preview > div.submit:first-of-type .btn-important')
 
     # 2 elements inside the modal popup
     _describe_changes_locator = (By.ID, 'id_comment')
@@ -184,9 +184,7 @@ class KnowledgeBaseTranslate(KnowledgeBase):
 
     def click_modal_submit_changes_button(self):
         self.selenium.find_element(*self._submit_changes_button_locator).click()
-        kb_article_history = KnowledgeBaseShowHistory(self.testsetup)
-        kb_article_history.is_the_current_page
-        return kb_article_history
+        return KnowledgeBaseShowHistory(self.testsetup)
 
 
 class KnowledgeBaseShowHistory(KnowledgeBase):
