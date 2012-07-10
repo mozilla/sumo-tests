@@ -127,6 +127,7 @@ class TestKnowledgeBaseArticle:
         timestamp = datetime.datetime.now()
         kb_translate_pg.type_title('artikolo_titolo%s' % timestamp)
         kb_translate_pg.type_slug('artikolo_limako_%s' % timestamp)
+        kb_translate_pg.type_search_result_summary('artikolo_serco_rezulto_resumo_%s' % timestamp)
         kb_translate_pg.click_submit_review()
 
         change_comment = 'artikolo sangoj %s' % timestamp
