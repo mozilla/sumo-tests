@@ -160,6 +160,7 @@ class KnowledgeBaseTranslate(KnowledgeBase):
     _page_title = 'Select language | '
     _description_title_locator = (By.ID, 'id_title')
     _description_slug_locator = (By.ID, 'id_slug')
+    _search_result_summary_locator = (By.ID, 'id_summary')
     _preview_content_button_locator = (By.ID, 'btn-preview')
     _submit_button_locator = (By.CSS_SELECTOR, '.buttons-and-preview > div.submit:first-of-type .btn-important')
 
@@ -175,6 +176,9 @@ class KnowledgeBaseTranslate(KnowledgeBase):
 
     def type_slug(self, text):
         self.selenium.find_element(*self._description_slug_locator).send_keys(text)
+
+    def type_search_result_summary(self, text):
+        self.selenium.find_element(*self._search_result_summary_locator).send_keys(text)
 
     def click_submit_review(self):
         self.selenium.find_element(*self._submit_button_locator).click()
