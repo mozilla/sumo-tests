@@ -43,6 +43,7 @@ class SearchPage(Base):
     def are_ten_results_present(self):
         return len(self.selenium.find_elements(*self._results_list_locator)) == 10
 
+    @property
     def get_result_text(self):
         return self.selenium.find_element(*self._result_div).text
 

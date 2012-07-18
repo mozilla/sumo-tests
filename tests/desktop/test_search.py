@@ -59,4 +59,4 @@ class TestSearch:
         Assert.true(search_page_obj.is_result_present, "Similar 2nd search has no results")
 
         result_search_2 = search_page_obj.get_result_text()
-        Assert.true(result_search_1 == result_search_2, "Similar searches have different results")
+        Assert.equal(result_search_1, result_search_2, "Similar searches have different results")
