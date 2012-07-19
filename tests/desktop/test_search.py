@@ -52,11 +52,11 @@ class TestSearch:
 
         # search with good search term only.  save first search result.
         search_page_obj.do_search_on_search_box(good_search_term)
-        result_search_1 = search_page_obj.get_result_text()
+        result_search_1 = search_page_obj.get_result_text
 
         # search with junk search term following the good search term
         search_page_obj.do_search_on_search_box(" " + junk_search_term)
         Assert.true(search_page_obj.is_result_present, "Similar 2nd search has no results")
 
-        result_search_2 = search_page_obj.get_result_text()
+        result_search_2 = search_page_obj.get_result_text
         Assert.equal(result_search_1, result_search_2, "Similar searches have different results")
