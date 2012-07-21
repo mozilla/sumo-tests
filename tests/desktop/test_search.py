@@ -52,6 +52,7 @@ class TestSearch:
 
         # search with good search term only.  save first search result.
         search_page_obj.do_search_on_search_box(good_search_term)
+        Assert.true(search_page_obj.is_result_present, "1st search has no results")
         result_search_1 = search_page_obj.get_result_text
 
         # search with junk search term following the good search term
