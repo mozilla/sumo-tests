@@ -20,88 +20,22 @@ class TestLoginLogout:
 
     ### logging out of the following pages redirects the user to the home page
 
-    # @pytest.mark.native
-    # @pytest.mark.nondestructive
-    # @pytest.mark.parametrize('page_method', [
-    #         'home_page',
-    #         'new_question_page',
-    #         'questions_page',
-    #         'search_page',
-    #         'refine_search_page',
-    #     ])
-    # def test_logout_from_pages(self, mozwebqa, page_method):
-    #     page_under_test = PageProvider(mozwebqa).page_method(do_login=True, user='default')
-    #     Assert.true(page_under_test.header.is_user_logged_in, 'User not shown to be logged in')
-
-    #     # sign out
-    #     home_page = page_under_test.sign_out()
-    #     home_page.is_the_current_page
-    #     Assert.false(home_page.header.is_user_logged_in)
-
     @pytest.mark.native
     @pytest.mark.nondestructive
-    def test_logout_from_homepage(self, mozwebqa):
-        home_page = PageProvider(mozwebqa).home_page(do_login=True, user='default')
-        Assert.true(home_page.header.is_user_logged_in, 'User not shown to be logged in')
+    @pytest.mark.parametrize('page_method', [
+            'home_page',
+            'new_question_page',
+            'questions_page',
+            'search_page',
+            'refine_search_page',
+            'new_kb_article_page',
+        ])
+    def test_logout_from_pages(self, mozwebqa, page_method):
+        page_under_test = getattr(PageProvider(mozwebqa), page_method)(do_login=True, user='default')
+        Assert.true(page_under_test.header.is_user_logged_in, 'User not shown to be logged in')
 
         # sign out
-        home_page = home_page.sign_out()
-        home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_logout_from_new_question_page(self, mozwebqa):
-        new_question_page = PageProvider(mozwebqa).new_question_page(do_login=True, user='default')
-        Assert.true(new_question_page.header.is_user_logged_in, 'User not shown to be logged in')
-
-        # sign out
-        home_page = new_question_page.sign_out()
-        home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_logout_from_questions_page(self, mozwebqa):
-        questions_page = PageProvider(mozwebqa).questions_page(do_login=True, user='default')
-        Assert.true(questions_page.header.is_user_logged_in, 'User not shown to be logged in')
-
-        # sign out
-        home_page = questions_page.sign_out()
-        home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_logout_from_search_page(self, mozwebqa):
-        search_page = PageProvider(mozwebqa).search_page(do_login=True, user='default')
-        Assert.true(search_page.header.is_user_logged_in, 'User not shown to be logged in')
-
-        # sign out
-        home_page = search_page.sign_out()
-        home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_logout_from_refine_search_page(self, mozwebqa):
-        refine_search_page = PageProvider(mozwebqa).refine_search_page(do_login=True, user='default')
-        Assert.true(refine_search_page.header.is_user_logged_in, 'User not shown to be logged in')
-
-        # sign out
-        home_page = refine_search_page.sign_out()
-        home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
-
-    ### logging out of these pages returns the user to X page
-    @pytest.mark.native
-    @pytest.mark.destructive
-    def test_logout_from_new_kb_article_page(self, mozwebqa):
-        new_kb_article_page = PageProvider(mozwebqa).new_kb_article_page()
-        Assert.true(new_kb_article_page.header.is_user_logged_in, 'User not shown to be logged in')
-
-        # sign out
-        home_page = new_kb_article_page.sign_out()
+        home_page = page_under_test.sign_out()
         home_page.is_the_current_page
         Assert.false(home_page.header.is_user_logged_in)
 
@@ -124,7 +58,7 @@ class TestLoginLogout:
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
         # sign out
-        home_page = new_kb_article_page.sign_out()
+        home_page = kb_translate_pg.sign_out()
         home_page.is_the_current_page
         Assert.false(home_page.header.is_user_logged_in)
 
