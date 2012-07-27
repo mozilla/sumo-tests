@@ -39,9 +39,11 @@ class Base(Page):
             return LoginPage(self.testsetup)
 
         def click_logout(self):
-            account_menu_element = self.selenium.find_element(*self._account_dropdown_locator)
-            logout_element = self.selenium.find_element(*self._logout_locator)
-            ActionChains(self.selenium).move_to_element(account_menu_element).move_to_element(logout_element).click().perform()
+            ActionChains(self.selenium).move_to_element(
+                    self.selenium.find_element(*self._account_dropdown_locator)
+                ).move_to_element(
+                    self.selenium.find_element(*self._logout_locator)
+                ).click().perform()
 
         @property
         def is_user_logged_in(self):
