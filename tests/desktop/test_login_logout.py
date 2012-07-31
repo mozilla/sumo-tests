@@ -28,7 +28,6 @@ class TestLoginLogout:
             'questions_page',
             'search_page',
             'refine_search_page',
-            'new_kb_article_page',
         ])
     def test_logout_from_pages(self, mozwebqa, page_method):
         page_under_test = getattr(PageProvider(mozwebqa), page_method)(do_login=True, user='default')
@@ -36,6 +35,17 @@ class TestLoginLogout:
 
         # sign out
         home_page = page_under_test.sign_out()
+        home_page.is_the_current_page
+        Assert.false(home_page.header.is_user_logged_in)
+
+    @pytest.mark.native
+    @pytest.mark.nondestructive
+    def test_logout_from_new_kb_article_page(self, mozwebqa):
+        new_kb_page = PageProvider(mozwebqa).new_kb_article_page()
+        Assert.true(new_kb_page.header.is_user_logged_in, 'User not shown to be logged in')
+
+        # sign out
+        home_page = new_kb_page.sign_out()
         home_page.is_the_current_page
         Assert.false(home_page.header.is_user_logged_in)
 
