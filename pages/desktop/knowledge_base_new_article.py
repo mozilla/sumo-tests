@@ -55,11 +55,11 @@ class KnowledgeBaseNewArticle(Base):
 
     def check_article_topic(self, index):
         index = index - 1
-        self.selenium.find_elements(*self.article_topic_locator)[index].click()
+        self.selenium.find_elements(*self._article_topic_locator)[index].click()
 
     def check_article_product(self, index):
         index = index - 1
-        self.selenium.find_elements(*self.article_product_locator)[index].click()
+        self.selenium.find_elements(*self._article_product_locator)[index].click()
     
     def set_article_keyword(self, keyword):
         self.selenium.find_element(*self._article_keywords_box_locator).send_keys(keyword)
