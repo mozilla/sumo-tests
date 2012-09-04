@@ -106,6 +106,8 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
     _article_content_box_locator = (By.ID, 'id_content')
+    _article_topic_locator = (By.CSS_SELECTOR, 'input[name=topics]')
+    _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn-submit')
     _comment_box_locator = (By.ID, 'id_comment')
     _comment_submit_btn_locator = (By.CSS_SELECTOR, 'input[value="Submit"]')
@@ -125,6 +127,8 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         self.set_article_keyword(article_info_dict['keyword'])
         self.set_article_summary(article_info_dict['summary'])
         self.set_article_content(article_info_dict['content'])
+        self.check_article_topic(1)
+        self.check_article_product(1)
         self.submit_article()
         return self.set_article_comment_box()
 
@@ -142,6 +146,14 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         element = self.selenium.find_element(*self._article_content_box_locator)
         element.clear()
         element.send_keys(content)
+    
+    def check_article_topic(self, index):
+        index = index - 1
+        self.selenium.find_elements(*self.article_topic_locator)[index].click()
+    
+    def check_article_product(self, index):
+        index = index - 1
+        self.selenium.find_elements(*self.article_product_locator)[index].click()
 
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
