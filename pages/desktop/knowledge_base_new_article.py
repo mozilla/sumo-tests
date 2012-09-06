@@ -37,11 +37,11 @@ class KnowledgeBaseNewArticle(Base):
         self.set_article_title(article_info_dict['title'])
         self.set_article_slug(article_info_dict['title'])
         self.set_article_category(article_info_dict['category'])
+        self.check_article_topic(1)
+        self.check_article_product(1)
         self.set_article_keyword(article_info_dict['keyword'])
         self.set_article_summary(article_info_dict['summary'])
         self.set_article_content(article_info_dict['content'])
-        self.check_article_topic(1)
-        self.check_article_product(1)
 
     def set_article_title(self, title):
         self.selenium.find_element(*self._article_title_box_locator).send_keys(title)
