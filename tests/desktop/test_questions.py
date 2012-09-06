@@ -24,7 +24,7 @@ class TestQuestions:
         ask_new_questions_pg.click_firefox_product_link()
         ask_new_questions_pg.click_category_problem_link()
         ask_new_questions_pg.type_question(q_to_ask)
-        ask_new_questions_pg.click_provide_details_button()
+        ask_new_questions_pg.click_none_of_these_solve_my_problem_button()
         view_question_pg = ask_new_questions_pg.fill_up_questions_form(q_to_ask, q_details)
 
         Assert.equal(view_question_pg.question, q_to_ask)
