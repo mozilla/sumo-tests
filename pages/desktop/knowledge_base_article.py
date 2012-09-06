@@ -178,7 +178,7 @@ class KnowledgeBaseTranslate(KnowledgeBase):
 
     # 2 elements inside the modal popup
     _describe_changes_locator = (By.ID, 'id_comment')
-    _submit_changes_button_locator = (By.CSS_SELECTOR, '#submit-modal > input')
+    _submit_changes_button_locator = (By.CSS_SELECTOR, '#submit-modal > button')
 
     def click_translate_language(self, language):
         self.selenium.find_element(By.LINK_TEXT, language).click()
