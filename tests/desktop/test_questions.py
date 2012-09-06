@@ -2,6 +2,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from unittestzero import Assert
 from pages.desktop.page_provider import PageProvider
 import datetime
@@ -24,7 +25,7 @@ class TestQuestions:
         ask_new_questions_pg.click_firefox_product_link()
         ask_new_questions_pg.click_category_problem_link()
         ask_new_questions_pg.type_question(q_to_ask)
-        ask_new_questions_pg.click_provide_details_button()
+        ask_new_questions_pg.click_none_of_these_solve_my_problem_button()
         view_question_pg = ask_new_questions_pg.fill_up_questions_form(q_to_ask, q_details)
 
         Assert.equal(view_question_pg.question, q_to_ask)
@@ -41,15 +42,18 @@ class TestQuestions:
         """
         expected_sorted_text = "Solved"
 
-        questions_pg = PageProvider(mozwebqa).questions_page()
-        questions_pg.click_sort_by_solved_questions()
-        # if there are no questions in the list then skip the test
-        if not questions_pg.are_questions_present:
-            pytest.skip("No questions present for filter=%s" % expected_sorted_text)
-        num_of_questions = questions_pg.questions_count
+        questions_page = PageProvider(mozwebqa).questions_page()
+        questions_page.click_to_expand_sort_and_filter_box()
+        Assert.true(questions_page.is_sort_and_filter_box_expanded)
 
-        for counter in range(num_of_questions):
-            actual_sorted_text = questions_pg.sorted_list_filter_text(counter + 1)
+        questions_page.click_sort_by_solved_questions()
+        # if there are no questions in the list then skip the test
+        if not questions_page.are_questions_present:
+            pytest.skip("No questions present for filter=%s" % expected_sorted_text)
+        number_of_questions = questions_page.questions_count
+
+        for counter in range(number_of_questions):
+            actual_sorted_text = questions_page.sorted_list_filter_text(counter + 1)
             Assert.equal(actual_sorted_text, expected_sorted_text)
 
     @pytest.mark.nondestructive

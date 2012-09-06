@@ -7,6 +7,7 @@ from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
 from unittestzero import Assert
 
+
 class QuestionsPage(Base):
     """
     'Ask a Question' landing page.
@@ -14,14 +15,15 @@ class QuestionsPage(Base):
     _page_title = 'Firefox Support Forum | Firefox Help'
     _page_url = '/en-US/questions'
     _ask_question_link_locator = '/en-US/questions/new'
+    _sort_and_filter_box_locator = (By.ID, 'filters')
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
     _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=unsolved"]')
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=no-replies"]')
-    _questions_list_block_locator = (By.CSS_SELECTOR, 'ol.questions')
+    _questions_list_block_locator = (By.CSS_SELECTOR, 'div.questions')
     _questions_list_locator = (By.CSS_SELECTOR, 'ol.questions > li')
     _question_list_link_locator = (By.CSS_SELECTOR, 'h2 > a')
     _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > span')
-    
+
     def click_ask_new_questions_link(self):
         self.selenium.find_element(*self._ask_question_link_locator).click()
         return AskNewQuestionsPage(self.testsetup)
@@ -34,6 +36,14 @@ class QuestionsPage(Base):
         view_question_pg = ViewQuestionPage(self.testsetup)
         view_question_pg.is_the_current_page
         return view_question_pg
+
+    def click_to_expand_sort_and_filter_box(self):
+        self.selenium.find_element(*self._sort_and_filter_box_locator).click()
+
+    @property
+    def is_sort_and_filter_box_expanded(self):
+        is_expanded = self.selenium.find_element(*self._sort_and_filter_box_locator).get_attribute('class')
+        return "collapsed" not in is_expanded
 
     def click_sort_by_solved_questions(self):
         self.selenium.find_element(*self._sort_solved_link_locator).click()
@@ -122,7 +132,6 @@ class ViewQuestionPage(Base):
                          "Expected page title: %s. Actual page title: %s" % \
                          (question_name + self._page_title, page_title))
 
-        
     @property
     def question(self):
         return self.selenium.find_element(*self._question_locator).text
