@@ -26,9 +26,9 @@ class KnowledgeBaseNewArticle(Base):
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_preview_btn_locator = (By.CSS_SELECTOR, 'div.submit > .btn-preview')
     _article_preview_content_locator = (By.CSS_SELECTOR, 'div#preview > div#doc-content')
-    _article_submit_btn_locator = (By.CSS_SELECTOR, 'input[value="Submit for Review"]')
+    _article_submit_btn_locator = (By.CSS_SELECTOR, 'button.btn-submit')
     _comment_box_locator = (By.ID, 'id_comment')
-    _comment_submit_btn_locator = (By.CSS_SELECTOR, 'input[value="Submit"]')
+    _comment_submit_btn_locator = (By.CSS_SELECTOR, '#submit-modal button.btn-important')
 
     def set_article(self, article_info_dict):
         """

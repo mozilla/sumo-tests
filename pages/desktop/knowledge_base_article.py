@@ -23,12 +23,12 @@ class KnowledgeBase(Base):
 
     class Navigation(Page):
 
-        _article_locator = (By.LINK_TEXT, 'Article')
-        _edit_article_locator = (By.LINK_TEXT, 'Edit Article')
-        _translate_article_locator = (By.LINK_TEXT, 'Translate Article')
-        _show_history_locator = (By.LINK_TEXT, 'Show History')
-        _show_editing_tools_locator = (By.CSS_SELECTOR, '.show')
-        _editing_tools_locator = (By.ID, 'doc-tabs')
+        _article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[1]/a')
+        _edit_article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[3]/a')
+        _translate_article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[4]/a')
+        _show_history_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[5]/a')
+        _show_editing_tools_locator = (By.CSS_SELECTOR, '.sidebar-nav.sidebar-folding > li:first-child')
+        _editing_tools_locator = (By.ID, 'doc-tools')
 
         def show_editing_tools(self):
             if self.is_element_visible(*self._show_editing_tools_locator):
