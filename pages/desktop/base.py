@@ -27,13 +27,13 @@ class Base(Page):
     class HeaderRegion(Page):
 
         #Not LoggedIn
-        _login_locator = (By.CSS_SELECTOR, 'li.logout > a:nth-of-type(1)')
+        _login_locator = (By.CSS_SELECTOR, 'a.sign-in')
         _register_locator = (By.CSS_SELECTOR, 'li.logout > a:nth-of-type(2)')
 
         #LoggedIn
         _account_controller_locator = (By.CSS_SELECTOR, '#aux-nav .account a.user')
-        _account_dropdown_locator = (By.CSS_SELECTOR, '#aux-nav li.account')
-        _logout_locator = (By.CSS_SELECTOR, 'li.account li:last-child > a')
+        _account_dropdown_locator = (By.CSS_SELECTOR, '#aux-nav li.dropdown')
+        _logout_locator = (By.CSS_SELECTOR, '#aux-nav li.dropdown a.sign-out')
 
         def click_login(self):
             self.selenium.find_element(*self._login_locator).click()
