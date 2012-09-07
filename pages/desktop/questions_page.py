@@ -3,9 +3,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pages.desktop.base import Base
-from selenium.webdriver.common.by import By
 from unittestzero import Assert
+from selenium.webdriver.common.by import By
+
+from pages.page import Page
+from pages.desktop.base import Base
 
 
 class QuestionsPage(Base):
@@ -20,9 +22,8 @@ class QuestionsPage(Base):
     _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=unsolved"]')
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=no-replies"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, 'div.questions')
-    _questions_list_locator = (By.CSS_SELECTOR, 'ol.questions > li')
+    _questions_list_locator = (By.CSS_SELECTOR, 'div.questions > section')
     _question_list_link_locator = (By.CSS_SELECTOR, 'h2 > a')
-    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > span')
 
     def click_ask_new_questions_link(self):
         self.selenium.find_element(*self._ask_question_link_locator).click()
@@ -62,8 +63,26 @@ class QuestionsPage(Base):
     def questions_count(self):
         return len(self.selenium.find_elements(*self._questions_list_locator))
 
-    def sorted_list_filter_text(self, question_number):
-        return self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._solved_or_unsolved_text_locator).text
+    @property
+    def questions(self):
+        return [self.Question(self.testsetup, web_element) for web_element in self.selenium.find_elements(*self._questions_list_locator)]
+
+    class Question(Page):
+
+        _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > div')
+        _replies_number_locator = (By.CSS_SELECTOR, 'div.replies > h4')
+
+        def __init__(self, testsetup, element):
+            Page.__init__(self, testsetup)
+            self._root_element = element
+
+        @property
+        def sorted_list_filter_text(self):
+            return self._root_element.find_element(*self._solved_or_unsolved_text_locator).text
+
+        @property
+        def number_of_replies(self):
+            return int(self._root_element.find_element(*self._replies_number_locator).text)
 
 
 class AskNewQuestionsPage(Base):
@@ -85,8 +104,8 @@ class AskNewQuestionsPage(Base):
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=solved]')
     _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=unsolved]')
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=no-replies]')
-    _questions_list_locator = (By.CSS_SELECTOR, 'ol.questions > li')
-    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > span')
+    _questions_list_locator = (By.CSS_SELECTOR, 'div.questions > section')
+    _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > div')
 
     def click_firefox_product_link(self):
         self.selenium.find_element(*self._firefox_product_first_link_locator).click()
