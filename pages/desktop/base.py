@@ -31,7 +31,7 @@ class Base(Page):
         _register_locator = (By.CSS_SELECTOR, 'a.register')
 
         #LoggedIn
-        _account_controller_locator = (By.CSS_SELECTOR, '#aux-nav .account a.user')
+        _account_controller_locator = (By.CSS_SELECTOR, '.user')
         _account_dropdown_locator = (By.CSS_SELECTOR, 'li.dropdown a.user')
         _logout_locator = (By.CSS_SELECTOR, 'li.dropdown > ul > li > a.sign-out')
 
