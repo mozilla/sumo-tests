@@ -92,7 +92,7 @@ class AskNewQuestionsPage(Base):
     """
     _page_title = 'Ask a Question | Firefox Help'
     _page_url = '/en-US/questions/new'
-    _firefox_product_first_link_locator = (By.CSS_SELECTOR, '#product-picker li:nth-child(1) > a')
+    _firefox_product_first_link_locator = (By.CSS_SELECTOR, '#product-picker li:nth-child(1) > a.cf > span.title')
     _category_prob_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _type_question_box_locator = (By.NAME, 'search')
     _ask_this_button_locator = (By.CSS_SELECTOR, '#ask-search-form .btn.btn-important')
