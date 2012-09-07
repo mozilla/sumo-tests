@@ -6,6 +6,7 @@ from unittestzero import Assert
 import pytest
 from pages.desktop.page_provider import PageProvider
 
+
 class TestSearch:
 
     @pytest.mark.nondestructive
@@ -32,9 +33,6 @@ class TestSearch:
         refine_search_pg.click_search_button_support()
 
         Assert.true(refine_search_pg.search_result_count > 0, "No search results not found")
-
-        # sign out
-        refine_search_pg.sign_out()
 
     @pytest.mark.nondestructive
     def test_search_returns_either_term(self, mozwebqa):
