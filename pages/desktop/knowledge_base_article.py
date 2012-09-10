@@ -24,9 +24,9 @@ class KnowledgeBase(Base):
     class Navigation(Page):
 
         _article_locator = (By.LINK_TEXT, 'Article')
-        _edit_article_locator = (By.LINK_TEXT, 'Edit Article')
+        _edit_article_locator = (By.LINK_TEXT, 'EDIT ARTICLE')
         _translate_article_locator = (By.LINK_TEXT, 'Translate Article')
-        _show_history_locator = (By.LINK_TEXT, 'Show History')
+        _show_history_locator = (By.LINK_TEXT, 'SHOW HISTORY')
         _show_editing_tools_locator = (By.CSS_SELECTOR, '.show')
         _editing_tools_locator = (By.ID, 'doc-tabs')
 
@@ -103,6 +103,8 @@ class KnowledgeBaseArticle(KnowledgeBase):
 class KnowledgeBaseEditArticle(KnowledgeBase):
 
     _page_title = 'Edit Article | '
+    _article_description_form_locator = (By.CSS_SELECTOR, 'div#document-form form')
+    _article_description_form_toggle_locator = (By.CSS_SELECTOR, 'div#document-form summary')
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
     _article_content_box_locator = (By.ID, 'id_content')
@@ -110,7 +112,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn-submit')
     _comment_box_locator = (By.ID, 'id_comment')
-    _comment_submit_btn_locator = (By.CSS_SELECTOR, 'input[value="Submit"]')
+    _comment_submit_btn_locator = (By.CSS_SELECTOR, '.kbox-container button[type="submit"]')
 
     @property
     def article_summary_text(self):
@@ -120,6 +122,9 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     def article_contents_text(self):
         return self.selenium.find_element(*self._article_content_box_locator).text
 
+    def toggle_edit_description_form(self):
+        self.selenium.find_element(*self._article_description_form_toggle_locator).click()
+
     def edit_article(self, article_info_dict):
         """
             Edits an existing article.
@@ -127,6 +132,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         self.set_article_keyword(article_info_dict['keyword'])
         self.set_article_summary(article_info_dict['summary'])
         self.set_article_content(article_info_dict['content'])
+        self.toggle_edit_description_form()
         self.check_article_topic(1)
         self.check_article_product(1)
         self.submit_article()
@@ -149,11 +155,11 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     
     def check_article_topic(self, index):
         index = index - 1
-        self.selenium.find_elements(*self.article_topic_locator)[index].click()
+        self.selenium.find_elements(*self._article_topic_locator)[index].click()
     
     def check_article_product(self, index):
         index = index - 1
-        self.selenium.find_elements(*self.article_product_locator)[index].click()
+        self.selenium.find_elements(*self._article_product_locator)[index].click()
 
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
