@@ -136,10 +136,10 @@ class AskNewQuestionsPage(Base):
 
 class ViewQuestionPage(Base):
 
-    _question_locator = (By.CSS_SELECTOR, 'div.content > h1')
-    _detail_locator = (By.CSS_SELECTOR, 'div.content > p')
-    _problem_too_button_locator = (By.CSS_SELECTOR, 'input[value*="problem"]')
-    _problem_count_text_locator = (By.CSS_SELECTOR, 'div[class^="have-problem"] > mark')
+    _question_locator = (By.CSS_SELECTOR, 'h2.summary')
+    _detail_locator = (By.CSS_SELECTOR, 'div.main-content > p')
+    _problem_too_button_locator = (By.CSS_SELECTOR, 'div.me-too > form > button.btn')
+    _problem_count_text_locator = (By.CSS_SELECTOR, 'div.question-meta > ul.cf > li:nth-child(2)')
     _no_thanks_link_locator = (By.LINK_TEXT, 'No Thanks')
     _page_title = ' | Firefox Support Forum | Firefox Help'
 
