@@ -12,7 +12,7 @@ class SearchPage(Base):
     'Search for Firefox Help' page
     """
 
-    _page_title = 'Search | Firefox Help'
+    _page_title = 'Advanced Search | Firefox Help'
     _page_url = '/en-US/search'
     _search_box = (By.CSS_SELECTOR, 'input.search-query')
     _search_button = (By.CSS_SELECTOR, 'input[type="submit"]')
