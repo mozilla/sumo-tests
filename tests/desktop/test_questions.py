@@ -32,7 +32,6 @@ class TestQuestions:
         Assert.equal(view_question_pg.question, q_to_ask)
         Assert.equal(view_question_pg.question_detail, q_details)
 
-    @pytest.mark.xfail(reason="Bug: Closed questions don't have 'Solved' tag")
     @pytest.mark.nondestructive
     def test_that_questions_sorts_correctly_by_filter_equal_to_solved(self, mozwebqa):
         """
