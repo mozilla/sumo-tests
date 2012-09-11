@@ -72,6 +72,7 @@ class TestQuestions:
             actual_sorted_text = questions_pg.sorted_list_filter_text(index)
             Assert.equal(actual_sorted_text, expected_sorted_text)
 
+    @pytest.mark.xfail(reason="Bug 790211 After clicking 'I have this problem too' the counter increments the total number by 2 instead of 1")
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
 
