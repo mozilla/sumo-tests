@@ -54,7 +54,7 @@ class TestLoginLogout:
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
         kb_article_history = self._create_new_kb_article(mozwebqa)
         kb_edit_article = kb_article_history.navigation.click_edit_article()
- 
+
         # sign out
         home_page = kb_edit_article.sign_out()
         home_page.is_the_current_page
