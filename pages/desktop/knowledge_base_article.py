@@ -204,6 +204,10 @@ class KnowledgeBaseTranslate(KnowledgeBase):
     def click_translate_language(self, language):
         self.selenium.find_element(By.LINK_TEXT, language).click()
 
+    @property
+    def is_type_title_visible(self):
+        return self.is_element_visible(*self._description_title_locator)
+
     def type_title(self, text):
         self.selenium.find_element(*self._description_title_locator).send_keys(text)
 

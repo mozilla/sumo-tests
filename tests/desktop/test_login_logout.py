@@ -39,7 +39,7 @@ class TestLoginLogout:
         Assert.false(home_page.header.is_user_logged_in)
 
     @pytest.mark.native
-    @pytest.mark.nondestructive
+    @pytest.mark.destructive  #until the credentials are working on production
     def test_logout_from_new_kb_article_page(self, mozwebqa):
         new_kb_page = PageProvider(mozwebqa).new_kb_article_page()
         Assert.true(new_kb_page.header.is_user_logged_in, 'User not shown to be logged in')
@@ -54,7 +54,7 @@ class TestLoginLogout:
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
         kb_article_history = self._create_new_kb_article(mozwebqa)
         kb_edit_article = kb_article_history.navigation.click_edit_article()
- 
+
         # sign out
         home_page = kb_edit_article.sign_out()
         home_page.is_the_current_page

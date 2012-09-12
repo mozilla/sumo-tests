@@ -123,6 +123,9 @@ class TestKnowledgeBaseArticle:
         kb_translate_pg = kb_article_history.navigation.click_translate_article()
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
+        if not kb_translate_pg.is_type_title_visible:
+            pytest.xfail(reason='Bug 790626 - [STAGE] translating a question sometimes returns 500 page')
+
         timestamp = datetime.datetime.now()
         kb_translate_pg.type_title('artikolo_titolo%s' % timestamp)
         kb_translate_pg.type_slug('artikolo_limako_%s' % timestamp)
@@ -148,8 +151,10 @@ class TestKnowledgeBaseArticle:
         article_content = "automated content_%s" % timestamp
 
         article_info_dict = {'title': article_name,
-                             'category': 'How to', 'keyword': 'test',
-                             'summary': article_summary, 'content': article_content}
+                             'category': 'How to',
+                             'keyword': 'test',
+                             'summary': article_summary,
+                             'content': article_content}
 
         # create a new article
         kb_new_article.set_article(article_info_dict)
