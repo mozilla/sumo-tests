@@ -31,11 +31,11 @@ class KnowledgeBase(Base):
         _translate_article_locator = (By.CSS_SELECTOR, '.sidebar-nav a[href$="locales"]')
         _show_history_locator = (By.CSS_SELECTOR, '.sidebar-nav a[href$="history"]')
         _show_editing_tools_locator = (By.CSS_SELECTOR, '#doc-tools li:nth-of-type(1) span')
-        _editing_tools_locator = (By.CSS_SELECTOR, '#doc-tools li:nth-of-type(1) span')
+        _editing_tools_locator = (By.CSS_SELECTOR, '#doc-tools li:nth-of-type(1)')
 
         def show_editing_tools(self):
             if not self.is_element_visible(*self._edit_article_locator):
-                self.selenium.find_element(*self._editing_tools_locator).click()
+                self.selenium.find_element(*self._show_editing_tools_locator).click()
                 self.wait_for_element_visible(*self._edit_article_locator)
             
         def click_article(self):
