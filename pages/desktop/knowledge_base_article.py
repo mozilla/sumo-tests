@@ -24,9 +24,11 @@ class KnowledgeBase(Base):
     class Navigation(Page):
 
         _article_locator = (By.LINK_TEXT, 'Article')
-        _edit_article_locator = (By.LINK_TEXT, 'EDIT ARTICLE')
+        #_edit_article_locator = (By.LINK_TEXT, 'EDIT ARTICLE')
+        _edit_article_locator = (By.CSS_SELECTOR, '.sidebar-nav a[href$="edit"]')
         _translate_article_locator = (By.LINK_TEXT, 'Translate Article')
-        _show_history_locator = (By.LINK_TEXT, 'SHOW HISTORY')
+        #_show_history_locator = (By.LINK_TEXT, 'SHOW HISTORY')
+        _show_history_locator = (By.CSS_SELECTOR, '.sidebar-nav a[href$="history"]')
         _show_editing_tools_locator = (By.CSS_SELECTOR, '.show')
         _editing_tools_locator = (By.ID, 'doc-tabs')
 
