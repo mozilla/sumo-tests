@@ -57,7 +57,7 @@ class KnowledgeBase(Base):
 
 class KnowledgeBaseArticle(KnowledgeBase):
 
-    _page_title = ' | How to | Firefox Help'
+    _page_title = ' | How to | Mozilla Support'
     _title_locator = (By.CSS_SELECTOR, 'h1.title')
     _helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=helpful]')
     _not_helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=not-helpful]')

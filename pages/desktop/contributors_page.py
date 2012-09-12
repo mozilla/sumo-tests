@@ -15,7 +15,7 @@ class ContributorsPage(Base):
     web elements and methods that can be
     performed on them.
     """
-    _page_title = 'Contributor Dashboard | Firefox Help'
+    _page_title = 'Contributor Dashboard | Mozilla Support'
     _page_url = '/en-US/contributors'
     _this_week_button_locator = (By.LINK_TEXT, 'This Week')
     _all_time_button_locator = (By.LINK_TEXT, 'All Time')

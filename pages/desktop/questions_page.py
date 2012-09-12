@@ -14,7 +14,7 @@ class QuestionsPage(Base):
     """
     'Ask a Question' landing page.
     """
-    _page_title = 'Firefox Support Forum | Firefox Help'
+    _page_title = 'Firefox Support Forum | Mozilla Support'
     _page_url = '/en-US/questions'
     _ask_question_link_locator = '/en-US/questions/new'
     _sort_and_filter_box_locator = (By.ID, 'filters')
@@ -90,7 +90,7 @@ class AskNewQuestionsPage(Base):
     'Ask a New Question' page.
     Child class of Questions Page
     """
-    _page_title = 'Ask a Question | Firefox Help'
+    _page_title = 'Ask a Question | Mozilla Support'
     _page_url = '/en-US/questions/new'
     _firefox_product_first_link_locator = (By.CSS_SELECTOR, '#product-picker li:nth-child(1) > a.cf > span.title')
     _category_prob_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
@@ -141,7 +141,7 @@ class ViewQuestionPage(Base):
     _problem_too_button_locator = (By.CSS_SELECTOR, 'div.me-too > form > button.btn')
     _problem_count_text_locator = (By.CSS_SELECTOR, 'div.question-meta > ul.cf > li:nth-child(2)')
     _no_thanks_link_locator = (By.LINK_TEXT, 'No Thanks')
-    _page_title = ' | Firefox Support Forum | Firefox Help'
+    _page_title = ' | Firefox Support Forum | Mozilla Support'
 
     def is_the_current_page(self, question_name):
         if self._page_title:
