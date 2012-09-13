@@ -6,6 +6,7 @@ from unittestzero import Assert
 import pytest
 from pages.desktop.page_provider import PageProvider
 
+
 class TestSearch:
 
     @pytest.mark.nondestructive
@@ -44,7 +45,8 @@ class TestSearch:
         should return same as only the good search term
 
         """
-
+        if (mozwebqa.base_url == "http://support.mozilla.org"):
+            pytest.xfail(reason="Bug 790951Search returns different results for a good search term and a good search term with a junk search term ")
         good_search_term = "firefox"
         junk_search_term = "werpadfjka"
 
