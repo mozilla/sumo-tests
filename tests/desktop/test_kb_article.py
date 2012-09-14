@@ -34,7 +34,6 @@ class TestKnowledgeBaseArticle:
         kb_article_history = kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    @pytest.mark.xfail(reason='Bug 694614 - spurious failures')
     def test_that_article_can_be_edited(self, mozwebqa):
         """
            Creates a new knowledge base article.
