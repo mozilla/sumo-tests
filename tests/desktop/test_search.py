@@ -15,7 +15,7 @@ class TestSearch:
         ('bgkhdsaghb')])
     def test_cant_find_what_youre_looking_for_test(self, mozwebqa, search_term):
         search_page_obj = PageProvider(mozwebqa).search_page()
-        search_page_obj.do_search_on_search_box(search_term)
+        search_page_obj.do_search_on_search_query(search_term)
 
         expected_text = "Can't find what you're looking for?"
         Assert.contains(expected_text, search_page_obj.ask_a_question_text)
@@ -49,7 +49,7 @@ class TestSearch:
         search_page_obj = PageProvider(mozwebqa).search_page()
 
         # search with good search term only.  save first search result.
-        search_page_obj.do_search_on_search_box(good_search_term)
+        search_page_obj.do_search_on_search_query(good_search_term)
         Assert.true(search_page_obj.is_result_present, "1st search has no results")
         result_search_1 = search_page_obj.get_result_text
 
