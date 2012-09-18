@@ -34,7 +34,6 @@ class TestKnowledgeBaseArticle:
         kb_article_history = kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    @pytest.mark.xfail(reason='Bug 694614 - spurious failures')
     def test_that_article_can_be_edited(self, mozwebqa):
         """
            Creates a new knowledge base article.
@@ -123,9 +122,6 @@ class TestKnowledgeBaseArticle:
         # translating
         kb_translate_pg = kb_article_history.navigation.click_translate_article()
         kb_translate_pg.click_translate_language('Esperanto (eo)')
-
-        if not kb_translate_pg.is_type_title_visible:
-            pytest.xfail(reason='Bug 790626 - [STAGE] translating a question sometimes returns 500 page')
 
         timestamp = datetime.datetime.now()
         kb_translate_pg.type_title('artikolo_titolo%s' % timestamp)

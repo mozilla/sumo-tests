@@ -14,7 +14,7 @@ class SupportHomePage(Base):
     performed on them.
     """
 
-    _page_title = 'Firefox Support Home Page | Firefox Help'
+    _page_title = 'Mozilla Support'
     _page_url = '/en-US/home'
     
     _main_search_box = (By.ID, 'q')
