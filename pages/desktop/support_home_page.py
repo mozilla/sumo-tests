@@ -23,6 +23,7 @@ class SupportHomePage(Base):
     _top_helpful_content_locator = (By.CSS_SELECTOR, 'div#home-content-quick section ul > li > a')
     _top_issues_link_locator = (By.CSS_SELECTOR, '#home-content-explore ul > li > a')
     _kb_dashboard_link_locator = (By.LINK_TEXT, 'Knowledge Base Dashboard')
+    _for_contributor_locator = (By.CSS_SELECTOR, '#for-contributors h1')
 
     def do_search_on_main_search_box(self, search_query):
         search_box = self.selenium.find_element(*self._main_search_box)
@@ -39,6 +40,7 @@ class SupportHomePage(Base):
         self.selenium.find_element(*self._top_issues_link_locator).click()
 
     def click_knowledge_base_dashboard_link(self):
+        self.selenium.find_element(*self._for_contributor_locator).click()
         self.selenium.find_element(*self._kb_dashboard_link_locator).click()
         from contributors_page import ContributorsPage
         return ContributorsPage(self.testsetup)
