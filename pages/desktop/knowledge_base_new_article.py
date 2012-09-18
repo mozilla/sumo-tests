@@ -8,12 +8,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from pages.desktop.knowledge_base_article import KnowledgeBaseShowHistory
 
+
 class KnowledgeBaseNewArticle(Base):
     """
     'Create New Article' Page is where the form
     for creating new knowledge base article is found.
     """
-    _page_title = 'Create a New Article | Knowledge Base | Firefox Help'
+    _page_title = 'Create a New Article | Knowledge Base | Mozilla Support'
     _page_url = '/en-US/kb/new'
 
     _article_title_box_locator = (By.ID, 'id_title')
@@ -26,9 +27,9 @@ class KnowledgeBaseNewArticle(Base):
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_preview_btn_locator = (By.CSS_SELECTOR, 'div.submit > .btn-preview')
     _article_preview_content_locator = (By.CSS_SELECTOR, 'div#preview > div#doc-content')
-    _article_submit_btn_locator = (By.CSS_SELECTOR, 'button.btn-submit')
+    _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn.btn-important.btn-submit')
     _comment_box_locator = (By.ID, 'id_comment')
-    _comment_submit_btn_locator = (By.CSS_SELECTOR, '#submit-modal button')
+    _comment_submit_btn_locator = (By.CSS_SELECTOR, '.kbox-wrap .btn.btn-important')
 
     def set_article(self, article_info_dict):
         """
@@ -48,7 +49,7 @@ class KnowledgeBaseNewArticle(Base):
 
     def set_article_slug(self, text):
         self.selenium.find_element(*self._article_slug_box_locator).send_keys(text)
-        
+
     def set_article_category(self, category):
         select_box = Select(self.selenium.find_element(*self._article_category_menu_locator))
         select_box.select_by_visible_text(category)
@@ -60,7 +61,7 @@ class KnowledgeBaseNewArticle(Base):
     def check_article_product(self, index):
         index = index - 1
         self.selenium.find_elements(*self._article_product_locator)[index].click()
-    
+
     def set_article_keyword(self, keyword):
         self.selenium.find_element(*self._article_keywords_box_locator).send_keys(keyword)
 

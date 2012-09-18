@@ -8,7 +8,7 @@ from pages.page import Page
 
 class PageProvider():
     ''' internal methods '''
-    
+
     def __init__(self, testsetup):
         self.testsetup = testsetup
         self.base_url_ssl = testsetup.base_url.replace('http://', 'https://')
@@ -21,7 +21,7 @@ class PageProvider():
         if (do_login):
             page_object.sign_in(user)
         return page_object
-    
+
     def _go_to_page_with_login_redirect(self, page_object, user='default'):
         self.selenium.maximize_window()
         from pages.desktop.login_page import LoginPage
@@ -63,4 +63,4 @@ class PageProvider():
 
     def new_kb_article_page(self, user='admin'):
         from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
-        return self._go_to_page_with_login_redirect(KnowledgeBaseNewArticle(self.testsetup),user)
+        return self._go_to_page_with_login_redirect(KnowledgeBaseNewArticle(self.testsetup), user)

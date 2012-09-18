@@ -6,19 +6,8 @@ from unittestzero import Assert
 import pytest
 from pages.desktop.page_provider import PageProvider
 
+
 class TestSearch:
-
-    @pytest.mark.nondestructive
-    @pytest.mark.parametrize(('search_term'), [
-        ('firefox'),
-        ('bgkhdsaghb')])
-    def test_cant_find_what_youre_looking_for_test(self, mozwebqa, search_term):
-        search_page_obj = PageProvider(mozwebqa).search_page()
-        search_page_obj.do_search_on_search_box(search_term)
-
-        expected_text = "Can't find what you're looking for?"
-        Assert.contains(expected_text, search_page_obj.ask_a_question_text)
-        Assert.true(search_page_obj.is_ask_a_question_present, "Ask question link not present")
 
     @pytest.mark.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out')
     @pytest.mark.native
@@ -32,9 +21,6 @@ class TestSearch:
         refine_search_pg.click_search_button_support()
 
         Assert.true(refine_search_pg.search_result_count > 0, "No search results not found")
-
-        # sign out
-        refine_search_pg.sign_out()
 
     @pytest.mark.nondestructive
     def test_search_returns_either_term(self, mozwebqa):
@@ -51,7 +37,7 @@ class TestSearch:
         search_page_obj = PageProvider(mozwebqa).search_page()
 
         # search with good search term only.  save first search result.
-        search_page_obj.do_search_on_search_box(good_search_term)
+        search_page_obj.do_search_on_search_query(good_search_term)
         Assert.true(search_page_obj.is_result_present, "1st search has no results")
         result_search_1 = search_page_obj.get_result_text
 

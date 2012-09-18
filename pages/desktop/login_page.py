@@ -15,7 +15,7 @@ class LoginPage(Base):
     """
         Form for login.
     """
-    _page_title = 'Log In | Firefox Help'
+    _page_title = 'Log In | Mozilla Support'
     _page_url = '/en-US/users/login'
     _username_box_locator = (By.ID, 'id_username')
     _password_box_locator = (By.ID, 'id_password')
