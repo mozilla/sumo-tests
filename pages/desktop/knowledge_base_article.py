@@ -23,50 +23,41 @@ class KnowledgeBase(Base):
 
     class Navigation(Page):
 
-        _article_locator = (By.LINK_TEXT, 'Article')
-        _edit_article_locator = (By.LINK_TEXT, 'Edit Article')
-        _translate_article_locator = (By.LINK_TEXT, 'Translate Article')
-        _show_history_locator = (By.LINK_TEXT, 'Show History')
-        _show_editing_tools_locator = (By.CSS_SELECTOR, '.show')
-        _editing_tools_locator = (By.ID, 'doc-tabs')
+        _article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[1]/a')
+        _edit_article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[3]/a')
+        _translate_article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[4]/a')
+        _show_history_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[5]/a')
+        _show_editing_tools_locator = (By.CSS_SELECTOR, '.sidebar-nav.sidebar-folding > li:first-child span')
+        _editing_tools_locator = (By.ID, 'doc-tools')
 
         def show_editing_tools(self):
-            if self.is_element_visible(*self._show_editing_tools_locator):
+            if not self.is_element_visible(*self._edit_article_locator):
                 self.selenium.find_element(*self._show_editing_tools_locator).click()
-                self.wait_for_element_visible(*self._editing_tools_locator)
-            
+                self.wait_for_element_visible(*self._edit_article_locator)
+
         def click_article(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._article_locator).click()
-            kb_article = KnowledgeBaseArticle(self.testsetup)
-            kb_article.is_the_current_page
-            return kb_article
+            return KnowledgeBaseArticle(self.testsetup)
 
         def click_edit_article(self):
-            self.show_editing_tools()
             self.selenium.find_element(*self._edit_article_locator).click()
-            edit_kb_article = KnowledgeBaseEditArticle(self.testsetup)
-            edit_kb_article.is_the_current_page
-            return edit_kb_article
+            return KnowledgeBaseEditArticle(self.testsetup)
 
         def click_translate_article(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._translate_article_locator).click()
-            translate_kb_article = KnowledgeBaseTranslate(self.testsetup)
-            translate_kb_article.is_the_current_page
-            return translate_kb_article
+            return KnowledgeBaseTranslate(self.testsetup)
 
         def click_show_history(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._show_history_locator).click()
-            kb_article_history = KnowledgeBaseShowHistory(self.testsetup)
-            kb_article_history.is_the_current_page
-            return kb_article_history
+            return KnowledgeBaseShowHistory(self.testsetup)
 
 
 class KnowledgeBaseArticle(KnowledgeBase):
 
-    _page_title = ' | How to | Firefox Help'
+    _page_title = ' | How to | Mozilla Support'
     _title_locator = (By.CSS_SELECTOR, 'h1.title')
     _helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=helpful]')
     _not_helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=not-helpful]')
@@ -93,7 +84,7 @@ class KnowledgeBaseArticle(KnowledgeBase):
     def vote(self):
         if self.can_vote:
             import random
-            helpful = random.randint(0,1)
+            helpful = random.randint(0, 1)
             if (helpful):
                 self.vote_helpful()
             else:
@@ -103,6 +94,8 @@ class KnowledgeBaseArticle(KnowledgeBase):
 class KnowledgeBaseEditArticle(KnowledgeBase):
 
     _page_title = 'Edit Article | '
+    _description_form_toggle_locator = (By.CSS_SELECTOR, '#document-form summary')
+    _description_form_save_locator = (By.CSS_SELECTOR, '#document-form button[type="submit"]')
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
     _article_content_box_locator = (By.ID, 'id_content')
@@ -110,7 +103,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn-submit')
     _comment_box_locator = (By.ID, 'id_comment')
-    _comment_submit_btn_locator = (By.CSS_SELECTOR, 'input[value="Submit"]')
+    _comment_submit_btn_locator = (By.CSS_SELECTOR, '.kbox-wrap button[type="submit"]')
 
     @property
     def article_summary_text(self):
@@ -124,11 +117,16 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         """
             Edits an existing article.
         """
+        # Edit the Description form
+        self.open_description_form()
+        # select a different topic & product than as selected for a new article
+        self.check_article_topic(2)
+        self.check_article_product(2)
+        self.save_description_form()
+        # Edit Content form
         self.set_article_keyword(article_info_dict['keyword'])
         self.set_article_summary(article_info_dict['summary'])
         self.set_article_content(article_info_dict['content'])
-        self.check_article_topic(1)
-        self.check_article_product(1)
         self.submit_article()
         return self.set_article_comment_box()
 
@@ -146,14 +144,22 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         element = self.selenium.find_element(*self._article_content_box_locator)
         element.clear()
         element.send_keys(content)
-    
+
+    def open_description_form(self):
+        if not self.is_element_visible(*self._article_topic_locator):
+            self.selenium.find_element(*self._description_form_toggle_locator).click()
+            self.wait_for_element_present(*self._article_topic_locator)
+
+    def save_description_form(self):
+        self.selenium.find_element(*self._description_form_save_locator).click()
+
     def check_article_topic(self, index):
         index = index - 1
-        self.selenium.find_elements(*self.article_topic_locator)[index].click()
-    
+        self.selenium.find_elements(*self._article_topic_locator)[index].click()
+
     def check_article_product(self, index):
         index = index - 1
-        self.selenium.find_elements(*self.article_product_locator)[index].click()
+        self.selenium.find_elements(*self._article_product_locator)[index].click()
 
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
@@ -226,7 +232,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
 
     @property
     def is_helpfulness_chart_visible(self):
-        # Because of bug 723575 there are two element checks to assert that 
+        # Because of bug 723575 there are two element checks to assert that
         # the graph has actually loaded
         return self.is_element_visible(*self._helpfulness_chart_locator) \
             and self.is_element_visible(*self._helpfulness_chart_graph_locator)
@@ -244,7 +250,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     def click_show_helpfulness_chart(self):
         self.selenium.find_element(*self._show_chart_link_locator).click()
         self.wait_for_ajax()
-        
+
     @property
     def most_recent_revision_comment(self):
         self.wait_for_element_visible(*self._top_revision_comment)

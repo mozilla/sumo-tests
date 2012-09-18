@@ -11,7 +11,7 @@ class RefineSearchPage(Base):
     """
        'Advanced Search' page.
     """
-    _page_title = 'Search | Firefox Help'
+    _page_title = 'Advanced Search | Mozilla Support'
     _page_url = '/en-US/search?a=2'
     _article_search_box = (By.ID, 'kb_q')
     _post_search_box = (By.ID, 'support_q')
