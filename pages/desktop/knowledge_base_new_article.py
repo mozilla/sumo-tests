@@ -14,7 +14,10 @@ class KnowledgeBaseNewArticle(Base):
     'Create New Article' Page is where the form
     for creating new knowledge base article is found.
     """
-    _page_title = 'Create a New Article | Knowledge Base | Mozilla Support'
+    @property
+    def _page_title(self):
+        return self.format_page_title('Create a New Article', 'Knowledge Base')
+
     _page_url = '/en-US/kb/new'
 
     _article_title_box_locator = (By.ID, 'id_title')
