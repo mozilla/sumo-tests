@@ -41,7 +41,7 @@ class SupportHomePage(Base):
 
     @property
     def is_for_contributors_expanded(self):
-        return 'expanded' in self.selenium.find_element(*self._for_contributor_locators).get_attribute('class')
+        return 'expanded' in self.selenium.find_element(*self._for_contributors_locator).get_attribute('class')
 
     def click_knowledge_base_dashboard_link(self):
         self.selenium.find_element(*self._for_contributors_locator).click()
