@@ -17,7 +17,7 @@ class TestRedirects:
     _user_agent_firefox = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0) Gecko/20100101 Firefox/13.0.1'
 
     def _check_redirect(self, testsetup, start_url, user_agent=_user_agent_firefox, locale='en-US'):
-        if not testsetup.base_url == 'https://support.mozilla.org': 
+        if 'support.mozilla.org' not in testsetup.base_url: 
             pytest.xfail("Only run re-write tests on prod.")
         
         start_url = testsetup.base_url + start_url
