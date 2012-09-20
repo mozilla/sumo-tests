@@ -27,15 +27,15 @@ class TestRedirects:
         return requests.get(start_url, headers=headers)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/1/firefox/4.0/WINNT/en-US/firefox-help/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/WINNT/en-US/firefox-f1/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/WINNT/en-US/firefox-osxkey/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/Darwin/en-US/firefox-help/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/Darwin/en-US/firefox-f1/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/Darwin/en-US/firefox-osxkey/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/Linux/en-US/firefox-help/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/Linux/en-US/firefox-f1/', '/en-US/home?as=u'),
-        ('/1/firefox/4.0/Linux/en-US/firefox-osxkey/', '/en-US/home?as=u'),
+        ('/1/firefox/4.0/WINNT/en-US/firefox-help/', '/en-US/products/firefox?as=u'),
+        ('/1/firefox/4.0/WINNT/en-US/firefox-f1/', '/en-US/products/firefox?as=u'),
+        ('/1/firefox/4.0/WINNT/en-US/firefox-osxkey/', '/en-US/products/firefox?as=u'),
+        ('/1/firefox/4.0/Darwin/en-US/firefox-help/', '/en-US/products/firefox?as=u'),
+        ('/1/firefox/4.0/Darwin/en-US/firefox-f1/', '/en-US/products/firefox?as=u'),
+        ('/1/firefox/4.0/Darwin/en-US/firefox-osxkey/', '/en-US/products/firefox?as=u'),
+        ('/1/firefox/4.0/Linux/en-US/firefox-help/', '/en-US/products/firefox?as=u'),
+        ('/1/firefox/4.0/Linux/en-US/firefox-f1/', '/en-US/products/firefox?as=u'),
+        ('/1/firefox/4.0/Linux/en-US/firefox-osxkey/', '/en-US/products/firefox?as=u'),
     ])
     def test_browser_redirect_to_sumo(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
