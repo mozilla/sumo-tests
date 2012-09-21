@@ -24,6 +24,24 @@ class Base(Page):
         from pages.desktop.support_home_page import SupportHomePage
         return SupportHomePage(self.testsetup)
 
+    def format_page_title(self, *title_segments):
+        '''
+            Create a page title by adding separators between title segments
+            and ending with the base segment
+            Usage:
+                format_page_title('Forum')            returns 'Forum | Mozilla Support'
+                format_page_title('Create New', 'KB') returns 'Create New | KB | Mozilla Support'
+                format_page_title('', 'Forum')        returns ' | Forum | Mozilla Support'
+                format_page_title()                   returns 'Mozilla Support'
+        '''
+        separator = ' | '
+        page_title = 'Mozilla Support'
+        segment_list = list(title_segments)
+        segment_list.reverse()
+        for title in segment_list:
+            page_title = title + separator + page_title
+        return page_title
+
     class HeaderRegion(Page):
 
         #Not LoggedIn
