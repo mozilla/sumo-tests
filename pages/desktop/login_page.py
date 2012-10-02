@@ -19,7 +19,7 @@ class LoginPage(Base):
     _page_url = '/en-US/users/login'
     _username_box_locator = (By.ID, 'id_username')
     _password_box_locator = (By.ID, 'id_password')
-    _log_in_button_locator = (By.NAME, 'login')
+    _log_in_button_locator = (By.CSS_SELECTOR, '#login > form > div.submit > button')
     _login_error_locator = (By.CSS_SELECTOR, 'ul.errorlist > li')
 
     # if user is logged-in then you see these elements

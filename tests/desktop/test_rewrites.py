@@ -18,7 +18,7 @@ class TestRedirects:
 
     def _check_redirect(self, testsetup, start_url, user_agent=_user_agent_firefox, locale='en-US'):
         if 'support.mozilla.org' not in testsetup.base_url: 
-            pytest.xfail("Only run re-write tests on prod.")
+            pytest.skip("Only run re-write tests on prod.")
         
         start_url = testsetup.base_url + start_url
 

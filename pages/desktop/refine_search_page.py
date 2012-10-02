@@ -18,7 +18,7 @@ class RefineSearchPage(Base):
     _post_tags_box = (By.ID, 'id_q_tags')
     _thread_search_box = (By.ID, 'discussion_q')
     _search_button_kb = (By.CSS_SELECTOR, 'input[name="w"][value="1"]+div.submit-search > input[type="submit"]')
-    _search_button_support = (By.CSS_SELECTOR, 'input[name="w"][value="2"]+div.submit-search > input[type="submit"]')
+    _search_button_support = (By.CSS_SELECTOR, '#support > div.submit-search > button')
     _search_button_disc = (By.CSS_SELECTOR, 'input[name="w"][value="4"]+div.submit-search > input[type="submit"]')
     _kb_cat_check_box = (By.CSS_SELECTOR, 'input#id_category_0')
     _kb_tab = (By.CSS_SELECTOR, 'div#search-tabs > ul > li:nth-child(1) > a')
