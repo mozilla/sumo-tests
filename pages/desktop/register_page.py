@@ -19,7 +19,7 @@ class RegisterPage(Base):
     _password_box_locator = (By.ID, 'id_for_password')
     _password_repeat_box_locator = (By.ID, 'id_for_password2')
     _email_add_box_locator = (By.ID, 'id_for_email')
-    _register_button_locator = (By.CSS_SELECTOR, 'input.btn[value="Register"]')
+    _register_button_locator = (By.CSS_SELECTOR, '#register > form > div.submit > button')
 
     def register_new_user(self):
         user_name = self.get_random_word(5)

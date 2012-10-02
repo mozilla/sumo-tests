@@ -22,7 +22,7 @@ class QuestionsPage(Base):
     _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=unsolved"]')
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=no-replies"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, 'div.questions')
-    _questions_list_locator = (By.CSS_SELECTOR, 'div.questions > section')
+    _questions_list_locator = (By.CSS_SELECTOR, 'article.questions > section')
     _question_list_link_locator = (By.CSS_SELECTOR, 'h2 > a')
 
     def click_ask_new_questions_link(self):
