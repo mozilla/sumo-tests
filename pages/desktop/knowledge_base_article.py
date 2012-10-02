@@ -113,7 +113,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     def article_contents_text(self):
         return self.selenium.find_element(*self._article_content_box_locator).text
 
-    def edit_article(self, article_info_dict):
+    def edit_article(self, mock_article):
         """
             Edits an existing article.
         """
@@ -124,9 +124,9 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         self.check_article_product(2)
         self.save_description_form()
         # Edit Content form
-        self.set_article_keyword(article_info_dict['keyword'])
-        self.set_article_summary(article_info_dict['summary'])
-        self.set_article_content(article_info_dict['content'])
+        self.set_article_keyword(mock_article['keyword'])
+        self.set_article_summary(mock_article['summary'])
+        self.set_article_content(mock_article['content'])
         self.submit_article()
         return self.set_article_comment_box()
 
@@ -161,7 +161,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
         index = index - 1
         self.selenium.find_elements(*self._article_product_locator)[index].click()
 
-    def set_article_comment_box(self, comment='automated test'):
+    def set_article_comment_box(self, comment='default comment'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
         self.selenium.find_element(*self._comment_submit_btn_locator).click()
         kb_article_history = KnowledgeBaseShowHistory(self.testsetup)
@@ -223,8 +223,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     _revision_history_language_locator = (By.CSS_SELECTOR, 'div.choice-list ul li > span')
 
     #history of the test
-    _top_revision_comment = (By.CSS_SELECTOR, \
-                             '#revision-list li:nth-child(2) > div.comment')
+    _top_revision_comment = (By.CSS_SELECTOR, '#revision-list li:nth-child(2) > div.comment')
 
     _show_chart_link_locator = (By.ID, 'show-chart')
     _helpfulness_chart_locator = (By.ID, 'helpful-chart')

@@ -3,10 +3,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import pytest
+
 from unittestzero import Assert
 from pages.desktop.page_provider import PageProvider
-
-import pytest
+from mocks.mock_article import MockArticle
 
 
 class TestLoginLogout:
@@ -22,13 +23,12 @@ class TestLoginLogout:
 
     @pytest.mark.native
     @pytest.mark.nondestructive
-    @pytest.mark.parametrize('page_method', [
-            'home_page',
-            'new_question_page',
-            'questions_page',
-            'search_page',
-            'refine_search_page',
-        ])
+    @pytest.mark.parametrize('page_method', ['home_page',
+                                             'new_question_page',
+                                             'questions_page',
+                                             'search_page',
+                                             'refine_search_page',
+                                             ])
     def test_logout_from_pages(self, mozwebqa, page_method):
         page_under_test = getattr(PageProvider(mozwebqa), page_method)(do_login=True, user='default')
         Assert.true(page_under_test.header.is_user_logged_in, 'User not shown to be logged in')
@@ -39,7 +39,7 @@ class TestLoginLogout:
         Assert.false(home_page.header.is_user_logged_in)
 
     @pytest.mark.native
-    @pytest.mark.destructive  #until the credentials are working on production
+    @pytest.mark.destructive  # until the credentials are working on production
     def test_logout_from_new_kb_article_page(self, mozwebqa):
         new_kb_page = PageProvider(mozwebqa).new_kb_article_page()
         Assert.true(new_kb_page.header.is_user_logged_in, 'User not shown to be logged in')
@@ -52,7 +52,14 @@ class TestLoginLogout:
     @pytest.mark.native
     @pytest.mark.destructive
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
-        kb_article_history = self._create_new_kb_article(mozwebqa)
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+
+        # create a new article
+        mock_article = MockArticle()
+        kb_new_article.set_article(mock_article)
+        kb_new_article.submit_article()
+        kb_article_history = kb_new_article.set_article_comment_box(mock_article['comment'])
+
         kb_edit_article = kb_article_history.navigation.click_edit_article()
 
         # sign out
@@ -63,7 +70,14 @@ class TestLoginLogout:
     @pytest.mark.native
     @pytest.mark.destructive
     def test_logout_from_translate_kb_article_page(self, mozwebqa):
-        kb_article_history = self._create_new_kb_article(mozwebqa)
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+
+        # create a new article
+        mock_article = MockArticle()
+        kb_new_article.set_article(mock_article)
+        kb_new_article.submit_article()
+        kb_article_history = kb_new_article.set_article_comment_box(mock_article['comment'])
+
         kb_translate_pg = kb_article_history.navigation.click_translate_article()
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
@@ -71,27 +85,3 @@ class TestLoginLogout:
         home_page = kb_translate_pg.sign_out()
         home_page.is_the_current_page
         Assert.false(home_page.header.is_user_logged_in)
-
-    def _create_new_kb_article(self, mozwebqa):
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
-        article_info_dict = self._create_new_generic_article(kb_new_article)
-        kb_new_article.submit_article()
-        kb_article_history = kb_new_article.set_article_comment_box()
-        return kb_article_history
-
-    def _create_new_generic_article(self, kb_new_article):
-        import datetime
-        timestamp = datetime.datetime.now()
-
-        article_name = "test_article_%s" % timestamp
-        article_summary = "this is an automated summary_%s" % timestamp
-        article_content = "automated content_%s" % timestamp
-
-        article_info_dict = {'title': article_name,
-                             'category': 'How to', 'keyword': 'test',
-                             'summary': article_summary, 'content': article_content}
-
-        # create a new article
-        kb_new_article.set_article(article_info_dict)
-
-        return article_info_dict
