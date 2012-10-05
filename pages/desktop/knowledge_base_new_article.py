@@ -34,18 +34,18 @@ class KnowledgeBaseNewArticle(Base):
     _comment_box_locator = (By.ID, 'id_comment')
     _comment_submit_btn_locator = (By.CSS_SELECTOR, '.kbox-wrap .btn.btn-important')
 
-    def set_article(self, article_info_dict):
+    def set_article(self, mock_article):
         """
             creates a new article
         """
-        self.set_article_title(article_info_dict['title'])
-        self.set_article_slug(article_info_dict['title'])
-        self.set_article_category(article_info_dict['category'])
+        self.set_article_title(mock_article['title'])
+        self.set_article_slug(mock_article['slug'])
+        self.set_article_category(mock_article['category'])
         self.check_article_topic(1)
         self.check_article_product(1)
-        self.set_article_keyword(article_info_dict['keyword'])
-        self.set_article_summary(article_info_dict['summary'])
-        self.set_article_content(article_info_dict['content'])
+        self.set_article_keyword(mock_article['keyword'])
+        self.set_article_summary(mock_article['summary'])
+        self.set_article_content(mock_article['content'])
 
     def set_article_title(self, title):
         self.selenium.find_element(*self._article_title_box_locator).send_keys(title)
