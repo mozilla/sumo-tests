@@ -34,9 +34,10 @@ class TestLoginLogout:
         Assert.true(page_under_test.header.is_user_logged_in, 'User not shown to be logged in')
 
         # sign out
+        signed_in_element = page_under_test.header.get_logged_in_element()
         home_page = page_under_test.sign_out()
         home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
+        Assert.true(page_under_test.is_element_stale(signed_in_element), 'User not shown to be logged out')
 
     @pytest.mark.native
     def test_logout_from_new_kb_article_page(self, mozwebqa):
@@ -44,9 +45,10 @@ class TestLoginLogout:
         Assert.true(new_kb_page.header.is_user_logged_in, 'User not shown to be logged in')
 
         # sign out
+        signed_in_element = new_kb_page.header.get_logged_in_element()
         home_page = new_kb_page.sign_out()
         home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
+        Assert.true(new_kb_page.is_element_stale(signed_in_element), 'User not shown to be logged out')
 
     @pytest.mark.native
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
@@ -61,9 +63,10 @@ class TestLoginLogout:
         kb_edit_article = kb_article_history.navigation.click_edit_article()
 
         # sign out
+        signed_in_element = kb_edit_article.header.get_logged_in_element()
         home_page = kb_edit_article.sign_out()
         home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
+        Assert.true(kb_edit_article.is_element_stale(signed_in_element), 'User not shown to be logged out')
 
     @pytest.mark.native
     def test_logout_from_translate_kb_article_page(self, mozwebqa):
@@ -79,6 +82,7 @@ class TestLoginLogout:
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
         # sign out
+        signed_in_element = kb_translate_pg.header.get_logged_in_element()
         home_page = kb_translate_pg.sign_out()
         home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
+        Assert.true(kb_translate_pg.is_element_stale(signed_in_element), 'User not shown to be logged out')
