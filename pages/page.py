@@ -14,6 +14,7 @@ from unittestzero import Assert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotVisibleException
+from selenium.common.exceptions import StaleElementReferenceException
 
 http_regex = re.compile('https?://((\w+\.)+\w+\.\w+)')
 
@@ -64,6 +65,21 @@ class Page(object):
         finally:
             # set back to where you once belonged
             self.selenium.implicitly_wait(self.testsetup.default_implicit_wait)
+    
+    def get_element(self, *locator):
+        try:
+            return self.selenium.find_element(*locator)
+        except NoSuchElementException:
+            # this will return a snapshot, which takes time.
+            return None
+    
+    #https://github.com/Dude-X/Selenium2/blob/pythonExpected/py/selenium/webdriver/support/expected_conditions.py
+    def is_element_stale(self, element):
+        try:
+            element.is_enabled()
+            return False
+        except StaleElementReferenceException as expected:
+            return True
             
     def is_element_visible(self, *locator):
         try:

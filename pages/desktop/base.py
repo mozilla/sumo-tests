@@ -68,3 +68,6 @@ class Base(Page):
         @property
         def is_user_logged_in(self):
             return self.is_element_visible(*self._account_controller_locator)
+        
+        def get_logged_in_element(self):
+            return self.get_element(*self._account_controller_locator)
