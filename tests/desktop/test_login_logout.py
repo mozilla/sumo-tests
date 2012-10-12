@@ -36,7 +36,7 @@ class TestLoginLogout:
         # sign out
         home_page = page_under_test.sign_out()
         home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
+        Assert.true(home_page.header.is_user_logged_out)
 
     @pytest.mark.native
     def test_logout_from_new_kb_article_page(self, mozwebqa):
@@ -46,7 +46,7 @@ class TestLoginLogout:
         # sign out
         home_page = new_kb_page.sign_out()
         home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
+        Assert.true(home_page.header.is_user_logged_out)
 
     @pytest.mark.native
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
@@ -63,7 +63,7 @@ class TestLoginLogout:
         # sign out
         home_page = kb_edit_article.sign_out()
         home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
+        Assert.true(home_page.header.is_user_logged_out)
 
     @pytest.mark.native
     def test_logout_from_translate_kb_article_page(self, mozwebqa):
@@ -81,4 +81,4 @@ class TestLoginLogout:
         # sign out
         home_page = kb_translate_pg.sign_out()
         home_page.is_the_current_page
-        Assert.false(home_page.header.is_user_logged_in)
+        Assert.true(home_page.header.is_user_logged_out)
