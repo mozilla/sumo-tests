@@ -17,7 +17,7 @@ class QuestionsPage(Base):
     _page_title = 'Firefox Support Forum | Mozilla Support'
     _page_url = '/en-US/questions'
     _ask_question_link_locator = '/en-US/questions/new'
-    _sort_and_filter_box_locator = (By.ID, 'filters')
+    _sort_and_filter_box_locator = (By.CSS_SELECTOR, '#filters h2')
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
     _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=unsolved"]')
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=no-replies"]')
