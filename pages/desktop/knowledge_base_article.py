@@ -227,6 +227,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
 
     _show_chart_link_locator = (By.ID, 'show-chart')
     _helpfulness_chart_locator = (By.ID, 'helpful-chart')
+    _helpfulness_chart_footnote = (By.ID, 'chart-footnote')
     _helpfulness_chart_graph_locator = (By.CSS_SELECTOR, 'svg > rect')
 
     @property
@@ -249,6 +250,8 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     def click_show_helpfulness_chart(self):
         self.selenium.find_element(*self._show_chart_link_locator).click()
         self.wait_for_ajax()
+        # added to strengthen the wait as the test was failing intermittently
+        self.wait_for_element_present(*self._helpfulness_chart_footnote)
 
     @property
     def most_recent_revision_comment(self):
