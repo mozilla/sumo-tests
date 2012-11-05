@@ -98,7 +98,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     _description_form_save_locator = (By.CSS_SELECTOR, '#document-form button[type="submit"]')
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
-    _article_content_box_locator = (By.ID, 'id_content')
+    _article_content_box_locator = (By.ID, 'editor')
     _article_topic_locator = (By.CSS_SELECTOR, 'input[name=topics]')
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn-submit')
