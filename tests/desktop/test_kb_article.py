@@ -32,9 +32,8 @@ class TestKnowledgeBaseArticle:
         actual_summary_text = kb_edit_article.article_summary_text
         Assert.equal(mock_article['summary'], actual_summary_text)
 
-        ## article contents now includes line numbers
         actual_contents_text = kb_edit_article.article_contents_text
-        Assert.contains(mock_article['content'], actual_contents_text)
+        Assert.equal(mock_article['content'], actual_contents_text)
 
         # delete the same article
         kb_article_history = kb_edit_article.navigation.click_show_history()
@@ -71,10 +70,8 @@ class TestKnowledgeBaseArticle:
         actual_summary_text = kb_edit_article.article_summary_text
         Assert.equal(mock_article_edited['summary'], actual_summary_text)
 
-        ## commenting this assert because we dont' know how to .text or .clear()
-        ## the new widget, yet we still want to clean-up
-        # actual_content_text = kb_edit_article.article_contents_text
-        # Assert.equal(mock_article_edited['content'], actual_content_text)
+        actual_content_text = kb_edit_article.article_contents_text
+        Assert.equal(mock_article_edited['content'], actual_content_text)
 
         # delete the same article
         kb_article_history = kb_edit_article.navigation.click_show_history()
