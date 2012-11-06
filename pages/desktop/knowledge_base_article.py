@@ -98,6 +98,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     _description_form_save_locator = (By.CSS_SELECTOR, '#document-form button[type="submit"]')
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
+    _article_content_object = 'window.highlighting.editor'
     _article_topic_locator = (By.CSS_SELECTOR, 'input[name=topics]')
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn-submit')
@@ -111,7 +112,8 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     @property
     def article_contents_text(self):
         # widget doesn't respond well to selenium commands
-        return self.selenium.execute_script("return window.highlighting.editor.getValue()")
+        return self.selenium.execute_script("return %s.getValue()" % 
+            self._article_content_object)
 
     def edit_article(self, mock_article):
         """
@@ -142,7 +144,8 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
 
     def set_article_content(self, content):
         # widget doesn't respond well to selenium commands
-        self.selenium.execute_script("window.highlighting.editor.setValue('%s')" % content)
+        self.selenium.execute_script("%s.setValue('%s')" % 
+            (self._article_content_object, content))
 
     def open_description_form(self):
         if not self.is_element_visible(*self._article_topic_locator):
