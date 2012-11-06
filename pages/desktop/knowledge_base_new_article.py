@@ -24,7 +24,7 @@ class KnowledgeBaseNewArticle(Base):
     _article_category_menu_locator = (By.ID, 'id_category')
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
-    _article_content_box_locator = (By.ID, 'id_content')
+    _article_content_box_locator = (By.CSS_SELECTOR, '#editor > textarea')
     _article_slug_box_locator = (By.ID, 'id_slug')
     _article_topic_locator = (By.CSS_SELECTOR, 'input[name=topics]')
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
