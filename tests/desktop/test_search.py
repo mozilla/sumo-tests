@@ -22,6 +22,8 @@ class TestSearch:
 
         Assert.true(refine_search_pg.search_result_count > 0, "No search results not found")
 
+    @pytest.mark.xfail(reason='Issue 165 - needs investigation')
+    # https://github.com/mozilla/sumo-tests/issues/165
     @pytest.mark.nondestructive
     def test_search_returns_either_term(self, mozwebqa):
         """Search looks for either of two search terms
