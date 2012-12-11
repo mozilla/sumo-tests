@@ -2,12 +2,16 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+import pytest
+
 from unittestzero import Assert
 from pages.desktop.page_provider import PageProvider
 
 
 class TestNewUserRegistration:
 
+    @pytest.mark.xfail(reason='https://bugzilla.mozilla.org/show_bug.cgi?id=820331 - [dev][stage][prod]Cannot register new user')
     def test_that_thank_you_page_is_displayed_after_successful_registration(self, mozwebqa):
         """
            Register a new user using random username.
