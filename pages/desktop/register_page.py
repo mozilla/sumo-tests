@@ -12,7 +12,7 @@ class RegisterPage(Base):
     """
         Form for user registration.
     """
-    _page_title = 'Register | Mozilla Support'
+    _page_title = 'Log In / Register | Mozilla Support'
     _page_title_after_registration = 'Thank you for registering'
     _page_url = '/en-US/users/register'
     _username_box_locator = (By.ID, 'id_for_username')
