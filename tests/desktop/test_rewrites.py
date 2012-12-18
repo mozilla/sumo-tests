@@ -17,9 +17,9 @@ class TestRedirects:
     _user_agent_firefox = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0) Gecko/20100101 Firefox/13.0.1'
 
     def _check_redirect(self, testsetup, start_url, user_agent=_user_agent_firefox, locale='en-US'):
-        if 'support.mozilla.org' not in testsetup.base_url: 
+        if 'support.mozilla.org' not in testsetup.base_url:
             pytest.skip("Only run re-write tests on prod.")
-        
+
         start_url = testsetup.base_url + start_url
 
         headers = {'user-agent': user_agent,
@@ -57,9 +57,9 @@ class TestRedirects:
         Assert.equal(r.status_code, requests.codes.ok)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/products/mobile'),
-        ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/products/mobile'),
-        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/products/mobile')])
+        ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/products/mobile?as=u&utm_source=inproduct'),
+        ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/products/mobile?as=u&utm_source=inproduct'),
+        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/products/mobile?as=u&utm_source=inproduct')])
     def test_old_mobile_redirects(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
         r = self._check_redirect(mozwebqa, input)
