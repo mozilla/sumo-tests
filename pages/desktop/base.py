@@ -44,14 +44,17 @@ class Base(Page):
 
     class HeaderRegion(Page):
 
-        #Not LoggedIn
+        # Not LoggedIn
         _login_locator = (By.CSS_SELECTOR, 'a.sign-in')
         _register_locator = (By.CSS_SELECTOR, 'a.register')
 
-        #LoggedIn
+        # LoggedIn
         _account_controller_locator = (By.CSS_SELECTOR, '.user')
         _account_dropdown_locator = (By.CSS_SELECTOR, 'li.dropdown a.user')
         _logout_locator = (By.CSS_SELECTOR, 'li.dropdown > ul > li > a.sign-out')
+
+        # Staging site warning
+        _staging_site_warning_close_button_locator = (By.CSS_SELECTOR, '#stage-banner > div.close-button')
 
         def click_login(self):
             self.selenium.find_element(*self._login_locator).click()
@@ -59,11 +62,16 @@ class Base(Page):
             return LoginPage(self.testsetup)
 
         def click_logout(self):
+            self.dismiss_staging_site_warning_if_present()
             ActionChains(self.selenium).move_to_element(
                     self.selenium.find_element(*self._account_dropdown_locator)
                 ).move_to_element(
                     self.selenium.find_element(*self._logout_locator)
                 ).click().perform()
+
+        def dismiss_staging_site_warning_if_present(self):
+            if self.is_element_present(*self._staging_site_warning_close_button_locator):
+                self.selenium.find_element(*self._staging_site_warning_close_button_locator).click()
 
         @property
         def is_user_logged_in(self):
