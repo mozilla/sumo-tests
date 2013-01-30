@@ -52,7 +52,7 @@ class Page(object):
 
     def open(self, url_fragment):
         self.selenium.get(self.base_url + url_fragment)
-        
+
     def is_element_present(self, *locator):
         self.selenium.implicitly_wait(0)
         try:
@@ -64,11 +64,11 @@ class Page(object):
         finally:
             # set back to where you once belonged
             self.selenium.implicitly_wait(self.testsetup.default_implicit_wait)
-            
+
     def is_element_visible(self, *locator):
         try:
             return self.selenium.find_element(*locator).is_displayed()
-        except NoSuchElementException, ElementNotVisibleException:
+        except (NoSuchElementException, ElementNotVisibleException):
             # this will return a snapshot, which takes time.
             return False
 
@@ -96,7 +96,7 @@ class Page(object):
             if self.selenium.execute_script("return jQuery.active == 0"):
                 return
         raise Exception("Wait for AJAX timed out after %s seconds" % count)
-        
+
     def get_user_name(self, user='default'):
         credentials = self.testsetup.credentials[user]
         return credentials['name']
