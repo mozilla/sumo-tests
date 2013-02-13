@@ -112,8 +112,8 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     @property
     def article_contents_text(self):
         # widget doesn't respond well to selenium commands
-        return self.selenium.execute_script("return %s.getValue()" % 
-            self._article_content_object)
+        return self.selenium.execute_script("return %s.getValue()" %
+                                            self._article_content_object)
 
     def edit_article(self, mock_article):
         """
@@ -144,8 +144,8 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
 
     def set_article_content(self, content):
         # widget doesn't respond well to selenium commands
-        self.selenium.execute_script("%s.setValue('%s')" % 
-            (self._article_content_object, content))
+        self.selenium.execute_script("%s.setValue('%s')" %
+                                     (self._article_content_object, content))
 
     def open_description_form(self):
         if not self.is_element_visible(*self._article_topic_locator):

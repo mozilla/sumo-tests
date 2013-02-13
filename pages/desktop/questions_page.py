@@ -145,7 +145,7 @@ class ViewQuestionPage(Base):
         if self._page_title:
             page_title = self.page_title
             Assert.equal(page_title, question_name + self._page_title,
-                         "Expected page title: %s. Actual page title: %s" % \
+                         "Expected page title: %s. Actual page title: %s" %
                          (question_name + self._page_title, page_title))
 
     @property
