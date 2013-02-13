@@ -26,7 +26,7 @@ class KnowledgeBase(Base):
         _article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[1]/a')
         _edit_article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[3]/a')
         _translate_article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[4]/a')
-        _show_history_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[5]/a')
+        _show_history_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[6]/a')
         _show_editing_tools_locator = (By.CSS_SELECTOR, '.sidebar-nav.sidebar-folding > li:first-child span')
         _editing_tools_locator = (By.ID, 'doc-tools')
 
