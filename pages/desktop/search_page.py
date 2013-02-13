@@ -31,7 +31,7 @@ class SearchPage(Base):
             self.go_to_search_page()
         self.selenium.find_element(*self._search_query_locator).send_keys(search_query)
         self.selenium.find_element(*self._search_button).click()
-    
+
     def do_search_on_search_box(self, search_term):
         if not (self._page_title in self.selenium.title):
             self.go_to_search_page()

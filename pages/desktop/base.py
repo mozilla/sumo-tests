@@ -64,10 +64,10 @@ class Base(Page):
         def click_logout(self):
             self.dismiss_staging_site_warning_if_present()
             ActionChains(self.selenium).move_to_element(
-                    self.selenium.find_element(*self._account_dropdown_locator)
-                ).move_to_element(
-                    self.selenium.find_element(*self._logout_locator)
-                ).click().perform()
+                self.selenium.find_element(*self._account_dropdown_locator)
+            ).move_to_element(
+                self.selenium.find_element(*self._logout_locator)
+            ).click().perform()
 
         def dismiss_staging_site_warning_if_present(self):
             if self.is_element_present(*self._staging_site_warning_close_button_locator):

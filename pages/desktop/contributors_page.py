@@ -24,7 +24,6 @@ class ContributorsPage(Base):
     _top_most_visited_article_locator = \
         (By.CSS_SELECTOR, '#most-visited-table > tr:nth-of-type(2) > td:nth-of-type(1) > a')
 
-
     def go_to_contributors_page(self):
         self.open(self._page_url)
         self.is_the_current_page
