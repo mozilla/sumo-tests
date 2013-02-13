@@ -35,7 +35,7 @@ class Page(object):
         if self._page_title:
             page_title = self.page_title
             Assert.equal(page_title, self._page_title,
-                         "Expected page title: %s. Actual page title: %s" % \
+                         "Expected page title: %s. Actual page title: %s" %
                          (self._page_title, page_title))
 
     @property

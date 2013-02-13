@@ -11,6 +11,7 @@ from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
 from unittestzero import Assert
 
+
 class LoginPage(Base):
     """
         Form for login.
@@ -32,7 +33,7 @@ class LoginPage(Base):
         self.selenium.find_element(*self._username_box_locator).send_keys(credentials['name'])
         self.selenium.find_element(*self._password_box_locator).send_keys(credentials['password'])
         self.selenium.find_element(*self._log_in_button_locator).click()
-        
+
         if not self.header.is_user_logged_in:
             error = self.selenium.find_element(*self._login_error_locator).text
             error = "login failed for %s\n" % credentials['name'] + error
