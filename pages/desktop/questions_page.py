@@ -105,6 +105,7 @@ class AskNewQuestionsPage(Base):
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=no-replies]')
     _questions_list_locator = (By.CSS_SELECTOR, 'div.questions > section')
     _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > div')
+    _close_stage_banner_locator = (By.CLASS_NAME, 'close-button')
 
     def click_firefox_product_link(self):
         self.selenium.find_element(*self._firefox_product_first_link_locator).click()
@@ -131,6 +132,9 @@ class AskNewQuestionsPage(Base):
     def sorted_list_filter_text(self, question_number):
         return self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._solved_or_unsolved_text_locator).text
 
+    def close_stage_site_banner(self):
+        self.selenium.find_element(*self._close_stage_banner_locator).click()
+
 
 class ViewQuestionPage(Base):
 
@@ -145,7 +149,7 @@ class ViewQuestionPage(Base):
         if self._page_title:
             page_title = self.page_title
             Assert.equal(page_title, question_name + self._page_title,
-                         "Expected page title: %s. Actual page title: %s" % \
+                         "Expected page title: %s. Actual page title: %s" %
                          (question_name + self._page_title, page_title))
 
     @property

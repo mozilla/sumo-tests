@@ -26,6 +26,7 @@ class TestQuestions:
         ask_new_questions_page.click_firefox_product_link()
         ask_new_questions_page.click_category_problem_link()
         ask_new_questions_page.type_question(q_to_ask)
+        ask_new_questions_page.close_stage_site_banner()
         ask_new_questions_page.click_none_of_these_solve_my_problem_button()
         view_question_pg = ask_new_questions_page.fill_up_questions_form(q_to_ask, q_details)
 
