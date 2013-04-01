@@ -17,7 +17,7 @@ class SearchPage(Base):
     _search_query_locator = (By.CSS_SELECTOR, 'input.search-query')
     _search_box_locator = (By.CSS_SELECTOR, 'input.searchbox')
     _search_button = (By.CSS_SELECTOR, 'input[type="submit"]')
-    _search_support_button_locator = (By.CSS_SELECTOR, 'form.search-form > button.btn')
+    _search_support_button_locator = (By.CSS_SELECTOR, '.btn-important')
     _refine_search_link = (By.CSS_SELECTOR, 'a[href *= "a=2"]')
     _next_page_link = (By.LINK_TEXT, 'Next')
     _prev_page_link = (By.LINK_TEXT, 'Previous')

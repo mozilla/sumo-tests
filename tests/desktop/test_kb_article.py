@@ -156,7 +156,6 @@ class TestKnowledgeBaseArticle:
         # deleting
         kb_article_history.delete_entire_article_document()
 
-    @pytest.mark.xfail(reason='Bug 814002 - "Error loading chart" shown when "Show Helpfulness Votes Chart" is clicked')
     @pytest.mark.nondestructive
     def test_view_helpfulness_chart(self, mozwebqa):
         """
