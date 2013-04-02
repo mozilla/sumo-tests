@@ -11,12 +11,12 @@ class PageProvider():
 
     def __init__(self, testsetup):
         self.testsetup = testsetup
-        self.base_url_ssl = testsetup.base_url.replace('http://', 'https://')
+        self.base_url = testsetup.base_url
         self.selenium = testsetup.selenium
 
     def _go_to_page(self, page_object, do_login=False, user='default'):
         self.selenium.maximize_window()
-        self.selenium.get(self.base_url_ssl + page_object._page_url)
+        self.selenium.get(self.base_url + page_object._page_url)
         page_object.is_the_current_page
         if (do_login):
             page_object.sign_in(user)
@@ -25,7 +25,7 @@ class PageProvider():
     def _go_to_page_with_login_redirect(self, page_object, user='default'):
         self.selenium.maximize_window()
         from pages.desktop.login_page import LoginPage
-        self.selenium.get(self.base_url_ssl + page_object._page_url)
+        self.selenium.get(self.base_url + page_object._page_url)
         login_page = LoginPage(self.testsetup)
         login_page.log_in(user)
         page_object.is_the_current_page
