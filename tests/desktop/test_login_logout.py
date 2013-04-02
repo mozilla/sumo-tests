@@ -30,7 +30,7 @@ class TestLoginLogout:
                                              'refine_search_page',
                                              ])
     def test_logout_from_pages(self, mozwebqa, page_method):
-        if mozwebqa.baseurl == 'https://support.allizom.org' and mozwebqa.baseurl == 'https://support.mozilla.org':
+        if mozwebqa.baseurl == 'https://support.allizom.org' or mozwebqa.baseurl == 'https://support.mozilla.org':
             pytest.xfail(reason='Bug 856982 - [prod][stage] Redirect after logout')
         page_under_test = getattr(PageProvider(mozwebqa), page_method)(do_login=True, user='default')
         Assert.true(page_under_test.header.is_user_logged_in, 'User not shown to be logged in')
@@ -42,7 +42,7 @@ class TestLoginLogout:
 
     @pytest.mark.native
     def test_logout_from_new_kb_article_page(self, mozwebqa):
-        if mozwebqa.baseurl == 'https://support.allizom.org' and mozwebqa.baseurl == 'https://support.mozilla.org':
+        if mozwebqa.baseurl == 'https://support.allizom.org' or mozwebqa.baseurl == 'https://support.mozilla.org':
             pytest.xfail(reason='Bug 856982 - [prod][stage] Redirect after logout')
         new_kb_page = PageProvider(mozwebqa).new_kb_article_page()
         Assert.true(new_kb_page.header.is_user_logged_in, 'User not shown to be logged in')
@@ -54,7 +54,7 @@ class TestLoginLogout:
 
     @pytest.mark.native
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
-        if mozwebqa.baseurl == 'https://support.allizom.org' and mozwebqa.baseurl == 'https://support.mozilla.org':
+        if mozwebqa.baseurl == 'https://support.allizom.org' or mozwebqa.baseurl == 'https://support.mozilla.org':
             pytest.xfail(reason='Bug 856982 - [prod][stage] Redirect after logout')
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
 
@@ -73,7 +73,7 @@ class TestLoginLogout:
 
     @pytest.mark.native
     def test_logout_from_translate_kb_article_page(self, mozwebqa):
-        if mozwebqa.baseurl == 'https://support.allizom.org' and mozwebqa.baseurl == 'https://support.mozilla.org':
+        if mozwebqa.baseurl == 'https://support.allizom.org' or mozwebqa.baseurl == 'https://support.mozilla.org':
             pytest.xfail(reason='Bug 856982 - [prod][stage] Redirect after logout')
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
 
