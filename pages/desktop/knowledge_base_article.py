@@ -227,17 +227,16 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     #history of the test
     _top_revision_comment = (By.CSS_SELECTOR, '#revision-list li:nth-child(2) > div.comment')
 
-    _show_chart_link_locator = (By.ID, 'show-chart')
-    _helpfulness_chart_locator = (By.ID, 'helpful-chart')
-    _helpfulness_chart_footnote = (By.ID, 'chart-footnote')
-    _helpfulness_chart_graph_locator = (By.CSS_SELECTOR, 'svg > rect')
+    _show_chart_link_locator = (By.ID, 'show-graph')
+    _helpfulness_chart_locator = (By.ID, 'helpful-graph')
+    _helpfulness_chart_graph_locator = (By.CSS_SELECTOR, 'svg > path')
 
     @property
     def is_helpfulness_chart_visible(self):
         # Because of bug 723575 there are two element checks to assert that
         # the graph has actually loaded
         return self.is_element_visible(*self._helpfulness_chart_locator) \
-            and self.is_element_visible(*self._helpfulness_chart_graph_locator)
+            and self.is_element_present(*self._helpfulness_chart_graph_locator)
 
     def delete_entire_article_document(self):
         self.click_delete_entire_article_document()
@@ -252,8 +251,6 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     def click_show_helpfulness_chart(self):
         self.selenium.find_element(*self._show_chart_link_locator).click()
         self.wait_for_ajax()
-        # added to strengthen the wait as the test was failing intermittently
-        self.wait_for_element_present(*self._helpfulness_chart_footnote)
 
     @property
     def most_recent_revision_comment(self):
