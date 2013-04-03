@@ -19,7 +19,7 @@ class TestLoginLogout:
 
         Assert.true(home_page.header.is_user_logged_in, 'User not shown to be logged in')
 
-    ### logging out of the following pages redirects the user to the home page
+    ### logging out of the following pages keeps user on the same pages
 
     @pytest.mark.native
     @pytest.mark.nondestructive
@@ -34,9 +34,9 @@ class TestLoginLogout:
         Assert.true(page_under_test.header.is_user_logged_in, 'User not shown to be logged in')
 
         # sign out
-        home_page = page_under_test.sign_out()
-        home_page.is_the_current_page
-        Assert.true(home_page.header.is_user_logged_out)
+        page_under_test.sign_out()
+        page_under_test.is_the_current_page
+        Assert.true(page_under_test.header.is_user_logged_out)
 
     @pytest.mark.native
     def test_logout_from_new_kb_article_page(self, mozwebqa):
@@ -44,9 +44,9 @@ class TestLoginLogout:
         Assert.true(new_kb_page.header.is_user_logged_in, 'User not shown to be logged in')
 
         # sign out
-        home_page = new_kb_page.sign_out()
-        home_page.is_the_current_page
-        Assert.true(home_page.header.is_user_logged_out)
+        register_page = new_kb_page.sign_out()
+        register_page.is_the_current_page
+        Assert.true(register_page.header.is_user_logged_out)
 
     @pytest.mark.native
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
@@ -61,9 +61,9 @@ class TestLoginLogout:
         kb_edit_article = kb_article_history.navigation.click_edit_article()
 
         # sign out
-        home_page = kb_edit_article.sign_out()
-        home_page.is_the_current_page
-        Assert.true(home_page.header.is_user_logged_out)
+        register_page = kb_edit_article.sign_out()
+        register_page.is_the_current_page
+        Assert.true(register_page.header.is_user_logged_out)
 
     @pytest.mark.native
     def test_logout_from_translate_kb_article_page(self, mozwebqa):
@@ -79,6 +79,6 @@ class TestLoginLogout:
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
         # sign out
-        home_page = kb_translate_pg.sign_out()
-        home_page.is_the_current_page
-        Assert.true(home_page.header.is_user_logged_out)
+        register_page = kb_translate_pg.sign_out()
+        register_page.is_the_current_page
+        Assert.true(register_page.header.is_user_logged_out)
