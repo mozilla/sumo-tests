@@ -12,6 +12,8 @@ class TestSearch:
     @pytest.mark.native
     @pytest.mark.nondestructive
     def test_no_query_adv_forum_search(self, mozwebqa):
+        if mozwebqa.base_url == 'https://support.allizom.org' or mozwebqa.base_url == 'https://support.mozilla.org':
+            pytest.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out on support-dev.allizom.org')
         refine_search_pg = PageProvider(mozwebqa).refine_search_page()
 
         # do test
@@ -20,29 +22,3 @@ class TestSearch:
         refine_search_pg.click_search_button_support()
 
         Assert.true(refine_search_pg.search_result_count > 0, "No search results not found")
-
-    @pytest.mark.nondestructive
-    def test_search_returns_either_term(self, mozwebqa):
-        """Search looks for either of two search terms
-
-        Search using a good search term with a junk search term
-        should return same as only the good search term
-
-        """
-
-        good_search_term = "firefox"
-        junk_search_term = "werpadfjka"
-
-        search_page_obj = PageProvider(mozwebqa).search_page()
-
-        # search with good search term only.  save first search result.
-        search_page_obj.do_search_on_search_query(good_search_term)
-        Assert.true(search_page_obj.is_result_present, "1st search has no results")
-        result_search_1 = search_page_obj.get_result_text
-
-        # search with junk search term following the good search term
-        search_page_obj.do_search_on_search_box(" " + junk_search_term)
-        Assert.true(search_page_obj.is_result_present, "Similar 2nd search has no results")
-
-        result_search_2 = search_page_obj.get_result_text
-        Assert.equal(result_search_1, result_search_2, "Similar searches have different results")
