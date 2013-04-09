@@ -21,8 +21,8 @@ class Base(Page):
 
     def sign_out(self):
         self.header.click_logout()
-        from pages.desktop.support_home_page import SupportHomePage
-        return SupportHomePage(self.testsetup)
+        from pages.desktop.register_page import RegisterPage
+        return RegisterPage(self.testsetup)
 
     def format_page_title(self, *title_segments):
         '''

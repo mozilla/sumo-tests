@@ -74,7 +74,7 @@ class TestQuestions:
         for question in questions_page.questions:
             Assert.equal(0, question.number_of_replies)
 
-    @pytest.mark.xfail(reason="Bug 790211 After clicking 'I have this problem too' the counter increments the total number by 2 instead of 1")
+    @pytest.mark.xfail(reason='Bug 857564 - [dev] Questions problem count does not increment')
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
 
