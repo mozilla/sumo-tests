@@ -151,7 +151,7 @@ class TestKnowledgeBaseArticle:
 
         # verifying
         Assert.equal(change_comment, kb_article_history.most_recent_revision_comment)
-        Assert.equal('Esperanto', kb_article_history.revision_history)
+        Assert.contains('Esperanto', kb_article_history.revision_history)
 
         # deleting
         kb_article_history.delete_entire_article_document()
