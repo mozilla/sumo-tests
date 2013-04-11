@@ -222,7 +222,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     _delete_document_link_locator = (By.CSS_SELECTOR, 'div#delete-doc > a[href*="delete"]')
     _delete_confirmation_btn_locator = (By.CSS_SELECTOR, '#delete-document input[type=submit]')
 
-    _revision_history_language_locator = (By.CSS_SELECTOR, 'div.choice-list > span')
+    _revision_history_language_locator = (By.CSS_SELECTOR, '#revision-history > div:nth-child(5)')
 
     #history of the test
     _top_revision_comment = (By.CSS_SELECTOR, '#revision-list li:nth-child(2) > div.comment')
