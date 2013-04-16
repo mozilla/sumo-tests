@@ -83,7 +83,7 @@ class TestKnowledgeBaseArticle:
            Verifies the deletion.
         """
         if mozwebqa.base_url == 'https://support-dev.allizom.org':
-            pytest.mark.xfail(reason='Bug 862223 - [dev] Delete kb article')
+            pytest.xfail(reason='Bug 862223 - [dev] Delete kb article')
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
 
         # create a new article
