@@ -8,7 +8,7 @@ import pytest
 from unittestzero import Assert
 from pages.desktop.page_provider import PageProvider
 
-
+@pytest.mark.skipif("config.getvalue('base_url')=='http://support-dev.allizom.org'")
 class TestCardViews:
 
     @pytest.mark.nondestructive
