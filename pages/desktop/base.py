@@ -11,6 +11,22 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 class Base(Page):
 
+    learn_the_basics_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(1) > a.cf')
+    download_migration_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(2) > a.cf')
+    privacy_security_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(3) > a.cf')
+    customize_addons_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(4) > a.cf')
+    fix_slowness_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(5) > a.cf')
+    get_support_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(6) > a.cf')
+    firefox_product_locator = (By.CSS_SELECTOR, '#product-cards > li:nth-of-type(1) > a')
+    firefox_android_product_locator = (By.CSS_SELECTOR, '#product-cards > li:nth-of-type(2) > a')
+    firefoxos_product_locator = (By.CSS_SELECTOR, '#product-cards > li:nth-of-type(3) > a')
+
+    def click_card_grid(self, locator):
+        ActionChains(self.selenium).move_to_element(
+            self.selenium.find_element(*locator)).click().perform()
+        self.selenium.implicitly_wait(10)
+        return self.selenium.title
+
     @property
     def header(self):
         return self.HeaderRegion(self.testsetup)
