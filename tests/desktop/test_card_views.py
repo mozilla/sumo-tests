@@ -8,6 +8,9 @@ import pytest
 from unittestzero import Assert
 from pages.desktop.page_provider import PageProvider
 
+from selenium import webdriver
+
+
 @pytest.mark.skipif("config.getvalue('base_url')=='https://support-dev.allizom.org'")
 class TestCardViews:
 
@@ -57,8 +60,9 @@ class TestCardViews:
         Assert.contains('Fix slowness, crashing, error messages and other problems | Firefox Help', page_title)
 
     @pytest.mark.nondestructive
-    @pytest.mark.xfail(reason='Xfailing till Selenium 2.23.0 Firefox visibility issue is fixed')
     def test_click_get_support(self, mozwebqa):
+        if webdriver.__version__ == '2.32.0':
+            pytest.xfail(reason='Xfailing until the next selenium version is released, which contains the fix for selenium issue 5499')
         home_page = PageProvider(mozwebqa).home_page()
         home_page.sign_in('default')
         page_title = home_page.click_card_grid(home_page.get_support_locator)
