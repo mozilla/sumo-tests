@@ -12,7 +12,7 @@ class TestSearch:
     @pytest.mark.native
     @pytest.mark.nondestructive
     def test_no_query_adv_forum_search(self, mozwebqa):
-        if mozwebqa.base_url == 'https://support.allizom.org' or mozwebqa.base_url == 'https://support.mozilla.org':
+        if mozwebqa.base_url == 'https://support.mozilla.org':
             pytest.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out on support-dev.allizom.org')
         refine_search_pg = PageProvider(mozwebqa).refine_search_page()
 
