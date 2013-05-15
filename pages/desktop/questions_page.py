@@ -23,7 +23,6 @@ class QuestionsPage(Base):
     _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=no-replies"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, 'div.questions')
     _questions_list_locator = (By.CSS_SELECTOR, 'article.questions > section')
-    _question_list_link_locator = (By.CSS_SELECTOR, 'h2 > a')
 
     def click_ask_new_questions_link(self):
         self.selenium.find_element(*self._ask_question_link_locator).click()
@@ -33,10 +32,7 @@ class QuestionsPage(Base):
         self.open(url)
 
     def click_any_question(self, question_number):
-        self.selenium.find_elements(*self._questions_list_locator)[question_number - 1].find_element(*self._question_list_link_locator).click()
-        view_question_pg = ViewQuestionPage(self.testsetup)
-        view_question_pg.is_the_current_page
-        return view_question_pg
+        return self.questions[question_number - 1].click_question_link()
 
     def click_to_expand_sort_and_filter_box(self):
         self.selenium.find_element(*self._sort_and_filter_box_locator).click()
@@ -71,6 +67,7 @@ class QuestionsPage(Base):
 
         _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > div')
         _replies_number_locator = (By.CSS_SELECTOR, 'div.replies > h4')
+        _question_link_locator = (By.CSS_SELECTOR, 'a')
 
         def __init__(self, testsetup, element):
             Page.__init__(self, testsetup)
@@ -83,6 +80,12 @@ class QuestionsPage(Base):
         @property
         def number_of_replies(self):
             return int(self._root_element.find_element(*self._replies_number_locator).text)
+
+        def click_question_link(self):
+            self._root_element.find_element(*self._question_link_locator).click()
+            view_question_pg = ViewQuestionPage(self.testsetup)
+            view_question_pg.is_the_current_page
+            return view_question_pg
 
 
 class AskNewQuestionsPage(Base):
