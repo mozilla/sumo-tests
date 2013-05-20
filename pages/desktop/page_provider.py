@@ -5,6 +5,8 @@
 
 from pages.page import Page
 
+from selenium.webdriver.common.keys import Keys
+from selenium.common import exceptions
 
 class PageProvider():
     ''' internal methods '''
@@ -14,8 +16,24 @@ class PageProvider():
         self.base_url = testsetup.base_url
         self.selenium = testsetup.selenium
 
+    def _set_window_small(self, width, height, zoom_level):
+        self.selenium.set_window_size(width, height)
+        el_window = self.selenium.switch_to_active_element()
+        if zoom_level < 100:
+            el_window.send_keys(Keys.CONTROL,Keys.SUBTRACT) #100->90%
+        if zoom_level < 90:
+            el_window.send_keys(Keys.CONTROL,Keys.SUBTRACT) #90->80%
+        if zoom_level < 80:
+            el_window.send_keys(Keys.CONTROL,Keys.SUBTRACT) #80->67%    
+        
+    def _set_zoom_default(self):    
+        el_window = self.selenium.switch_to_active_element()
+        el_window.send_keys(Keys.CONTROL,'0') #100%     
+        
     def _go_to_page(self, page_object, do_login=False, user='default'):
-        self.selenium.maximize_window()
+        #self.selenium.maximize_window()
+        dim = self.selenium.get_window_size()
+        self._set_window_small(0.9*dim['width'], 0.9*dim['height'], 67)
         self.selenium.get(self.base_url + page_object._page_url)
         page_object.is_the_current_page
         if (do_login):
@@ -23,7 +41,9 @@ class PageProvider():
         return page_object
 
     def _go_to_page_with_login_redirect(self, page_object, user='default'):
-        self.selenium.maximize_window()
+        #self.selenium.maximize_window()
+        self.selenium.set_window_size(700,500)
+        
         from pages.desktop.login_page import LoginPage
         self.selenium.get(self.base_url + page_object._page_url)
         login_page = LoginPage(self.testsetup)
@@ -44,7 +64,7 @@ class PageProvider():
         return self._go_to_page(SupportHomePage(self.testsetup), do_login, user)
 
     def new_question_page(self, do_login=True, user='default'):
-        from pages.desktop.questions_page import AskNewQuestionsPage
+        from pages.desktop.questions_page import AskNewQuestionsPagec
         return self._go_to_page(AskNewQuestionsPage(self.testsetup), do_login, user)
 
     def questions_page(self, do_login=False, user='default'):
