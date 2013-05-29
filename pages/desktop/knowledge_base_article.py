@@ -229,7 +229,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
 
     _show_chart_link_locator = (By.ID, 'show-graph')
     _helpfulness_chart_locator = (By.ID, 'helpful-graph')
-    _helpfulness_chart_graph_locator = (By.CSS_SELECTOR, 'svg > path')
+    _helpfulness_chart_graph_locator = (By.CSS_SELECTOR, '.graph.rickshaw_graph > svg > g  > path')
 
     @property
     def is_helpfulness_chart_visible(self):
