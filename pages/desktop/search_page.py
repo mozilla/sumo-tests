@@ -69,15 +69,22 @@ class SearchPage(Base):
         self.selenium.find_element(*self._next_page_link).click()
 
     def click_question_link(self,link_title):
+        #click the link to one of the forum threads
         self.selenium.find_element(*self._result_question_locator).click()
+        #check if the opened page contains the given page title
+        #1.get all the window handles
         window_handles = self.selenium.window_handles
         num_window_handles = len(window_handles)
         isReachedRightPage = False
+        #2.search for the handle of the window containing the given title
         for h_window in window_handles:
+            #3. switch to one of the handles
             self.selenium.switch_to_window(h_window)
             self.selenium.implicitly_wait(1)
             title_h_window = self.selenium.title
             if (link_title in title_h_window):
+                #a handle of the window containing it is found
                 isReachedRightPage = True
                 break
+        #4. notify if such a page has been found
         return isReachedRightPage
