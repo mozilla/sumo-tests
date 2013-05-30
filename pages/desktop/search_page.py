@@ -5,7 +5,7 @@
 
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
-
+from selenium.webdriver.common.keys import Keys
 
 class SearchPage(Base):
     """
@@ -25,7 +25,12 @@ class SearchPage(Base):
     _second_page_link = (By.LINK_TEXT, '2')
     _search_unavailable_msg = 'unavailable'
     _results_list_locator = (By.CSS_SELECTOR, 'div.search-results div[class*="result"]')
-
+    _result_question_locator = (By.XPATH, ".//*[@id='search-results']//h3/a")
+    
+    def go_to_search_page(self):
+        self.open(self._page_url)
+        self.is_the_current_page      
+        
     def do_search_on_search_query(self, search_query):
         if not (self._page_title in self.selenium.title):
             self.go_to_search_page()
@@ -53,9 +58,26 @@ class SearchPage(Base):
     def get_result_text(self):
         return self.selenium.find_element(*self._result_div).text
 
+    def get_result_question_text(self):
+        return self.selenium.find_element(*self._result_question_locator).text
+
     def click_refine_search_link(self, refine_search_page_obj):
         self.selenium.find_element(*self._refine_search_link).click()
         refine_search_page_obj.is_the_current_page
 
     def click_next_page_link(self):
         self.selenium.find_element(*self._next_page_link).click()
+
+    def click_question_link(self,link_title):
+        self.selenium.find_element(*self._result_question_locator).click()
+        window_handles = self.selenium.window_handles
+        num_window_handles = len(window_handles)
+        isReachedRightPage = False
+        for h_window in window_handles:
+            self.selenium.switch_to_window(h_window)
+            self.selenium.implicitly_wait(1)
+            title_h_window = self.selenium.title
+            if (link_title in title_h_window):
+                isReachedRightPage = True
+                break
+        return isReachedRightPage
