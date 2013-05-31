@@ -6,6 +6,7 @@
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
 
+
 class SearchPage(Base):
     """
     'Search for Firefox Help' page
@@ -24,7 +25,7 @@ class SearchPage(Base):
     _second_page_link = (By.LINK_TEXT, '2')
     _search_unavailable_msg = 'unavailable'
     _results_list_locator = (By.CSS_SELECTOR, 'div.search-results div[class*="result"]')
-    _result_question_locator = (By.XPATH, ".//*[@id='search-results']//h3/a")
+    _result_question_locator = (By.CSS_SELECTOR, '#search-results h3 a')
     
     def go_to_search_page(self):
         self.open(self._page_url)
@@ -57,7 +58,7 @@ class SearchPage(Base):
     def get_result_text(self):
         return self.selenium.find_element(*self._result_div).text
 
-    def get_result_question_text(self):
+    def result_question_text(self):
         return self.selenium.find_element(*self._result_question_locator).text
 
     def click_refine_search_link(self, refine_search_page_obj):
@@ -87,3 +88,4 @@ class SearchPage(Base):
                 break
         #4. notify if such a page has been found
         return isReachedRightPage
+
