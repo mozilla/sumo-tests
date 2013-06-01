@@ -19,6 +19,8 @@ class MockArticle(dict):
         self['summary'] = "this is an automated summary_%s%s" % (timestamp, suffix)
         self['content'] = "automated content_%s%s" % (timestamp, suffix)
         self['comment'] = "comment %s %s" % (timestamp, suffix)
+        self['product'] = "Firefox"
+        self['topic'] = "Websites"
 
         # update with any keyword arguments passed
         self.update(**kwargs)

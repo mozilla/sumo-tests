@@ -41,6 +41,8 @@ class TestSearch:
         #   (Url is in the forum of /questions/[some number])
         #5. A complete forum thread should be displayed.
         Assert.true(search_pg.is_result_present, "result page is not present.")
-        result_thread_title = search_pg.get_result_question_text()
-        Assert.contains(self.forum_search_term,result_thread_title)
-        search_pg.click_question_link(self.forum_search_term)                
+        result_thread_title = search_pg.result_question_text()
+        Assert.contains(self.forum_search_term, result_thread_title)
+        is_reached_right_page = search_pg.click_question_link(self.forum_search_term) 
+	Assert.true(is_reached_right_page, "a form thread page is not displayed.")
+             

@@ -27,7 +27,9 @@ class KnowledgeBaseNewArticle(Base):
     _article_content_box_locator = (By.CSS_SELECTOR, '#editor > textarea')
     _article_slug_box_locator = (By.ID, 'id_slug')
     _article_topic_locator = (By.CSS_SELECTOR, 'input[name=topics]')
+    _article_topic_label_locator = (By.CSS_SELECTOR, '.topics label')
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
+    _article_product_label_locator = (By.CSS_SELECTOR, 'label[for*="id_products_"]')
     _article_preview_btn_locator = (By.CSS_SELECTOR, 'div.submit > .btn-preview')
     _article_preview_content_locator = (By.CSS_SELECTOR, 'div#preview > div#doc-content')
     _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn.btn-important.btn-submit')
@@ -41,8 +43,8 @@ class KnowledgeBaseNewArticle(Base):
         self.set_article_title(mock_article['title'])
         self.set_article_slug(mock_article['slug'])
         self.set_article_category(mock_article['category'])
-        self.check_article_topic(1)
-        self.check_article_product(1)
+        self.check_article_topic(mock_article['topic'])
+        self.check_article_product(mock_article['product'])
         self.set_article_keyword(mock_article['keyword'])
         self.set_article_summary(mock_article['summary'])
         self.set_article_content(mock_article['content'])
@@ -57,13 +59,21 @@ class KnowledgeBaseNewArticle(Base):
         select_box = Select(self.selenium.find_element(*self._article_category_menu_locator))
         select_box.select_by_visible_text(category)
 
-    def check_article_topic(self, index):
-        index = index - 1
-        self.selenium.find_elements(*self._article_topic_locator)[index].click()
+    def check_article_topic(self, topic):
+        self._check_element_by_label_text(
+            topic, self._article_topic_locator, self._article_topic_label_locator)
 
-    def check_article_product(self, index):
-        index = index - 1
-        self.selenium.find_elements(*self._article_product_locator)[index].click()
+    def check_article_product(self, product):
+        self._check_element_by_label_text(
+            product, self._article_product_locator, self._article_product_label_locator)
+
+    def _check_element_by_label_text(self, text_to_match, input_locator, label_locator):
+        inputs = self.selenium.find_elements(*input_locator)
+        labels = [e.text for e in self.selenium.find_elements(*label_locator)]
+        for i in xrange(len(labels)):
+            if labels[i].lower() == text_to_match.lower():
+                inputs[i].click()
+                break
 
     def set_article_keyword(self, keyword):
         self.selenium.find_element(*self._article_keywords_box_locator).send_keys(keyword)
