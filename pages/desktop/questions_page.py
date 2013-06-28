@@ -82,10 +82,15 @@ class QuestionsPage(Base):
             return int(self._root_element.find_element(*self._replies_number_locator).text)
 
         def click_question_link(self):
+            question_title = self.title
             self._root_element.find_element(*self._question_link_locator).click()
             view_question_pg = ViewQuestionPage(self.testsetup)
-            view_question_pg.is_the_current_page
+            view_question_pg.is_the_current_page(question_title)
             return view_question_pg
+
+        @property
+        def title(self):
+            return self._root_element.find_element(*self._question_link_locator).text
 
 
 class AskNewQuestionsPage(Base):
