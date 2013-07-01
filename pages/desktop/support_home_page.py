@@ -4,7 +4,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.desktop.base import Base
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
+from unittestzero import Assert
 
 
 class SupportHomePage(Base):
@@ -25,6 +27,8 @@ class SupportHomePage(Base):
     _kb_dashboard_link_locator = (By.LINK_TEXT, 'Knowledge Base Dashboard')
     _for_contributors_locator = (By.CSS_SELECTOR, '#for-contributors h1')
 
+    _navigation_locator = (By.CSS_SELECTOR, 'nav#aux-nav > ul')
+
     def do_search_on_main_search_box(self, search_query):
         search_box = self.selenium.find_element(*self._main_search_box)
         search_box.clear()
@@ -43,9 +47,27 @@ class SupportHomePage(Base):
     def is_for_contributors_expanded(self):
         return 'expanded' in self.selenium.find_element(*self._for_contributors_locator).get_attribute('class')
 
+    def hover_navigation_item(self, item_text):
+        nav = self.selenium.find_element(*self._navigation_locator)
+        for item in nav.find_elements(By.CSS_SELECTOR, 'li'):
+            if item.text == item_text:
+                ActionChains(self.selenium).move_to_element(item).perform()
+                break
+        else:
+            return None
+
+        return item
+
     def click_knowledge_base_dashboard_link(self):
-        self.selenium.find_element(*self._for_contributors_locator).click()
-        self.is_for_contributors_expanded
-        self.selenium.find_element(*self._kb_dashboard_link_locator).click()
+        contributor_tools = self.hover_navigation_item('CONTRIBUTOR TOOLS')
+        links = contributor_tools.find_elements(By.CSS_SELECTOR, 'ul > li > a')
+        for link in links:
+            print 'Link text: ', str(link)
+            if link.text == 'Knowledge Base Dashboard'.upper():
+                link.click()
+                break
+        else:
+            Assert.true(False, 'Knowledge Base Dashboard link not found.')
+
         from contributors_page import ContributorsPage
         return ContributorsPage(self.testsetup)
