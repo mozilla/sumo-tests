@@ -47,27 +47,33 @@ class SupportHomePage(Base):
     def is_for_contributors_expanded(self):
         return 'expanded' in self.selenium.find_element(*self._for_contributors_locator).get_attribute('class')
 
-    def hover_navigation_item(self, item_text):
+    def click_navigation_item(self, item_text, subitem_text=None, subitem_index=None):
         nav = self.selenium.find_element(*self._navigation_locator)
+        ac = ActionChains(self.selenium)
         for item in nav.find_elements(By.CSS_SELECTOR, 'li'):
             if item.text == item_text:
-                ActionChains(self.selenium).move_to_element(item).perform()
+                if subitem_text is None and subitem_index is None:
+                    ac.click(item)
+                else:
+                    ac.move_to_element(item)
+                    subitems = item.find_elements(By.CSS_SELECTOR, 'ul > li > a')
+                    if subitem_text is not None:
+                        for subitem in subitems:
+                            if subitem.text == subitem_text:
+                                ac.click(subitem)
+                                break
+                        else:
+                            raise Exception('Subitem %s not found.' % subitem_text)
+                    else:
+                        ac.click(subitems[subitem_index])
                 break
         else:
-            return None
+            raise Exception('Navigation item %s not found.' % item_text)
 
-        return item
+        ac.perform()
 
     def click_knowledge_base_dashboard_link(self):
-        contributor_tools = self.hover_navigation_item('CONTRIBUTOR TOOLS')
-        links = contributor_tools.find_elements(By.CSS_SELECTOR, 'ul > li > a')
-        for link in links:
-            print 'Link text: ', str(link)
-            if link.text == 'Knowledge Base Dashboard'.upper():
-                link.click()
-                break
-        else:
-            Assert.true(False, 'Knowledge Base Dashboard link not found.')
-
+        #self.click_navigation_item('CONTRIBUTOR TOOLS', 'Knowledge Base Dashboard')
+        self.click_navigation_item('CONTRIBUTOR TOOLS', subitem_index=4)
         from contributors_page import ContributorsPage
         return ContributorsPage(self.testsetup)
