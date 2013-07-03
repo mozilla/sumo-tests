@@ -164,6 +164,7 @@ class TestKnowledgeBaseArticle:
            Deletes the article
         """
         sumo_homepage = PageProvider(mozwebqa).home_page(do_login=True)
+        sumo_homepage.header.dismiss_staging_site_warning_if_present()
         contrib_page = sumo_homepage.click_knowledge_base_dashboard_link()
         contrib_page.is_the_current_page
         contrib_page.click_all_time()
