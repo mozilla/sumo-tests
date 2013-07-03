@@ -156,7 +156,7 @@ class TestKnowledgeBaseArticle:
         # deleting
         kb_article_history.delete_entire_article_document()
 
-    @pytest.mark.xfail(reason='Locators for Knowledge Base Dashboard changed. Pending pull #209 needs to be reviewed.')
+    @pytest.mark.native
     @pytest.mark.nondestructive
     def test_view_helpfulness_chart(self, mozwebqa):
         """

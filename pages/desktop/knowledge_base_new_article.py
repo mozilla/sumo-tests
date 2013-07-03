@@ -43,7 +43,7 @@ class KnowledgeBaseNewArticle(Base):
         self.set_article_title(mock_article['title'])
         self.set_article_slug(mock_article['slug'])
         self.set_article_category(mock_article['category'])
-        self.check_article_topic(mock_article['topic'])
+        self.check_first_article_topic()
         self.check_article_product(mock_article['product'])
         self.set_article_keyword(mock_article['keyword'])
         self.set_article_summary(mock_article['summary'])
@@ -59,9 +59,8 @@ class KnowledgeBaseNewArticle(Base):
         select_box = Select(self.selenium.find_element(*self._article_category_menu_locator))
         select_box.select_by_visible_text(category)
 
-    def check_article_topic(self, topic):
-        self._check_element_by_label_text(
-            topic, self._article_topic_locator, self._article_topic_label_locator)
+    def check_first_article_topic(self):
+        self.selenium.find_element(*self._article_topic_locator).click()
 
     def check_article_product(self, product):
         self._check_element_by_label_text(
