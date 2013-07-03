@@ -13,8 +13,9 @@ class TestSearch:
 
     @pytest.mark.nondestructive
     def test_no_query_adv_forum_search(self, mozwebqa):
-        if mozwebqa.base_url == 'https://support-dev.allizom.org':
-            pytest.skip('Search results are not guaranteed to exist on support-dev.allizom.org')
+        if mozwebqa.base_url in ['https://support-dev.allizom.org',
+                                 'https://support.mozilla.org']:
+            pytest.skip('Search results are not guaranteed to exist on %s' % mozwebqa.base_url)
 
         refine_search_pg = PageProvider(mozwebqa).refine_search_page()
 
