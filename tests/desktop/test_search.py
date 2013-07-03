@@ -11,11 +11,11 @@ class TestSearch:
 
     forum_search_term = "Firefox crash"
 
-    @pytest.mark.native
     @pytest.mark.nondestructive
     def test_no_query_adv_forum_search(self, mozwebqa):
-        if mozwebqa.base_url == 'https://support.mozilla.org':
-            pytest.xfail(reason='Bug 710361 - Empty/default advanced searches fail/time out on support-dev.allizom.org')
+        if mozwebqa.base_url == 'https://support-dev.allizom.org':
+            pytest.skip('Search results are not guaranteed to exist on support-dev.allizom.org')
+
         refine_search_pg = PageProvider(mozwebqa).refine_search_page()
 
         # do test
@@ -25,9 +25,13 @@ class TestSearch:
 
         Assert.true(refine_search_pg.search_result_count > 0, "No search results not found")
 
+
     @pytest.mark.nondestructive
     def test_user_flow_to_forum_post(self, mozwebqa):
            
+        if mozwebqa.base_url == 'https://support-dev.allizom.org':
+            pytest.skip('Search results are not guaranteed to exist on support-dev.allizom.org')
+
         #1. start on the home page
         home_pg = PageProvider(mozwebqa).home_page()
         
