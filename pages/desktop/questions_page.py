@@ -151,6 +151,11 @@ class ViewQuestionPage(Base):
     _problem_too_button_locator = (By.CSS_SELECTOR, 'div.me-too > form > button.btn')
     _problem_count_text_locator = (By.CSS_SELECTOR, 'div.question-meta > ul.cf > li:nth-child(2)')
     _no_thanks_link_locator = (By.LINK_TEXT, 'No Thanks')
+    _thread_content_box_locator = (By.ID, 'id_content')
+    _reply_button_locator = (By.CSS_SELECTOR, "button[class='btn btn-submit big']")
+    _answers_locator = (By.CSS_SELECTOR, '.answer.grid_9')
+    _post_author_locator = (By.CSS_SELECTOR, '.asked-by > a')
+    _post_content_locator = (By.CSS_SELECTOR, 'div > p')
     _page_title = ' | Firefox Support Forum | Mozilla Support'
 
     def is_the_current_page(self, question_name):
@@ -177,3 +182,24 @@ class ViewQuestionPage(Base):
         count_text = self.selenium.find_element(*self._problem_count_text_locator).text
         count_text = count_text.split()
         return int(count_text[0])
+
+    def post_reply(self, reply_text):
+        self.selenium.find_element(*self._thread_content_box_locator).send_keys(reply_text)
+        self.selenium.find_element(*self._reply_button_locator).click()
+
+    def is_reply_text_present(self, username, reply_text):
+        is_reply_present = False
+        #get a list of answers
+        answers = self.selenium.find_elements(*self._answers_locator)
+        #check if there exists a reply the user replied as "reply"
+        for answer in answers:
+            #name of the person who authored a post (name of a replyer)
+            post_author_name = answer.find_element(*self._post_author_locator).text.lower()
+            #content of the post
+            post_content = answer.find_element(*self._post_content_locator).text
+            #there should exist a post, whose content is "reply" and
+            #the author is the person who logged in with username
+            if username == post_author_name and post_content == reply_text:
+                is_reply_present = True
+                break
+        return is_reply_present

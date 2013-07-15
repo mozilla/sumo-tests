@@ -6,7 +6,7 @@
 import pytest
 import datetime
 from unittestzero import Assert
-
+from random import randrange
 from pages.desktop.page_provider import PageProvider
 
 
@@ -87,3 +87,38 @@ class TestQuestions:
         post_click_count = view_question_page.problem_count
 
         Assert.equal(initial_count + 1, post_click_count)
+
+    def test_contributor_flow_to_support_forum_post(self, mozwebqa):
+        """
+            Shows a contributor can start on the home page and move
+            all the way to answering a question in the forum.
+        """
+        num_questions_to_display = 20
+        reply_text = "reply"
+
+        #1. Start on the home page
+        #2. Log in
+        #3. Use the contributor bar to go to the forums.
+        #   The questions page should list 20 posts.
+        #3.1 go to the question page
+        question_page = PageProvider(mozwebqa).questions_page(do_login=True)
+        #3.2 ensure the size of the list is 20
+        Assert.equal(question_page.questions_count, num_questions_to_display,
+                     'amount of displayed questions is not equal to expected value')
+
+        #4. Click on a question. (URL is in the forum of /questions/[some number])
+        #4.1 pick up an arbitrary question and click
+        #4.2 check if it landed on an intended forum page
+        question = question_page.questions[randrange(num_questions_to_display)]
+        forum_page = question.click_question_link()
+
+        #5. Go to the thread
+        #6. Scroll to the bottom and click into the text field
+        #7. Type reply
+        #7.1 get the login-user name to check the author of the reply
+        username = forum_page.header.login_user_name
+        #7.2 reply the post
+        forum_page.post_reply(reply_text)
+        #7.3 check if posting a reply finishes without an error
+        Assert.true(forum_page.is_reply_text_present(username, reply_text),
+            u'reply with "%s" text posted by %s is not present' % (reply_text, username))
