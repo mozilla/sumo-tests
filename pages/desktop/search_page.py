@@ -14,7 +14,7 @@ class SearchPage(Base):
 
     _page_title = 'Search | Mozilla Support'
     _page_url = '/en-US/search'
-    _search_query_locator = (By.CSS_SELECTOR, 'input.search-query')
+    _search_query_locator = (By.CSS_SELECTOR, 'input.searchbox')
     _search_box_locator = (By.CSS_SELECTOR, 'input.searchbox')
     _search_button = (By.CSS_SELECTOR, 'button[type="submit"]')
     _search_support_button_locator = (By.CSS_SELECTOR, '.btn-important')
