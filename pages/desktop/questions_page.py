@@ -202,4 +202,4 @@ class ViewQuestionPage(Base):
             if username == post_author_name and post_content == reply_text:
                 is_reply_present = True
                 break
-        return is_reply_present
+        return is_reply_present, post_author_name

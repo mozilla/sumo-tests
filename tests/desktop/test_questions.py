@@ -120,5 +120,6 @@ class TestQuestions:
         #7.2 reply the post
         forum_page.post_reply(reply_text)
         #7.3 check if posting a reply finishes without an error
-        Assert.true(forum_page.is_reply_text_present(username, reply_text),
-            u'reply with "%s" text posted by %s is not present' % (reply_text, username))
+        is_reply_present, post_author_name = forum_page.is_reply_text_present(username, reply_text)
+        Assert.true(is_reply_present, 
+            u'reply with "%s" text posted by %s (actually: %s) is not present' % (reply_text, username, post_author_name))
