@@ -26,6 +26,7 @@ class KnowledgeBaseNewArticle(Base):
     _article_summary_box_locator = (By.ID, 'id_summary')
     _article_content_box_locator = (By.CSS_SELECTOR, '#editor > textarea')
     _article_slug_box_locator = (By.ID, 'id_slug')
+    _article_topic_expander_locator = (By.CSS_SELECTOR, '#accordion li strong')
     _article_topic_locator = (By.CSS_SELECTOR, 'input[name=topics]')
     _article_topic_label_locator = (By.CSS_SELECTOR, '.topics label')
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
@@ -60,6 +61,7 @@ class KnowledgeBaseNewArticle(Base):
         select_box.select_by_visible_text(category)
 
     def check_first_article_topic(self):
+        self.selenium.find_element(*self._article_topic_expander_locator).click()
         self.selenium.find_element(*self._article_topic_locator).click()
 
     def check_article_product(self, product):
