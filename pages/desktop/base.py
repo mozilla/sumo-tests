@@ -21,6 +21,10 @@ class Base(Page):
     firefox_android_product_locator = (By.CSS_SELECTOR, '#product-cards > li:nth-of-type(2) > a')
     firefoxos_product_locator = (By.CSS_SELECTOR, '#product-cards > li:nth-of-type(3) > a')
 
+    def __init__(self, testsetup):
+        super(Base, self).__init__(testsetup)
+        self.header.dismiss_staging_site_warning_if_present()
+
     def click_card_grid(self, locator):
         ActionChains(self.selenium).move_to_element(
             self.selenium.find_element(*locator)).click().perform()
@@ -87,7 +91,8 @@ class Base(Page):
 
         def dismiss_staging_site_warning_if_present(self):
             if self.is_element_present(*self._staging_site_warning_close_button_locator):
-                self.selenium.find_element(*self._staging_site_warning_close_button_locator).click()
+                if self.is_element_visible(*self._staging_site_warning_close_button_locator):
+                    self.selenium.find_element(*self._staging_site_warning_close_button_locator).click()
 
         @property
         def is_user_logged_in(self):
