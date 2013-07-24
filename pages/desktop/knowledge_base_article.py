@@ -99,6 +99,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
     _article_content_object = 'window.highlighting.editor'
+    _article_topic_expander_locator = (By.CSS_SELECTOR, '#accordion li strong')
     _article_topic_locator = (By.CSS_SELECTOR, 'input[name=topics]')
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn-submit')
@@ -157,6 +158,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
 
     def check_article_topic(self, index):
         index = index - 1
+        self.selenium.find_element(*self._article_topic_expander_locator).click()
         self.selenium.find_elements(*self._article_topic_locator)[index].click()
 
     def check_article_product(self, index):

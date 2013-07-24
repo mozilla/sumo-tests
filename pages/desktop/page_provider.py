@@ -20,6 +20,7 @@ class PageProvider():
         page_object.is_the_current_page
         if (do_login):
             page_object.sign_in(user)
+        page_object.header.dismiss_staging_site_warning_if_present()
         return page_object
 
     def _go_to_page_with_login_redirect(self, page_object, user='default'):
@@ -29,6 +30,7 @@ class PageProvider():
         login_page = LoginPage(self.testsetup)
         login_page.log_in(user)
         page_object.is_the_current_page
+        page_object.header.dismiss_staging_site_warning_if_present()
         return page_object
 
     ''' pages for which login is forbidden '''
