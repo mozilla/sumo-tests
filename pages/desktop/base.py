@@ -99,4 +99,4 @@ class Base(Page):
 
         @property
         def login_user_name(self):
-            return self.selenium.find_element(*self._account_controller_locator).text.lower()
+            return self.selenium.find_element(*self._account_controller_locator).text
