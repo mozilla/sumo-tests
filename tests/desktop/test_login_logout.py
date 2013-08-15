@@ -21,6 +21,7 @@ class TestLoginLogout:
 
     ### logging out of the following pages keeps user on the same pages
 
+    @pytest.mark.xfail(reason='Bug 905118 - Signing in from other pages always redirects user to home_page')
     @pytest.mark.native
     @pytest.mark.nondestructive
     @pytest.mark.parametrize('page_method', ['home_page',
