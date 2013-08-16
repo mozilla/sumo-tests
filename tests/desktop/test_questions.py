@@ -12,6 +12,7 @@ from pages.desktop.page_provider import PageProvider
 
 class TestQuestions:
 
+    @pytest.mark.xfail(reason='Bug 905118 - Signing in from other pages always redirects user to home_page')
     @pytest.mark.native
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""

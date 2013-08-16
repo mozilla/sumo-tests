@@ -28,7 +28,7 @@ class PageProvider():
         self.selenium.maximize_window()
         self.selenium.get(self.base_url + page_object._page_url)
         bid_login = Base(self.testsetup)
-        bid_login.log_in(user)
+        bid_login.sign_in(user)
         page_object.is_the_current_page
         page_object.header.dismiss_staging_site_warning_if_present()
         return page_object
