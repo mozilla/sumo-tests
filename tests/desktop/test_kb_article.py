@@ -167,7 +167,7 @@ class TestKnowledgeBaseArticle:
         """
            Creates a new knowledge base article.
            Verifies creation.
-           Deletes the article
+           Deletes the article.
         """
         sumo_homepage = PageProvider(mozwebqa).home_page(do_login=True)
         sumo_homepage.header.dismiss_staging_site_warning_if_present()
