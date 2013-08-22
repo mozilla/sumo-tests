@@ -64,6 +64,6 @@ class SupportHomePage(Base):
         ac.perform()
 
     def click_knowledge_base_dashboard_link(self):
-        self.click_navigation_item('CONTRIBUTOR TOOLS', subitem_index=4)
+        self.click_navigation_item('CONTRIBUTOR TOOLS', subitem_index=5)
         from contributors_page import ContributorsPage
         return ContributorsPage(self.testsetup)
