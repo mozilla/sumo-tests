@@ -21,7 +21,6 @@ class TestLoginLogout:
 
     ### logging out of the following pages keeps user on the same pages
 
-    @pytest.mark.xfail(reason='Bug 905118 - Signing in from other pages always redirects user to home_page')
     @pytest.mark.native
     @pytest.mark.nondestructive
     @pytest.mark.parametrize('page_method', ['home_page',
@@ -39,7 +38,6 @@ class TestLoginLogout:
         page_under_test.is_the_current_page
         Assert.true(page_under_test.header.is_user_logged_out)
 
-    @pytest.mark.xfail(reason='Bug 905118 - Signing in from other pages always redirects user to home_page')
     @pytest.mark.native
     def test_logout_from_new_kb_article_page(self, mozwebqa):
         new_kb_page = PageProvider(mozwebqa).new_kb_article_page()
@@ -50,7 +48,6 @@ class TestLoginLogout:
         register_page.is_the_current_page
         Assert.true(register_page.header.is_user_logged_out)
 
-    @pytest.mark.xfail(reason='Bug 905118 - Signing in from other pages always redirects user to home_page')
     @pytest.mark.native
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
@@ -68,7 +65,6 @@ class TestLoginLogout:
         register_page.is_the_current_page
         Assert.true(register_page.header.is_user_logged_out)
 
-    @pytest.mark.xfail(reason='Bug 905118 - Signing in from other pages always redirects user to home_page')
     @pytest.mark.native
     def test_logout_from_translate_kb_article_page(self, mozwebqa):
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
