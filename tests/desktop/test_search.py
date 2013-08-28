@@ -11,7 +11,6 @@ class TestSearch:
 
     forum_search_term = "Firefox crash"
 
-    @pytest.mark.xfail(reason='Bug 905118 - Signing in from other pages always redirects user to home_page')
     @pytest.mark.nondestructive
     def test_no_query_adv_forum_search(self, mozwebqa):
         if mozwebqa.base_url in ['https://support-dev.allizom.org',
