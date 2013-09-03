@@ -5,8 +5,6 @@
 
 from pages.desktop.base import Base
 from pages.desktop.knowledge_base_article import KnowledgeBaseArticle
-import re
-import time
 from selenium.webdriver.common.by import By
 
 

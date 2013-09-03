@@ -9,7 +9,6 @@ Created on Jun 21, 2010
 '''
 import re
 import time
-import base64
 from unittestzero import Assert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException

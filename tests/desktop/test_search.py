@@ -34,12 +34,12 @@ class TestSearch:
             pytest.skip('Search results are not guaranteed to exist on support-dev.allizom.org')
 
         #1. start on the home page
-        home_pg = PageProvider(mozwebqa).home_page()
+        PageProvider(mozwebqa).home_page()
 
         #2. type "Firefox crashed"
         #3. hit Enter
         search_pg = SearchPage(mozwebqa)
-        search_pg.do_search_on_search_query(self.forum_search_term+"ed")
+        search_pg.do_search_on_search_query(self.forum_search_term + "ed")
 
         #4. In the results list there are two types of results:
         #   Forum and KB. Click on a forum result.
