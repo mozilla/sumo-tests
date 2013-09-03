@@ -9,5 +9,5 @@ py==1.4.9
 pytest==2.2.4
 pytest-mozwebqa==1.1.1
 pytest-xdist==1.8
-requests==0.10.8
+requests==1.2.3
 selenium
