@@ -26,11 +26,11 @@ class SearchPage(Base):
     _search_unavailable_msg = 'unavailable'
     _results_list_locator = (By.CSS_SELECTOR, 'div.search-results div[class*="result"]')
     _result_question_locator = (By.CSS_SELECTOR, '#search-results h3 a')
-    
+
     def go_to_search_page(self):
         self.open(self._page_url)
-        self.is_the_current_page      
-        
+        self.is_the_current_page
+
     def do_search_on_search_query(self, search_query):
         if not (self._page_title in self.selenium.title):
             self.go_to_search_page()
@@ -68,13 +68,12 @@ class SearchPage(Base):
     def click_next_page_link(self):
         self.selenium.find_element(*self._next_page_link).click()
 
-    def click_question_link(self,link_title):
+    def click_question_link(self, link_title):
         #click the link to one of the forum threads
         self.selenium.find_element(*self._result_question_locator).click()
         #check if the opened page contains the given page title
         #1.get all the window handles
         window_handles = self.selenium.window_handles
-        num_window_handles = len(window_handles)
         isReachedRightPage = False
         #2.search for the handle of the window containing the given title
         for h_window in window_handles:
@@ -88,4 +87,3 @@ class SearchPage(Base):
                 break
         #4. notify if such a page has been found
         return isReachedRightPage
-
