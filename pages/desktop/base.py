@@ -38,6 +38,8 @@ class Base(Page):
 
     def sign_out(self):
         self.header.click_logout()
+        from pages.desktop.login_page import LoginPage
+        return LoginPage(self.testsetup) 
 
     def sign_in(self, user):
 
