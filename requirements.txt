@@ -4,7 +4,7 @@
 PyYAML==3.10
 UnittestZero
 certifi==0.0.8
-chardet==1.0.1
+chardet==2.1.1
 py==1.4.9
 pytest==2.2.4
 pytest-mozwebqa==1.1.1
