@@ -12,7 +12,6 @@ from mocks.mock_article import MockArticle
 
 class TestKnowledgeBaseArticle:
 
-    @pytest.mark.xfail(reason='Bug 910149 - [browserid] Going to a @login_required view sends user to non-Persona login page')
     def test_that_article_can_be_created(self, mozwebqa):
         """
            Creates a new knowledge base article.
@@ -40,7 +39,6 @@ class TestKnowledgeBaseArticle:
         kb_article_history = kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    @pytest.mark.xfail(reason='Bug 910149 - [browserid] Going to a @login_required view sends user to non-Persona login page')
     def test_that_article_can_be_edited(self, mozwebqa):
         """
            Creates a new knowledge base article.
@@ -78,7 +76,6 @@ class TestKnowledgeBaseArticle:
         kb_article_history = kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    @pytest.mark.xfail(reason='Bug 910149 - [browserid] Going to a @login_required view sends user to non-Persona login page')
     def test_that_article_can_be_deleted(self, mozwebqa):
         """
            Creates a new knowledge base article.
@@ -105,7 +102,6 @@ class TestKnowledgeBaseArticle:
         actual_page_title = kb_article_history.page_title
         Assert.contains("Page Not Found", actual_page_title)
 
-    @pytest.mark.xfail(reason='Bug 910149 - [browserid] Going to a @login_required view sends user to non-Persona login page')
     def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
         """
             Start a new knowledge base article.
@@ -125,7 +121,6 @@ class TestKnowledgeBaseArticle:
 
         # Does not need to be deleted as it does not commit the article
 
-    @pytest.mark.xfail(reason='Bug 910149 - [browserid] Going to a @login_required view sends user to non-Persona login page')
     def test_that_article_can_be_translated(self, mozwebqa):
         """
            Creates a new knowledge base article.
