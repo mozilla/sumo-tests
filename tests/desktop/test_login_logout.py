@@ -38,18 +38,16 @@ class TestLoginLogout:
         page_under_test.is_the_current_page
         Assert.true(page_under_test.header.is_user_logged_out)
 
-    @pytest.mark.xfail(reason='Bug 910149 - [browserid] Going to a @login_required view sends user to non-Persona login page')
     @pytest.mark.native
     def test_logout_from_new_kb_article_page(self, mozwebqa):
         new_kb_page = PageProvider(mozwebqa).new_kb_article_page()
         Assert.true(new_kb_page.header.is_user_logged_in, 'User not shown to be logged in')
 
         # sign out
-        register_page = new_kb_page.sign_out()
-        register_page.is_the_current_page
-        Assert.true(register_page.header.is_user_logged_out)
+        login_page = new_kb_page.sign_out()
+        login_page.is_the_current_page
+        Assert.true(login_page.header.is_user_logged_out)
 
-    @pytest.mark.xfail(reason='Bug 910149 - [browserid] Going to a @login_required view sends user to non-Persona login page')
     @pytest.mark.native
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
@@ -63,11 +61,10 @@ class TestLoginLogout:
         kb_edit_article = kb_article_history.navigation.click_edit_article()
 
         # sign out
-        register_page = kb_edit_article.sign_out()
-        register_page.is_the_current_page
-        Assert.true(register_page.header.is_user_logged_out)
+        login_page = kb_edit_article.sign_out()
+        login_page.is_the_current_page
+        Assert.true(login_page.header.is_user_logged_out)
 
-    @pytest.mark.xfail(reason='Bug 910149 - [browserid] Going to a @login_required view sends user to non-Persona login page')
     @pytest.mark.native
     def test_logout_from_translate_kb_article_page(self, mozwebqa):
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
@@ -82,6 +79,6 @@ class TestLoginLogout:
         kb_translate_pg.click_translate_language('Esperanto (eo)')
 
         # sign out
-        register_page = kb_translate_pg.sign_out()
-        register_page.is_the_current_page
-        Assert.true(register_page.header.is_user_logged_out)
+        login_page = kb_translate_pg.sign_out()
+        login_page.is_the_current_page
+        Assert.true(login_page.header.is_user_logged_out)
