@@ -6,6 +6,7 @@
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 from pages.desktop.knowledge_base_article import KnowledgeBaseShowHistory
 
 
@@ -26,8 +27,10 @@ class KnowledgeBaseNewArticle(Base):
     _article_summary_box_locator = (By.ID, 'id_summary')
     _article_content_box_locator = (By.CSS_SELECTOR, '#editor > textarea')
     _article_slug_box_locator = (By.ID, 'id_slug')
+    _first_article_topic_heading = (By.ID, 'ui-accordion-accordion-header-0')
+    _first_article_topics_panel = (By.CSS_SELECTOR, '#ui-accordion-accordion-panel-0.ui-accordion-content-active')
     _article_topic_expander_locator = (By.CSS_SELECTOR, '#accordion li strong')
-    _article_topic_locator = (By.CSS_SELECTOR, 'input[name=topics]')
+    _first_article_topic_locator = (By.CSS_SELECTOR, '#ui-accordion-accordion-panel-0 input[name=topics]')
     _article_topic_label_locator = (By.CSS_SELECTOR, '.topics label')
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_product_label_locator = (By.CSS_SELECTOR, 'label[for*="id_products_"]')
@@ -61,8 +64,12 @@ class KnowledgeBaseNewArticle(Base):
         select_box.select_by_visible_text(category)
 
     def check_first_article_topic(self):
+        self.wait_for_element_visible(*self._first_article_topic_heading)
         self.selenium.find_element(*self._article_topic_expander_locator).click()
-        self.selenium.find_element(*self._article_topic_locator).click()
+        self.wait_for_element_visible(*self._first_article_topics_panel)
+        WebDriverWait(self.selenium, self.timeout).until(lambda s:
+            'overflow:hidden' not in self.selenium.find_element(*self._first_article_topics_panel).get_attribute('style'))
+        self.selenium.find_element(*self._first_article_topic_locator).click()
 
     def check_article_product(self, product):
         self._check_element_by_label_text(
