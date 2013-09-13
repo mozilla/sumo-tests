@@ -3,10 +3,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pages.desktop.base import Base
-from pages.page import Page
 from selenium.webdriver.common.by import By
 from unittestzero import Assert
+from pages.desktop.base import Base
+from pages.page import Page
 
 
 class KnowledgeBase(Base):
@@ -28,7 +28,6 @@ class KnowledgeBase(Base):
         _translate_article_locator = (By.XPATH, './/*[@id="doc-tools"]/ul/li[1]/ul/li[4]/a')
         _show_history_locator = (By.CSS_SELECTOR, '.sidebar-nav li a[href$="/history"]')
         _show_editing_tools_locator = (By.CSS_SELECTOR, '.sidebar-nav.sidebar-folding > li:first-child span')
-        _editing_tools_locator = (By.ID, 'doc-tools')
 
         def show_editing_tools(self):
             if not self.is_element_visible(*self._edit_article_locator):
@@ -61,7 +60,6 @@ class KnowledgeBaseArticle(KnowledgeBase):
     _title_locator = (By.CSS_SELECTOR, 'h1.title')
     _helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=helpful]')
     _not_helpful_locator = (By.CSS_SELECTOR, 'div#side input[name=not-helpful]')
-    _helpful_form_busy_locator = (By.CSS_SELECTOR, 'form.helpful.busy')
 
     @property
     def article_title(self):
@@ -183,7 +181,6 @@ class KnowledgeBaseTranslate(KnowledgeBase):
     _description_title_locator = (By.ID, 'id_title')
     _description_slug_locator = (By.ID, 'id_slug')
     _search_result_summary_locator = (By.ID, 'id_summary')
-    _preview_content_button_locator = (By.ID, 'btn-preview')
     _submit_button_locator = (By.CSS_SELECTOR, '.buttons-and-preview > div.submit:first-of-type .btn-important')
 
     # 2 elements inside the modal popup

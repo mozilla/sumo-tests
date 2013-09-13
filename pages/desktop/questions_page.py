@@ -3,9 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from unittestzero import Assert
 from selenium.webdriver.common.by import By
-
+from unittestzero import Assert
 from pages.page import Page
 from pages.desktop.base import Base
 
@@ -108,9 +107,6 @@ class AskNewQuestionsPage(Base):
     _q_content_box_locator = (By.ID, 'id_content')
     _q_trouble_box_locator = (By.ID, 'id_troubleshooting')
     _q_post_button_locator = (By.CSS_SELECTOR, 'li.submit button.btn')
-    _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=solved]')
-    _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=unsolved]')
-    _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=no-replies]')
     _questions_list_locator = (By.CSS_SELECTOR, 'div.questions > section')
     _solved_or_unsolved_text_locator = (By.CSS_SELECTOR, 'div.thread-meta > div')
     _close_stage_banner_locator = (By.CLASS_NAME, 'close-button')

@@ -14,19 +14,11 @@ class ForumsPage(Base):
     categories of forums: SUMO community/Off-topic etc.
     """
     _page_title = 'Forums'
-    _first_cat_forum_link = "css=div.name > a"
     _post_new_thread_link = "new-thread"
     _thread_title_box = "css=input#id_title"
     _thread_content_box = "id_content"
     _post_button = "css=input[value='Post']"
-    _cancel_link = "link=Cancel"
     _reply_button = "css=input[value='Reply']"
-    _reply_link = "css=a[href='#thread-reply']"
-    _pagination_link = "css=ol.pagination"
-    _next_page_link = "css=li.next"
-    _prev_page_link = "css=li.prev"
-    _locked_thread_format = "css=ol.threads li:nth-child(%d) > div > img[title='Locked']"
-    _unlocked_thread_format = "css=ol.threads > li:nth-child(%d) > div:nth-child(2) > a"
 
     def __init__(self, testsetup):
         self.forums_cat_list_url = testsetup.base_url_ssl + '/en-US/forums'
