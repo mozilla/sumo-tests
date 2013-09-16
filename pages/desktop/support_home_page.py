@@ -3,9 +3,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pages.desktop.base import Base
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
+from pages.desktop.base import Base
 
 
 class SupportHomePage(Base):
@@ -20,12 +20,9 @@ class SupportHomePage(Base):
 
     _main_search_box = (By.ID, 'q')
     _search_button = (By.CSS_SELECTOR, 'button.img-submit')
-    _see_all_button = (By.ID, 'button-seeall')
     _top_helpful_content_locator = (By.CSS_SELECTOR, 'div#home-content-quick section ul > li > a')
     _top_issues_link_locator = (By.CSS_SELECTOR, '#home-content-explore ul > li > a')
-    _kb_dashboard_link_locator = (By.LINK_TEXT, 'Knowledge Base Dashboard')
     _for_contributors_locator = (By.CSS_SELECTOR, '#for-contributors h1')
-
     _navigation_locator = (By.CSS_SELECTOR, 'nav#aux-nav > ul')
 
     def do_search_on_main_search_box(self, search_query):

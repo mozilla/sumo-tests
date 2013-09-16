@@ -3,8 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
+from pages.desktop.base import Base
 
 
 class SearchPage(Base):
@@ -20,10 +20,7 @@ class SearchPage(Base):
     _search_support_button_locator = (By.CSS_SELECTOR, '.btn-important')
     _refine_search_link = (By.CSS_SELECTOR, 'a[href *= "a=2"]')
     _next_page_link = (By.LINK_TEXT, 'Next')
-    _prev_page_link = (By.LINK_TEXT, 'Previous')
     _result_div = (By.CSS_SELECTOR, 'div.result')
-    _second_page_link = (By.LINK_TEXT, '2')
-    _search_unavailable_msg = 'unavailable'
     _results_list_locator = (By.CSS_SELECTOR, 'div.search-results div[class*="result"]')
     _result_question_locator = (By.CSS_SELECTOR, '#search-results h3 a')
 
@@ -42,9 +39,6 @@ class SearchPage(Base):
             self.go_to_search_page()
         self.selenium.find_element(*self._search_box_locator).send_keys(search_term)
         self.selenium.find_element(*self._search_support_button_locator).click()
-
-    def get_search_box_value(self):
-        return self.selenium.find_element(*self._search_box).value
 
     @property
     def is_result_present(self):
