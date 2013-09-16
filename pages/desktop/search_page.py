@@ -6,6 +6,7 @@
 from selenium.webdriver.common.by import By
 from pages.desktop.base import Base
 
+
 class SearchPage(Base):
     """
     'Search for Firefox Help' page
@@ -38,9 +39,6 @@ class SearchPage(Base):
             self.go_to_search_page()
         self.selenium.find_element(*self._search_box_locator).send_keys(search_term)
         self.selenium.find_element(*self._search_support_button_locator).click()
-
-    def get_search_box_value(self):
-        return self.selenium.find_element(*self._search_box_locator).value
 
     @property
     def is_result_present(self):

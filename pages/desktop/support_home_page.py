@@ -7,6 +7,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from pages.desktop.base import Base
 
+
 class SupportHomePage(Base):
     """
     The Firefox Support Home Page contains
