@@ -3,11 +3,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from pages.desktop.knowledge_base_article import KnowledgeBaseShowHistory
+from pages.desktop.base import Base
 
 
 class KnowledgeBaseNewArticle(Base):
@@ -31,7 +31,6 @@ class KnowledgeBaseNewArticle(Base):
     _first_article_topics_panel = (By.CSS_SELECTOR, '#ui-accordion-accordion-panel-0.ui-accordion-content-active')
     _article_topic_expander_locator = (By.CSS_SELECTOR, '#accordion li strong')
     _first_article_topic_locator = (By.CSS_SELECTOR, '#ui-accordion-accordion-panel-0 input[name=topics]')
-    _article_topic_label_locator = (By.CSS_SELECTOR, '.topics label')
     _article_product_locator = (By.CSS_SELECTOR, 'input[name=products]')
     _article_product_label_locator = (By.CSS_SELECTOR, 'label[for*="id_products_"]')
     _article_preview_btn_locator = (By.CSS_SELECTOR, 'div.submit > .btn-preview')

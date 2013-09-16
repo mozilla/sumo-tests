@@ -4,23 +4,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pages.page import Page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
+from pages.page import Page
 
 
 class Base(Page):
-
-    learn_the_basics_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(1) > a.cf')
-    download_migration_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(2) > a.cf')
-    privacy_security_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(3) > a.cf')
-    customize_addons_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(4) > a.cf')
-    fix_slowness_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(5) > a.cf')
-    get_support_locator = (By.CSS_SELECTOR, '#help-topics > ul.card-grid >li:nth-of-type(6) > a.cf')
-    firefox_product_locator = (By.CSS_SELECTOR, '#product-cards > li:nth-of-type(1) > a')
-    firefox_android_product_locator = (By.CSS_SELECTOR, '#product-cards > li:nth-of-type(2) > a')
-    firefoxos_product_locator = (By.CSS_SELECTOR, '#product-cards > li:nth-of-type(3) > a')
 
     def __init__(self, testsetup):
         super(Base, self).__init__(testsetup)
@@ -39,7 +29,7 @@ class Base(Page):
     def sign_out(self):
         self.header.click_logout()
         from pages.desktop.login_page import LoginPage
-        return LoginPage(self.testsetup) 
+        return LoginPage(self.testsetup)
 
     def sign_in(self, user):
 
@@ -75,7 +65,6 @@ class Base(Page):
 
         # Not LoggedIn
         _login_locator = (By.CSS_SELECTOR, '.browserid-login')
-        _register_locator = (By.CSS_SELECTOR, 'a.register')
 
         # LoggedIn
         _account_controller_locator = (By.CSS_SELECTOR, '.user')
