@@ -12,6 +12,7 @@ from pages.desktop.page_provider import PageProvider
 
 class TestQuestions:
 
+    @pytest.mark.xfail(reason='Bug 920027 - [stage] Asking a question if none of those solve the problem requires login if user is already logged in')
     @pytest.mark.native
     def test_that_posting_question_works(self, mozwebqa):
         """Posts a question to /questions"""
