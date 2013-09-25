@@ -103,7 +103,7 @@ class AskNewQuestionsPage(Base):
     _category_prob_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _type_question_box_locator = (By.NAME, 'search')
     _ask_this_button_locator = (By.CSS_SELECTOR, '#ask-search-form .btn.btn-important')
-    _none_of_these_button_locator = (By.CSS_SELECTOR, 'form .btn.btn-submit')
+    _none_of_these_button_locator = (By.CSS_SELECTOR, '.btn-submit.browserid-login')
     _q_content_box_locator = (By.ID, 'id_content')
     _q_trouble_box_locator = (By.ID, 'id_troubleshooting')
     _q_post_button_locator = (By.CSS_SELECTOR, 'li.submit button.btn')
