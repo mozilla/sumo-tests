@@ -51,8 +51,7 @@ class TestQuestions:
             pytest.skip("No questions present for filter=%s" % expected_sorted_text)
 
         for question in questions_page.questions:
-            actual_sorted_text = question.sorted_list_filter_text
-            Assert.equal(actual_sorted_text, expected_sorted_text)
+            Assert.true('highlighted' in question.solved_questions_filter)
 
     @pytest.mark.nondestructive
     def test_that_questions_sorts_correctly_by_filter_equal_to_no_replies(self, mozwebqa):
