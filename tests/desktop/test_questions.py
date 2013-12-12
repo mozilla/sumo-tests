@@ -42,8 +42,7 @@ class TestQuestions:
         expected_sorted_text = "SOLVED"
 
         questions_page = PageProvider(mozwebqa).questions_page()
-        questions_page.click_to_expand_sort_and_filter_box()
-        Assert.true(questions_page.is_sort_and_filter_box_expanded)
+        questions_page.click_questions_done_tab()
 
         questions_page.click_sort_by_solved_questions()
         # if there are no questions in the list then skip the test
@@ -51,11 +50,11 @@ class TestQuestions:
             pytest.skip("No questions present for filter=%s" % expected_sorted_text)
 
         for question in questions_page.questions:
-            actual_sorted_text = question.sorted_list_filter_text
-            Assert.equal(actual_sorted_text, expected_sorted_text)
+            # if solved mark is highlighted the question is really solved
+            Assert.true('highlighted' in question.solved_questions_filter)
 
     @pytest.mark.nondestructive
-    def test_that_questions_sorts_correctly_by_filter_equal_to_no_replies(self, mozwebqa):
+    def test_that_questions_sorts_correctly_by_filter_equal_to_attention_needed(self, mozwebqa):
         """
            Goes to the /questions page,
            Verifies the sort filter=noreplies works
@@ -63,10 +62,9 @@ class TestQuestions:
         expected_sorted_text = "No replies"
 
         questions_page = PageProvider(mozwebqa).questions_page()
-        questions_page.click_to_expand_sort_and_filter_box()
-        Assert.true(questions_page.is_sort_and_filter_box_expanded)
+        questions_page.click_questions_attention_needed_tab()
 
-        questions_page.click_sort_by_no_replies_questions()
+        questions_page.click_sort_by_new_questions()
         # if there are no questions in the list then skip the test
         if not questions_page.are_questions_present:
             pytest.skip("No questions present for filter=%s" % expected_sorted_text)
