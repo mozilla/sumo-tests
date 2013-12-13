@@ -15,11 +15,12 @@ class QuestionsPage(Base):
     """
     _page_title = 'Firefox Support Forum | Mozilla Support'
     _page_url = '/en-US/questions'
+
     _ask_question_link_locator = '/en-US/questions/new'
     _questions_done_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="done"]')
-    _questions_attention_needed_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="attention"]')
+    _all_questions_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="all"]')
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
-    _sort_new_link_locator = (By.CSS_SELECTOR, '#more-filters ul > li > a[href*="new"]')
+    _sort_unanswered_locator = (By.CSS_SELECTOR, '#more-filters ul > li > a[href*="unanswered"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, '.questions > section[id*="question"]')
     _questions_list_locator = (By.CSS_SELECTOR, 'article.questions > section')
 
@@ -36,11 +37,11 @@ class QuestionsPage(Base):
     def click_questions_done_tab(self):
         self.selenium.find_element(*self._questions_done_tab_locator).click()
 
-    def click_questions_attention_needed_tab(self):
-        self.selenium.find_element(*self._questions_attention_needed_locator).click()
+    def click_all_questions_tab(self):
+        self.selenium.find_element(*self._all_questions_tab_locator).click()
 
-    def click_sort_by_new_questions(self):
-        self.selenium.find_element(*self._sort_new_link_locator).click()
+    def click_sort_by_unanswered_questions(self):
+        self.selenium.find_element(*self._sort_unanswered_locator).click()
 
     def click_sort_by_solved_questions(self):
         self.selenium.find_element(*self._sort_solved_link_locator).click()
