@@ -54,17 +54,17 @@ class TestQuestions:
             Assert.true('highlighted' in question.solved_questions_filter)
 
     @pytest.mark.nondestructive
-    def test_that_questions_sorts_correctly_by_filter_equal_to_attention_needed(self, mozwebqa):
+    def test_that_questions_sorts_correctly_by_filter_equal_to_unanswered(self, mozwebqa):
         """
            Goes to the /questions page,
-           Verifies the sort filter=noreplies works
+           Verifies the sort filter=unanswered works
         """
-        expected_sorted_text = "No replies"
+        expected_sorted_text = "Unanswered"
 
         questions_page = PageProvider(mozwebqa).questions_page()
-        questions_page.click_questions_attention_needed_tab()
+        questions_page.click_all_questions_tab()
 
-        questions_page.click_sort_by_new_questions()
+        questions_page.click_sort_by_unanswered_questions()
         # if there are no questions in the list then skip the test
         if not questions_page.are_questions_present:
             pytest.skip("No questions present for filter=%s" % expected_sorted_text)
