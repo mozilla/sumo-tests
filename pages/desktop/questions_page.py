@@ -16,11 +16,12 @@ class QuestionsPage(Base):
     """
     _page_title = 'Firefox Support Forum | Mozilla Support'
     _page_url = '/en-US/questions'
+
     _ask_question_link_locator = '/en-US/questions/new'
-    _sort_and_filter_box_locator = (By.CSS_SELECTOR, '#filters h2')
+    _questions_done_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="done"]')
+    _all_questions_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="all"]')
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
-    _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=unsolved"]')
-    _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=no-replies"]')
+    _sort_unanswered_link_locator = (By.CSS_SELECTOR, '#more-filters ul > li > a[href*="unanswered"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, '.questions > section[id*="question"]')
     _questions_list_locator = (By.CSS_SELECTOR, 'article.questions > section')
 
@@ -34,22 +35,17 @@ class QuestionsPage(Base):
     def click_any_question(self, question_number):
         return self.questions[question_number - 1].click_question_link()
 
-    def click_to_expand_sort_and_filter_box(self):
-        self.selenium.find_element(*self._sort_and_filter_box_locator).click()
+    def click_questions_done_tab(self):
+        self.selenium.find_element(*self._questions_done_tab_locator).click()
 
-    @property
-    def is_sort_and_filter_box_expanded(self):
-        is_expanded = self.selenium.find_element(*self._sort_and_filter_box_locator).get_attribute('class')
-        return "collapsed" not in is_expanded
+    def click_all_questions_tab(self):
+        self.selenium.find_element(*self._all_questions_tab_locator).click()
+
+    def click_sort_by_unanswered_questions(self):
+        self.selenium.find_element(*self._sort_unanswered_link_locator).click()
 
     def click_sort_by_solved_questions(self):
         self.selenium.find_element(*self._sort_solved_link_locator).click()
-
-    def click_sort_by_unsolved_questions(self):
-        self.selenium.find_element(*self._sort_unsolved_link_locator).click()
-
-    def click_sort_by_no_replies_questions(self):
-        self.selenium.find_element(*self._sort_no_replies_link_locator).click()
 
     @property
     def are_questions_present(self):
@@ -108,10 +104,6 @@ class AskNewQuestionsPage(Base):
     _q_content_box_locator = (By.ID, 'id_content')
     _q_trouble_box_locator = (By.ID, 'id_troubleshooting')
     _q_post_button_locator = (By.CSS_SELECTOR, 'li.submit button.btn')
-    _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=solved]')
-    _sort_unsolved_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=unsolved]')
-    _sort_no_replies_link_locator = (By.CSS_SELECTOR, 'a[href*=filter=no-replies]')
-    _questions_list_locator = (By.CSS_SELECTOR, 'div.questions > section')
     _close_stage_banner_locator = (By.CLASS_NAME, 'close-button')
 
     def click_firefox_product_link(self):
