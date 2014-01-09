@@ -13,7 +13,7 @@ class RefineSearchPage(Base):
     """
     _page_title = 'Advanced Search | Mozilla Support'
     _page_url = '/en-US/search?a=2'
-    _post_tags_box = (By.ID, 'id_q_tags')
+    _post_tags_box = (By.CSS_SELECTOR, 'input[name="q_tags"]')
     _thread_search_box = (By.ID, 'discussion_q')
     _search_button_kb = (By.CSS_SELECTOR, 'input[name="w"][value="1"]+div.submit-search > input[type="submit"]')
     _search_button_support = (By.CSS_SELECTOR, '#support > div.submit-search > button')
@@ -21,7 +21,7 @@ class RefineSearchPage(Base):
     _kb_tab = (By.CSS_SELECTOR, 'div#search-tabs > ul > li:nth-child(1) > a')
     _support_questions_tab = (By.CSS_SELECTOR, 'div#search-tabs > ul > li:nth-child(2) > a')
     _forums_tab = (By.CSS_SELECTOR, 'div#search-tabs > ul > li:nth-child(3) > a')
-    _asked_by_box = (By.ID, 'id_asked_by')
+    _asked_by_box = (By.CSS_SELECTOR, 'input[name="asked_by"]')
     _search_results_list = (By.CSS_SELECTOR, 'div.result.question')
 
     def click_support_questions_tab(self):
