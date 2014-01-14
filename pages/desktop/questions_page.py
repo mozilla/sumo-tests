@@ -22,7 +22,7 @@ class QuestionsPage(Base):
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
     _sort_unanswered_locator = (By.CSS_SELECTOR, '#more-filters ul > li > a[href*="unanswered"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, '.questions > section[id*="question"]')
-    _questions_list_locator = (By.CSS_SELECTOR, 'article.questions > section')
+    _questions_list_locator = (By.CSS_SELECTOR, 'article.questions > section[class="cf"]')
 
     def click_ask_new_questions_link(self):
         self.selenium.find_element(*self._ask_question_link_locator).click()
