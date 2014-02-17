@@ -40,14 +40,6 @@ class ForumsPage(Base):
         self.selenium.wait_for_page_to_load(self.timeout)
         self.is_the_current_page
 
-    def post_reply(self, thread_url, reply_text):
-        self.go_to_thread(thread_url)
-        self.selenium.type(self._thread_content_box, reply_text)
-        self.selenium.click(self._reply_button)
-        self.selenium.wait_for_page_to_load(self.timeout)
-        if not(self.selenium.is_text_present(reply_text)):
-            raise Exception('Posting reply failed\r\n')
-
     def go_to_thread(self, url):
         self.selenium.open(url)
         self.selenium.wait_for_page_to_load(self.timeout)
