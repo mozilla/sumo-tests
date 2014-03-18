@@ -26,22 +26,14 @@ class Base(Page):
     def header(self):
         return self.HeaderRegion(self.testsetup)
 
+    def sign_in(self, user="default"):
+        login = self.header.click_login()
+        login.log_in(user)
+
     def sign_out(self):
         self.header.click_logout()
-        from pages.desktop.login_page import LoginPage
-        return LoginPage(self.testsetup)
-
-    def sign_in(self, user):
-
-        if type(user) is str:
-            user = self.testsetup.credentials[user]
-
-        from browserid import BrowserID
-        self.header.click_login()
-        browser_id = BrowserID(self.selenium, timeout=self.timeout)
-        browser_id.sign_in(user['email'], user['password'])
-
-        WebDriverWait(self.selenium, self.timeout).until(lambda s: self.header.is_user_logged_in)
+        from pages.desktop.register_page import RegisterPage
+        return RegisterPage(self.testsetup)
 
     def format_page_title(self, *title_segments):
         '''
@@ -64,7 +56,8 @@ class Base(Page):
     class HeaderRegion(Page):
 
         # Not LoggedIn
-        _login_locator = (By.CSS_SELECTOR, '.browserid-login')
+        _login_locator = (By.CSS_SELECTOR, 'a.sign-in')
+        _register_locator = (By.CSS_SELECTOR, 'a.register')
 
         # LoggedIn
         _account_controller_locator = (By.CSS_SELECTOR, '.user')
@@ -76,6 +69,8 @@ class Base(Page):
 
         def click_login(self):
             self.selenium.find_element(*self._login_locator).click()
+            from pages.desktop.login_page import LoginPage
+            return LoginPage(self.testsetup)
 
         def click_logout(self):
             self.dismiss_staging_site_warning_if_present()
