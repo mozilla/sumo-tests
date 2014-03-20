@@ -22,14 +22,20 @@ class PageProvider():
         return page_object
 
     def _go_to_page_with_login_redirect(self, page_object, user='default'):
-        from pages.desktop.base import Base
         self.selenium.maximize_window()
+        from pages.desktop.login_page import LoginPage
         self.selenium.get(self.base_url + page_object._page_url)
-        bid_login = Base(self.testsetup)
-        bid_login.sign_in(user)
+        login_page = LoginPage(self.testsetup)
+        login_page.log_in(user)
         page_object.is_the_current_page
         page_object.header.dismiss_staging_site_warning_if_present()
         return page_object
+
+    ''' pages for which login is forbidden '''
+
+    def new_user_registration_page(self):
+        from pages.desktop.register_page import RegisterPage
+        return self._go_to_page(RegisterPage(self.testsetup))
 
     ''' pages for which login is optional '''
 
