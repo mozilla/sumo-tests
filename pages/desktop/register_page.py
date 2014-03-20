@@ -14,12 +14,12 @@ class RegisterPage(Base):
     """
     _page_title = 'Log In / Register | Mozilla Support'
     _page_title_after_registration = 'Thank you for registering'
-    _page_url = '/en-US/users/register'
+    _page_url = '/en-US/users/authcontributor'
     _username_box_locator = (By.ID, 'id_for_username')
     _password_box_locator = (By.ID, 'id_for_password')
     _password_repeat_box_locator = (By.ID, 'id_for_password2')
     _email_add_box_locator = (By.ID, 'id_for_email')
-    _register_button_locator = (By.CSS_SELECTOR, "button[data-name='register']")
+    _register_button_locator = (By.CSS_SELECTOR, '#register button.btn-submit')
 
     def register_new_user(self):
         user_name = self.get_random_word(5)
