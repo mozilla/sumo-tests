@@ -91,7 +91,6 @@ class TestQuestions:
             Shows a contributor can start on the home page and move
             all the way to answering a question in the forum.
         """
-        num_questions_to_display = 20
         reply_text = "reply"
 
         #1. Start on the home page
@@ -101,13 +100,13 @@ class TestQuestions:
         #3.1 go to the question page
         question_page = PageProvider(mozwebqa).questions_page(do_login=True)
         #3.2 ensure the size of the list is 20
-        Assert.equal(question_page.questions_count, num_questions_to_display,
-                     'amount of displayed questions is not equal to expected value')
+        Assert.greater(question_page.questions_count, 0,
+                     'There is not at least one question displayed.')
 
         #4. Click on a question. (URL is in the forum of /questions/[some number])
         #4.1 pick up an arbitrary question and click
         #4.2 check if it landed on an intended forum page
-        question = question_page.questions[randrange(num_questions_to_display)]
+        question = question_page.questions[randrange(question_page.questions_count)]
         forum_page = question.click_question_link()
 
         #5. Go to the thread
