@@ -13,12 +13,14 @@ class QuestionsPage(Base):
     """
     'Ask a Question' landing page.
     """
-    _page_title = 'Firefox Support Forum | Mozilla Support'
+    _page_title = 'Support Forum | Mozilla Support'
     _page_url = '/en-US/questions'
 
     _ask_question_link_locator = '/en-US/questions/new'
+
+    _all_products_locator = (By.CSS_SELECTOR, '.product a[href$="/all"]')
     _questions_done_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="done"]')
-    _all_questions_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="all"]')
+    _all_questions_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="show=all"]')
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
     _sort_unanswered_locator = (By.CSS_SELECTOR, '#more-filters ul > li > a[href*="unanswered"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, '.questions > section[id*="question"]')
@@ -45,6 +47,9 @@ class QuestionsPage(Base):
 
     def click_sort_by_solved_questions(self):
         self.selenium.find_element(*self._sort_solved_link_locator).click()
+
+    def click_all_products(self):
+        self.selenium.find_element(*self._all_products_locator).click()
 
     @property
     def are_questions_present(self):
