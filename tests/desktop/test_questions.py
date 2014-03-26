@@ -42,6 +42,7 @@ class TestQuestions:
         expected_sorted_text = "SOLVED"
 
         questions_page = PageProvider(mozwebqa).questions_page()
+        questions_page.click_all_products()
         questions_page.click_questions_done_tab()
 
         questions_page.click_sort_by_solved_questions()
@@ -62,6 +63,7 @@ class TestQuestions:
         expected_sorted_text = "Unanswered"
 
         questions_page = PageProvider(mozwebqa).questions_page()
+        questions_page.click_all_products()
         questions_page.click_all_questions_tab()
 
         questions_page.click_sort_by_unanswered_questions()
@@ -77,6 +79,8 @@ class TestQuestions:
 
         # Can't +1 your own question so will do it logged out
         questions_page = PageProvider(mozwebqa).questions_page()
+        questions_page.click_all_products()
+
         view_question_page = questions_page.click_any_question(1)
 
         initial_count = view_question_page.problem_count
@@ -98,15 +102,16 @@ class TestQuestions:
         #3. Use the contributor bar to go to the forums.
         #   The questions page should list 20 posts.
         #3.1 go to the question page
-        question_page = PageProvider(mozwebqa).questions_page(do_login=True)
+        questions_page = PageProvider(mozwebqa).questions_page(do_login=True)
+        questions_page.click_all_products()
         #3.2 ensure the size of the list is 20
-        Assert.greater(question_page.questions_count, 0,
+        Assert.greater(questions_page.questions_count, 0,
                      'There is not at least one question displayed.')
 
         #4. Click on a question. (URL is in the forum of /questions/[some number])
         #4.1 pick up an arbitrary question and click
         #4.2 check if it landed on an intended forum page
-        question = question_page.questions[randrange(question_page.questions_count)]
+        question = questions_page.questions[randrange(questions_page.questions_count)]
         forum_page = question.click_question_link()
 
         #5. Go to the thread
