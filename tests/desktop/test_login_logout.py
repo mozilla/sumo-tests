@@ -76,9 +76,10 @@ class TestLoginLogout:
         kb_article_history = kb_new_article.set_article_comment_box(mock_article['comment'])
 
         kb_translate_pg = kb_article_history.navigation.click_translate_article()
-        kb_translate_pg.click_translate_language('Esperanto (eo)')
+        kb_translate_pg.click_translate_language('Deutsch (de)')
 
         # sign out
         register_page = kb_translate_pg.sign_out()
+        register_page._page_title = 'Anmelden / Registrieren | Mozilla-Hilfe'
         register_page.is_the_current_page
         Assert.true(register_page.header.is_user_logged_out)
