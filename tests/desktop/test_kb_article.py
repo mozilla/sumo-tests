@@ -135,10 +135,10 @@ class TestKnowledgeBaseArticle:
 
         # translating
         kb_translate_pg = kb_article_history.navigation.click_translate_article()
-        kb_translate_pg.click_translate_language('Esperanto (eo)')
+        kb_translate_pg.click_translate_language('Deutsch (de)')
 
-        #enter the tranlation
-        mock_article_esperanto = MockArticle(suffix="_esperanto")
+        #enter the translation
+        mock_article_esperanto = MockArticle(suffix="_deutsch")
         kb_translate_pg.type_title(mock_article_esperanto['title'])
         kb_translate_pg.type_slug(mock_article_esperanto['slug'])
         kb_translate_pg.type_search_result_summary(mock_article_esperanto['summary'])
@@ -150,7 +150,7 @@ class TestKnowledgeBaseArticle:
 
         # verifying
         Assert.equal(change_comment, kb_article_history.most_recent_revision_comment)
-        Assert.contains('Esperanto', kb_article_history.revision_history)
+        Assert.contains('Deutsch', kb_article_history.revision_history)
 
         # deleting
         kb_article_history.delete_entire_article_document()
