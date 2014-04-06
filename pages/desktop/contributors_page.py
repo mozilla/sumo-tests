@@ -20,7 +20,7 @@ class ContributorsPage(Base):
     _this_week_button_locator = (By.LINK_TEXT, 'This Week')
     _all_time_button_locator = (By.LINK_TEXT, 'All Time')
     _top_most_visited_article_locator = \
-        (By.CSS_SELECTOR, '#most-visited-table > tr:nth-of-type(2) > td:nth-of-type(1) > a')
+        (By.CSS_SELECTOR, '#most-visited-table > tr:last-of-type > td:nth-of-type(1) > a')
 
     def go_to_contributors_page(self):
         self.open(self._page_url)
