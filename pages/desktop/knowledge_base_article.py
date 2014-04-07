@@ -189,6 +189,7 @@ class KnowledgeBaseTranslate(KnowledgeBase):
 
     def click_translate_language(self, language):
         self.selenium.find_element(By.LINK_TEXT, language).click()
+        self.header.dismiss_staging_site_warning_if_present()
 
     @property
     def is_type_title_visible(self):
