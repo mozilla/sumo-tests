@@ -138,13 +138,13 @@ class TestKnowledgeBaseArticle:
         kb_translate_pg.click_translate_language('Deutsch (de)')
 
         #enter the translation
-        mock_article_esperanto = MockArticle(suffix="_deutsch")
-        kb_translate_pg.type_title(mock_article_esperanto['title'])
-        kb_translate_pg.type_slug(mock_article_esperanto['slug'])
-        kb_translate_pg.type_search_result_summary(mock_article_esperanto['summary'])
+        mock_article_deutsch = MockArticle(suffix="_deutsch")
+        kb_translate_pg.type_title(mock_article_deutsch['title'])
+        kb_translate_pg.type_slug(mock_article_deutsch['slug'])
+        kb_translate_pg.type_search_result_summary(mock_article_deutsch['summary'])
         kb_translate_pg.click_submit_review()
 
-        change_comment = mock_article_esperanto['comment']
+        change_comment = mock_article_deutsch['comment']
         kb_translate_pg.type_modal_describe_changes(change_comment)
         kb_article_history = kb_translate_pg.click_modal_submit_changes_button()
 
