@@ -20,6 +20,7 @@ class RegisterPage(Base):
     _password_repeat_box_locator = (By.ID, 'id_for_password2')
     _email_add_box_locator = (By.ID, 'id_for_email')
     _register_button_locator = (By.CSS_SELECTOR, '#register button.btn-submit')
+    _successful_registration_message_locator = (By.CSS_SELECTOR, '#main-content > #register > h1')
 
     def register_new_user(self):
         user_name = self.get_random_word(5)
@@ -30,6 +31,11 @@ class RegisterPage(Base):
         self.selenium.find_element(*self._password_repeat_box_locator).send_keys(password)
         self.selenium.find_element(*self._email_add_box_locator).send_keys(email)
         self.selenium.find_element(*self._register_button_locator).click()
+
+    @property
+    def successful_registration_message(self):
+        self.wait_for_element_visible(*self._successful_registration_message_locator)
+        return self.selenium.find_element(*self._successful_registration_message_locator).text
 
     def get_random_word(self, length):
         random_word = ''
