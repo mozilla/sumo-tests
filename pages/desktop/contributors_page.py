@@ -21,10 +21,14 @@ class ContributorsPage(Base):
     _all_time_button_locator = (By.LINK_TEXT, 'All Time')
     _top_most_visited_article_locator = \
         (By.CSS_SELECTOR, '#most-visited-table > tr:last-of-type > td:nth-of-type(1) > a')
+    _footer_locator = (By.CSS_SELECTOR, 'footer')
 
     def go_to_contributors_page(self):
         self.open(self._page_url)
         self.is_the_current_page
+
+    def click_footer(self):
+        self.selenium.find_element(*self._footer_locator).click()
 
     def click_top_visited_article_link(self):
         self.selenium.find_element(*self._top_most_visited_article_locator).click()
@@ -35,5 +39,7 @@ class ContributorsPage(Base):
         self.wait_for_ajax()
 
     def click_all_time(self):
+        #We click on the footer first to avoid hovering over the drop-down
+        self.click_footer()
         self.selenium.find_element(*self._all_time_button_locator).click()
         self.wait_for_ajax()
