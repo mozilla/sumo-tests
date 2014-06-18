@@ -68,6 +68,7 @@ class QuestionsPage(Base):
         _solved_question_locator = (By.CSS_SELECTOR, '.thread-solved')
         _replies_number_locator = (By.CSS_SELECTOR, 'div.replies > h4')
         _question_link_locator = (By.CSS_SELECTOR, 'a')
+        _product_name_locator = (By.CSS_SELECTOR, '.content h3 a:nth-child(2)')
 
         def __init__(self, testsetup, element):
             Page.__init__(self, testsetup)
@@ -81,11 +82,16 @@ class QuestionsPage(Base):
         def number_of_replies(self):
             return int(self._root_element.find_element(*self._replies_number_locator).text)
 
+        @property
+        def product_name(self):
+            return self._root_element.find_element(*self._product_name_locator).text
+
         def click_question_link(self):
             question_title = self.title
+            product_name = self.product_name
             self._root_element.find_element(*self._question_link_locator).click()
             view_question_pg = ViewQuestionPage(self.testsetup)
-            view_question_pg.is_the_current_page(question_title)
+            view_question_pg.is_the_current_page(question_title, product_name)
             return view_question_pg
 
         @property
@@ -110,6 +116,7 @@ class AskNewQuestionsPage(Base):
     _q_trouble_box_locator = (By.ID, 'id_troubleshooting')
     _q_post_button_locator = (By.CSS_SELECTOR, 'li.submit button.btn')
     _close_stage_banner_locator = (By.CLASS_NAME, 'close-button')
+    _selected_product_locator = (By.CSS_SELECTOR, '#selected-product span')
 
     def click_firefox_product_link(self):
         self.selenium.find_element(*self._firefox_product_first_link_locator).click()
@@ -124,13 +131,19 @@ class AskNewQuestionsPage(Base):
     def click_none_of_these_solve_my_problem_button(self):
         self.selenium.find_element(*self._none_of_these_button_locator).click()
 
+    @property
+    def selected_product(self):
+        return self.selenium.find_element(*self._selected_product_locator).text
+
     def fill_up_questions_form(self, question_to_ask, q_text='details', q_site='www.example.com', q_trouble='no addons'):
+        self.header.dismiss_staging_site_warning_if_present()
         self.selenium.find_element(*self._q_content_box_locator).send_keys(q_text)
         self.selenium.find_element(*self._q_trouble_link_locator).click()
         self.selenium.find_element(*self._q_trouble_box_locator).send_keys(q_trouble)
+        selected_product = self.selected_product == "Firefox for Desktop" and "Firefox" or self.selected_product
         self.selenium.find_element(*self._q_post_button_locator).click()
         view_question_pg = ViewQuestionPage(self.testsetup)
-        view_question_pg.is_the_current_page(question_to_ask)
+        view_question_pg.is_the_current_page(question_to_ask, selected_product)
         return view_question_pg
 
     def close_stage_site_banner(self):
@@ -149,14 +162,15 @@ class ViewQuestionPage(Base):
     _answers_locator = (By.CSS_SELECTOR, '.answer.grid_9')
     _post_author_locator = (By.CSS_SELECTOR, '.asked-by > a')
     _post_content_locator = (By.CSS_SELECTOR, 'div > p')
-    _page_title = ' | Firefox Support Forum | Mozilla Support'
+    _page_title = ' Support Forum | Mozilla Support'
 
-    def is_the_current_page(self, question_name):
+    def is_the_current_page(self, question_name, product_name):
         if self._page_title:
             page_title = self.page_title
-            Assert.equal(page_title, question_name + self._page_title,
+            expected_title =  question_name + ' | ' + product_name + self._page_title
+            Assert.equal(page_title, expected_title,
                          "Expected page title: %s. Actual page title: %s" %
-                         (question_name + self._page_title, page_title))
+                         (expected_title, page_title))
 
     @property
     def question(self):
