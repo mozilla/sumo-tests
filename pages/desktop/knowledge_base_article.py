@@ -149,7 +149,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     def open_description_form(self):
         if not self.is_element_visible(*self._article_topic_locator):
             self.selenium.find_element(*self._description_form_toggle_locator).click()
-            self.wait_for_element_present(*self._article_topic_locator)
+            self.wait_for_element_visible(*self._article_topic_expander_locator)
 
     def save_description_form(self):
         self.selenium.find_element(*self._description_form_save_locator).click()
@@ -157,6 +157,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     def check_article_topic(self, index):
         index = index - 1
         self.selenium.find_element(*self._article_topic_expander_locator).click()
+        self.wait_for_element_visible(*self._article_topic_locator)
         self.selenium.find_elements(*self._article_topic_locator)[index].click()
 
     def check_article_product(self, index):
