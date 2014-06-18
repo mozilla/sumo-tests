@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from unittestzero import Assert
 from pages.desktop.base import Base
 from pages.page import Page
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class KnowledgeBase(Base):
@@ -241,6 +242,8 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
     def delete_entire_article_document(self):
         self.click_delete_entire_article_document()
         self.click_delete_confirmation_button()
+        WebDriverWait(self.selenium, self.timeout).until(
+            lambda s: not self.is_element_present(*self._delete_confirmation_btn_locator))
 
     def click_delete_entire_article_document(self):
         self.selenium.find_element(*self._delete_document_link_locator).click()
