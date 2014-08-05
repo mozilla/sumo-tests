@@ -4,6 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from unittestzero import Assert
 from pages.page import Page
 from pages.desktop.base import Base
@@ -168,6 +169,8 @@ class ViewQuestionPage(Base):
         if self._page_title:
             page_title = self.page_title
             expected_title =  question_name + ' | ' + product_name + self._page_title
+            WebDriverWait(self.selenium, self.timeout).until(lambda s:
+                       page_title == expected_title)
             Assert.equal(page_title, expected_title,
                          "Expected page title: %s. Actual page title: %s" %
                          (expected_title, page_title))
