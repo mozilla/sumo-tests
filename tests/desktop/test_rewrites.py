@@ -57,9 +57,9 @@ class TestRedirects:
         Assert.equal(r.status_code, requests.codes.ok)
 
     @pytest.mark.parametrize(('input', 'expected'), [
-        ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/products/mobile?as=u&utm_source=inproduct'),
-        ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/products/mobile?as=u&utm_source=inproduct'),
-        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/products/mobile?as=u&utm_source=inproduct')])
+        ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/kb/popular-topics-firefox-android?as=u&utm_source=inproduct''),
+        ('/1/mobile/4.0/iphone/en-US/firefox-help', '/en-US/kb/popular-topics-firefox-android?as=u&utm_source=inproduct''),
+        ('/1/mobile/4.0/nokia/en-US/firefox-help', '/en-US/kb/popular-topics-firefox-android?as=u&utm_source=inproduct'')])
     def test_old_mobile_redirects(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
         r = self._check_redirect(mozwebqa, input)
