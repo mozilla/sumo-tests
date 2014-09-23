@@ -4,6 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from unittestzero import Assert
 from pages.page import Page
@@ -167,10 +168,9 @@ class ViewQuestionPage(Base):
 
     def is_the_current_page(self, question_name, product_name):
         if self._page_title:
-            page_title = self.page_title
             expected_title =  question_name + ' | ' + product_name + self._page_title
-            WebDriverWait(self.selenium, self.timeout).until(lambda s:
-                       page_title == expected_title)
+            WebDriverWait(self.selenium, self.timeout).until(EC.title_is(expected_title))
+            page_title = self.page_title
             Assert.equal(page_title, expected_title,
                          "Expected page title: %s. Actual page title: %s" %
                          (expected_title, page_title))
