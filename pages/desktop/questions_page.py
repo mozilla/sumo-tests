@@ -107,10 +107,8 @@ class AskNewQuestionsPage(Base):
     """
     _page_title = 'Ask a Question | Mozilla Support'
     _page_url = '/en-US/questions/new'
-
     _firefox_product_first_link_locator = (By.CSS_SELECTOR, '#product-picker li:nth-child(1) > a.cf > span.title')
     _category_prob_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
-    _notification_message_locator = (By.CSS_SELECTOR, '.user-messages')
     _type_question_box_locator = (By.NAME, 'search')
     _ask_this_button_locator = (By.CSS_SELECTOR, '#ask-search-form .btn.btn-important')
     _none_of_these_button_locator = (By.CSS_SELECTOR, 'form .btn.btn-submit')
@@ -145,7 +143,6 @@ class AskNewQuestionsPage(Base):
         self.selenium.find_element(*self._q_trouble_box_locator).send_keys(q_trouble)
         selected_product = self.selected_product == "Firefox for Desktop" and "Firefox" or self.selected_product
         self.selenium.find_element(*self._q_post_button_locator).click()
-        self.wait_for_element_visible(*self._notification_message_locator)
         view_question_pg = ViewQuestionPage(self.testsetup)
         view_question_pg.is_the_current_page(question_to_ask, selected_product)
         return view_question_pg
@@ -155,8 +152,6 @@ class AskNewQuestionsPage(Base):
 
 
 class ViewQuestionPage(Base):
-
-    _page_title = ' Support Forum | Mozilla Support'
 
     _question_locator = (By.CSS_SELECTOR, 'h2.summary')
     _detail_locator = (By.CSS_SELECTOR, 'div.main-content > p')
@@ -168,6 +163,7 @@ class ViewQuestionPage(Base):
     _answers_locator = (By.CSS_SELECTOR, '.answer.grid_9')
     _post_author_locator = (By.CSS_SELECTOR, '.asked-by > a')
     _post_content_locator = (By.CSS_SELECTOR, 'div > p')
+    _page_title = ' Support Forum | Mozilla Support'
 
     def is_the_current_page(self, question_name, product_name):
         if self._page_title:
