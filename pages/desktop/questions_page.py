@@ -139,10 +139,14 @@ class AskNewQuestionsPage(Base):
     def fill_up_questions_form(self, question_to_ask, q_text='details', q_site='www.example.com', q_trouble='no addons'):
         self.header.dismiss_staging_site_warning_if_present()
         self.selenium.find_element(*self._q_content_box_locator).send_keys(q_text)
+        self.header.dismiss_staging_site_warning_if_present()
         self.selenium.find_element(*self._q_trouble_link_locator).click()
         self.selenium.find_element(*self._q_trouble_box_locator).send_keys(q_trouble)
         selected_product = self.selected_product == "Firefox for Desktop" and "Firefox" or self.selected_product
+        self.header.dismiss_staging_site_warning_if_present()
         self.selenium.find_element(*self._q_post_button_locator).click()
+        WebDriverWait(self.selenium, self.timeout).until(
+            lambda s: not self.is_element_present(*self._q_post_button_locator))
         view_question_pg = ViewQuestionPage(self.testsetup)
         view_question_pg.is_the_current_page(question_to_ask, selected_product)
         return view_question_pg
@@ -167,13 +171,8 @@ class ViewQuestionPage(Base):
 
     def is_the_current_page(self, question_name, product_name):
         if self._page_title:
-            page_title = self.page_title
-            expected_title =  question_name + ' | ' + product_name + self._page_title
-            WebDriverWait(self.selenium, self.timeout).until(lambda s:
-                       page_title == expected_title)
-            Assert.equal(page_title, expected_title,
-                         "Expected page title: %s. Actual page title: %s" %
-                         (expected_title, page_title))
+            expected_title = question_name + ' | ' + product_name + self._page_title
+            WebDriverWait(self.selenium, self.timeout).until(lambda s: self.page_title == expected_title)
 
     @property
     def question(self):
