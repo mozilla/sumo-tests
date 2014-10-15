@@ -154,26 +154,3 @@ class TestKnowledgeBaseArticle:
 
         # deleting
         kb_article_history.delete_entire_article_document()
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_view_helpfulness_chart(self, mozwebqa):
-        """
-           Creates a new knowledge base article.
-           Verifies creation.
-           Deletes the article.
-        """
-        sumo_homepage = PageProvider(mozwebqa).home_page(do_login=True)
-        sumo_homepage.header.dismiss_staging_site_warning_if_present()
-        contrib_page = sumo_homepage.click_knowledge_base_dashboard_link()
-        contrib_page.is_the_current_page
-        contrib_page.click_all_time()
-        kb_article = contrib_page.click_top_visited_article_link()
-
-        # vote on article to artificially inflate data
-        kb_article.vote()
-
-        kb_article_history = kb_article.navigation.click_show_history()
-
-        kb_article_history.click_show_helpfulness_chart()
-        Assert.true(kb_article_history.is_helpfulness_chart_visible)

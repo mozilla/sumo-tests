@@ -23,7 +23,6 @@ class SupportHomePage(Base):
     _top_helpful_content_locator = (By.CSS_SELECTOR, 'div#home-content-quick section ul > li > a')
     _top_issues_link_locator = (By.CSS_SELECTOR, '#home-content-explore ul > li > a')
     _for_contributors_locator = (By.CSS_SELECTOR, '#for-contributors h1')
-    _navigation_locator = (By.CSS_SELECTOR, 'nav#aux-nav > ul')
 
     def do_search_on_main_search_box(self, search_query):
         search_box = self.selenium.find_element(*self._main_search_box)
@@ -42,25 +41,3 @@ class SupportHomePage(Base):
     @property
     def is_for_contributors_expanded(self):
         return 'expanded' in self.selenium.find_element(*self._for_contributors_locator).get_attribute('class')
-
-    def click_navigation_item(self, item_text, subitem_index=None):
-        nav = self.selenium.find_element(*self._navigation_locator)
-        ac = ActionChains(self.selenium)
-        for item in nav.find_elements(By.CSS_SELECTOR, 'li'):
-            if item.text == item_text:
-                if subitem_index is None:
-                    ac.click(item)
-                else:
-                    ac.move_to_element(item)
-                    subitems = item.find_elements(By.CSS_SELECTOR, 'ul > li > a')
-                    ac.click(subitems[subitem_index])
-                break
-        else:
-            raise Exception('Navigation item %s not found.' % item_text)
-
-        ac.perform()
-
-    def click_knowledge_base_dashboard_link(self):
-        self.click_navigation_item('CONTRIBUTOR TOOLS', subitem_index=5)
-        from contributors_page import ContributorsPage
-        return ContributorsPage(self.testsetup)
