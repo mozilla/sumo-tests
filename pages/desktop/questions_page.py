@@ -23,7 +23,7 @@ class QuestionsPage(Base):
     _questions_done_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="done"]')
     _all_questions_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="show=all"]')
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
-    _sort_unanswered_locator = (By.CSS_SELECTOR, '.sidebar-nav a[href*="unanswered"]')
+    _sort_unanswered_locator = (By.CSS_SELECTOR, '#more-filters ul > li > a[href*="unanswered"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, '.questions > section[id*="question"]')
     _questions_list_locator = (By.CSS_SELECTOR, 'article.questions > section[class="cf"]')
 
