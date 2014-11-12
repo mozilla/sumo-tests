@@ -23,7 +23,7 @@ class QuestionsPage(Base):
     _questions_done_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="done"]')
     _all_questions_tab_locator = (By.CSS_SELECTOR, '#owner-tabs > a[href*="show=all"]')
     _sort_solved_link_locator = (By.CSS_SELECTOR, 'a[href*="filter=solved"]')
-    _sort_unanswered_locator = (By.CSS_SELECTOR, '#more-filters ul > li > a[href*="unanswered"]')
+    _sort_unanswered_locator = (By.CSS_SELECTOR, '.questions-sidebar ul > li > a[href*="unanswered"]')
     _questions_list_block_locator = (By.CSS_SELECTOR, '.questions > section[id*="question"]')
     _questions_list_locator = (By.CSS_SELECTOR, 'article.questions > section[class="cf"]')
 
@@ -69,7 +69,7 @@ class QuestionsPage(Base):
         _solved_question_locator = (By.CSS_SELECTOR, '.thread-solved')
         _replies_number_locator = (By.CSS_SELECTOR, 'div.replies > h4')
         _question_link_locator = (By.CSS_SELECTOR, 'a')
-        _product_name_locator = (By.CSS_SELECTOR, '.content h3 a:nth-child(2)')
+        _product_name_locator = (By.CSS_SELECTOR, '.content ul.tag-list li:nth-child(1)')
 
         def __init__(self, testsetup, element):
             Page.__init__(self, testsetup)
@@ -115,7 +115,7 @@ class AskNewQuestionsPage(Base):
     _q_content_box_locator = (By.ID, 'id_content')
     _q_trouble_link_locator = (By.CSS_SELECTOR, '#troubleshooting-manual a')
     _q_trouble_box_locator = (By.ID, 'id_troubleshooting')
-    _q_post_button_locator = (By.CSS_SELECTOR, 'li.submit button.btn')
+    _q_post_button_locator = (By.CSS_SELECTOR, '#question-form button.btn-submit')
     _close_stage_banner_locator = (By.CLASS_NAME, 'close-button')
     _selected_product_locator = (By.CSS_SELECTOR, '#selected-product span')
 
@@ -158,7 +158,7 @@ class AskNewQuestionsPage(Base):
 class ViewQuestionPage(Base):
 
     _question_locator = (By.CSS_SELECTOR, 'h2.summary')
-    _detail_locator = (By.CSS_SELECTOR, 'div.main-content > p')
+    _detail_locator = (By.CSS_SELECTOR, 'div.main-content p')
     _problem_too_button_locator = (By.CSS_SELECTOR, 'div.me-too > form > button.btn')
     _problem_count_text_locator = (By.CSS_SELECTOR, 'div.question-meta > ul.cf > li:nth-child(2)')
     _no_thanks_link_locator = (By.LINK_TEXT, 'No Thanks')
