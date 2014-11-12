@@ -90,6 +90,7 @@ class TestQuestions:
 
         Assert.equal(initial_count + 1, post_click_count)
 
+    @pytest.mark.xfail(reason='Bug 1097948 - Staging is missing product tags on the Questions page')
     def test_contributor_flow_to_support_forum_post(self, mozwebqa):
         """
             Shows a contributor can start on the home page and move
