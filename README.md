@@ -25,10 +25,12 @@ To brush up on Python skills before engaging with us, [Dive Into Python][dive] i
 
 Questions are always welcome
 ----------------------------
-While we take pains to keep our documentation updated, the best source of information is those of us who work on the project.  Don't be afraid to join us in irc.mozilla.org #mozwebqa to ask questions about our Selenium tests.  Mozilla also hosts the #mozillians chat room to answer your general questions about contributing to Mozilla.
+While we take pains to keep our documentation updated, the best source of information is those of us who work on the project.  Don't be afraid to join us in irc.mozilla.org #mozwebqa to ask questions about our Selenium tests.  Mozilla also hosts the  [#mozillians][mozillians] chat room to answer your general questions about contributing to Mozilla.
 
-[mozwebqa]:http://02.chat.mibbit.com/?server=irc.mozilla.org&channel=#mozwebqa
-[mozillians]:http://02.chat.mibbit.com/?server=irc.mozilla.org&channel=#mozillians
+[mozwebqa]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#mozwebqa
+[mozillians]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#mozillians
+
+
 
 
 How to Set up and Build SUMO Tests Locally
@@ -43,7 +45,7 @@ For information specific to Firefox Support see the [GitHub repository][GitHub S
 
 Mozilla maintains a guide to running Automated tests on our QMO website:
 
-https://wiki.mozilla.org/QA/Execution/Web_Testing/Automation
+https://developer.mozilla.org/docs/Mozilla/QA/Running_Web_QA_automated_tests
 This wiki page has some advanced instructions specific to Windows:
 
 https://wiki.mozilla.org/QA_SoftVision_Team/WebQA_Automation
@@ -89,8 +91,12 @@ While most of us have had some experience using virtual machines, [virtualenv][v
 Some of the tests in sumo-tests require logging in to https://support.allizom.org with credentials of varying privilege levels.
 
 1. Create two username and password combinations on https://support.allizom.org
-2. Join #sumo and ask for one of these users to be upgraded to admin (or ask someone on #mozwebqa to do this for you)
+2. Join [#sumo][sumo] and ask for one of these users to be upgraded to admin (or ask someone on [#mozwebqa][mozwebqa] to do this for you)
 3. Copy sumo-tests/credentials.yaml to a location outside of sumo-tests. update the 'default' and 'admin' users in credentials.yaml with those credentials
+
+[mozwebqa]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#mozwebqa
+[sumo]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#sumo
+
 
 #### Running tests locally
 
@@ -141,6 +147,8 @@ we'd like to ask you to do:
 4. Make sure all tests are passing, and submit a pull request with your changes
 
 [GitHub Templates]: https://github.com/mozilla/mozwebqa-test-templates
+[Style Guide]: https://wiki.mozilla.org/QA/Execution/Web_Testing/Docs/Automation/StyleGuide
+
 
 License
 -------
