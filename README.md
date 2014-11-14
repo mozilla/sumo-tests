@@ -18,7 +18,7 @@ If you need to brush up on programming but are eager to start contributing immed
 To brush up on Python skills before engaging with us, [Dive Into Python][dive] is an excellent resource.  MIT also has [lecture notes on Python][mit] available through their open courseware.The programming concepts you will need to know include functions, working with classes, and some object-oriented programming basics.
 
 [mit]: http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-189-a-gentle-introduction-to-programming-using-python-january-iap-2011/
-[dive]: http://www.diveintopython.net/toc/index.html
+[dive]: http://www.diveintopython.net/toc/
 [webqa]: https://quality.mozilla.org/teams/web-qa/
 [firefox]: https://quality.mozilla.org/teams/firefoxqe//
 [webdriver]: http://seleniumhq.org/docs/03_webdriver.html
