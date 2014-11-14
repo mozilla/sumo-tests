@@ -1,4 +1,4 @@
-Selenium Tests for support.mozilla.org - the Firefox Support Site (SUMO)
+Selenium Tests for support.mozilla.org - the Mozilla Support Site (SUMO)
 ===================
 
 Thank you for checking out Mozilla's SUMO test suite. Mozilla and the Mozwebqa team are grateful for the help and hard work of many contributors like yourself.
@@ -19,8 +19,8 @@ To brush up on Python skills before engaging with us, [Dive Into Python][dive] i
 
 [mit]: http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-189-a-gentle-introduction-to-programming-using-python-january-iap-2011/
 [dive]: http://www.diveintopython.net/toc/index.html
-[webqa]: http://quality.mozilla.org/teams/web-qa/
-[firefox]: http://quality.mozilla.org/teams/desktop-firefox/
+[webqa]: https://quality.mozilla.org/teams/web-qa/
+[firefox]: https://quality.mozilla.org/teams/firefoxqe//
 [webdriver]: http://seleniumhq.org/docs/03_webdriver.html
 
 Questions are always welcome
@@ -43,8 +43,7 @@ For information specific to Firefox Support see the [GitHub repository][GitHub S
 
 Mozilla maintains a guide to running Automated tests on our QMO website:
 
-https://quality.mozilla.org/docs/webqa/running-webqa-automated-tests/
-
+https://wiki.mozilla.org/QA/Execution/Web_Testing/Automation
 This wiki page has some advanced instructions specific to Windows:
 
 https://wiki.mozilla.org/QA_SoftVision_Team/WebQA_Automation
@@ -142,7 +141,6 @@ we'd like to ask you to do:
 4. Make sure all tests are passing, and submit a pull request with your changes
 
 [GitHub Templates]: https://github.com/mozilla/mozwebqa-test-templates
-[Style Guide]: https://wiki.mozilla.org/QA/Execution/Web_Testing/Docs/Automation/StyleGuide
 
 License
 -------
