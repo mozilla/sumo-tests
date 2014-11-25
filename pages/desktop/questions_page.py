@@ -141,6 +141,7 @@ class AskNewQuestionsPage(Base):
         self.selenium.find_element(*self._q_content_box_locator).send_keys(q_text)
         self.header.dismiss_staging_site_warning_if_present()
         self.selenium.find_element(*self._q_trouble_link_locator).click()
+        self.wait_for_element_visible(*self._q_trouble_box_locator)
         self.selenium.find_element(*self._q_trouble_box_locator).send_keys(q_trouble)
         selected_product = self.selected_product == "Firefox for Desktop" and "Firefox" or self.selected_product
         self.header.dismiss_staging_site_warning_if_present()
