@@ -114,7 +114,6 @@ class AskNewQuestionsPage(Base):
     _none_of_these_button_locator = (By.CSS_SELECTOR, 'form .btn.btn-submit')
     _q_content_box_locator = (By.ID, 'id_content')
     _q_trouble_link_locator = (By.CSS_SELECTOR, '#troubleshooting-manual a')
-    _q_trouble_box_locator = (By.ID, 'id_troubleshooting')
     _q_post_button_locator = (By.CSS_SELECTOR, '#question-form button.btn-submit')
     _close_stage_banner_locator = (By.CLASS_NAME, 'close-button')
     _selected_product_locator = (By.CSS_SELECTOR, '#selected-product span')
@@ -136,12 +135,11 @@ class AskNewQuestionsPage(Base):
     def selected_product(self):
         return self.selenium.find_element(*self._selected_product_locator).text
 
-    def fill_up_questions_form(self, question_to_ask, q_text='details', q_site='www.example.com', q_trouble='no addons'):
+    def fill_up_questions_form(self, question_to_ask, q_text='details', q_site='www.example.com'):
         self.header.dismiss_staging_site_warning_if_present()
         self.selenium.find_element(*self._q_content_box_locator).send_keys(q_text)
         self.header.dismiss_staging_site_warning_if_present()
         self.selenium.find_element(*self._q_trouble_link_locator).click()
-        self.selenium.find_element(*self._q_trouble_box_locator).send_keys(q_trouble)
         selected_product = self.selected_product == "Firefox for Desktop" and "Firefox" or self.selected_product
         self.header.dismiss_staging_site_warning_if_present()
         self.selenium.find_element(*self._q_post_button_locator).click()
