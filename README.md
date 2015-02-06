@@ -128,8 +128,8 @@ __Note__
 
 Some options for py.test are pre-specified by the file sumo_tests/mozwebqa.cfg
 
-The mozwebqa plugin has advanced command line options for reporting and using browsers. See the documentation on [davehunt's pytest mozwebqa github][pymozwebqa]:
-[pymozwebqa]: https://github.com/davehunt/pytest-mozwebqa
+The mozwebqa plugin has advanced command line options for reporting and using browsers. See the documentation on [pytest mozwebqa github][pymozwebqa]:
+[pymozwebqa]: https://github.com/mozilla/pytest-mozwebqa
 
 __Troubleshooting__
 
