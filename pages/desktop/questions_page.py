@@ -208,16 +208,16 @@ class ViewQuestionPage(Base):
 
     def is_reply_text_present(self, username, reply_text):
         is_reply_present = False
-        #get a list of answers
+        # get a list of answers
         answers = reversed(self.selenium.find_elements(*self._answers_locator))
-        #check if there exists a reply the user replied as "reply"
+        # check if there exists a reply the user replied as "reply"
         for answer in answers:
-            #name of the person who authored a post (name of a replyer)
+            # name of the person who authored a post (name of a replyer)
             post_author_name = answer.find_element(*self._post_author_locator).text.lower()
-            #content of the post
+            # content of the post
             post_content = answer.find_element(*self._post_content_locator).text
-            #there should exist a post, whose content is "reply" and
-            #the author is the person who logged in with username
+            # there should exist a post, whose content is "reply" and
+            # the author is the person who logged in with username
             if username.lower() == post_author_name and post_content == reply_text:
                 is_reply_present = True
                 break
