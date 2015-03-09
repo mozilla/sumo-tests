@@ -44,7 +44,11 @@ class QuestionsPage(Base):
         self.selenium.find_element(*self._all_questions_tab_locator).click()
 
     def click_sort_by_unanswered_questions(self):
-        self.selenium.find_element(*self._sort_unanswered_locator).click()
+        # Prevent Selenium automatically scrolling this element to the top of
+        # the page, which can lead to unintented  clicks on the banner
+        element = self.selenium.find_element(*self._sort_unanswered_locator)
+        self.selenium.execute_script('arguments[0].scrollIntoView(false);', element)
+        element.click()
 
     def click_sort_by_solved_questions(self):
         self.selenium.find_element(*self._sort_solved_link_locator).click()
@@ -90,7 +94,11 @@ class QuestionsPage(Base):
         def click_question_link(self):
             question_title = self.title
             product_name = self.product_name
-            self._root_element.find_element(*self._question_link_locator).click()
+            # Prevent Selenium automatically scrolling this element to the top
+            # of the page, which can lead to unintented  clicks on the banner
+            element = self._root_element.find_element(*self._question_link_locator)
+            self.selenium.execute_script('arguments[0].scrollIntoView(false);', element)
+            element.click()
             view_question_pg = ViewQuestionPage(self.testsetup)
             view_question_pg.is_the_current_page(question_title, product_name)
             return view_question_pg
@@ -181,7 +189,11 @@ class ViewQuestionPage(Base):
         return self.selenium.find_element(*self._detail_locator).text
 
     def click_problem_too_button(self):
-        self.selenium.find_element(*self._problem_too_button_locator).click()
+        # Prevent Selenium automatically scrolling this element to the top of
+        # the page, which can lead to unintented  clicks on the banner
+        element = self.selenium.find_element(*self._problem_too_button_locator)
+        self.selenium.execute_script('arguments[0].scrollIntoView(false);', element)
+        element.click()
         self.wait_for_element_present(*self._no_thanks_link_locator)
 
     @property
