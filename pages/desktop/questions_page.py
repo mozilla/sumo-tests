@@ -51,7 +51,11 @@ class QuestionsPage(Base):
         element.click()
 
     def click_sort_by_solved_questions(self):
-        self.selenium.find_element(*self._sort_solved_link_locator).click()
+        # Prevent Selenium automatically scrolling this element to the top of
+        # the page, which can lead to unintented  clicks on the banner
+        element = self.selenium.find_element(*self._sort_solved_link_locator)
+        self.selenium.execute_script('arguments[0].scrollIntoView(false);', element)
+        element.click()
 
     def click_all_products(self):
         self.selenium.find_element(*self._all_products_locator).click()
