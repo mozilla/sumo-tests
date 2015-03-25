@@ -48,6 +48,7 @@ class TestLoginLogout:
         register_page.is_the_current_page
         Assert.true(register_page.header.is_user_logged_out)
 
+    @pytest.mark.xfail(reason='Bug 1147569 - Topic accordion is not rendering as it used to')
     @pytest.mark.native
     def test_logout_from_edit_kb_article_page(self, mozwebqa):
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
@@ -65,6 +66,7 @@ class TestLoginLogout:
         register_page.is_the_current_page
         Assert.true(register_page.header.is_user_logged_out)
 
+    @pytest.mark.xfail(reason='Bug 1147569 - Topic accordion is not rendering as it used to')
     @pytest.mark.native
     def test_logout_from_translate_kb_article_page(self, mozwebqa):
         kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
