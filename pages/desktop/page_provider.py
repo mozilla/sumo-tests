@@ -12,8 +12,14 @@ class PageProvider():
         self.base_url = testsetup.base_url
         self.selenium = testsetup.selenium
 
+    def _set_window_size(self):
+        # SUMO requires a minimum window width
+        # to display elements that we are checking
+        if self.selenium.get_window_size()['width'] < 1920:
+            self.selenium.set_window_size(1920, 1080)
+
     def _go_to_page(self, page_object, do_login=False, user='default'):
-        self.selenium.maximize_window()
+        self._set_window_size()
         self.selenium.get(self.base_url + page_object._page_url)
         page_object.is_the_current_page
         if (do_login):
@@ -22,7 +28,7 @@ class PageProvider():
         return page_object
 
     def _go_to_page_with_login_redirect(self, page_object, user='default'):
-        self.selenium.maximize_window()
+        self._set_window_size()
         from pages.desktop.login_page import LoginPage
         self.selenium.get(self.base_url + page_object._page_url)
         login_page = LoginPage(self.testsetup)
