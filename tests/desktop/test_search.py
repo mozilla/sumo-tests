@@ -33,18 +33,18 @@ class TestSearch:
         if mozwebqa.base_url == 'https://support-dev.allizom.org':
             pytest.skip('Search results are not guaranteed to exist on support-dev.allizom.org')
 
-        #1. start on the home page
+        # 1. start on the home page
         PageProvider(mozwebqa).home_page()
 
-        #2. type "Firefox crashed"
-        #3. hit Enter
+        # 2. type "Firefox crashed"
+        # 3. hit Enter
         search_pg = SearchPage(mozwebqa)
         search_pg.do_search_on_search_query(self.forum_search_term + "ed")
 
-        #4. In the results list there are two types of results:
-        #   Forum and KB. Click on a forum result.
-        #   (Url is in the forum of /questions/[some number])
-        #5. A complete forum thread should be displayed.
+        # 4. In the results list there are two types of results:
+        #    Forum and KB. Click on a forum result.
+        #    (Url is in the forum of /questions/[some number])
+        # 5. A complete forum thread should be displayed.
         Assert.true(search_pg.is_result_present, "result page is not present.")
         result_thread_title = search_pg.result_question_text()
         Assert.contains(self.forum_search_term, result_thread_title)

@@ -3,7 +3,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import pytest
 from unittestzero import Assert
 from pages.desktop.page_provider import PageProvider
 from mocks.mock_article import MockArticle
@@ -137,7 +136,7 @@ class TestKnowledgeBaseArticle:
         kb_translate_pg = kb_article_history.navigation.click_translate_article()
         kb_translate_pg.click_translate_language('Deutsch (de)')
 
-        #enter the translation
+        # enter the translation
         mock_article_deutsch = MockArticle(suffix="_deutsch")
         kb_translate_pg.type_title(mock_article_deutsch['title'])
         kb_translate_pg.type_slug(mock_article_deutsch['slug'])

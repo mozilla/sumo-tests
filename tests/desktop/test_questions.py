@@ -97,31 +97,31 @@ class TestQuestions:
         """
         reply_text = "reply"
 
-        #1. Start on the home page
-        #2. Log in
-        #3. Use the contributor bar to go to the forums.
-        #   The questions page should list 20 posts.
-        #3.1 go to the question page
+        # 1. Start on the home page
+        # 2. Log in
+        # 3. Use the contributor bar to go to the forums.
+        #    The questions page should list 20 posts.
+        # 3.1 go to the question page
         questions_page = PageProvider(mozwebqa).questions_page(do_login=True)
         questions_page.click_all_products()
-        #3.2 ensure the size of the list is 20
+        # 3.2 ensure the size of the list is 20
         Assert.greater(questions_page.questions_count, 0,
-                     'There is not at least one question displayed.')
+                       'There is not at least one question displayed.')
 
-        #4. Click on a question. (URL is in the forum of /questions/[some number])
-        #4.1 pick up an arbitrary question and click
-        #4.2 check if it landed on an intended forum page
+        # 4. Click on a question. (URL is in the forum of /questions/[some number])
+        # 4.1 pick up an arbitrary question and click
+        # 4.2 check if it landed on an intended forum page
         question = questions_page.questions[randrange(questions_page.questions_count)]
         forum_page = question.click_question_link()
 
-        #5. Go to the thread
-        #6. Scroll to the bottom and click into the text field
-        #7. Type reply
-        #7.1 get the login-user name to check the author of the reply
+        # 5. Go to the thread
+        # 6. Scroll to the bottom and click into the text field
+        # 7. Type reply
+        # 7.1 get the login-user name to check the author of the reply
         username = forum_page.header.login_user_name
-        #7.2 reply the post
+        # 7.2 reply the post
         forum_page.post_reply(reply_text)
-        #7.3 check if posting a reply finishes without an error
+        # 7.3 check if posting a reply finishes without an error
         is_reply_present = forum_page.is_reply_text_present(username, reply_text)
         Assert.true(is_reply_present,
-            u'reply with "%s" text posted by %s is not present' % (reply_text, username))
+                    u'reply with "%s" text posted by %s is not present' % (reply_text, username))
