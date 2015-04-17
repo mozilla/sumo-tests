@@ -19,7 +19,7 @@ class TestLoginLogout:
 
         Assert.true(home_page.header.is_user_logged_in, 'User not shown to be logged in')
 
-    ### logging out of the following pages keeps user on the same pages
+    # logging out of the following pages keeps user on the same pages
 
     @pytest.mark.native
     @pytest.mark.nondestructive

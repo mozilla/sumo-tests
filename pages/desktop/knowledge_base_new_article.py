@@ -67,7 +67,7 @@ class KnowledgeBaseNewArticle(Base):
         self.selenium.find_element(*self._article_topic_expander_locator).click()
         self.wait_for_element_visible(*self._first_article_topics_panel)
         WebDriverWait(self.selenium, self.timeout).until(lambda s:
-            'overflow:hidden' not in self.selenium.find_element(*self._first_article_topics_panel).get_attribute('style'))
+                                                         'overflow:hidden' not in self.selenium.find_element(*self._first_article_topics_panel).get_attribute('style'))
         self.selenium.find_element(*self._first_article_topic_locator).click()
 
     def check_article_product(self, product):

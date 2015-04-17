@@ -201,7 +201,7 @@ class KnowledgeBaseShowHistory(KnowledgeBase):
 
     _revision_history_language_locator = (By.CSS_SELECTOR, '#revision-history > div:nth-child(5)')
 
-    #history of the test
+    # history of the test
     _top_revision_comment = (By.CSS_SELECTOR, '#revision-list li:nth-child(2) > div.comment')
 
     def delete_entire_article_document(self):

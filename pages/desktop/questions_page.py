@@ -5,7 +5,6 @@
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from unittestzero import Assert
 from pages.page import Page
 from pages.desktop.base import Base
 
