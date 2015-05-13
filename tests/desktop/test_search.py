@@ -13,7 +13,7 @@ class TestSearch:
     forum_search_term = "Firefox crash"
 
     @pytest.mark.nondestructive
-    def test_no_query_adv_forum_search(self, mozwebqa):
+    def test_no_query_adv_forum_search(self, mozwebqa, variables):
         if mozwebqa.base_url in ['https://support-dev.allizom.org',
                                  'https://support.mozilla.org']:
             pytest.skip('Search results are not guaranteed to exist on %s' % mozwebqa.base_url)
@@ -22,7 +22,8 @@ class TestSearch:
 
         # do test
         refine_search_pg.click_support_questions_tab()
-        refine_search_pg.type_in_asked_by_box(refine_search_pg.get_user_name('default'))
+        username = variables['users']['default']['username']
+        refine_search_pg.type_in_asked_by_box(username)
         refine_search_pg.click_search_button_support()
 
         Assert.true(refine_search_pg.search_result_count > 0, "No search results not found")

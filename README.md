@@ -92,7 +92,7 @@ Some of the tests in sumo-tests require logging in to https://support.allizom.or
 
 1. Create two username and password combinations on https://support.allizom.org
 2. Join [#sumo][sumo] and ask for one of these users to be upgraded to admin (or ask someone on [#mozwebqa][mozwebqa] to do this for you)
-3. Copy sumo-tests/credentials.yaml to a location outside of sumo-tests. update the 'default' and 'admin' users in credentials.yaml with those credentials
+3. Copy sumo-tests/variables.json to a location outside of sumo-tests. update the 'default' and 'admin' users in variables.json with those credentials
 
 [mozwebqa]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#mozwebqa
 [sumo]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#sumo
@@ -104,9 +104,9 @@ Some of the tests in sumo-tests require logging in to https://support.allizom.or
 Before each test run, clean up the repo:
     find . \( -name 'results*' -or -name '*.pyc' \) -print0 | xargs -0 rm -Rf
 
-To run tests locally its a simple case of calling the command below from this directory
+To run tests locally it's a simple case of calling the command below from this directory:
 
-    py.test --driver=firefox --destructive --credentials=/full/path/to/credentials.yaml .
+    py.test --driver=firefox --destructive --variables=/full/path/to/variables.json .
 
 __Output__
 Output of a test run should look like this:

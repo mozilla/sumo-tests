@@ -94,7 +94,3 @@ class Page(object):
             if self.selenium.execute_script("return jQuery.active == 0"):
                 return
         raise Exception("Wait for AJAX timed out after %s seconds" % count)
-
-    def get_user_name(self, user='default'):
-        credentials = self.testsetup.credentials[user]
-        return credentials['name']

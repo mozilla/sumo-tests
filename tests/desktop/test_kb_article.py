@@ -10,13 +10,15 @@ from mocks.mock_article import MockArticle
 
 class TestKnowledgeBaseArticle:
 
-    def test_that_article_can_be_created(self, mozwebqa):
+    def test_that_article_can_be_created(self, mozwebqa, variables):
         """
            Creates a new knowledge base article.
            Verifies creation.
            Deletes the article
         """
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+        user = variables['users']['admin']
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+            user['username'], user['password'])
 
         # create a new article
         mock_article = MockArticle()
@@ -37,14 +39,16 @@ class TestKnowledgeBaseArticle:
         kb_article = kb_edit_article.navigation.click_show_history()
         kb_article.delete_entire_article_document()
 
-    def test_that_article_can_be_edited(self, mozwebqa):
+    def test_that_article_can_be_edited(self, mozwebqa, variables):
         """
            Creates a new knowledge base article.
            Verifies creation.
            Edits the article, verifies the edition.
            Deletes the article
         """
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+        user = variables['users']['admin']
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+            user['username'], user['password'])
 
         # create a new article
         mock_article = MockArticle()
@@ -74,13 +78,15 @@ class TestKnowledgeBaseArticle:
         kb_article_history = kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    def test_that_article_can_be_deleted(self, mozwebqa):
+    def test_that_article_can_be_deleted(self, mozwebqa, variables):
         """
            Creates a new knowledge base article.
            Deletes the article.
            Verifies the deletion.
         """
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+        user = variables['users']['admin']
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+            user['username'], user['password'])
 
         # create a new article
         mock_article = MockArticle()
@@ -100,13 +106,15 @@ class TestKnowledgeBaseArticle:
         actual_page_title = kb_article_history.page_title
         Assert.contains("Page Not Found", actual_page_title)
 
-    def test_that_article_can_be_previewed_before_submitting(self, mozwebqa):
+    def test_that_article_can_be_previewed_before_submitting(self, mozwebqa, variables):
         """
             Start a new knowledge base article.
             Preview.
             Verify the contents in the preview
         """
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+        user = variables['users']['default']
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+            user['username'], user['password'])
 
         # create a new article
         mock_article = MockArticle()
@@ -119,12 +127,14 @@ class TestKnowledgeBaseArticle:
 
         # Does not need to be deleted as it does not commit the article
 
-    def test_that_article_can_be_translated(self, mozwebqa):
+    def test_that_article_can_be_translated(self, mozwebqa, variables):
         """
            Creates a new knowledge base article.
            Translate article
         """
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+        user = variables['users']['admin']
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+            user['username'], user['password'])
 
         # create a new article
         mock_article = MockArticle()

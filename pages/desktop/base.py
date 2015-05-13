@@ -25,9 +25,9 @@ class Base(Page):
     def header(self):
         return self.HeaderRegion(self.testsetup)
 
-    def sign_in(self, user="default"):
+    def sign_in(self, username, password):
         login = self.header.click_login()
-        login.log_in(user)
+        login.log_in(username, password)
 
     def sign_out(self):
         self.header.click_logout()

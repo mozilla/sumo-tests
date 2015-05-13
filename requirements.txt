@@ -8,5 +8,6 @@ chardet==2.1.1
 py==1.4.26
 pytest==2.7.0
 pytest-mozwebqa
+pytest-variables
 requests==2.4.3
 selenium
