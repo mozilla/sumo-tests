@@ -13,9 +13,10 @@ from mocks.mock_article import MockArticle
 class TestLoginLogout:
 
     @pytest.mark.nondestructive
-    def test_login(self, mozwebqa):
+    def test_login(self, mozwebqa, variables):
+        user = variables['users']['default']
         home_page = PageProvider(mozwebqa).home_page()
-        home_page.sign_in(user='default')
+        home_page.sign_in(user['username'], user['password'])
 
         Assert.true(home_page.header.is_user_logged_in, 'User not shown to be logged in')
 
@@ -29,8 +30,10 @@ class TestLoginLogout:
                                              'search_page',
                                              'refine_search_page',
                                              ])
-    def test_logout_from_pages(self, mozwebqa, page_method):
-        page_under_test = getattr(PageProvider(mozwebqa), page_method)(do_login=True, user='default')
+    def test_logout_from_pages(self, mozwebqa, variables, page_method):
+        user = variables['users']['default']
+        page_under_test = getattr(PageProvider(mozwebqa), page_method)(
+            user['username'], user['password'])
         Assert.true(page_under_test.header.is_user_logged_in, 'User not shown to be logged in')
 
         # sign out
@@ -39,8 +42,10 @@ class TestLoginLogout:
         Assert.true(page_under_test.header.is_user_logged_out)
 
     @pytest.mark.native
-    def test_logout_from_new_kb_article_page(self, mozwebqa):
-        new_kb_page = PageProvider(mozwebqa).new_kb_article_page()
+    def test_logout_from_new_kb_article_page(self, mozwebqa, variables):
+        user = variables['users']['default']
+        new_kb_page = PageProvider(mozwebqa).new_kb_article_page(
+            user['username'], user['password'])
         Assert.true(new_kb_page.header.is_user_logged_in, 'User not shown to be logged in')
 
         # sign out
@@ -49,8 +54,10 @@ class TestLoginLogout:
         Assert.true(register_page.header.is_user_logged_out)
 
     @pytest.mark.native
-    def test_logout_from_edit_kb_article_page(self, mozwebqa):
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+    def test_logout_from_edit_kb_article_page(self, mozwebqa, variables):
+        user = variables['users']['default']
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+            user['username'], user['password'])
 
         # create a new article
         mock_article = MockArticle()
@@ -66,8 +73,10 @@ class TestLoginLogout:
         Assert.true(register_page.header.is_user_logged_out)
 
     @pytest.mark.native
-    def test_logout_from_translate_kb_article_page(self, mozwebqa):
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page()
+    def test_logout_from_translate_kb_article_page(self, mozwebqa, variables):
+        user = variables['users']['default']
+        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+            user['username'], user['password'])
 
         # create a new article
         mock_article = MockArticle()

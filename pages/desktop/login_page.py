@@ -23,14 +23,12 @@ class LoginPage(Base):
     _logged_in_as_div_locator = (By.CSS_SELECTOR, 'div#mod-login_box > div')
     _logged_in_text = 'Logged in as'
 
-    def log_in(self, user='default'):
-        credentials = self.testsetup.credentials[user]
-
-        self.selenium.find_element(*self._username_box_locator).send_keys(credentials['name'])
-        self.selenium.find_element(*self._password_box_locator).send_keys(credentials['password'])
+    def log_in(self, username, password):
+        self.selenium.find_element(*self._username_box_locator).send_keys(username)
+        self.selenium.find_element(*self._password_box_locator).send_keys(password)
         self.selenium.find_element(*self._log_in_button_locator).click()
 
         if not self.header.is_user_logged_in:
             error = self.selenium.find_element(*self._login_error_locator).text
-            error = "login failed for %s\n" % credentials['name'] + error
+            error = "login failed for %s\n" % username + error
             Assert.fail(error)

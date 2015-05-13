@@ -13,14 +13,16 @@ from pages.desktop.page_provider import PageProvider
 class TestQuestions:
 
     @pytest.mark.native
-    def test_that_posting_question_works(self, mozwebqa):
+    def test_that_posting_question_works(self, mozwebqa, variables):
         """Posts a question to /questions"""
+        user = variables['users']['default']
         timestamp = datetime.datetime.today()
         q_to_ask = "automation test question %s" % (timestamp)
         q_details = "This is a test. %s" % (timestamp)
 
         # go to the /questions/new page and log in
-        ask_new_questions_page = PageProvider(mozwebqa).new_question_page()
+        ask_new_questions_page = PageProvider(mozwebqa).new_question_page(
+            user['username'], user['password'])
 
         # post a question
         ask_new_questions_page.click_firefox_product_link()
@@ -90,19 +92,20 @@ class TestQuestions:
 
         Assert.equal(initial_count + 1, post_click_count)
 
-    def test_contributor_flow_to_support_forum_post(self, mozwebqa):
+    def test_contributor_flow_to_support_forum_post(self, mozwebqa, variables):
         """
             Shows a contributor can start on the home page and move
             all the way to answering a question in the forum.
         """
-        reply_text = "reply"
-
         # 1. Start on the home page
         # 2. Log in
         # 3. Use the contributor bar to go to the forums.
         #    The questions page should list 20 posts.
         # 3.1 go to the question page
-        questions_page = PageProvider(mozwebqa).questions_page(do_login=True)
+        user = variables['users']['default']
+        questions_page = PageProvider(mozwebqa).questions_page(
+            user['username'], user['password'])
+
         questions_page.click_all_products()
         # 3.2 ensure the size of the list is 20
         Assert.greater(questions_page.questions_count, 0,
@@ -117,11 +120,10 @@ class TestQuestions:
         # 5. Go to the thread
         # 6. Scroll to the bottom and click into the text field
         # 7. Type reply
-        # 7.1 get the login-user name to check the author of the reply
-        username = forum_page.header.login_user_name
-        # 7.2 reply the post
-        forum_page.post_reply(reply_text)
-        # 7.3 check if posting a reply finishes without an error
-        is_reply_present = forum_page.is_reply_text_present(username, reply_text)
-        Assert.true(is_reply_present,
-                    u'reply with "%s" text posted by %s is not present' % (reply_text, username))
+        # 7.1 reply the post
+        reply = "reply"
+        forum_page.post_reply(reply)
+        # 7.2 check if posting a reply finishes without an error
+        Assert.true(forum_page.is_reply_text_present(user['username'], reply),
+                    u'reply with "%s" text posted by %s is not present' % (
+                        reply, user['username']))
