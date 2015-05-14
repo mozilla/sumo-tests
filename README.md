@@ -104,7 +104,7 @@ Some of the tests in sumo-tests require logging in to https://support.allizom.or
 Before each test run, clean up the repo:
     find . \( -name 'results*' -or -name '*.pyc' \) -print0 | xargs -0 rm -Rf
 
-To run tests locally its a simple case of calling the command below from this directory
+To run tests locally it's a simple case of calling the command below from this directory:
 
     py.test --driver=firefox --destructive --variables=/full/path/to/variables.json .
 
