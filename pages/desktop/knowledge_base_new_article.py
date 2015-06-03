@@ -25,7 +25,7 @@ class KnowledgeBaseNewArticle(Base):
     _article_category_menu_locator = (By.ID, 'id_category')
     _article_keywords_box_locator = (By.ID, 'id_keywords')
     _article_summary_box_locator = (By.ID, 'id_summary')
-    _article_content_box_locator = (By.CSS_SELECTOR, '#editor > textarea')
+    _article_content_object = 'window.highlighting.editor'
     _article_slug_box_locator = (By.ID, 'id_slug')
     _first_article_topic_heading = (By.ID, 'ui-accordion-accordion-header-0')
     _first_article_topics_panel = (By.CSS_SELECTOR, '#ui-accordion-accordion-panel-0.ui-accordion-content-active')
@@ -89,7 +89,9 @@ class KnowledgeBaseNewArticle(Base):
         self.selenium.find_element(*self._article_summary_box_locator).send_keys(summary)
 
     def set_article_content(self, content):
-        self.selenium.find_element(*self._article_content_box_locator).send_keys(content)
+        # widget doesn't respond well to selenium commands
+        self.selenium.execute_script("%s.setValue('%s')" %
+                                     (self._article_content_object, content))
 
     def set_article_comment_box(self, comment='automated test'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
