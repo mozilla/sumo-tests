@@ -11,36 +11,39 @@ from pages.page import Page
 
 class Base(Page):
 
+    _body_locator = (By.TAG_NAME, 'body')
+    _menu_items_locator = (By.CSS_SELECTOR, 'nav a')
+    _menu_button_locator = (By.ID, 'menu-button')
+
     @property
-    def header(self):
-        return Base.HeaderRegion(self.testsetup)
+    def is_menu_exposed(self):
+        return 'exposed' in self.selenium.find_element(*self._body_locator).get_attribute('class')
 
-    class HeaderRegion(Page):
+    @property
+    def menu_items(self):
+        return [self.MenuItem(self.testsetup, element)
+                for element in self.selenium.find_elements(*self._menu_items_locator)]
 
-        _dropdown_expanded_menu_locator = (By.CSS_SELECTOR, 'div.moz-menu')
-        _menu_items_locator = (By.CSS_SELECTOR, '.menu-items li')
-        _menu_button_locator = (By.CSS_SELECTOR, '.tab > a')
+    def click_menu(self):
+        self.selenium.find_element(*self._menu_button_locator).click()
 
-        def click_header_menu(self):
-            self.selenium.find_element(*self._menu_button_locator).click()
+    def close_menu(self):
+        assert self.is_menu_exposed, 'Menu is already closed'
+        self.click_menu()
+
+    def open_menu(self):
+        assert not self.is_menu_exposed, 'Menu is already open'
+        self.click_menu()
+
+    class MenuItem(Page):
+
+        def __init__(self, testsetup, element):
+            Page.__init__(self, testsetup)
+            self._root_element = element
 
         @property
-        def is_dropdown_menu_expanded(self):
-            return "expand" in self.selenium.find_element(*self._dropdown_expanded_menu_locator).get_attribute('class')
+        def name(self):
+            return self._root_element.text
 
-        @property
-        def dropdown_menu_items(self):
-            # returns a list containing all the menu items
-            return [self.MenuItem(self.testsetup, web_element) for web_element in self.selenium.find_elements(*self._menu_items_locator)]
-
-        class MenuItem(Page):
-
-            _name_items_locator = (By.CSS_SELECTOR, 'a')
-
-            def __init__(self, testsetup, element):
-                Page.__init__(self, testsetup)
-                self._root_element = element
-
-            @property
-            def name(self):
-                return self._root_element.find_element(*self._name_items_locator).text
+        def click(self):
+            return self._root_element.click()

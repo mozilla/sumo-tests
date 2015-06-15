@@ -12,19 +12,23 @@ from pages.page import Page
 
 class Search(Base):
 
-    _page_url = '/en-US/search'
     _results_locator = (By.CSS_SELECTOR, 'ol.search-results li')
 
-    def __init__(self, testsetup, search_term):
+    def __init__(self, testsetup):
         Base.__init__(self, testsetup)
-        self._page_title = "%s :: Search :: Add-ons for Firefox" % search_term
+        self._page_title = 'Search | Mozilla Support'
 
     @property
     def results(self):
-        return [self.SearchResult(self.testsetup, web_element)
-                for web_element in self.selenium.find_elements(*self._results_locator)]
+        return [self.SearchResult(self.testsetup, element)
+                for element in self.selenium.find_elements(*self._results_locator)]
 
     class SearchResult(Page):
-        def __init__(self, testsetup, web_element):
+        def __init__(self, testsetup, element):
             Page.__init__(self, testsetup)
-            self._root_element = web_element
+            self._root_element = element
+
+        def click(self):
+            self._root_element.click()
+            from pages.mobile.article import Article
+            return Article(self.testsetup)
