@@ -1,10 +1,7 @@
-#!/usr/bin/env python
-
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from unittestzero import Assert
 import pytest
 import requests
 import urllib
@@ -40,9 +37,8 @@ class TestRedirects:
     def test_browser_redirect_to_sumo(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
         r = self._check_redirect(mozwebqa, input)
-
-        Assert.equal(urllib.unquote(r.url), expected_url)
-        Assert.equal(r.status_code, requests.codes.ok)
+        assert expected_url == urllib.unquote(r.url)
+        assert requests.codes.ok == r.status_code
 
     @pytest.mark.parametrize(('input'), [
         ('/1/firefox/4.0/WINNT/en-US/prefs-main/'),
@@ -54,7 +50,7 @@ class TestRedirects:
         ('/1/firefox/4.0/WINNT/en-US/prefs-fonts-and-colors/')])
     def test_kb_redirects_status_ok(self, mozwebqa, input):
         r = self._check_redirect(mozwebqa, input)
-        Assert.equal(r.status_code, requests.codes.ok)
+        assert requests.codes.ok == r.status_code
 
     @pytest.mark.parametrize(('input', 'expected'), [
         ('/1/mobile/4.0/android/en-US/firefox-help', '/en-US/kb/popular-topics-firefox-android?as=u&utm_source=inproduct'),
@@ -63,13 +59,12 @@ class TestRedirects:
     def test_old_mobile_redirects(self, mozwebqa, input, expected):
         expected_url = mozwebqa.base_url + expected
         r = self._check_redirect(mozwebqa, input)
-
-        Assert.equal(urllib.unquote(r.url), expected_url)
-        Assert.equal(r.status_code, requests.codes.ok)
+        assert expected_url == urllib.unquote(r.url)
+        assert requests.codes.ok == r.status_code
 
     @pytest.mark.parametrize(('input'), [
         ('/1/firefox-home/4.0/iPhone/en-US'),
         ('/1/firefox-home/4.0/iPhone/en-US/log-in')])
     def test_iphone_kb_redirects_status_ok(self, mozwebqa, input):
         r = self._check_redirect(mozwebqa, input)
-        Assert.equal(r.status_code, requests.codes.ok)
+        assert requests.codes.ok == r.status_code
