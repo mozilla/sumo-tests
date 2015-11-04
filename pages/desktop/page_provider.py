@@ -57,13 +57,13 @@ class PageProvider():
         from pages.desktop.questions_page import QuestionsPage
         return self._go_to_page(QuestionsPage(self.testsetup), username, password)
 
-    def search_page(self, username=None, password=None):
-        from pages.desktop.search_page import SearchPage
-        return self._go_to_page(SearchPage(self.testsetup), username, password)
-
     def refine_search_page(self, username=None, password=None):
         from pages.desktop.refine_search_page import RefineSearchPage
         return self._go_to_page(RefineSearchPage(self.testsetup), username, password)
+
+    def search_page(self, username=None, password=None):
+        from pages.desktop.search_page import SearchPage
+        return self._go_to_page(SearchPage(self.testsetup), username, password)
 
     ''' pages for which login is required '''
 

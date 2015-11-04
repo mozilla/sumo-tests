@@ -14,6 +14,7 @@ class Base(Page):
     _body_locator = (By.TAG_NAME, 'body')
     _menu_items_locator = (By.CSS_SELECTOR, 'nav a')
     _menu_button_locator = (By.ID, 'menu-button')
+    _mobile_header_locator = (By.CSS_SELECTOR, 'header.slide-on-exposed')
 
     @property
     def is_menu_exposed(self):
@@ -23,6 +24,10 @@ class Base(Page):
     def menu_items(self):
         return [self.MenuItem(self.testsetup, element)
                 for element in self.selenium.find_elements(*self._menu_items_locator)]
+
+    @property
+    def is_mobile_view_displayed(self):
+        return self.selenium.find_element(*self._mobile_header_locator).is_displayed()
 
     def click_menu(self):
         self.selenium.find_element(*self._menu_button_locator).click()

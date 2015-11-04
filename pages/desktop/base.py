@@ -22,6 +22,10 @@ class Base(Page):
         return self.selenium.title
 
     @property
+    def footer(self):
+        return self.FooterRegion(self.testsetup)
+
+    @property
     def header(self):
         return self.HeaderRegion(self.testsetup)
 
@@ -33,6 +37,9 @@ class Base(Page):
         self.header.click_logout()
         from pages.desktop.register_page import RegisterPage
         return RegisterPage(self.testsetup)
+
+    def switch_to_mobile_view(self):
+        self.footer.click_switch_to_mobile_view()
 
     def format_page_title(self, *title_segments):
         '''
@@ -51,6 +58,13 @@ class Base(Page):
         for title in segment_list:
             page_title = title + separator + page_title
         return page_title
+
+    class FooterRegion(Page):
+
+        _switch_to_mobile_view_locator = (By.CSS_SELECTOR, 'footer a[href*="mobile=1"]')
+
+        def click_switch_to_mobile_view(self):
+            self.selenium.find_element(*self._switch_to_mobile_view_locator).click()
 
     class HeaderRegion(Page):
 
