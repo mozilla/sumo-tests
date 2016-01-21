@@ -9,7 +9,6 @@ Created on Jun 21, 2010
 '''
 import re
 import time
-from unittestzero import Assert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotVisibleException
@@ -31,10 +30,7 @@ class Page(object):
     @property
     def is_the_current_page(self):
         if self._page_title:
-            page_title = self.page_title
-            Assert.equal(page_title, self._page_title,
-                         "Expected page title: %s. Actual page title: %s" %
-                         (self._page_title, page_title))
+            assert self._page_title == self.page_title
 
     @property
     def url_current_page(self):

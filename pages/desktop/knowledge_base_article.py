@@ -4,7 +4,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from selenium.webdriver.common.by import By
-from unittestzero import Assert
 from pages.desktop.base import Base
 from pages.page import Page
 from selenium.webdriver.support.ui import WebDriverWait
@@ -20,7 +19,7 @@ class KnowledgeBase(Base):
     def is_the_current_page(self):
         if self._page_title:
             page_title = self.page_title
-            Assert.contains(self._page_title, page_title)
+            assert self._page_title in page_title
 
     class Navigation(Page):
 

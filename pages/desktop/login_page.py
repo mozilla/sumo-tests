@@ -5,7 +5,6 @@
 
 from pages.desktop.base import Base
 from selenium.webdriver.common.by import By
-from unittestzero import Assert
 
 
 class LoginPage(Base):
@@ -31,4 +30,4 @@ class LoginPage(Base):
         if not self.header.is_user_logged_in:
             error = self.selenium.find_element(*self._login_error_locator).text
             error = "login failed for %s\n" % username + error
-            Assert.fail(error)
+            raise AssertionError(error)

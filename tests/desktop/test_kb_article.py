@@ -3,7 +3,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from unittestzero import Assert
 from pages.desktop.page_provider import PageProvider
 from mocks.mock_article import MockArticle
 
@@ -30,10 +29,10 @@ class TestKnowledgeBaseArticle:
         kb_edit_article = kb_article_history.navigation.click_edit_article()
 
         actual_summary_text = str(kb_edit_article.article_summary_text)
-        Assert.equal(mock_article['summary'], actual_summary_text)
+        assert mock_article['summary'] == actual_summary_text
 
         actual_contents_text = str(kb_edit_article.article_contents_text)
-        Assert.equal(mock_article['content'], actual_contents_text)
+        assert mock_article['content'] == actual_contents_text
 
         # delete the same article
         kb_article = kb_edit_article.navigation.click_show_history()
@@ -66,13 +65,13 @@ class TestKnowledgeBaseArticle:
 
         # verify the contents of the edited article
         actual_page_title = kb_edit_article.page_title
-        Assert.contains(mock_article_edited['title'], actual_page_title)
+        assert mock_article_edited['title'] in actual_page_title
 
         actual_summary_text = kb_edit_article.article_summary_text
-        Assert.equal(mock_article_edited['summary'], actual_summary_text)
+        assert mock_article_edited['summary'] == actual_summary_text
 
         actual_content_text = kb_edit_article.article_contents_text
-        Assert.equal(mock_article_edited['content'], actual_content_text)
+        assert mock_article_edited['content'] == actual_content_text
 
         # delete the same article
         kb_article_history = kb_edit_article.navigation.click_show_history()
@@ -104,7 +103,7 @@ class TestKnowledgeBaseArticle:
 
         kb_article_history.selenium.get(article_url)
         actual_page_title = kb_article_history.page_title
-        Assert.contains("Page Not Found", actual_page_title)
+        assert "Page Not Found" in actual_page_title
 
     def test_that_article_can_be_previewed_before_submitting(self, mozwebqa, variables):
         """
@@ -123,7 +122,7 @@ class TestKnowledgeBaseArticle:
         kb_new_article.click_article_preview_button()
         actual_preview_text = kb_new_article.article_preview_text
 
-        Assert.equal(mock_article['content'], actual_preview_text)
+        assert mock_article['content'] == actual_preview_text
 
         # Does not need to be deleted as it does not commit the article
 
@@ -158,8 +157,8 @@ class TestKnowledgeBaseArticle:
         kb_article_history = kb_translate_pg.click_modal_submit_changes_button()
 
         # verifying
-        Assert.equal(change_comment, kb_article_history.most_recent_revision_comment)
-        Assert.contains('Deutsch', kb_article_history.revision_history)
+        assert change_comment == kb_article_history.most_recent_revision_comment
+        assert 'Deutsch' in kb_article_history.revision_history
 
         # deleting
         kb_article_history.delete_entire_article_document()

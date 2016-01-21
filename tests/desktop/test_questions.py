@@ -5,7 +5,6 @@
 
 import pytest
 import datetime
-from unittestzero import Assert
 from random import randrange
 from pages.desktop.page_provider import PageProvider
 
@@ -32,8 +31,8 @@ class TestQuestions:
         ask_new_questions_page.click_none_of_these_solve_my_problem_button()
         view_question_pg = ask_new_questions_page.fill_up_questions_form(q_to_ask, q_details)
 
-        Assert.equal(view_question_pg.question, q_to_ask)
-        Assert.equal(view_question_pg.question_detail, q_details)
+        assert q_to_ask == view_question_pg.question
+        assert q_details == view_question_pg.question_detail
 
     @pytest.mark.nondestructive
     def test_that_questions_sorts_correctly_by_filter_equal_to_solved(self, mozwebqa):
@@ -54,7 +53,7 @@ class TestQuestions:
 
         for question in questions_page.questions:
             # if solved mark is highlighted the question is really solved
-            Assert.true('highlighted' in question.solved_questions_filter)
+            assert 'highlighted' in question.solved_questions_filter
 
     @pytest.mark.nondestructive
     def test_that_questions_sorts_correctly_by_filter_equal_to_unanswered(self, mozwebqa):
@@ -74,7 +73,7 @@ class TestQuestions:
             pytest.skip("No questions present for filter=%s" % expected_sorted_text)
 
         for question in questions_page.questions:
-            Assert.equal(0, question.number_of_replies)
+            assert 0 == question.number_of_replies
 
     def test_that_questions_problem_count_increments(self, mozwebqa):
         """Checks if the 'I have this problem too' counter increments"""
@@ -90,7 +89,7 @@ class TestQuestions:
         view_question_page.refresh()
         post_click_count = view_question_page.problem_count
 
-        Assert.equal(initial_count + 1, post_click_count)
+        assert initial_count + 1 == post_click_count
 
     def test_contributor_flow_to_support_forum_post(self, mozwebqa, variables):
         """
@@ -108,8 +107,7 @@ class TestQuestions:
 
         questions_page.click_all_products()
         # 3.2 ensure the size of the list is 20
-        Assert.greater(questions_page.questions_count, 0,
-                       'There is not at least one question displayed.')
+        assert questions_page.questions_count > 0, 'There is not at least one question displayed.'
 
         # 4. Click on a question. (URL is in the forum of /questions/[some number])
         # 4.1 pick up an arbitrary question and click
@@ -124,6 +122,6 @@ class TestQuestions:
         reply = "reply"
         forum_page.post_reply(reply)
         # 7.2 check if posting a reply finishes without an error
-        Assert.true(forum_page.is_reply_text_present(user['username'], reply),
-                    u'reply with "%s" text posted by %s is not present' % (
-                        reply, user['username']))
+        assert forum_page.is_reply_text_present(user['username'], reply), \
+            u'reply with "%s" text posted by %s is not present' % (
+                reply, user['username'])

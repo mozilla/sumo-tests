@@ -5,8 +5,6 @@
 
 import pytest
 
-from unittestzero import Assert
-
 from pages.desktop.page_provider import PageProvider
 from pages.mobile.page_provider import PageProvider as MobilePageProvider
 
@@ -19,4 +17,4 @@ class TestMobileSite:
         home.switch_to_mobile_view()
 
         mobile = MobilePageProvider(mozwebqa).home_page()
-        Assert.true(mobile.is_mobile_view_displayed)
+        assert mobile.is_mobile_view_displayed
