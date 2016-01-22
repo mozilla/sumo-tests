@@ -12,21 +12,21 @@ class Search(Base):
 
     _results_locator = (By.CSS_SELECTOR, 'ol.search-results li')
 
-    def __init__(self, testsetup):
-        Base.__init__(self, testsetup)
+    def __init__(self, base_url, selenium):
+        Base.__init__(self, base_url, selenium)
         self._page_title = 'Search | Mozilla Support'
 
     @property
     def results(self):
-        return [self.SearchResult(self.testsetup, element)
+        return [self.SearchResult(self.base_url, self.selenium, element)
                 for element in self.selenium.find_elements(*self._results_locator)]
 
     class SearchResult(Page):
-        def __init__(self, testsetup, element):
-            Page.__init__(self, testsetup)
+        def __init__(self, base_url, selenium, element):
+            Page.__init__(self, base_url, selenium)
             self._root_element = element
 
         def click(self):
             self._root_element.click()
             from pages.mobile.article import Article
-            return Article(self.testsetup)
+            return Article(self.base_url, self.selenium)

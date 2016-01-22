@@ -11,7 +11,7 @@ from pages.desktop.page_provider import PageProvider
 class TestQuestions:
 
     @pytest.mark.native
-    def test_that_posting_question_works(self, mozwebqa, variables):
+    def test_that_posting_question_works(self, base_url, selenium, variables):
         """Posts a question to /questions"""
         user = variables['users']['default']
         timestamp = datetime.datetime.today()
@@ -19,7 +19,7 @@ class TestQuestions:
         q_details = "This is a test. %s" % (timestamp)
 
         # go to the /questions/new page and log in
-        ask_new_questions_page = PageProvider(mozwebqa).new_question_page(
+        ask_new_questions_page = PageProvider(base_url, selenium).new_question_page(
             user['username'], user['password'])
 
         # post a question
@@ -34,14 +34,14 @@ class TestQuestions:
         assert q_details == view_question_pg.question_detail
 
     @pytest.mark.nondestructive
-    def test_that_questions_sorts_correctly_by_filter_equal_to_solved(self, mozwebqa):
+    def test_that_questions_sorts_correctly_by_filter_equal_to_solved(self, base_url, selenium):
         """
            Goes to the /questions page,
            Verifies the sort filter=solved works
         """
         expected_sorted_text = "SOLVED"
 
-        questions_page = PageProvider(mozwebqa).questions_page()
+        questions_page = PageProvider(base_url, selenium).questions_page()
         questions_page.click_all_products()
         questions_page.click_questions_done_tab()
 
@@ -55,14 +55,14 @@ class TestQuestions:
             assert 'highlighted' in question.solved_questions_filter
 
     @pytest.mark.nondestructive
-    def test_that_questions_sorts_correctly_by_filter_equal_to_unanswered(self, mozwebqa):
+    def test_that_questions_sorts_correctly_by_filter_equal_to_unanswered(self, base_url, selenium):
         """
            Goes to the /questions page,
            Verifies the sort filter=unanswered works
         """
         expected_sorted_text = "Unanswered"
 
-        questions_page = PageProvider(mozwebqa).questions_page()
+        questions_page = PageProvider(base_url, selenium).questions_page()
         questions_page.click_all_products()
         questions_page.click_all_questions_tab()
 
@@ -74,11 +74,11 @@ class TestQuestions:
         for question in questions_page.questions:
             assert 0 == question.number_of_replies
 
-    def test_that_questions_problem_count_increments(self, mozwebqa):
+    def test_that_questions_problem_count_increments(self, base_url, selenium):
         """Checks if the 'I have this problem too' counter increments"""
 
         # Can't +1 your own question so will do it logged out
-        questions_page = PageProvider(mozwebqa).questions_page()
+        questions_page = PageProvider(base_url, selenium).questions_page()
         questions_page.click_all_products()
 
         view_question_page = questions_page.click_any_question(1)
@@ -90,7 +90,7 @@ class TestQuestions:
 
         assert initial_count + 1 == post_click_count
 
-    def test_contributor_flow_to_support_forum_post(self, mozwebqa, variables):
+    def test_contributor_flow_to_support_forum_post(self, base_url, selenium, variables):
         """
             Shows a contributor can start on the home page and move
             all the way to answering a question in the forum.
@@ -101,7 +101,7 @@ class TestQuestions:
         #    The questions page should list 20 posts.
         # 3.1 go to the question page
         user = variables['users']['default']
-        questions_page = PageProvider(mozwebqa).questions_page(
+        questions_page = PageProvider(base_url, selenium).questions_page(
             user['username'], user['password'])
 
         questions_page.click_all_products()

@@ -6,10 +6,9 @@
 class PageProvider():
     ''' internal methods '''
 
-    def __init__(self, testsetup):
-        self.testsetup = testsetup
-        self.base_url = testsetup.base_url
-        self.selenium = testsetup.selenium
+    def __init__(self, base_url, selenium):
+        self.base_url = base_url
+        self.selenium = selenium
 
     def _set_window_size(self):
         # SUMO requires a minimum window width
@@ -30,7 +29,7 @@ class PageProvider():
         self._set_window_size()
         from pages.desktop.login_page import LoginPage
         self.selenium.get(self.base_url + page_object._page_url)
-        login_page = LoginPage(self.testsetup)
+        login_page = LoginPage(self.base_url, self.selenium)
         login_page.log_in(username, password)
         page_object.is_the_current_page
         page_object.header.dismiss_staging_site_warning_if_present()
@@ -40,32 +39,32 @@ class PageProvider():
 
     def new_user_registration_page(self):
         from pages.desktop.register_page import RegisterPage
-        return self._go_to_page(RegisterPage(self.testsetup))
+        return self._go_to_page(RegisterPage(self.base_url, self.selenium))
 
     ''' pages for which login is optional '''
 
     def home_page(self, username=None, password=None):
         from pages.desktop.support_home_page import SupportHomePage
-        return self._go_to_page(SupportHomePage(self.testsetup), username, password)
+        return self._go_to_page(SupportHomePage(self.base_url, self.selenium), username, password)
 
     def new_question_page(self, username=None, password=None):
         from pages.desktop.questions_page import AskNewQuestionsPage
-        return self._go_to_page(AskNewQuestionsPage(self.testsetup), username, password)
+        return self._go_to_page(AskNewQuestionsPage(self.base_url, self.selenium), username, password)
 
     def questions_page(self, username=None, password=None):
         from pages.desktop.questions_page import QuestionsPage
-        return self._go_to_page(QuestionsPage(self.testsetup), username, password)
+        return self._go_to_page(QuestionsPage(self.base_url, self.selenium), username, password)
 
     def refine_search_page(self, username=None, password=None):
         from pages.desktop.refine_search_page import RefineSearchPage
-        return self._go_to_page(RefineSearchPage(self.testsetup), username, password)
+        return self._go_to_page(RefineSearchPage(self.base_url, self.selenium), username, password)
 
     def search_page(self, username=None, password=None):
         from pages.desktop.search_page import SearchPage
-        return self._go_to_page(SearchPage(self.testsetup), username, password)
+        return self._go_to_page(SearchPage(self.base_url, self.selenium), username, password)
 
     ''' pages for which login is required '''
 
     def new_kb_article_page(self, username, password):
         from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
-        return self._go_to_page_with_login_redirect(KnowledgeBaseNewArticle(self.testsetup), username, password)
+        return self._go_to_page_with_login_redirect(KnowledgeBaseNewArticle(self.base_url, self.selenium), username, password)

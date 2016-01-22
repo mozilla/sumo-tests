@@ -10,15 +10,15 @@ from pages.mobile.page_provider import PageProvider
 class TestSearch:
 
     @pytest.mark.nondestructive
-    def test_that_positive_search_returns_results(self, mozwebqa):
-        home = PageProvider(mozwebqa).home_page()
+    def test_that_positive_search_returns_results(self, base_url, selenium):
+        home = PageProvider(base_url, selenium).home_page()
 
         search_page = home.search_for('firefox')
         assert len(search_page.results) > 0, 'No search results found'
 
     @pytest.mark.nondestructive
-    def test_that_negative_search_does_not_return_results(self, mozwebqa):
-        home = PageProvider(mozwebqa).home_page()
+    def test_that_negative_search_does_not_return_results(self, base_url, selenium):
+        home = PageProvider(base_url, selenium).home_page()
 
         search_page = home.search_for('frfx')
         assert 0 == len(search_page.results), 'Search results found but none expected'

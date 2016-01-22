@@ -9,8 +9,8 @@ from pages.page import Page
 
 class Base(Page):
 
-    def __init__(self, testsetup):
-        super(Base, self).__init__(testsetup)
+    def __init__(self, base_url, selenium):
+        super(Base, self).__init__(base_url, selenium)
         self.header.dismiss_staging_site_warning_if_present()
 
     def click_card_grid(self, locator):
@@ -21,11 +21,11 @@ class Base(Page):
 
     @property
     def footer(self):
-        return self.FooterRegion(self.testsetup)
+        return self.FooterRegion(self.base_url, self.selenium)
 
     @property
     def header(self):
-        return self.HeaderRegion(self.testsetup)
+        return self.HeaderRegion(self.base_url, self.selenium)
 
     def sign_in(self, username, password):
         login = self.header.click_login()
@@ -34,7 +34,7 @@ class Base(Page):
     def sign_out(self):
         self.header.click_logout()
         from pages.desktop.register_page import RegisterPage
-        return RegisterPage(self.testsetup)
+        return RegisterPage(self.base_url, self.selenium)
 
     def switch_to_mobile_view(self):
         self.footer.click_switch_to_mobile_view()
@@ -81,7 +81,7 @@ class Base(Page):
         def click_login(self):
             self.selenium.find_element(*self._login_locator).click()
             from pages.desktop.login_page import LoginPage
-            return LoginPage(self.testsetup)
+            return LoginPage(self.base_url, self.selenium)
 
         def click_logout(self):
             self.dismiss_staging_site_warning_if_present()

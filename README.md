@@ -106,30 +106,30 @@ Before each test run, clean up the repo:
 
 To run tests locally it's a simple case of calling the command below from this directory:
 
-    py.test --driver=firefox --destructive --variables=/full/path/to/variables.json .
+    py.test --driver Firefox --variables /full/path/to/variables.json .
 
 __Output__
 Output of a test run should look like this:
 
 	============================= test session starts ==============================
 	platform darwin -- Python 2.6.1 -- pytest-2.2.3
-	collected 35 items 
-	
+	collected 35 items
+
 	tests/desktop/test_kb_article.py .X....
 	tests/desktop/test_new_user_registration.py .
 	tests/desktop/test_questions.py ....
 	tests/desktop/test_rewrites.py .....................
 	tests/desktop/test_search.py ..X
-	
+
 	==================== 33 passed, 2 xpassed in 172.03 seconds ====================
 
 __Note__
 "~" will not resolve to the home directory when used in the py.test command line.
 
-Some options for py.test are pre-specified by the file sumo_tests/mozwebqa.cfg
-
-The mozwebqa plugin has advanced command line options for reporting and using browsers. See the documentation on [pytest mozwebqa github][pymozwebqa]:
-[pymozwebqa]: https://github.com/mozilla/pytest-mozwebqa
+The pytest plugin that we use for running tests has a number of advanced
+command line options available. To see the options available, run
+`py.test --help`. The full documentation for the plugin can be found
+[here][pytest-selenium].
 
 __Troubleshooting__
 
@@ -159,3 +159,5 @@ This software is licensed under the [MPL] 2.0:
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 [MPL]: http://www.mozilla.org/MPL/2.0/
+
+[pytest-selenium]: http://pytest-selenium.readthedocs.org/

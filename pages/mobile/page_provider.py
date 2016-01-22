@@ -14,4 +14,4 @@ class PageProvider(Page):
 
     def home_page(self):
         from pages.mobile.home import Home
-        return self._go_to_page(Home(self.testsetup))
+        return self._go_to_page(Home(self.base_url, self.selenium))

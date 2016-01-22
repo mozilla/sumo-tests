@@ -12,7 +12,7 @@ class KnowledgeBase(Base):
 
     @property
     def navigation(self):
-        return self.Navigation(self.testsetup)
+        return self.Navigation(self.base_url, self.selenium)
 
     @property
     def is_the_current_page(self):
@@ -36,21 +36,21 @@ class KnowledgeBase(Base):
         def click_article(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._article_locator).click()
-            return KnowledgeBaseArticle(self.testsetup)
+            return KnowledgeBaseArticle(self.base_url, self.selenium)
 
         def click_edit_article(self):
             self.selenium.find_element(*self._edit_article_locator).click()
-            return KnowledgeBaseEditArticle(self.testsetup)
+            return KnowledgeBaseEditArticle(self.base_url, self.selenium)
 
         def click_translate_article(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._translate_article_locator).click()
-            return KnowledgeBaseTranslate(self.testsetup)
+            return KnowledgeBaseTranslate(self.base_url, self.selenium)
 
         def click_show_history(self):
             self.show_editing_tools()
             self.selenium.find_element(*self._show_history_locator).click()
-            return KnowledgeBaseShowHistory(self.testsetup)
+            return KnowledgeBaseShowHistory(self.base_url, self.selenium)
 
 
 class KnowledgeBaseArticle(KnowledgeBase):
@@ -141,7 +141,7 @@ class KnowledgeBaseEditArticle(KnowledgeBase):
     def set_article_comment_box(self, comment='default comment'):
         self.selenium.find_element(*self._comment_box_locator).send_keys(comment)
         self.selenium.find_element(*self._comment_submit_btn_locator).click()
-        kb_article_history = KnowledgeBaseShowHistory(self.testsetup)
+        kb_article_history = KnowledgeBaseShowHistory(self.base_url, self.selenium)
         kb_article_history.is_the_current_page
         return kb_article_history
 
@@ -187,7 +187,7 @@ class KnowledgeBaseTranslate(KnowledgeBase):
 
     def click_modal_submit_changes_button(self):
         self.selenium.find_element(*self._submit_changes_button_locator).click()
-        return KnowledgeBaseShowHistory(self.testsetup)
+        return KnowledgeBaseShowHistory(self.base_url, self.selenium)
 
 
 class KnowledgeBaseShowHistory(KnowledgeBase):

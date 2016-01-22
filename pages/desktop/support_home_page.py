@@ -28,7 +28,7 @@ class SupportHomePage(Base):
         search_box.type_keys(search_query)
         self.selenium.find_element(*self._search_button).click()
         from search_page import SearchPage
-        return SearchPage(self.testsetup)
+        return SearchPage(self.base_url, self.selenium)
 
     def click_top_common_content_link(self):
         self.selenium.find_element(*self._top_helpful_content_locator).click()

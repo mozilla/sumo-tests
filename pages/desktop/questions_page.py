@@ -27,7 +27,7 @@ class QuestionsPage(Base):
 
     def click_ask_new_questions_link(self):
         self.selenium.find_element(*self._ask_question_link_locator).click()
-        return AskNewQuestionsPage(self.testsetup)
+        return AskNewQuestionsPage(self.base_url, self.selenium)
 
     def go_to_thread(self, url):
         self.open(url)
@@ -68,7 +68,7 @@ class QuestionsPage(Base):
 
     @property
     def questions(self):
-        return [self.Question(self.testsetup, web_element) for web_element in self.selenium.find_elements(*self._questions_list_locator)]
+        return [self.Question(self.base_url, self.selenium, web_element) for web_element in self.selenium.find_elements(*self._questions_list_locator)]
 
     class Question(Page):
 
@@ -77,8 +77,8 @@ class QuestionsPage(Base):
         _question_link_locator = (By.CSS_SELECTOR, 'a')
         _product_name_locator = (By.CSS_SELECTOR, '.content ul.tag-list li:nth-child(1)')
 
-        def __init__(self, testsetup, element):
-            Page.__init__(self, testsetup)
+        def __init__(self, base_url, selenium, element):
+            Page.__init__(self, base_url, selenium)
             self._root_element = element
 
         @property
@@ -101,7 +101,7 @@ class QuestionsPage(Base):
             element = self._root_element.find_element(*self._question_link_locator)
             self.selenium.execute_script('arguments[0].scrollIntoView(false);', element)
             element.click()
-            view_question_pg = ViewQuestionPage(self.testsetup)
+            view_question_pg = ViewQuestionPage(self.base_url, self.selenium)
             view_question_pg.is_the_current_page(question_title, product_name)
             return view_question_pg
 
@@ -155,7 +155,7 @@ class AskNewQuestionsPage(Base):
         self.selenium.find_element(*self._q_post_button_locator).click()
         WebDriverWait(self.selenium, self.timeout).until(
             lambda s: not self.is_element_present(*self._q_post_button_locator))
-        view_question_pg = ViewQuestionPage(self.testsetup)
+        view_question_pg = ViewQuestionPage(self.base_url, self.selenium)
         view_question_pg.is_the_current_page(question_to_ask, selected_product)
         return view_question_pg
 

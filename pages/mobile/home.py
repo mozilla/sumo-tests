@@ -15,8 +15,8 @@ class Home(Base):
     _header_locator = (By.CSS_SELECTOR, 'header h1')
     _search_box_locator = (By.CSS_SELECTOR, '#search input')
 
-    def __init__(self, testsetup):
-        Base.__init__(self, testsetup)
+    def __init__(self, base_url, selenium):
+        Base.__init__(self, base_url, selenium)
 
     @property
     def header_text(self):
@@ -29,4 +29,4 @@ class Home(Base):
         search_box.submit()
 
         from pages.mobile.search import Search
-        return Search(self.testsetup)
+        return Search(self.base_url, self.selenium)

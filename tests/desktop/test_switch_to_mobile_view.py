@@ -11,9 +11,9 @@ from pages.mobile.page_provider import PageProvider as MobilePageProvider
 class TestMobileSite:
 
     @pytest.mark.nondestructive
-    def test_switch_to_mobile_view(self, mozwebqa):
-        home = PageProvider(mozwebqa).home_page()
+    def test_switch_to_mobile_view(self, base_url, selenium):
+        home = PageProvider(base_url, selenium).home_page()
         home.switch_to_mobile_view()
 
-        mobile = MobilePageProvider(mozwebqa).home_page()
+        mobile = MobilePageProvider(base_url, selenium).home_page()
         assert mobile.is_mobile_view_displayed

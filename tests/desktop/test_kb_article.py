@@ -8,14 +8,14 @@ from mocks.mock_article import MockArticle
 
 class TestKnowledgeBaseArticle:
 
-    def test_that_article_can_be_created(self, mozwebqa, variables):
+    def test_that_article_can_be_created(self, base_url, selenium, variables):
         """
            Creates a new knowledge base article.
            Verifies creation.
            Deletes the article
         """
         user = variables['users']['admin']
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
             user['username'], user['password'])
 
         # create a new article
@@ -37,7 +37,7 @@ class TestKnowledgeBaseArticle:
         kb_article = kb_edit_article.navigation.click_show_history()
         kb_article.delete_entire_article_document()
 
-    def test_that_article_can_be_edited(self, mozwebqa, variables):
+    def test_that_article_can_be_edited(self, base_url, selenium, variables):
         """
            Creates a new knowledge base article.
            Verifies creation.
@@ -45,7 +45,7 @@ class TestKnowledgeBaseArticle:
            Deletes the article
         """
         user = variables['users']['admin']
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
             user['username'], user['password'])
 
         # create a new article
@@ -76,14 +76,14 @@ class TestKnowledgeBaseArticle:
         kb_article_history = kb_edit_article.navigation.click_show_history()
         kb_article_history.delete_entire_article_document()
 
-    def test_that_article_can_be_deleted(self, mozwebqa, variables):
+    def test_that_article_can_be_deleted(self, base_url, selenium, variables):
         """
            Creates a new knowledge base article.
            Deletes the article.
            Verifies the deletion.
         """
         user = variables['users']['admin']
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
             user['username'], user['password'])
 
         # create a new article
@@ -104,14 +104,14 @@ class TestKnowledgeBaseArticle:
         actual_page_title = kb_article_history.page_title
         assert "Page Not Found" in actual_page_title
 
-    def test_that_article_can_be_previewed_before_submitting(self, mozwebqa, variables):
+    def test_that_article_can_be_previewed_before_submitting(self, base_url, selenium, variables):
         """
             Start a new knowledge base article.
             Preview.
             Verify the contents in the preview
         """
         user = variables['users']['default']
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
             user['username'], user['password'])
 
         # create a new article
@@ -125,13 +125,13 @@ class TestKnowledgeBaseArticle:
 
         # Does not need to be deleted as it does not commit the article
 
-    def test_that_article_can_be_translated(self, mozwebqa, variables):
+    def test_that_article_can_be_translated(self, base_url, selenium, variables):
         """
            Creates a new knowledge base article.
            Translate article
         """
         user = variables['users']['admin']
-        kb_new_article = PageProvider(mozwebqa).new_kb_article_page(
+        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
             user['username'], user['password'])
 
         # create a new article

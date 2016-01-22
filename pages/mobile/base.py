@@ -20,7 +20,7 @@ class Base(Page):
 
     @property
     def menu_items(self):
-        return [self.MenuItem(self.testsetup, element)
+        return [self.MenuItem(self.base_url, self.selenium, element)
                 for element in self.selenium.find_elements(*self._menu_items_locator)]
 
     @property
@@ -40,8 +40,8 @@ class Base(Page):
 
     class MenuItem(Page):
 
-        def __init__(self, testsetup, element):
-            Page.__init__(self, testsetup)
+        def __init__(self, base_url, selenium, element):
+            Page.__init__(self, base_url, selenium)
             self._root_element = element
 
         @property

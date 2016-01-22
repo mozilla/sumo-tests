@@ -10,7 +10,7 @@ from pages.mobile.page_provider import PageProvider
 class TestHome:
 
     @pytest.mark.nondestructive
-    def test_the_expandable_header_menu(self, mozwebqa):
+    def test_the_expandable_header_menu(self, base_url, selenium):
         expected_menu_items = [u'Home',
                                u'Ask a question',
                                u'Support Forum',
@@ -18,7 +18,7 @@ class TestHome:
                                u'Switch to desktop site',
                                u'Sign in',
                                u'Switch language']
-        home = PageProvider(mozwebqa).home_page()
+        home = PageProvider(base_url, selenium).home_page()
         home.open_menu()
         assert home.is_menu_exposed, 'Menu is not open'
 
@@ -29,8 +29,8 @@ class TestHome:
         assert not home.is_menu_exposed, 'Menu is not closed'
 
     @pytest.mark.nondestructive
-    def test_the_header_text(self, mozwebqa):
-        home = PageProvider(mozwebqa).home_page()
+    def test_the_header_text(self, base_url, selenium):
+        home = PageProvider(base_url, selenium).home_page()
         home.is_the_current_page
 
         assert 'Products' == home.header_text

@@ -8,12 +8,12 @@ from pages.desktop.page_provider import PageProvider
 
 class TestNewUserRegistration:
 
-    def test_that_thank_you_page_is_displayed_after_successful_registration(self, mozwebqa):
+    def test_that_thank_you_page_is_displayed_after_successful_registration(self, base_url, selenium):
         """
            Register a new user using random username.
            Verify registration by checking the page title
         """
-        register_pg = PageProvider(mozwebqa).new_user_registration_page()
+        register_pg = PageProvider(base_url, selenium).new_user_registration_page()
         register_pg.register_new_user()
 
         registration_text = register_pg.successful_registration_message

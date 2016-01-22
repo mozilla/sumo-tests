@@ -8,8 +8,8 @@ from pages.mobile.page_provider import PageProvider
 
 class TestArticle:
 
-    def test_that_checks_the_vote_of_an_article(self, mozwebqa):
-        home = PageProvider(mozwebqa).home_page()
+    def test_that_checks_the_vote_of_an_article(self, base_url, selenium):
+        home = PageProvider(base_url, selenium).home_page()
 
         article_page = home.search_for('firefox').results[0].click()
         assert '| Mozilla Support' in article_page.page_title

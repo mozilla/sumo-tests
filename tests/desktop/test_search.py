@@ -11,12 +11,12 @@ class TestSearch:
     forum_search_term = "Firefox crash"
 
     @pytest.mark.nondestructive
-    def test_no_query_adv_forum_search(self, mozwebqa, variables):
-        if mozwebqa.base_url in ['https://support-dev.allizom.org',
-                                 'https://support.mozilla.org']:
-            pytest.skip('Search results are not guaranteed to exist on %s' % mozwebqa.base_url)
+    def test_no_query_adv_forum_search(self, base_url, selenium, variables):
+        if base_url in ['https://support-dev.allizom.org',
+                        'https://support.mozilla.org']:
+            pytest.skip('Search results are not guaranteed to exist on %s' % base_url)
 
-        refine_search_pg = PageProvider(mozwebqa).refine_search_page()
+        refine_search_pg = PageProvider(base_url, selenium).refine_search_page()
 
         # do test
         refine_search_pg.click_support_questions_tab()
@@ -27,17 +27,17 @@ class TestSearch:
         assert refine_search_pg.search_result_count > 0, "No search results not found"
 
     @pytest.mark.nondestructive
-    def test_user_flow_to_forum_post(self, mozwebqa):
+    def test_user_flow_to_forum_post(self, base_url, selenium):
 
-        if mozwebqa.base_url == 'https://support-dev.allizom.org':
+        if base_url == 'https://support-dev.allizom.org':
             pytest.skip('Search results are not guaranteed to exist on support-dev.allizom.org')
 
         # 1. start on the home page
-        PageProvider(mozwebqa).home_page()
+        PageProvider(base_url, selenium).home_page()
 
         # 2. type "Firefox crashed"
         # 3. hit Enter
-        search_pg = SearchPage(mozwebqa)
+        search_pg = SearchPage(base_url, selenium)
         search_pg.do_search_on_search_query(self.forum_search_term + "ed")
 
         # 4. In the results list there are two types of results:
