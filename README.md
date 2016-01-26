@@ -1,163 +1,148 @@
-Selenium Tests for support.mozilla.org - the Mozilla Support Site (SUMO)
-===================
+# Tests for Mozilla's support website
+This repository contains tests for [Mozilla's support website](https://support.mozilla.org/).
 
-Thank you for checking out Mozilla's SUMO test suite. Mozilla and the Mozwebqa team are grateful for the help and hard work of many contributors like yourself.
-The following contributors have submitted pull requests to sumo-tests:
+[![license](https://img.shields.io/badge/license-MPL%202.0-blue.svg)](https://github.com/mozilla/sumo-tests/blob/master/LICENSE)
+[![travis](https://img.shields.io/travis/mozilla/sumo-tests.svg?label=travis)](http://travis-ci.org/mozilla/sumo-tests/)
+[![stage](https://img.shields.io/jenkins/s/https/webqa-ci.mozilla.com/sumo.stage.svg?label=stage)](https://webqa-ci.mozilla.com/job/sumo.stage/)
+[![prod](https://img.shields.io/jenkins/s/https/webqa-ci.mozilla.com/sumo.prod.svg?label=prod)](https://webqa-ci.mozilla.com/job/sumo.prod/)
+[![requirements](https://img.shields.io/requires/github/mozilla/sumo-tests.svg)](https://requires.io/github/mozilla/sumo-tests/requirements/?branch=master)
 
-https://github.com/mozilla/sumo-tests/contributors
+## Getting involved
+We love working with contributors to fill out the test coverage for Mozilla's
+support website, but it does require a few skills. By contributing to our test
+suite you will have an opportunity to learn and/or improve your skills with
+Python, Selenium WebDriver, GitHub, virtual environments, the Page Object
+Model, and more.
 
-Getting involved as a contributor
-------------------------------------------
+For some resources for learning about these technologies, take a look at our
+documentation on [running Web QA automated tests][running-tests].
 
-We love working with contributors to fill out the Selenium test coverage for sumo-tests, but it does require a few skills.   You will need to know some Python, some Selenium and you will need some basic familiarity with GitHub.
+All of [these awesome contributors][contributors] have opened pull requests
+against this repository.
 
-If you know some Python, it's worth having a look at the Selenium framework to understand the basic concepts of browser-based testing and especially page objects.
+## Questions are always welcome
+While we take pains to keep our documentation updated, the best source of
+information is those of us who work on the project. Don't be afraid to join us
+in irc.mozilla.org [#mozwebqa][irc] to ask questions about our tests. We also
+have a [mailing list][list] available that you are welcome to join and post to.
 
-If you need to brush up on programming but are eager to start contributing immediately, please consider helping us find bugs in Mozilla [Firefox][firefox] or find bugs in the Mozilla web-sites tested by the [WebQA][webqa] team.
+## How to run the tests locally
+We maintain a [detailed guide][running-tests] to running our automated tests.
+However, if you want to get started quickly, you can try following the steps
+below:
 
-To brush up on Python skills before engaging with us, [Dive Into Python][dive] is an excellent resource.  MIT also has [lecture notes on Python][mit] available through their open courseware.The programming concepts you will need to know include functions, working with classes, and some object-oriented programming basics.
+### Clone the repository
+If you have cloned this project already then you can skip this, otherwise you'll
+need to clone this repo using Git. If you do not know how to clone a GitHub
+repository, check out this [help page][git-clone] from GitHub.
 
-[mit]: http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-189-a-gentle-introduction-to-programming-using-python-january-iap-2011/
-[dive]: http://www.diveintopython.net/toc/
-[webqa]: https://quality.mozilla.org/teams/web-qa/
-[firefox]: https://quality.mozilla.org/teams/firefoxqe//
-[webdriver]: http://seleniumhq.org/docs/03_webdriver.html
+If you think you would like to contribute to the tests by writing or maintaining
+them in the future, it would be a good idea to create a fork of this repository
+first, and then clone that. GitHub also has great documentation for
+[forking a repository][git-fork].
 
-Questions are always welcome
-----------------------------
-While we take pains to keep our documentation updated, the best source of information is those of us who work on the project.  Don't be afraid to join us in irc.mozilla.org #mozwebqa to ask questions about our Selenium tests.  Mozilla also hosts the  [#mozillians][mozillians] chat room to answer your general questions about contributing to Mozilla.
+### Create or activate a Python virtual environment
+You should install this project's dependencies (which is described in the next
+step) into a virtual environment in order to avoid impacting the rest of your
+system, and to make problem solving easier. If you already have a virtual
+environment for these tests, then you should activate it, otherwise you should
+create a new one. For more information on working with virtual environments see
+our [summary][virtualenv].
 
-[mozwebqa]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#mozwebqa
-[mozillians]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#mozillians
+### Install dependencies
+Install the Python packages that are needed to run our tests using pip. In a
+terminal, from the the project root, issue the following command:
 
+```bash
+$ pip install -Ur requirements.txt
+```
 
+### Create test users
 
+Some of the tests require logging in as a administrator, and others require
+logging in as a user. To run these tests you will need to create accounts on
+https://support.allizom.org/. If you want to run the tests that require
+administrator access, then you will need to ask someone on [irc][irc] to
+upgrade one of your test accounts.
 
-How to Set up and Build SUMO Tests Locally
-------------------------------------------
-This repository contains Selenium tests used to test the website support.mozilla.org on
-development: http://support-dev.allizom.org or
-staging: http://support.allizom.org
+### Create a variables file
+The credentials associated with the test users are stored in a JSON file, which
+we then pass to the tests via the command line. If you want to be able to run
+any of those tests, you will need to create a variables file containing your
+own credentials (see above). The following is an example JSON file with the
+values missing. You can use this as a template.
 
-For information specific to Firefox Support see the [GitHub repository][GitHub Support].
-
-[GitHub Support]: https://github.com/mozilla/kitsune
-
-Mozilla maintains a guide to running Automated tests on our QMO website:
-
-https://developer.mozilla.org/docs/Mozilla/QA/Running_Web_QA_automated_tests
-This wiki page has some advanced instructions specific to Windows:
-
-https://wiki.mozilla.org/QA_SoftVision_Team/WebQA_Automation
-
-
-###You will need to install the following:
-
-#### Git
-If you have cloned this project already then you can skip this!
-GitHub has excellent guides for [Windows][GitWin], [MacOSX][GitMacOSX] and [Linux][GitLinux].
-[GitWin]: http://help.github.com/win-set-up-git/
-[GitMacOSX]: http://help.github.com/mac-set-up-git/
-[GitLinux]: http://help.github.com/linux-set-up-git/
-
-#### Python
-Before you will be able to run these tests you will need to have [Python 2.6][Python] installed.
-[Python]: http://www.python.org/download/releases/2.6.6/
-
-Run
-
-    easy_install pip
-
-followed by
-
-    sudo pip install -r requirements.txt
-
-__note__
-
-If you are running on Ubuntu/Debian you will need to do following first
-
-    sudo apt-get install python-setuptools
-
-to install the required Python libraries.
-
-####Virtualenv and Virtualenvwrapper (Optional/Intermediate level)
-While most of us have had some experience using virtual machines, [virtualenv][venv] is something else entirely.  It's used to keep libraries that you install from clashing and messing up your local environment.  After installing virtualenv, installing [virtualenvwrapper][wrapper] will give you some nice commands to use with virtualenvwrapper.
-
-[venv]: http://pypi.python.org/pypi/virtualenv
-[wrapper]: http://www.doughellmann.com/projects/virtualenvwrapper/
-
-#### Credentials
-
-Some of the tests in sumo-tests require logging in to https://support.allizom.org with credentials of varying privilege levels.
-
-1. Create two username and password combinations on https://support.allizom.org
-2. Join [#sumo][sumo] and ask for one of these users to be upgraded to admin (or ask someone on [#mozwebqa][mozwebqa] to do this for you)
-3. Copy sumo-tests/variables.json to a location outside of sumo-tests. update the 'default' and 'admin' users in variables.json with those credentials
-
-[mozwebqa]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#mozwebqa
-[sumo]:http://chat.mibbit.com/?server=irc.mozilla.org&channel=#sumo
+```json
+{
+  "users": {
+    "default": {
+      "username": "",
+      "password": "",
+      "email": ""},
+    "admin": {
+      "username": "",
+      "password": "",
+      "email": ""}
+  }
+}
+```
 
 
-#### Running tests locally
 
+You will then pass the name of that your variables file on the command line.
+For the purposes of the examples below, assume you named your copy of the file
+`my_variables.json`.
 
-Before each test run, clean up the repo:
-    find . \( -name 'results*' -or -name '*.pyc' \) -print0 | xargs -0 rm -Rf
+### Run the tests
+Tests are run using the command line. Below are a couple of examples of running
+the tests:
 
-To run tests locally it's a simple case of calling the command below from this directory:
+To run all of the desktop tests against the default environment:
 
-    py.test --driver Firefox --variables /full/path/to/variables.json .
+```bash
+$ py.test --driver Firefox --variables my_variables.json tests/desktop
+```
 
-__Output__
-Output of a test run should look like this:
+To run against a different environment, pass in a value for `--base-url`, like so:
 
-	============================= test session starts ==============================
-	platform darwin -- Python 2.6.1 -- pytest-2.2.3
-	collected 35 items
+```bash
+$ py.test --base-url https://support.allizom.org --driver Firefox --variables my_variables.json tests/desktop
+```
 
-	tests/desktop/test_kb_article.py .X....
-	tests/desktop/test_new_user_registration.py .
-	tests/desktop/test_questions.py ....
-	tests/desktop/test_rewrites.py .....................
-	tests/desktop/test_search.py ..X
+To run the mobile tests you will need to target a mobile device or emulator
+using a tool like [Appium][appium]:
 
-	==================== 33 passed, 2 xpassed in 172.03 seconds ====================
+```bash
+$ py.test --driver Remote --port 4723 \
+--capability platformName iOS \
+--capability platformVersion 9.2 \
+--capability deviceName "iPhone 6" \
+--capability browserName Safari \
+--variables my_variables.json \
+tests/mobile
+```
 
-__Note__
-"~" will not resolve to the home directory when used in the py.test command line.
+Alternatively you can change the default user agent in Firefox to masquerade
+as a mobile browser:
+
+```bash
+$ py.test --driver Firefox \
+--firefox-preference general.useragent.override "Mozilla/5.0 (iPhone; CPU iPhone OS 8_4_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) GSA/8.0.57838 Mobile/12H321 Safari/600.1.4" \
+--variables .variables.json \
+tests/mobile
+```
 
 The pytest plugin that we use for running tests has a number of advanced
 command line options available. To see the options available, run
 `py.test --help`. The full documentation for the plugin can be found
 [here][pytest-selenium].
 
-__Troubleshooting__
-
-If the test run hangs with Firefox open but no URL gets entered in the address box, some combination of the Firefox version, the Selenium RC version, and the python Selenium bindings version may not be compatible. Upgrading each of them to latest should fix it.
-
-Writing Tests
--------------
-
-If you want to get involved and add more tests, then there's just a few things
-we'd like to ask you to do:
-
-1. Use the [template files][GitHub Templates] for all new tests and page objects
-2. Follow our simple [style guide][Style Guide]
-3. Fork this project with your own GitHub account
-4. Make sure all tests are passing, and submit a pull request with your changes
-
-[GitHub Templates]: https://github.com/mozilla/mozwebqa-test-templates
-[Style Guide]: https://wiki.mozilla.org/QA/Execution/Web_Testing/Docs/Automation/StyleGuide
-
-
-License
--------
-This software is licensed under the [MPL] 2.0:
-
-    This Source Code Form is subject to the terms of the Mozilla Public
-    License, v. 2.0. If a copy of the MPL was not distributed with this
-    file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-[MPL]: http://www.mozilla.org/MPL/2.0/
-
-[pytest-selenium]: http://pytest-selenium.readthedocs.org/
+[contributors]: https://github.com/mozilla/sumo-tests/contributors
+[git-clone]: https://help.github.com/articles/cloning-a-repository/
+[git-fork]: https://help.github.com/articles/fork-a-repo/
+[irc]: http://widget01.mibbit.com/?settings=1b10107157e79b08f2bf99a11f521973&server=irc.mozilla.org&channel=%23mozwebqa
+[list]: https://mail.mozilla.org/listinfo/mozwebqa
+[appium]: http://appium.io/
+[pytest-selenium]: https://github.com/mozilla/pytest-selenium
+[running-tests]: https://developer.mozilla.org/en-US/docs/Mozilla/QA/Running_Web_QA_automated_tests
+[virtualenv]: https://wiki.mozilla.org/QA/Execution/Web_Testing/Automation/Virtual_Environments
