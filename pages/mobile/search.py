@@ -10,11 +10,8 @@ from pages.page import Page
 
 class Search(Base):
 
+    _page_title = 'Search | Mozilla Support'
     _results_locator = (By.CSS_SELECTOR, 'ol.search-results li')
-
-    def __init__(self, base_url, selenium):
-        Base.__init__(self, base_url, selenium)
-        self._page_title = 'Search | Mozilla Support'
 
     @property
     def results(self):

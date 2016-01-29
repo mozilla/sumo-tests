@@ -1,9 +1,12 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import pytest
-from pages.desktop.page_provider import PageProvider
+
+from pages.desktop.refine_search_page import RefineSearchPage
 from pages.desktop.search_page import SearchPage
+from pages.desktop.support_home_page import SupportHomePage
 
 
 class TestSearch:
@@ -16,7 +19,7 @@ class TestSearch:
                         'https://support.mozilla.org']:
             pytest.skip('Search results are not guaranteed to exist on %s' % base_url)
 
-        refine_search_pg = PageProvider(base_url, selenium).refine_search_page()
+        refine_search_pg = RefineSearchPage(base_url, selenium).open()
 
         # do test
         refine_search_pg.click_support_questions_tab()
@@ -33,11 +36,12 @@ class TestSearch:
             pytest.skip('Search results are not guaranteed to exist on support-dev.allizom.org')
 
         # 1. start on the home page
-        PageProvider(base_url, selenium).home_page()
+        SupportHomePage(base_url, selenium).open()
 
         # 2. type "Firefox crashed"
         # 3. hit Enter
-        search_pg = SearchPage(base_url, selenium)
+        search_pg = SearchPage(base_url, selenium).open()
+        # FIXME: This is searching from the search page instead of the home page.
         search_pg.do_search_on_search_query(self.forum_search_term + "ed")
 
         # 4. In the results list there are two types of results:

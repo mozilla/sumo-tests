@@ -11,8 +11,9 @@ class SearchPage(Base):
     'Search for Firefox Help' page
     """
 
+    URL_TEMPLATE = '{locale}/search'
+
     _page_title = 'Search | Mozilla Support'
-    _page_url = '/en-US/search'
     _search_query_locator = (By.CSS_SELECTOR, 'input.searchbox')
     _search_box_locator = (By.CSS_SELECTOR, 'input.searchbox')
     _search_button = (By.CSS_SELECTOR, 'button[type="submit"]')
@@ -23,19 +24,11 @@ class SearchPage(Base):
     _results_list_locator = (By.CSS_SELECTOR, 'div.search-results div[class*="result"]')
     _result_question_locator = (By.CSS_SELECTOR, '#search-results h3 a')
 
-    def go_to_search_page(self):
-        self.open(self._page_url)
-        self.is_the_current_page
-
     def do_search_on_search_query(self, search_query):
-        if not (self._page_title in self.selenium.title):
-            self.go_to_search_page()
         self.selenium.find_element(*self._search_query_locator).send_keys(search_query)
         self.selenium.find_element(*self._search_button).click()
 
     def do_search_on_search_box(self, search_term):
-        if not (self._page_title in self.selenium.title):
-            self.go_to_search_page()
         self.selenium.find_element(*self._search_box_locator).send_keys(search_term)
         self.selenium.find_element(*self._search_support_button_locator).click()
 

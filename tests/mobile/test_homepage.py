@@ -4,7 +4,7 @@
 
 import pytest
 
-from pages.mobile.page_provider import PageProvider
+from pages.mobile.home import Home
 
 
 class TestHome:
@@ -18,7 +18,7 @@ class TestHome:
                                u'Switch to desktop site',
                                u'Sign in',
                                u'Switch language']
-        home = PageProvider(base_url, selenium).home_page()
+        home = Home(base_url, selenium).open()
         home.open_menu()
         assert home.is_menu_exposed, 'Menu is not open'
 
@@ -30,7 +30,7 @@ class TestHome:
 
     @pytest.mark.nondestructive
     def test_the_header_text(self, base_url, selenium):
-        home = PageProvider(base_url, selenium).home_page()
+        home = Home(base_url, selenium).open()
         home.is_the_current_page
 
         assert 'Products' == home.header_text

@@ -2,8 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from pages.desktop.page_provider import PageProvider
 from mocks.mock_article import MockArticle
+from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
 
 
 class TestKnowledgeBaseArticle:
@@ -15,7 +15,7 @@ class TestKnowledgeBaseArticle:
            Deletes the article
         """
         user = variables['users']['admin']
-        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
+        kb_new_article = KnowledgeBaseNewArticle(base_url, selenium).open(
             user['username'], user['password'])
 
         # create a new article
@@ -45,7 +45,7 @@ class TestKnowledgeBaseArticle:
            Deletes the article
         """
         user = variables['users']['admin']
-        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
+        kb_new_article = KnowledgeBaseNewArticle(base_url, selenium).open(
             user['username'], user['password'])
 
         # create a new article
@@ -83,7 +83,7 @@ class TestKnowledgeBaseArticle:
            Verifies the deletion.
         """
         user = variables['users']['admin']
-        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
+        kb_new_article = KnowledgeBaseNewArticle(base_url, selenium).open(
             user['username'], user['password'])
 
         # create a new article
@@ -111,7 +111,7 @@ class TestKnowledgeBaseArticle:
             Verify the contents in the preview
         """
         user = variables['users']['default']
-        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
+        kb_new_article = KnowledgeBaseNewArticle(base_url, selenium).open(
             user['username'], user['password'])
 
         # create a new article
@@ -131,7 +131,7 @@ class TestKnowledgeBaseArticle:
            Translate article
         """
         user = variables['users']['admin']
-        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
+        kb_new_article = KnowledgeBaseNewArticle(base_url, selenium).open(
             user['username'], user['password'])
 
         # create a new article

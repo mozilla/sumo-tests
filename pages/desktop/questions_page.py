@@ -12,8 +12,10 @@ class QuestionsPage(Base):
     """
     'Ask a Question' landing page.
     """
+
+    URL_TEMPLATE = '{locale}/questions'
+
     _page_title = 'Support Forum | Mozilla Support'
-    _page_url = '/en-US/questions'
 
     _ask_question_link_locator = '/en-US/questions/new'
 
@@ -115,8 +117,10 @@ class AskNewQuestionsPage(Base):
     'Ask a New Question' page.
     Child class of Questions Page
     """
+
+    URL_TEMPLATE = '{locale}/questions/new'
+
     _page_title = 'Ask a Question | Mozilla Support'
-    _page_url = '/en-US/questions/new'
     _firefox_product_first_link_locator = (By.CSS_SELECTOR, '#product-picker li:nth-child(1) > a.cf > span.title')
     _category_prob_first_link_locator = (By.CSS_SELECTOR, 'ul.select-one > li > a')
     _type_question_box_locator = (By.NAME, 'search')

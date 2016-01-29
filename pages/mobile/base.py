@@ -9,10 +9,16 @@ from pages.page import Page
 
 class Base(Page):
 
+    URL_TEMPLATE = '{locale}'
+
     _body_locator = (By.TAG_NAME, 'body')
     _menu_items_locator = (By.CSS_SELECTOR, 'nav a')
     _menu_button_locator = (By.ID, 'menu-button')
     _mobile_header_locator = (By.CSS_SELECTOR, 'header.slide-on-exposed')
+
+    def __init__(self, base_url, selenium, locale='en-US', **url_kwargs):
+        url_kwargs['locale'] = locale
+        super(Base, self).__init__(base_url, selenium, **url_kwargs)
 
     @property
     def is_menu_exposed(self):

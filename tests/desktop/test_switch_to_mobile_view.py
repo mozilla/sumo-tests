@@ -4,16 +4,15 @@
 
 import pytest
 
-from pages.desktop.page_provider import PageProvider
-from pages.mobile.page_provider import PageProvider as MobilePageProvider
+from pages.desktop.support_home_page import SupportHomePage as DesktopHome
+from pages.mobile.home import Home as MobileHome
 
 
 class TestMobileSite:
 
     @pytest.mark.nondestructive
     def test_switch_to_mobile_view(self, base_url, selenium):
-        home = PageProvider(base_url, selenium).home_page()
-        home.switch_to_mobile_view()
-
-        mobile = MobilePageProvider(base_url, selenium).home_page()
+        desktop = DesktopHome(base_url, selenium).open()
+        desktop.switch_to_mobile_view()
+        mobile = MobileHome(base_url, selenium)
         assert mobile.is_mobile_view_displayed

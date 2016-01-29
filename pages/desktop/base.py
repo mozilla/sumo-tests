@@ -9,9 +9,16 @@ from pages.page import Page
 
 class Base(Page):
 
-    def __init__(self, base_url, selenium):
-        super(Base, self).__init__(base_url, selenium)
+    URL_TEMPLATE = '{locale}'
+
+    def __init__(self, base_url, selenium, locale='en-US', **url_kwargs):
+        url_kwargs['locale'] = locale
+        super(Base, self).__init__(base_url, selenium, **url_kwargs)
+
+    def wait_for_page_to_load(self):
+        super(Base, self).wait_for_page_to_load()
         self.header.dismiss_staging_site_warning_if_present()
+        return self
 
     def click_card_grid(self, locator):
         ActionChains(self.selenium).move_to_element(
@@ -33,8 +40,8 @@ class Base(Page):
 
     def sign_out(self):
         self.header.click_logout()
-        from pages.desktop.register_page import RegisterPage
-        return RegisterPage(self.base_url, self.selenium)
+        from pages.desktop.login_page import LoginPage
+        return LoginPage(self.base_url, self.selenium)
 
     def switch_to_mobile_view(self):
         self.footer.click_switch_to_mobile_view()

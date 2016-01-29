@@ -10,13 +10,9 @@ from pages.mobile.base import Base
 class Home(Base):
 
     _page_title = 'Products | Mozilla Support'
-    _page_url = '/'
 
     _header_locator = (By.CSS_SELECTOR, 'header h1')
     _search_box_locator = (By.CSS_SELECTOR, '#search input')
-
-    def __init__(self, base_url, selenium):
-        Base.__init__(self, base_url, selenium)
 
     @property
     def header_text(self):

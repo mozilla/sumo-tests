@@ -8,12 +8,14 @@ from selenium.webdriver.common.by import By
 
 
 class RegisterPage(Base):
+
+    URL_TEMPLATE = '{locale}/users/authcontributor'
+
     """
         Form for user registration.
     """
     _page_title = 'Log In / Register | Mozilla Support'
     _page_title_after_registration = 'Thank you for registering'
-    _page_url = '/en-US/users/authcontributor'
     _username_box_locator = (By.ID, 'id_for_username')
     _password_box_locator = (By.ID, 'id_for_password')
     _email_add_box_locator = (By.ID, 'id_for_email')

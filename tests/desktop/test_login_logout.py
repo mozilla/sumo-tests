@@ -4,7 +4,12 @@
 
 import pytest
 
-from pages.desktop.page_provider import PageProvider
+from pages.desktop.knowledge_base_new_article import KnowledgeBaseNewArticle
+from pages.desktop.questions_page import AskNewQuestionsPage
+from pages.desktop.questions_page import QuestionsPage
+from pages.desktop.refine_search_page import RefineSearchPage
+from pages.desktop.search_page import SearchPage
+from pages.desktop.support_home_page import SupportHomePage
 from mocks.mock_article import MockArticle
 
 
@@ -13,48 +18,48 @@ class TestLoginLogout:
     @pytest.mark.nondestructive
     def test_login(self, base_url, selenium, variables):
         user = variables['users']['default']
-        home_page = PageProvider(base_url, selenium).home_page()
-        home_page.sign_in(user['username'], user['password'])
-
-        assert home_page.header.is_user_logged_in, 'User not shown to be logged in'
+        page = SupportHomePage(base_url, selenium).open()
+        page.sign_in(user['username'], user['password'])
+        assert page.header.is_user_logged_in, 'User not shown to be logged in'
 
     # logging out of the following pages keeps user on the same pages
 
     @pytest.mark.native
     @pytest.mark.nondestructive
-    @pytest.mark.parametrize('page_method', ['home_page',
-                                             'new_question_page',
-                                             'questions_page',
-                                             'search_page',
-                                             'refine_search_page',
-                                             ])
-    def test_logout_from_pages(self, base_url, selenium, variables, page_method):
+    @pytest.mark.parametrize('page_object', [
+        SupportHomePage,
+        AskNewQuestionsPage,
+        QuestionsPage,
+        SearchPage,
+        RefineSearchPage,
+    ])
+    def test_logout_from_pages(self, base_url, selenium, variables, page_object):
         user = variables['users']['default']
-        page_under_test = getattr(PageProvider(base_url, selenium), page_method)(
-            user['username'], user['password'])
-        assert page_under_test.header.is_user_logged_in, 'User not shown to be logged in'
+        page = page_object(base_url, selenium).open()
+        page.sign_in(user['username'], user['password'])
+        assert page.header.is_user_logged_in, 'User not shown to be logged in'
 
         # sign out
-        page_under_test.sign_out()
-        page_under_test.is_the_current_page
-        assert page_under_test.header.is_user_logged_out
+        page.sign_out()
+        assert page.canonical_url in selenium.current_url
+        assert page.header.is_user_logged_out
 
     @pytest.mark.native
     def test_logout_from_new_kb_article_page(self, base_url, selenium, variables):
         user = variables['users']['default']
-        new_kb_page = PageProvider(base_url, selenium).new_kb_article_page(
+        page = KnowledgeBaseNewArticle(base_url, selenium).open(
             user['username'], user['password'])
-        assert new_kb_page.header.is_user_logged_in, 'User not shown to be logged in'
+        assert page.header.is_user_logged_in, 'User not shown to be logged in'
 
         # sign out
-        register_page = new_kb_page.sign_out()
-        register_page.is_the_current_page
-        assert register_page.header.is_user_logged_out
+        login_page = page.sign_out()
+        assert login_page.canonical_url in selenium.current_url
+        assert login_page.header.is_user_logged_out
 
     @pytest.mark.native
     def test_logout_from_edit_kb_article_page(self, base_url, selenium, variables):
         user = variables['users']['default']
-        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
+        kb_new_article = KnowledgeBaseNewArticle(base_url, selenium).open(
             user['username'], user['password'])
 
         # create a new article
@@ -66,14 +71,14 @@ class TestLoginLogout:
         kb_edit_article = kb_article_history.navigation.click_edit_article()
 
         # sign out
-        register_page = kb_edit_article.sign_out()
-        register_page.is_the_current_page
-        assert register_page.header.is_user_logged_out
+        login_page = kb_edit_article.sign_out()
+        assert login_page.canonical_url in selenium.current_url
+        assert login_page.header.is_user_logged_out
 
     @pytest.mark.native
     def test_logout_from_translate_kb_article_page(self, base_url, selenium, variables):
         user = variables['users']['default']
-        kb_new_article = PageProvider(base_url, selenium).new_kb_article_page(
+        kb_new_article = KnowledgeBaseNewArticle(base_url, selenium).open(
             user['username'], user['password'])
 
         # create a new article
@@ -86,7 +91,7 @@ class TestLoginLogout:
         kb_translate_pg.click_translate_language('Deutsch (de)')
 
         # sign out
-        register_page = kb_translate_pg.sign_out()
-        register_page._page_title = 'Anmelden / Registrieren | Mozilla-Hilfe'
-        register_page.is_the_current_page
-        assert register_page.header.is_user_logged_out
+        login_page = kb_translate_pg.sign_out()
+        login_page.url_kwargs['locale'] = 'de'
+        assert login_page.canonical_url in selenium.current_url
+        assert login_page.header.is_user_logged_out

@@ -14,9 +14,6 @@ class Article(Base):
     _helpful_header_text_locator = (By.CSS_SELECTOR, 'div.vote-bar header')
     _vote_message_text_locator = (By.CSS_SELECTOR, 'div.vote-bar p')
 
-    def __init__(self, base_url, selenium):
-        Base.__init__(self, base_url, selenium)
-
     @property
     def helpful_header_text(self):
         return self.selenium.find_element(*self._helpful_header_text_locator).text

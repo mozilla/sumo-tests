@@ -14,7 +14,6 @@ class SupportHomePage(Base):
     """
 
     _page_title = 'Mozilla Support'
-    _page_url = '/en-US/home'
 
     _main_search_box = (By.ID, 'q')
     _search_button = (By.CSS_SELECTOR, 'button.img-submit')

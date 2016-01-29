@@ -14,11 +14,12 @@ class KnowledgeBaseNewArticle(Base):
     'Create New Article' Page is where the form
     for creating new knowledge base article is found.
     """
+
+    URL_TEMPLATE = '{locale}/kb/new'
+
     @property
     def _page_title(self):
         return self.format_page_title('Create a New Article', 'Knowledge Base')
-
-    _page_url = '/en-US/kb/new'
 
     _article_title_box_locator = (By.ID, 'id_title')
     _article_category_menu_locator = (By.ID, 'id_category')
@@ -37,6 +38,14 @@ class KnowledgeBaseNewArticle(Base):
     _article_submit_btn_locator = (By.CSS_SELECTOR, '.btn.btn-important.btn-submit')
     _comment_box_locator = (By.ID, 'id_comment')
     _comment_submit_btn_locator = (By.CSS_SELECTOR, '.kbox-wrap .btn.btn-important')
+
+    def open(self, username, password):
+        self.selenium.get(self.canonical_url)
+        from pages.desktop.login_page import LoginPage
+        page = LoginPage(self.base_url, self.selenium).wait_for_page_to_load()
+        page.log_in(username, password)
+        self.wait_for_page_to_load()
+        return self
 
     def set_article(self, mock_article):
         """

@@ -10,8 +10,10 @@ class RefineSearchPage(Base):
     """
        'Advanced Search' page.
     """
+
+    URL_TEMPLATE = '{locale}/search/advanced?a=2'
+
     _page_title = 'Advanced Search | Mozilla Support'
-    _page_url = '/en-US/search?a=2'
     _post_tags_box = (By.CSS_SELECTOR, 'input[name="q_tags"]')
     _thread_search_box = (By.ID, 'discussion_q')
     _search_button_kb = (By.CSS_SELECTOR, 'input[name="w"][value="1"]+div.submit-search > input[type="submit"]')

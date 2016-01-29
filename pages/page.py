@@ -2,12 +2,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''
-Created on Jun 21, 2010
-
-'''
 import re
 import time
+from urlparse import urljoin
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotVisibleException
@@ -16,14 +14,31 @@ http_regex = re.compile('https?://((\w+\.)+\w+\.\w+)')
 
 
 class Page(object):
-    """
-    Base class for all Pages
-    """
 
-    def __init__(self, base_url, selenium):
+    URL_TEMPLATE = None
+
+    def __init__(self, base_url, selenium, timeout=10, **url_kwargs):
         self.base_url = base_url
         self.selenium = selenium
-        self.timeout = 10
+        self.timeout = timeout
+        self.url_kwargs = url_kwargs
+        self.wait = WebDriverWait(self.selenium, self.timeout)
+
+    @property
+    def canonical_url(self):
+        if self.URL_TEMPLATE is not None:
+            return urljoin(self.base_url,
+                           self.URL_TEMPLATE.format(**self.url_kwargs))
+        return self.base_url
+
+    def open(self):
+        self.selenium.get(self.canonical_url)
+        self.wait_for_page_to_load()
+        return self
+
+    def wait_for_page_to_load(self):
+        self.wait.until(lambda s: self.canonical_url in s.current_url)
+        return self
 
     @property
     def is_the_current_page(self):
@@ -41,9 +56,6 @@ class Page(object):
 
     def refresh(self):
         self.selenium.refresh()
-
-    def open(self, url_fragment):
-        self.selenium.get(self.base_url + url_fragment)
 
     def is_element_present(self, *locator):
         self.selenium.implicitly_wait(0)

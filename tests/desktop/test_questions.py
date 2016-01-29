@@ -2,10 +2,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import pytest
 import datetime
 from random import randrange
-from pages.desktop.page_provider import PageProvider
+
+import pytest
+
+from pages.desktop.questions_page import AskNewQuestionsPage, QuestionsPage
 
 
 class TestQuestions:
@@ -19,8 +21,8 @@ class TestQuestions:
         q_details = "This is a test. %s" % (timestamp)
 
         # go to the /questions/new page and log in
-        ask_new_questions_page = PageProvider(base_url, selenium).new_question_page(
-            user['username'], user['password'])
+        ask_new_questions_page = AskNewQuestionsPage(base_url, selenium).open()
+        ask_new_questions_page.sign_in(user['username'], user['password'])
 
         # post a question
         ask_new_questions_page.click_firefox_product_link()
@@ -41,7 +43,7 @@ class TestQuestions:
         """
         expected_sorted_text = "SOLVED"
 
-        questions_page = PageProvider(base_url, selenium).questions_page()
+        questions_page = QuestionsPage(base_url, selenium).open()
         questions_page.click_all_products()
         questions_page.click_questions_done_tab()
 
@@ -62,7 +64,7 @@ class TestQuestions:
         """
         expected_sorted_text = "Unanswered"
 
-        questions_page = PageProvider(base_url, selenium).questions_page()
+        questions_page = QuestionsPage(base_url, selenium).open()
         questions_page.click_all_products()
         questions_page.click_all_questions_tab()
 
@@ -78,7 +80,7 @@ class TestQuestions:
         """Checks if the 'I have this problem too' counter increments"""
 
         # Can't +1 your own question so will do it logged out
-        questions_page = PageProvider(base_url, selenium).questions_page()
+        questions_page = QuestionsPage(base_url, selenium).open()
         questions_page.click_all_products()
 
         view_question_page = questions_page.click_any_question(1)
@@ -101,8 +103,8 @@ class TestQuestions:
         #    The questions page should list 20 posts.
         # 3.1 go to the question page
         user = variables['users']['default']
-        questions_page = PageProvider(base_url, selenium).questions_page(
-            user['username'], user['password'])
+        questions_page = QuestionsPage(base_url, selenium).open()
+        questions_page.sign_in(user['username'], user['password'])
 
         questions_page.click_all_products()
         # 3.2 ensure the size of the list is 20

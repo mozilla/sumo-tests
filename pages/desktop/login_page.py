@@ -10,8 +10,10 @@ class LoginPage(Base):
     """
         Form for login.
     """
+
+    URL_TEMPLATE = '{locale}/users/auth'
+
     _page_title = 'Log In | Mozilla Support'
-    _page_url = '/en-US/users/login'
     _username_box_locator = (By.ID, 'id_username')
     _password_box_locator = (By.ID, 'id_password')
     _log_in_button_locator = (By.CSS_SELECTOR, "button[data-name='login']")
