@@ -29,6 +29,10 @@ class Base(Page):
         super(Base, self).__init__(base_url, selenium, **url_kwargs)
 
     @property
+    def is_menu_exposed(self):
+        return 'exposed' in self.selenium.find_element(*self._body_locator).get_attribute('class')
+
+    @property
     def menu_items(self):
         return [self.MenuItem(self.base_url, self.selenium, element)
                 for element in self.selenium.find_elements(*self._menu_items_locator)]
