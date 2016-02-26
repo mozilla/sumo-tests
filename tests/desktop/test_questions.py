@@ -76,7 +76,6 @@ class TestQuestions:
         for question in questions_page.questions:
             assert 0 == question.number_of_replies
 
-    @pytest.mark.xfail(reason='bug 1250292')
     def test_that_questions_problem_count_increments(self, base_url, selenium):
         """Checks if the 'I have this problem too' counter increments"""
 
